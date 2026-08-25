@@ -1,0 +1,2150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prahar AI - Digital Mining Dashboard</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', path='css/style.css') }}">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <div class="brand">
+                    <div class="brand-logo">
+                        <i class="fa-solid fa-shield-halved"></i>
+                    </div>
+                    <div class="brand-info">
+                        <span class="brand-title">Prahar AI</span>
+                    </div>
+                </div>
+                <button class="sidebar-toggle" id="sidebarToggle" title="Toggle Sidebar">
+                    <i class="fa-solid fa-bars-staggered"></i>
+                </button>
+            </div>
+
+            <nav class="sidebar-nav">
+                <!-- Standard Main Sidebar Nav -->
+                <div class="main-sidebar-menu" id="mainSidebarMenu">
+                    <!-- HOME Section -->
+                    <div class="nav-section">
+                        <ul class="nav-list">
+                            <li class="nav-item nav-item-home">
+                                <a href="/" class="nav-link">
+                                    <i class="fa-solid fa-house nav-icon"></i>
+                                    <span class="nav-text">HOME</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Dashboards & Operations Section -->
+                    <div class="nav-section">
+                        <ul class="nav-list">
+                            <!-- Summary Section in place of ICCC Dashboard -->
+                            <li class="nav-item has-sub active" id="summaryNavItem">
+                                <a href="#" class="nav-link" id="summaryNavLink">
+                                    <i class="fa-solid fa-chart-pie nav-icon"></i>
+                                    <span class="nav-text">Summary</span>
+                                    <i class="fa-solid fa-chevron-right arrow-icon" id="summaryArrow"></i>
+                                </a>
+                                <ul class="sub-nav-list" id="summarySubList" style="display: none;">
+                                    <li class="sub-nav-item active" data-tab="weighbridge">
+                                        <a href="#weighbridge" class="sub-nav-link">
+                                            <i class="fa-solid fa-scale-balanced nav-icon"></i>
+                                            <span class="sub-nav-text">Weighbridge summary</span>
+                                        </a>
+                                    </li>
+                                    <li class="sub-nav-item" data-tab="checkpost">
+                                        <a href="#checkpost" class="sub-nav-link">
+                                            <i class="fa-solid fa-shield-cat nav-icon"></i>
+                                            <span class="sub-nav-text">Checkpost summary</span>
+                                        </a>
+                                    </li>
+                                    <li class="sub-nav-item" data-tab="vts">
+                                        <a href="#vts" class="sub-nav-link">
+                                            <i class="fa-solid fa-location-dot nav-icon"></i>
+                                            <span class="sub-nav-text">VTS summary</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="nav-item" data-view="alert-dashboard">
+                                <a href="#alert-dashboard" class="nav-link">
+                                    <i class="fa-solid fa-bell nav-icon"></i>
+                                    <span class="nav-text">Alert Dashboard</span>
+                                    <span class="badge badge-pink">Live</span>
+                                </a>
+                            </li>
+                            <li class="nav-item has-sub">
+                                <a href="#" class="nav-link nav-link-red">
+                                    <i class="fa-solid fa-video nav-icon"></i>
+                                    <span class="nav-text">Camera View</span>
+                                    <span class="badge badge-pink">Live</span>
+                                    <i class="fa-solid fa-chevron-right arrow-icon"></i>
+                                </a>
+                            </li>
+                            <li class="nav-item" data-view="drone-dashboard">
+                                <a href="#drone-dashboard" class="nav-link">
+                                    <i class="fa-solid fa-plane-slant nav-icon"></i>
+                                    <span class="nav-text">AI Driven Drone Monitoring</span>
+                                    <span class="badge badge-pink">AI</span>
+                                </a>
+                            </li>
+                            <li class="nav-item" data-view="vts-dashboard">
+                                <a href="#vts-dashboard" class="nav-link">
+                                    <i class="fa-solid fa-map-location-dot nav-icon"></i>
+                                    <span class="nav-text">VTS Dashboard</span>
+                                </a>
+                            </li>
+                            <li class="nav-item" data-view="rfid-dashboard">
+                                <a href="#rfid-dashboard" class="nav-link">
+                                    <i class="fa-solid fa-tower-cell nav-icon"></i>
+                                    <span class="nav-text">RFID Dashboard</span>
+                                </a>
+                            </li>
+                            <li class="nav-item" data-view="irregular-weighments">
+                                <a href="#irregular-weighments" class="nav-link">
+                                    <i class="fa-solid fa-triangle-exclamation nav-icon"></i>
+                                    <span class="nav-text">Irregular Weighments</span>
+                                </a>
+                            </li>
+                            <li class="nav-item" data-view="irregular-trips">
+                                <a href="#irregular-trips" class="nav-link">
+                                    <i class="fa-solid fa-route nav-icon"></i>
+                                    <span class="nav-text">Irregular Trips</span>
+                                </a>
+                            </li>
+                            <li class="nav-item" data-view="workers-attendance">
+                                <a href="#workers-attendance" class="nav-link">
+                                    <i class="fa-solid fa-users-viewfinder nav-icon"></i>
+                                    <span class="nav-text">Workers Attendance</span>
+                                </a>
+                            </li>
+                            <li class="nav-item has-sub">
+                                <a href="#" class="nav-link nav-link-red">
+                                    <i class="fa-solid fa-bars-no-heading nav-icon"></i>
+                                    <span class="nav-text">Blacklisted Vehicles</span>
+                                    <i class="fa-solid fa-chevron-right arrow-icon"></i>
+                                </a>
+                            </li>
+                            <li class="nav-item has-sub">
+                                <a href="#" class="nav-link nav-link-red">
+                                    <i class="fa-solid fa-file-invoice nav-icon"></i>
+                                    <span class="nav-text">DO Operations</span>
+                                    <i class="fa-solid fa-chevron-right arrow-icon"></i>
+                                </a>
+                            </li>
+                            <li class="nav-item has-sub">
+                                <a href="#" class="nav-link nav-link-red">
+                                    <i class="fa-solid fa-gear nav-icon"></i>
+                                    <span class="nav-text">Configuration</span>
+                                    <i class="fa-solid fa-chevron-right arrow-icon"></i>
+                                </a>
+                            </li>
+                            <li class="nav-item has-sub">
+                                <a href="#" class="nav-link nav-link-red">
+                                    <i class="fa-solid fa-chart-column nav-icon"></i>
+                                    <span class="nav-text">Reports</span>
+                                    <i class="fa-solid fa-chevron-right arrow-icon"></i>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#" class="nav-link nav-link-red">
+                                    <i class="fa-solid fa-clock-rotate-left nav-icon"></i>
+                                    <span class="nav-text">Digital Audit Trails</span>
+                                    <span class="badge badge-teal">Live</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Alert Dashboard Sidebar Nav (Shown ONLY on Alert Dashboard View) -->
+                <div class="alert-sidebar-menu" id="alertSidebarMenu" style="display: none;">
+                    <div class="nav-section">
+                        <div class="nav-section-title">DASHBOARD</div>
+                        <ul class="nav-list">
+                            <li class="nav-item nav-item-btn-green" id="btnBackHome">
+                                <a href="/" class="nav-link green-pill-btn">
+                                    <i class="fa-solid fa-house nav-icon"></i>
+                                    <span class="nav-text">CIL-Home</span>
+                                </a>
+                            </li>
+                            <li class="nav-item has-sub expanded">
+                                <a href="#" class="nav-link green-pill-btn active">
+                                    <i class="fa-solid fa-table-cells-large nav-icon"></i>
+                                    <span class="nav-text">Live Dashboard</span>
+                                    <i class="fa-solid fa-chevron-down arrow-icon"></i>
+                                </a>
+                                <ul class="sub-nav-list alert-sub-list">
+                                    <li class="sub-nav-item"><a href="#" class="sub-nav-link"><i class="fa-solid fa-triangle-exclamation nav-icon"></i><span class="sub-nav-text">Unauthorized stoppage</span></a></li>
+                                    <li class="sub-nav-item"><a href="#" class="sub-nav-link"><i class="fa-solid fa-car nav-icon"></i><span class="sub-nav-text">Vehicle Detection</span></a></li>
+                                    <li class="sub-nav-item"><a href="#" class="sub-nav-link"><i class="fa-solid fa-user nav-icon"></i><span class="sub-nav-text">Person Detection</span></a></li>
+                                    <li class="sub-nav-item"><a href="#" class="sub-nav-link"><i class="fa-solid fa-shield-halved nav-icon"></i><span class="sub-nav-text">Intrusion Detection</span></a></li>
+                                    <li class="sub-nav-item"><a href="#" class="sub-nav-link"><i class="fa-solid fa-traffic-light nav-icon"></i><span class="sub-nav-text">Traffic Congestion</span></a></li>
+                                    <li class="sub-nav-item"><a href="#" class="sub-nav-link"><i class="fa-solid fa-truck-ramp-box nav-icon"></i><span class="sub-nav-text">Loaded-Unloaded Alerts</span></a></li>
+                                </ul>
+                            </li>
+                        </ul>
+
+                        <div class="sidebar-meta-badges">
+                            <span class="badge badge-teal-pill">6 Cards</span>
+                            <span class="page-meta-text">Page 1 of 3</span>
+                        </div>
+                    </div>
+
+                    <div class="nav-section">
+                        <div class="nav-section-title">ANALYTICS</div>
+                        <ul class="nav-list">
+                            <li class="nav-item">
+                                <a href="#" class="nav-link nav-link-red">
+                                    <i class="fa-solid fa-chart-column nav-icon"></i>
+                                    <span class="nav-text">Reports & Analytics</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="main-wrapper">
+            <!-- Top Header Navbar -->
+            <header class="top-navbar">
+                <div class="header-titles">
+                    <h1 class="header-main-title">PRAHAR AI DIGITAL DASHBOARD</h1>
+                </div>
+
+                <div class="header-actions">
+                    <button class="btn-action btn-fullscreen" id="btnFullscreen">
+                        <i class="fa-solid fa-expand"></i> Full Screen
+                    </button>
+                    
+                    <div class="action-divider"></div>
+
+                    <div class="icon-group">
+                        <button class="icon-btn" title="Time Filter">
+                            <i class="fa-regular fa-clock"></i>
+                            <i class="fa-solid fa-caret-down mini-caret"></i>
+                        </button>
+                        <button class="icon-btn active" title="Analytics View">
+                            <i class="fa-solid fa-chart-simple"></i>
+                        </button>
+                        <button class="icon-btn" title="Export PDF">
+                            <i class="fa-regular fa-file-pdf"></i>
+                        </button>
+                        <button class="icon-btn" title="Export Excel">
+                            <i class="fa-regular fa-file-excel"></i>
+                        </button>
+                    </div>
+
+                    <div class="user-profile">
+                        <div class="avatar">
+                            <i class="fa-solid fa-user"></i>
+                        </div>
+                        <span class="user-name">{{ user_name }}</span>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Dashboard Content Container -->
+            <div class="content-body">
+                <!-- Top Tabs Bar -->
+                <div class="tabs-card">
+                    <div class="tabs-header">
+                        <button class="tab-btn active" data-content="weighbridge-view">Weighbridge Summary</button>
+                        <button class="tab-btn" data-content="checkpost-view">Checkpost Summary</button>
+                        <button class="tab-btn" data-content="vts-view">VTS Summary</button>
+                    </div>
+                </div>
+
+                <!-- Tab View 1: Weighbridge Summary -->
+                <div class="tab-content-panel active" id="weighbridge-view">
+                    <div class="analytics-card">
+                        <div class="card-header">
+                            <div class="card-title-group">
+                                <div class="icon-analytics-bars">
+                                    <span class="bar bar-pink"></span>
+                                    <span class="bar bar-blue"></span>
+                                    <span class="bar bar-green"></span>
+                                </div>
+                                <h2 class="card-title">Weighment Analytics Summary</h2>
+                            </div>
+                            <div class="period-badge">
+                                <span class="period-label">Period:</span> From: <strong>{{ current_date }} 00:00:00</strong> to <strong>{{ current_date }} 23:59:59</strong>
+                            </div>
+                        </div>
+
+                        <div class="card-body">
+                            <!-- Section 1: Weighment Data -->
+                            <h3 class="section-subheading">Weighment Data</h3>
+                            <div class="table-responsive margin-bottom-lg">
+                                <table class="data-table">
+                                    <thead>
+                                        <tr>
+                                            <th class="text-center" style="width: 70px;">S.No</th>
+                                            <th>Area / Project / WB</th>
+                                            <th class="text-right">Road Dispatch</th>
+                                            <th class="text-right">Internal Sending</th>
+                                            <th class="text-right">Internal Receiving</th>
+                                            <th class="text-right">Total</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for item in weighment_data %}
+                                        <tr>
+                                            <td class="text-center bold-sno">{{ item.s_no }}</td>
+                                            <td><a href="#" class="table-link">{{ item.name }}</a></td>
+                                            <td class="text-right">{{ item.road_dispatch }}</td>
+                                            <td class="text-right">{{ item.internal_sending }}</td>
+                                            <td class="text-right">{{ item.internal_receiving }}</td>
+                                            <td class="text-right total-cell">{{ item.total }}</td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                    <tfoot>
+                                        <tr class="summary-total-row">
+                                            <td colspan="2" class="text-bold">Total</td>
+                                            <td class="text-right text-bold">{{ weighment_total.road_dispatch }}</td>
+                                            <td class="text-right text-bold">{{ weighment_total.internal_sending }}</td>
+                                            <td class="text-right text-bold">{{ weighment_total.internal_receiving }}</td>
+                                            <td class="text-right text-bold">{{ weighment_total.total }}</td>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+
+                            <!-- Section 2: Weighbridge Status -->
+                            <h3 class="section-subheading">Weighbridge Status</h3>
+                            <div class="table-responsive margin-bottom-lg">
+                                <table class="data-table">
+                                    <thead>
+                                        <tr>
+                                            <th class="text-center" style="width: 70px;">S.No</th>
+                                            <th>Area / Project / WB</th>
+                                            <th class="text-center">Operational / Total</th>
+                                            <th class="text-center">Operational %</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for item in weighbridge_status_data %}
+                                        <tr>
+                                            <td class="text-center bold-sno">{{ item.s_no }}</td>
+                                            <td><a href="#" class="table-link">{{ item.name }}</a></td>
+                                            <td class="text-center">{{ item.operational_total }}</td>
+                                            <td class="text-center">{{ item.operational_pct }}</td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                    <tfoot>
+                                        <tr class="summary-total-row">
+                                            <td colspan="2" class="text-bold">Total</td>
+                                            <td class="text-center text-bold">{{ weighbridge_status_total.operational_total }}</td>
+                                            <td class="text-center text-bold">{{ weighbridge_status_total.operational_pct }}</td>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+
+                            <!-- Section 3: Advanced Analytics -->
+                            <h3 class="section-subheading">Advanced Analytics</h3>
+                            <div class="table-responsive">
+                                <table class="data-table multi-header-table">
+                                    <thead>
+                                        <tr>
+                                            <th rowspan="2" class="text-center" style="width: 60px;">S.No</th>
+                                            <th rowspan="2">Area / Project / WB</th>
+                                            <th colspan="3" class="text-center">Transactions</th>
+                                            <th rowspan="2" class="text-center">Manual Vehicle Bypassing</th>
+                                            <th rowspan="2" class="text-center">Manual Boom Barrier Operation</th>
+                                            <th rowspan="2" class="text-center">Long Vehicle (100T)</th>
+                                            <th colspan="3" class="text-center">Long Vehicle (LV)</th>
+                                            <th colspan="3" class="text-center">ANPR Mis-Match</th>
+                                        </tr>
+                                        <tr>
+                                            <th class="text-center">Road Dispatch</th>
+                                            <th class="text-center">Internal</th>
+                                            <th class="text-center">Total</th>
+                                            <th class="text-center">Road Dispatch</th>
+                                            <th class="text-center">Internal</th>
+                                            <th class="text-center">Total</th>
+                                            <th class="text-center">Road Dispatch</th>
+                                            <th class="text-center">Internal</th>
+                                            <th class="text-center">Total</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for item in advanced_analytics_data %}
+                                        <tr>
+                                            <td class="text-center bold-sno">{{ item.s_no }}</td>
+                                            <td><a href="#" class="table-link">{{ item.name }}</a></td>
+                                            <td class="text-center">{{ item.tx_road }}</td>
+                                            <td class="text-center">{{ item.tx_internal }}</td>
+                                            <td class="text-center total-cell">{{ item.tx_total }}</td>
+                                            <td class="text-center">{{ item.bypassing }}</td>
+                                            <td class="text-center">{{ item.barrier }}</td>
+                                            <td class="text-center total-cell">{{ item.lv_100t }}</td>
+                                            <td class="text-center">{{ item.lv_road }}</td>
+                                            <td class="text-center">{{ item.lv_internal }}</td>
+                                            <td class="text-center total-cell">{{ item.lv_total }}</td>
+                                            <td class="text-center">{{ item.anpr_road }}</td>
+                                            <td class="text-center">{{ item.anpr_internal }}</td>
+                                            <td class="text-center total-cell">{{ item.anpr_total }}</td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                    <tfoot>
+                                        <tr class="summary-total-row">
+                                            <td colspan="2" class="text-bold">Total</td>
+                                            <td class="text-center text-bold">{{ advanced_analytics_total.tx_road }}</td>
+                                            <td class="text-center text-bold">{{ advanced_analytics_total.tx_internal }}</td>
+                                            <td class="text-center text-bold">{{ advanced_analytics_total.tx_total }}</td>
+                                            <td class="text-center text-bold">{{ advanced_analytics_total.bypassing }}</td>
+                                            <td class="text-center text-bold">{{ advanced_analytics_total.barrier }}</td>
+                                            <td class="text-center text-bold">{{ advanced_analytics_total.lv_100t }}</td>
+                                            <td class="text-center text-bold">{{ advanced_analytics_total.lv_road }}</td>
+                                            <td class="text-center text-bold">{{ advanced_analytics_total.lv_internal }}</td>
+                                            <td class="text-center text-bold">{{ advanced_analytics_total.lv_total }}</td>
+                                            <td class="text-center text-bold">{{ advanced_analytics_total.anpr_road }}</td>
+                                            <td class="text-center text-bold">{{ advanced_analytics_total.anpr_internal }}</td>
+                                            <td class="text-center text-bold">{{ advanced_analytics_total.anpr_total }}</td>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tab View 2: Checkpost Summary -->
+                <div class="tab-content-panel" id="checkpost-view">
+                    <div class="analytics-card">
+                        <div class="card-header">
+                            <div class="card-title-group">
+                                <div class="icon-analytics-bars">
+                                    <span class="bar bar-green"></span>
+                                    <span class="bar bar-pink"></span>
+                                    <span class="bar bar-blue"></span>
+                                </div>
+                                <h2 class="card-title">Checkpost Summary</h2>
+                            </div>
+                            <div class="period-badge">
+                                <span class="period-label">Period:</span> From: <strong>{{ current_date }} 00:00:00</strong> to <strong>{{ current_date }} 23:59:59</strong>
+                            </div>
+                        </div>
+
+                        <div class="card-body">
+                            <!-- Section 1: Checkpost Status -->
+                            <h3 class="section-subheading">Checkpost Status</h3>
+                            <div class="table-responsive margin-bottom-lg">
+                                <table class="data-table">
+                                    <thead>
+                                        <tr>
+                                            <th class="text-center" style="width: 70px;">S.No</th>
+                                            <th>Area / Project / Checkpost</th>
+                                            <th class="text-center">Operational / Total</th>
+                                            <th class="text-center">Operational %</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for item in checkpost_status_data %}
+                                        <tr>
+                                            <td class="text-center bold-sno">{{ item.s_no }}</td>
+                                            <td><a href="#" class="table-link">{{ item.name }}</a></td>
+                                            <td class="text-center">{{ item.operational_total }}</td>
+                                            <td class="text-center">{{ item.operational_pct }}</td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                    <tfoot>
+                                        <tr class="summary-total-row">
+                                            <td colspan="2" class="text-bold">Total</td>
+                                            <td class="text-center text-bold">{{ checkpost_status_total.operational_total }}</td>
+                                            <td class="text-center text-bold">{{ checkpost_status_total.operational_pct }}</td>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+
+                            <!-- Section 2: Checkpost Analytics -->
+                            <h3 class="section-subheading">Checkpost Analytics</h3>
+                            <div class="table-responsive">
+                                <table class="data-table multi-header-table">
+                                    <thead>
+                                        <tr>
+                                            <th rowspan="2" class="text-center" style="width: 60px;">S.No</th>
+                                            <th rowspan="2">Area / Project / Checkpost</th>
+                                            <th colspan="2" class="text-center">Entry Transactions</th>
+                                            <th colspan="2" class="text-center">Exit Transactions</th>
+                                            <th colspan="4" class="text-center">Manual Boom Operation</th>
+                                        </tr>
+                                        <tr>
+                                            <th class="text-center">Total</th>
+                                            <th class="text-center">ANPR Mis-Match</th>
+                                            <th class="text-center">Total</th>
+                                            <th class="text-center">ANPR Mis-Match</th>
+                                            <th class="text-center">Total</th>
+                                            <th class="text-center">Others</th>
+                                            <th class="text-center">Departmental</th>
+                                            <th class="text-center">% of Total</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for item in checkpost_analytics_data %}
+                                        <tr>
+                                            <td class="text-center bold-sno">{{ item.s_no }}</td>
+                                            <td><a href="#" class="table-link">{{ item.name }}</a></td>
+                                            <td class="text-center">{{ item.entry_total }}</td>
+                                            <td class="text-center">{{ item.entry_anpr }}</td>
+                                            <td class="text-center">{{ item.exit_total }}</td>
+                                            <td class="text-center">{{ item.exit_anpr }}</td>
+                                            <td class="text-center total-cell">{{ item.boom_total }}</td>
+                                            <td class="text-center">{{ item.boom_others }}</td>
+                                            <td class="text-center">{{ item.boom_dept }}</td>
+                                            <td class="text-center">{{ item.boom_pct }}</td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                    <tfoot>
+                                        <tr class="summary-total-row">
+                                            <td colspan="2" class="text-bold">Total</td>
+                                            <td class="text-center text-bold">{{ checkpost_analytics_total.entry_total }}</td>
+                                            <td class="text-center text-bold">{{ checkpost_analytics_total.entry_anpr }}</td>
+                                            <td class="text-center text-bold">{{ checkpost_analytics_total.exit_total }}</td>
+                                            <td class="text-center text-bold">{{ checkpost_analytics_total.exit_anpr }}</td>
+                                            <td class="text-center text-bold">{{ checkpost_analytics_total.boom_total }}</td>
+                                            <td class="text-center text-bold">{{ checkpost_analytics_total.boom_others }}</td>
+                                            <td class="text-center text-bold">{{ checkpost_analytics_total.boom_dept }}</td>
+                                            <td class="text-center text-bold">{{ checkpost_analytics_total.boom_pct }}</td>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tab View 3: VTS Summary -->
+                <div class="tab-content-panel" id="vts-view">
+                    <div class="analytics-card">
+                        <div class="card-header">
+                            <div class="card-title-group">
+                                <div class="icon-analytics-bars">
+                                    <span class="bar bar-blue"></span>
+                                    <span class="bar bar-pink"></span>
+                                    <span class="bar bar-green"></span>
+                                </div>
+                                <h2 class="card-title">VTS Summary</h2>
+                            </div>
+                            <div class="period-badge">
+                                <span class="period-label">Period:</span> From: <strong>{{ current_date }} 00:00:00</strong> to: <strong>{{ current_date }} 23:59:00</strong>
+                            </div>
+                        </div>
+
+                        <div class="card-body">
+                            <!-- Section 1: Alert Summary -->
+                            <h3 class="section-subheading">Alert Summary</h3>
+                            <div class="table-responsive margin-bottom-lg">
+                                <table class="data-table multi-header-table">
+                                    <thead>
+                                        <tr>
+                                            <th rowspan="2" class="text-center" style="width: 50px;">S.No</th>
+                                            <th rowspan="2">Area / Project</th>
+                                            <th colspan="3" class="text-center">Offroute</th>
+                                            <th colspan="3" class="text-center">Off Area</th>
+                                            <th rowspan="2" class="text-center" style="width: 110px;">Offroute+OffArea Overlap <br><small style="font-weight: 400; color: #64748b;">(Vehicles)</small></th>
+                                            <th colspan="3" class="text-center">Device Tamper</th>
+                                            <th colspan="3" class="text-center">Unauthorized Stoppage</th>
+                                        </tr>
+                                        <tr>
+                                            <th class="text-center">Closed/Total</th>
+                                            <th class="text-center">% Closed</th>
+                                            <th class="text-center">% of Total</th>
+                                            <th class="text-center">Closed/Total</th>
+                                            <th class="text-center">% Closed</th>
+                                            <th class="text-center">% of Total</th>
+                                            <th class="text-center">Closed/Total</th>
+                                            <th class="text-center">% Closed</th>
+                                            <th class="text-center">% of Total</th>
+                                            <th class="text-center">Closed/Total</th>
+                                            <th class="text-center">% Closed</th>
+                                            <th class="text-center">% of Total</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for item in vts_alert_data %}
+                                        <tr>
+                                            <td class="text-center bold-sno">{{ item.s_no }}</td>
+                                            <td><a href="#" class="table-link">{{ item.name }}</a></td>
+                                            <td class="text-center">{{ item.offroute_closed }}</td>
+                                            <td class="text-center text-bold">{{ item.offroute_pct_closed }}</td>
+                                            <td class="text-center">{{ item.offroute_pct_total }}</td>
+                                            <td class="text-center">{{ item.offarea_closed }}</td>
+                                            <td class="text-center text-bold">{{ item.offarea_pct_closed }}</td>
+                                            <td class="text-center">{{ item.offarea_pct_total }}</td>
+                                            <td class="text-center">{{ item.overlap }}</td>
+                                            <td class="text-center">{{ item.tamper_closed }}</td>
+                                            <td class="text-center text-bold">{{ item.tamper_pct_closed }}</td>
+                                            <td class="text-center">{{ item.tamper_pct_total }}</td>
+                                            <td class="text-center">{{ item.stoppage_closed }}</td>
+                                            <td class="text-center text-bold">{{ item.stoppage_pct_closed }}</td>
+                                            <td class="text-center">{{ item.stoppage_pct_total }}</td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                    <tfoot>
+                                        <tr class="summary-total-row">
+                                            <td colspan="2" class="text-bold">Total</td>
+                                            <td class="text-center text-bold">{{ vts_alert_total.offroute_closed }}</td>
+                                            <td class="text-center text-bold">{{ vts_alert_total.offroute_pct_closed }}</td>
+                                            <td class="text-center text-bold">{{ vts_alert_total.offroute_pct_total }}</td>
+                                            <td class="text-center text-bold">{{ vts_alert_total.offarea_closed }}</td>
+                                            <td class="text-center text-bold">{{ vts_alert_total.offarea_pct_closed }}</td>
+                                            <td class="text-center text-bold">{{ vts_alert_total.offarea_pct_total }}</td>
+                                            <td class="text-center text-bold">{{ vts_alert_total.overlap }}</td>
+                                            <td class="text-center text-bold">{{ vts_alert_total.tamper_closed }}</td>
+                                            <td class="text-center text-bold">{{ vts_alert_total.tamper_pct_closed }}</td>
+                                            <td class="text-center text-bold">{{ vts_alert_total.tamper_pct_total }}</td>
+                                            <td class="text-center text-bold">{{ vts_alert_total.stoppage_closed }}</td>
+                                            <td class="text-center text-bold">{{ vts_alert_total.stoppage_pct_closed }}</td>
+                                            <td class="text-center text-bold">{{ vts_alert_total.stoppage_pct_total }}</td>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+
+                            <!-- Section 2: Fleet Info -->
+                            <h3 class="section-subheading">Fleet Info</h3>
+                            <p class="notice-text-red">** This data reflects the status at the time of report generation **</p>
+                            
+                            <div class="table-responsive">
+                                <table class="data-table">
+                                    <thead>
+                                        <tr>
+                                            <th class="text-center" style="width: 50px;">S.No</th>
+                                            <th>Area / Project</th>
+                                            <th class="text-center">Total Vehicle</th>
+                                            <th class="text-center">Online</th>
+                                            <th class="text-center">% Online</th>
+                                            <th class="text-center">Offline</th>
+                                            <th class="text-center">% Offline</th>
+                                            <th class="text-center">Workshop</th>
+                                            <th class="text-center">Offline >48h</th>
+                                            <th class="text-center">Offline >7 days</th>
+                                            <th class="text-center">No Data Found</th>
+                                            <th class="text-center">No Route Fleet</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for item in vts_fleet_data %}
+                                        <tr>
+                                            <td class="text-center bold-sno">{{ item.s_no }}</td>
+                                            <td><a href="#" class="table-link">{{ item.name }}</a></td>
+                                            <td class="text-center text-bold">{{ item.total_vehicle }}</td>
+                                            <td class="text-center">{{ item.online }}</td>
+                                            <td class="text-center">{{ item.pct_online }}</td>
+                                            <td class="text-center">{{ item.offline }}</td>
+                                            <td class="text-center">{{ item.pct_offline }}</td>
+                                            <td class="text-center">{{ item.workshop }}</td>
+                                            <td class="text-center">{{ item.offline_48h }}</td>
+                                            <td class="text-center">{{ item.offline_7d }}</td>
+                                            <td class="text-center">{{ item.no_data }}</td>
+                                            <td class="text-center">{{ item.no_route }}</td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                    <tfoot>
+                                        <tr class="summary-total-row">
+                                            <td colspan="2" class="text-bold">Total</td>
+                                            <td class="text-center text-bold">{{ vts_fleet_total.total_vehicle }}</td>
+                                            <td class="text-center text-bold">{{ vts_fleet_total.online }}</td>
+                                            <td class="text-center text-bold">{{ vts_fleet_total.pct_online }}</td>
+                                            <td class="text-center text-bold">{{ vts_fleet_total.offline }}</td>
+                                            <td class="text-center text-bold">{{ vts_fleet_total.pct_offline }}</td>
+                                            <td class="text-center text-bold">{{ vts_fleet_total.workshop }}</td>
+                                            <td class="text-center text-bold">{{ vts_fleet_total.offline_48h }}</td>
+                                            <td class="text-center text-bold">{{ vts_fleet_total.offline_7d }}</td>
+                                            <td class="text-center text-bold">{{ vts_fleet_total.no_data }}</td>
+                                            <td class="text-center text-bold">{{ vts_fleet_total.no_route }}</td>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+
+                            <div class="footer-timestamp">
+                                Generated on: {{ current_date }} 23:35:47
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Page View: Alert Dashboard (Dark Theme Layout) -->
+                <div class="tab-content-panel" id="alert-dashboard-view" style="display: none;">
+                    <div class="alert-dashboard-container">
+                        <!-- Dark Mode Header Bar -->
+                        <div class="alert-header">
+                            <div class="alert-header-left">
+                                <h1 class="alert-title">Alert Dashboard</h1>
+                                <span class="alert-subtitle">REAL TIME MONITORING SYSTEM</span>
+                                <div class="live-status-pill">
+                                    <span class="live-dot"></span>
+                                    <i class="fa-solid fa-pause"></i> LIVE
+                                </div>
+                            </div>
+                            
+                            <div class="alert-header-right">
+                                <button class="btn-dark-icon" title="Lock View"><i class="fa-solid fa-lock"></i></button>
+                                
+                                <div class="volume-control-group">
+                                    <i class="fa-solid fa-bell bell-icon"></i>
+                                    <input type="range" min="0" max="100" value="70" class="volume-slider">
+                                    <div class="mute-badge-btn">
+                                        <i class="fa-solid fa-bell-slash"></i>
+                                        <span class="badge-count" id="headerBadgeCount">6</span>
+                                    </div>
+                                </div>
+
+                                <div class="filter-dropdown">
+                                    <span class="filter-label">DETECTION</span>
+                                    <select class="dark-select" id="detectionTypeSelect">
+                                        <option value="All Types" selected>All Types</option>
+                                        <option value="Unauthorized stoppage">Unauthorized stoppage</option>
+                                        <option value="Vehicle Detection">Vehicle Detection</option>
+                                        <option value="Person Detection">Person Detection</option>
+                                        <option value="Intrusion Detection">Intrusion Detection</option>
+                                        <option value="Traffic Congestion">Traffic Congestion</option>
+                                        <option value="Loaded-Unloaded Alerts">Loaded-Unloaded Alerts</option>
+                                    </select>
+                                </div>
+
+                                <div class="filter-dropdown">
+                                    <span class="filter-label">AREA</span>
+                                    <select class="dark-select">
+                                        <option>All Areas</option>
+                                        <option>Amrapali</option>
+                                        <option>Argada</option>
+                                        <option>Barka Sayal</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 1. Original Overview View (Default View) -->
+                        <div class="alert-overview-container" id="alertOverviewContainer">
+                            <!-- Section A: VIDEO ANALYTICS ALERT -->
+                            <div class="alert-section-card margin-bottom-lg">
+                                <div class="alert-section-header">
+                                    <div class="section-title-group">
+                                        <span class="vertical-bar bar-teal"></span>
+                                        <i class="fa-solid fa-video section-icon"></i>
+                                        <h3 class="alert-section-title">VIDEO ANALYTICS ALERT</h3>
+                                    </div>
+                                    <span class="events-status-text">• NO EVENTS</span>
+                                </div>
+
+                                <div class="cards-grid grid-6">
+                                    <div class="metric-card dark-card" data-card-type="Crowd">
+                                        <div class="card-metric-info"><span class="metric-number">0</span><span class="metric-label">CROWD DETEC...</span></div>
+                                        <div class="metric-icon-circle"><i class="fa-solid fa-users"></i></div>
+                                    </div>
+                                    <div class="metric-card dark-card" data-card-type="Vehicle Detection">
+                                        <div class="card-metric-info"><span class="metric-number">0</span><span class="metric-label">VEHICLE DETE...</span></div>
+                                        <div class="metric-icon-circle"><i class="fa-solid fa-car"></i></div>
+                                    </div>
+                                    <div class="metric-card dark-card" data-card-type="Person Detection">
+                                        <div class="card-metric-info"><span class="metric-number">0</span><span class="metric-label">PERSON DETE...</span></div>
+                                        <div class="metric-icon-circle"><i class="fa-solid fa-user"></i></div>
+                                    </div>
+                                    <div class="metric-card dark-card" data-card-type="Intrusion Detection">
+                                        <div class="card-metric-info"><span class="metric-number">0</span><span class="metric-label">INTRUSION DE...</span></div>
+                                        <div class="metric-icon-circle"><i class="fa-solid fa-shield-halved"></i></div>
+                                    </div>
+                                    <div class="metric-card dark-card" data-card-type="Traffic Congestion">
+                                        <div class="card-metric-info"><span class="metric-number">0</span><span class="metric-label">TRAFFIC CONG...</span></div>
+                                        <div class="metric-icon-circle"><i class="fa-solid fa-traffic-light"></i></div>
+                                    </div>
+                                    <div class="metric-card dark-card" data-card-type="Loaded-Unloaded Alerts">
+                                        <div class="card-metric-info"><span class="metric-number">0</span><span class="metric-label">LOADED-UNLO...</span></div>
+                                        <div class="metric-icon-circle"><i class="fa-solid fa-truck-ramp-box"></i></div>
+                                    </div>
+                                    <div class="metric-card dark-card" data-card-type="Camera Tampering">
+                                        <div class="card-metric-info"><span class="metric-number">0</span><span class="metric-label">CAMERA TAMP...</span></div>
+                                        <div class="metric-icon-circle"><i class="fa-solid fa-video-slash"></i></div>
+                                    </div>
+                                    <div class="metric-card dark-card" data-card-type="Safety Hazard">
+                                        <div class="card-metric-info"><span class="metric-number">0</span><span class="metric-label">SAFETY HAZARD</span></div>
+                                        <div class="metric-icon-circle"><i class="fa-solid fa-triangle-exclamation"></i></div>
+                                    </div>
+                                    <div class="metric-card dark-card" data-card-type="Insufficient Illumination">
+                                        <div class="card-metric-info"><span class="metric-number">0</span><span class="metric-label">INSUFFICIENT I...</span></div>
+                                        <div class="metric-icon-circle"><i class="fa-solid fa-lightbulb"></i></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Section B: GPS-RFID ALERTS -->
+                            <div class="alert-section-card">
+                                <div class="alert-section-header">
+                                    <div class="section-title-group">
+                                        <span class="vertical-bar bar-orange"></span>
+                                        <i class="fa-solid fa-bus section-icon"></i>
+                                        <h3 class="alert-section-title">GPS-RFID ALERTS</h3>
+                                    </div>
+                                    <span class="events-status-text red-live-text">• 9 LIVE</span>
+                                </div>
+
+                                <div class="cards-grid grid-5">
+                                    <div class="metric-card dark-card">
+                                        <div class="card-metric-info"><span class="metric-number">0</span><span class="metric-label">OFF ROUTE ALERTS</span></div>
+                                        <div class="metric-icon-circle"><i class="fa-solid fa-route"></i></div>
+                                    </div>
+                                    <div class="metric-card dark-card">
+                                        <div class="card-metric-info"><span class="metric-number">0</span><span class="metric-label">OFF AREA ALERTS</span></div>
+                                        <div class="metric-icon-circle"><i class="fa-solid fa-ban"></i></div>
+                                    </div>
+                                    <div class="metric-card dark-card">
+                                        <div class="card-metric-info"><span class="metric-number">0</span><span class="metric-label">TAMPER ALERTS</span></div>
+                                        <div class="metric-icon-circle"><i class="fa-solid fa-triangle-exclamation"></i></div>
+                                    </div>
+                                    <div class="metric-card dark-card card-highlight-orange" data-card-type="Unauthorized stoppage">
+                                        <div class="card-metric-info"><span class="metric-number highlight-orange-text">5</span><span class="metric-label">UNAUTHORIZED STOP...</span></div>
+                                        <div class="metric-icon-circle highlight-orange-icon"><i class="fa-solid fa-triangle-exclamation"></i></div>
+                                    </div>
+                                    <div class="metric-card dark-card card-highlight-orange">
+                                        <div class="card-metric-info"><span class="metric-number highlight-orange-text">1</span><span class="metric-label">OVER SPEED</span></div>
+                                        <div class="metric-icon-circle highlight-orange-icon"><i class="fa-solid fa-gauge-high"></i></div>
+                                    </div>
+                                    <div class="metric-card dark-card card-highlight-orange">
+                                        <div class="card-metric-info"><span class="metric-number highlight-orange-text">3</span><span class="metric-label">OPEN BOOM BARRIERS</span></div>
+                                        <div class="metric-icon-circle highlight-orange-icon"><i class="fa-solid fa-traffic-light"></i></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 2. Detail View (Shown when clicking Unauthorized stoppage or other detection items) -->
+                        <div class="alert-main-grid-layout" id="alertDetailContainer" style="display: none;">
+                            <!-- Left / Primary Column -->
+                            <div class="alert-primary-col">
+                                <!-- Dynamic Event Detail Card -->
+                                <div class="alert-detail-card" id="alertDetailCard">
+                                    <div class="alert-detail-header">
+                                        <div class="detail-title-group">
+                                            <i class="fa-solid fa-triangle-exclamation detail-icon-orange" id="detailIcon"></i>
+                                            <h3 class="detail-title" id="detailTitle">Unauthorized stoppage <span class="detail-tag" id="detailTag">(Vehicle Alerts)</span></h3>
+                                        </div>
+                                        <div class="detail-actions">
+                                            <button class="btn-icon-action" title="Clear"><i class="fa-solid fa-trash-can"></i></button>
+                                            <button class="btn-icon-action" id="btnCloseDetail" title="Close"><i class="fa-solid fa-xmark"></i></button>
+                                        </div>
+                                    </div>
+
+                                    <div class="detail-subtitle-bar" id="detailSubtitleBar">
+                                        <span class="subtitle-events-text" id="detailSubtitleText">• SHOWING 12 OF 12 EVENTS</span>
+                                    </div>
+
+                                    <!-- Events Container -->
+                                    <div class="detail-events-body" id="detailEventsBody">
+                                        <div class="event-row-card">
+                                            <div class="event-row-info"><span class="event-row-title">MSRCR (SAKANDRA/BIHAR) (3 alerts, 3 vehicles)</span></div>
+                                            <div class="event-row-meta"><span class="event-timestamp">23:54:34</span><i class="fa-solid fa-chevron-down arrow-icon"></i></div>
+                                        </div>
+                                        <div class="event-row-card">
+                                            <div class="event-row-info"><span class="event-row-title">MSRCR (MONET/ALOK) (1 alerts, 1 vehicles)</span></div>
+                                            <div class="event-row-meta"><span class="event-timestamp">23:53:57</span><i class="fa-solid fa-chevron-down arrow-icon"></i></div>
+                                        </div>
+                                        <div class="event-row-card">
+                                            <div class="event-row-info"><span class="event-row-title">MSRCR (MUKESH/ROSHAN/HND) (2 alerts, 2 vehicles)</span></div>
+                                            <div class="event-row-meta"><span class="event-timestamp">23:53:00</span><i class="fa-solid fa-chevron-down arrow-icon"></i></div>
+                                        </div>
+                                        <div class="event-row-card">
+                                            <div class="event-row-info"><span class="event-row-title">LALITPUR POWER GENERATION COMPANY (2 alerts, 2 vehicles)</span></div>
+                                            <div class="event-row-meta"><span class="event-timestamp">23:52:41</span><i class="fa-solid fa-chevron-down arrow-icon"></i></div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- GPS-RFID ALERTS Section -->
+                                <div class="alert-section-card margin-top-md">
+                                    <div class="alert-section-header">
+                                        <div class="section-title-group">
+                                            <span class="vertical-bar bar-orange"></span>
+                                            <i class="fa-solid fa-bus section-icon"></i>
+                                            <h3 class="alert-section-title">GPS-RFID ALERTS</h3>
+                                        </div>
+                                        <span class="events-status-text red-live-text" id="gpsLiveCountText">• 40 LIVE</span>
+                                    </div>
+
+                                    <div class="cards-grid grid-5" id="gpsCardsGrid">
+                                        <div class="metric-card dark-card" data-card-type="OFF ROUTE ALERTS">
+                                            <div class="card-metric-info"><span class="metric-number">0</span><span class="metric-label">OFF-ROUTE ALERTS</span></div>
+                                            <div class="metric-icon-circle"><i class="fa-solid fa-route"></i></div>
+                                        </div>
+                                        <div class="metric-card dark-card" data-card-type="OFF AREA ALERTS">
+                                            <div class="card-metric-info"><span class="metric-number">0</span><span class="metric-label">OFF-AREA ALERTS</span></div>
+                                            <div class="metric-icon-circle"><i class="fa-solid fa-ban"></i></div>
+                                        </div>
+                                        <div class="metric-card dark-card card-highlight-orange" data-card-type="TAMPER ALERTS">
+                                            <div class="card-metric-info"><span class="metric-number highlight-orange-text">1</span><span class="metric-label">TAMPER ALERTS</span></div>
+                                            <div class="metric-icon-circle highlight-orange-icon"><i class="fa-solid fa-triangle-exclamation"></i></div>
+                                        </div>
+                                        <div class="metric-card dark-card card-highlight-teal active-card" data-card-type="Unauthorized stoppage" id="cardStoppage">
+                                            <div class="card-metric-info"><span class="metric-number highlight-teal-text">12</span><span class="metric-label">UNAUTHORIZED STO...</span></div>
+                                            <div class="metric-icon-circle highlight-teal-icon"><i class="fa-solid fa-triangle-exclamation"></i></div>
+                                        </div>
+                                        <div class="metric-card dark-card card-highlight-orange" data-card-type="OVER SPEED">
+                                            <div class="card-metric-info"><span class="metric-number highlight-orange-text">24</span><span class="metric-label">OVER-SPEED</span></div>
+                                            <div class="metric-icon-circle highlight-orange-icon"><i class="fa-solid fa-gauge-high"></i></div>
+                                        </div>
+                                        <div class="metric-card dark-card card-highlight-orange" data-card-type="OPEN BOOM BARRIERS">
+                                            <div class="card-metric-info"><span class="metric-number highlight-orange-text">3</span><span class="metric-label">OPEN BOOM BARRIERS</span></div>
+                                            <div class="metric-icon-circle highlight-orange-icon"><i class="fa-solid fa-traffic-light"></i></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Right Vertical Column: VA ALERTS -->
+                            <div class="alert-secondary-col" id="vaAlertsSidebarCol">
+                                <div class="va-sidebar-header">
+                                    <div class="va-header-title"><i class="fa-solid fa-video teal-text"></i><span>VA ALERTS</span></div>
+                                    <span class="events-status-text">NO EVENTS</span>
+                                </div>
+
+                                <div class="va-sidebar-cards-list">
+                                    <div class="metric-card dark-card mini-card" data-va-type="Crowd"><div class="card-metric-info"><span class="metric-number">0</span><span class="metric-label">CROWD DETECTION</span></div><div class="metric-icon-circle"><i class="fa-solid fa-users"></i></div></div>
+                                    <div class="metric-card dark-card mini-card" data-va-type="Vehicle Detection" id="vaCardVehicle"><div class="card-metric-info"><span class="metric-number">0</span><span class="metric-label">VEHICLE DETECTION</span></div><div class="metric-icon-circle"><i class="fa-solid fa-car"></i></div></div>
+                                    <div class="metric-card dark-card mini-card" data-va-type="Person Detection"><div class="card-metric-info"><span class="metric-number">0</span><span class="metric-label">PERSON DETECTION</span></div><div class="metric-icon-circle"><i class="fa-solid fa-user"></i></div></div>
+                                    <div class="metric-card dark-card mini-card" data-va-type="Intrusion Detection"><div class="card-metric-info"><span class="metric-number">0</span><span class="metric-label">INTRUSION DETECTION</span></div><div class="metric-icon-circle"><i class="fa-solid fa-shield-halved"></i></div></div>
+                                    <div class="metric-card dark-card mini-card" data-va-type="Traffic Congestion"><div class="card-metric-info"><span class="metric-number">0</span><span class="metric-label">TRAFFIC CONGESTION</span></div><div class="metric-icon-circle"><i class="fa-solid fa-traffic-light"></i></div></div>
+                                    <div class="metric-card dark-card mini-card" data-va-type="Loaded-Unloaded Alerts"><div class="card-metric-info"><span class="metric-number">0</span><span class="metric-label">LOADED-UNLOADED AL...</span></div><div class="metric-icon-circle"><i class="fa-solid fa-truck-ramp-box"></i></div></div>
+                                    <div class="metric-card dark-card mini-card" data-va-type="Camera Tampering"><div class="card-metric-info"><span class="metric-number">0</span><span class="metric-label">CAMERA TAMPERING</span></div><div class="metric-icon-circle"><i class="fa-solid fa-video-slash"></i></div></div>
+                                    <div class="metric-card dark-card mini-card" data-va-type="Safety Hazard"><div class="card-metric-info"><span class="metric-number">0</span><span class="metric-label">SAFETY HAZARD</span></div><div class="metric-icon-circle"><i class="fa-solid fa-triangle-exclamation"></i></div></div>
+                                    <div class="metric-card dark-card mini-card" data-va-type="Insufficient Illumination"><div class="card-metric-info"><span class="metric-number">0</span><span class="metric-label">INSUFFICIENT ILLUMIN...</span></div><div class="metric-icon-circle"><i class="fa-solid fa-lightbulb"></i></div></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Page View: VTS Dashboard (Dark Mode Theme) -->
+                <div class="tab-content-panel" id="vts-dashboard-view" style="display: none;">
+                    <div class="vts-dashboard-container">
+                        <!-- Top Sub-Bar: Home & Logout -->
+                        <div class="vts-subbar">
+                            <a href="/" class="vts-home-link" id="vtsBtnHome"><i class="fa-solid fa-house"></i> Home</a>
+                            <a href="/" class="vts-logout-link"><i class="fa-solid fa-power-off"></i> Logout</a>
+                        </div>
+
+                        <!-- SECTION 1: FLEET STATUS -->
+                        <div class="vts-section">
+                            <div class="vts-section-header">
+                                <span class="green-indicator-dot"></span>
+                                <h3 class="vts-section-title">FLEET STATUS</h3>
+                            </div>
+                            <div class="vts-grid grid-4">
+                                <!-- Stat 1: Total Fleet -->
+                                <div class="vts-card">
+                                    <div class="vts-card-info">
+                                        <span class="vts-stat-number">2279</span>
+                                        <span class="vts-stat-label">TOTAL FLEET</span>
+                                    </div>
+                                    <div class="vts-icon-circle icon-circle-cyan">
+                                        <i class="fa-solid fa-truck"></i>
+                                    </div>
+                                </div>
+                                <!-- Stat 2: Online -->
+                                <div class="vts-card">
+                                    <div class="vts-card-info">
+                                        <span class="vts-stat-number">1618</span>
+                                        <span class="vts-stat-label">ONLINE</span>
+                                    </div>
+                                    <div class="vts-icon-circle icon-circle-green">
+                                        <i class="fa-solid fa-truck"></i>
+                                    </div>
+                                </div>
+                                <!-- Stat 3: Offline -->
+                                <div class="vts-card">
+                                    <div class="vts-card-info">
+                                        <span class="vts-stat-number">499</span>
+                                        <span class="vts-stat-label">OFFLINE</span>
+                                    </div>
+                                    <div class="vts-icon-circle icon-circle-red">
+                                        <i class="fa-solid fa-truck"></i>
+                                    </div>
+                                </div>
+                                <!-- Stat 4: Workshop -->
+                                <div class="vts-card">
+                                    <div class="vts-card-info">
+                                        <span class="vts-stat-number">162</span>
+                                        <span class="vts-stat-label">WORKSHOP</span>
+                                    </div>
+                                    <div class="vts-icon-circle icon-circle-yellow">
+                                        <i class="fa-solid fa-truck"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- SECTION 2: LIVE ALERTS & TRACKING -->
+                        <div class="vts-split-row margin-top-lg">
+                            <!-- Left: LIVE ALERTS -->
+                            <div class="vts-split-col col-60">
+                                <div class="vts-section-header">
+                                    <span class="green-indicator-dot"></span>
+                                    <h3 class="vts-section-title">LIVE ALERTS</h3>
+                                </div>
+                                <div class="vts-grid grid-3">
+                                    <div class="vts-card">
+                                        <div class="vts-card-info">
+                                            <span class="vts-stat-number">33</span>
+                                            <span class="vts-stat-label">OFF-ROUTE</span>
+                                        </div>
+                                        <div class="vts-icon-circle icon-circle-amber">
+                                            <i class="fa-solid fa-route"></i>
+                                        </div>
+                                    </div>
+                                    <div class="vts-card">
+                                        <div class="vts-card-info">
+                                            <span class="vts-stat-number">60</span>
+                                            <span class="vts-stat-label">OFF-AREA</span>
+                                        </div>
+                                        <div class="vts-icon-circle icon-circle-amber">
+                                            <i class="fa-solid fa-location-dot"></i>
+                                        </div>
+                                    </div>
+                                    <div class="vts-card">
+                                        <div class="vts-card-info">
+                                            <span class="vts-stat-number">4</span>
+                                            <span class="vts-stat-label">DEVICE TAMPER</span>
+                                        </div>
+                                        <div class="vts-icon-circle icon-circle-yellow">
+                                            <i class="fa-solid fa-triangle-exclamation"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Right: TRACKING -->
+                            <div class="vts-split-col col-40">
+                                <div class="vts-section-header">
+                                    <span class="green-indicator-dot"></span>
+                                    <h3 class="vts-section-title">TRACKING</h3>
+                                </div>
+                                <div class="vts-grid grid-2">
+                                    <!-- Live View Banner -->
+                                    <div class="vts-action-card card-teal-bg">
+                                        <div class="action-card-text">
+                                            <span class="action-title">LIVE VIEW</span>
+                                            <span class="action-subtitle">REAL-TIME TRACKING</span>
+                                        </div>
+                                        <div class="vts-icon-circle icon-circle-dark-green">
+                                            <i class="fa-solid fa-map-location-dot"></i>
+                                        </div>
+                                    </div>
+                                    <!-- Playback Banner -->
+                                    <div class="vts-action-card card-amber-bg">
+                                        <div class="action-card-text">
+                                            <span class="action-title">PLAYBACK</span>
+                                            <span class="action-subtitle">REPLAY HISTORY</span>
+                                        </div>
+                                        <div class="vts-icon-circle icon-circle-dark-amber">
+                                            <i class="fa-solid fa-clock-rotate-left"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- SECTION 3: REPORTS -->
+                        <div class="vts-section margin-top-lg">
+                            <div class="vts-section-header">
+                                <span class="green-indicator-dot"></span>
+                                <h3 class="vts-section-title">REPORTS</h3>
+                            </div>
+                            <div class="vts-grid grid-6">
+                                <div class="vts-card">
+                                    <div class="vts-card-info"><span class="vts-action-name">OFF-ROUTE</span><span class="vts-action-desc">ALL RECORDS</span></div>
+                                    <div class="vts-icon-circle icon-circle-amber"><i class="fa-solid fa-route"></i></div>
+                                </div>
+                                <div class="vts-card">
+                                    <div class="vts-card-info"><span class="vts-action-name">OFF-AREA</span><span class="vts-action-desc">GEOFENCE ALERTS</span></div>
+                                    <div class="vts-icon-circle icon-circle-amber"><i class="fa-solid fa-location-dot"></i></div>
+                                </div>
+                                <div class="vts-card">
+                                    <div class="vts-card-info"><span class="vts-action-name">DEVICE TAMPER</span><span class="vts-action-desc">TAMPER HISTORY</span></div>
+                                    <div class="vts-icon-circle icon-circle-yellow"><i class="fa-solid fa-triangle-exclamation"></i></div>
+                                </div>
+                                <div class="vts-card">
+                                    <div class="vts-card-info"><span class="vts-action-name">OVERSPEED</span><span class="vts-action-desc">SPEED VIOLATIONS</span></div>
+                                    <div class="vts-icon-circle icon-circle-red"><i class="fa-solid fa-gauge-high"></i></div>
+                                </div>
+                                <div class="vts-card">
+                                    <div class="vts-card-info"><span class="vts-action-name">TRIP COUNT</span><span class="vts-action-desc">TOTAL TRIPS</span></div>
+                                    <div class="vts-icon-circle icon-circle-blue"><i class="fa-solid fa-route"></i></div>
+                                </div>
+                                <div class="vts-card">
+                                    <div class="vts-card-info"><span class="vts-action-name">UNAUTHORISED</span><span class="vts-action-desc">STOPPAGE REPORT</span></div>
+                                    <div class="vts-icon-circle icon-circle-red"><i class="fa-solid fa-hand"></i></div>
+                                </div>
+
+                                <div class="vts-card">
+                                    <div class="vts-card-info"><span class="vts-action-name">UNTRACKED</span><span class="vts-action-desc">NO GPS SIGNAL</span></div>
+                                    <div class="vts-icon-circle icon-circle-red"><i class="fa-solid fa-truck"></i></div>
+                                </div>
+                                <div class="vts-card">
+                                    <div class="vts-card-info"><span class="vts-action-name">OVER VOLTAGE</span><span class="vts-action-desc">VOLTAGE ALERTS</span></div>
+                                    <div class="vts-icon-circle icon-circle-yellow"><i class="fa-solid fa-charging-station"></i></div>
+                                </div>
+                                <div class="vts-card">
+                                    <div class="vts-card-info"><span class="vts-action-name">WORKSHOP</span><span class="vts-action-desc">MAINTENANCE</span></div>
+                                    <div class="vts-icon-circle icon-circle-yellow"><i class="fa-solid fa-truck"></i></div>
+                                </div>
+                                <div class="vts-card">
+                                    <div class="vts-card-info"><span class="vts-action-name">NO ROUTE FLEET</span><span class="vts-action-desc">UNASSIGNED</span></div>
+                                    <div class="vts-icon-circle icon-circle-red"><i class="fa-solid fa-truck-slash"></i></div>
+                                </div>
+                                <div class="vts-card">
+                                    <div class="vts-card-info"><span class="vts-action-name">VIEW GEOFENCES</span><span class="vts-action-desc">CREATED GEOFENCES</span></div>
+                                    <div class="vts-icon-circle icon-circle-green"><i class="fa-solid fa-eye"></i></div>
+                                </div>
+                                <div class="vts-card">
+                                    <div class="vts-card-info"><span class="vts-action-name">FLEET DETAILS</span><span class="vts-action-desc">ALL VEHICLE INFO</span></div>
+                                    <div class="vts-icon-circle icon-circle-cyan"><i class="fa-solid fa-truck-ramp-box"></i></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- SECTION 4: CONFIGURATION -->
+                        <div class="vts-section margin-top-lg">
+                            <div class="vts-section-header">
+                                <span class="green-indicator-dot"></span>
+                                <h3 class="vts-section-title">CONFIGURATION</h3>
+                            </div>
+                            <div class="vts-grid grid-4">
+                                <div class="vts-card">
+                                    <div class="vts-card-info"><span class="vts-action-name">REGISTER</span><span class="vts-action-desc">ADD NEW DEVICE</span></div>
+                                    <div class="vts-icon-circle icon-circle-green"><i class="fa-solid fa-plus"></i></div>
+                                </div>
+                                <div class="vts-card">
+                                    <div class="vts-card-info"><span class="vts-action-name">MODIFY</span><span class="vts-action-desc">EDIT EXISTING DEVICE</span></div>
+                                    <div class="vts-icon-circle icon-circle-yellow"><i class="fa-solid fa-pen-to-square"></i></div>
+                                </div>
+                                <div class="vts-card">
+                                    <div class="vts-card-info"><span class="vts-action-name">ROUTE & WORKSHOP</span><span class="vts-action-desc">ASSIGN ROUTES</span></div>
+                                    <div class="vts-icon-circle icon-circle-cyan"><i class="fa-solid fa-route"></i></div>
+                                </div>
+                                <div class="vts-card">
+                                    <div class="vts-card-info"><span class="vts-action-name">REMOVE / REINSTALL</span><span class="vts-action-desc">DEVICE ACTIONS</span></div>
+                                    <div class="vts-icon-circle icon-circle-blue"><i class="fa-solid fa-sim-card"></i></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Page View: RFID Dashboard -->
+                <div class="tab-content-panel" id="rfid-dashboard-view" style="display: none;">
+                    <div class="rfid-dashboard-container">
+                        <!-- Top Title & Links Bar -->
+                        <div class="rfid-header-row">
+                            <div class="rfid-title-group">
+                                <h1 class="rfid-page-title">All Areas Areas</h1>
+                                <div class="rfid-links-group">
+                                    <a href="#" class="rfid-op-link">Operation Weighbridges (Today): <strong>109/167</strong></a>
+                                    <a href="#" class="rfid-op-link">Operation Check-Post (Today): <strong>83/114</strong></a>
+                                </div>
+                            </div>
+
+                            <div class="rfid-filter-group">
+                                <label class="rfid-select-label">Select Area</label>
+                                <select class="rfid-select">
+                                    <option>All Areas</option>
+                                    <option>Barka Sayal</option>
+                                    <option>Argada</option>
+                                    <option>Piparwar</option>
+                                    <option>NK</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Time Period Radio Selector -->
+                        <div class="rfid-period-row">
+                            <label class="radio-label"><input type="radio" name="rfidPeriod" checked> Today</label>
+                            <label class="radio-label"><input type="radio" name="rfidPeriod"> This Week</label>
+                            <label class="radio-label"><input type="radio" name="rfidPeriod"> This Month</label>
+                            <label class="radio-label"><input type="radio" name="rfidPeriod"> Financial Year</label>
+                        </div>
+
+                        <!-- Top Metric Cards Grid (4 Cards from RFID dashboard-1.png) -->
+                        <div class="rfid-cards-grid">
+                            <!-- Card 1: Road Dispatch (Pink/Red) -->
+                            <div class="rfid-card card-pink">
+                                <span class="rfid-card-title">Road Dispatch</span>
+                                <div class="rfid-card-weight">358.600 <small>t</small></div>
+                                <span class="rfid-card-trips">Total Trips: 13</span>
+                            </div>
+                            <!-- Card 2: Internal Sending (Vibrant Green) -->
+                            <div class="rfid-card card-green">
+                                <span class="rfid-card-title">Internal Sending</span>
+                                <div class="rfid-card-weight">962.560 <small>t</small></div>
+                                <span class="rfid-card-trips">Total Trips: 34</span>
+                            </div>
+                            <!-- Card 3: Internal Receiving (Vibrant Blue) -->
+                            <div class="rfid-card card-blue">
+                                <span class="rfid-card-title">Internal Receiving</span>
+                                <div class="rfid-card-weight">447.730 <small>t</small></div>
+                                <span class="rfid-card-trips">Total Trips: 17</span>
+                            </div>
+                            <!-- Card 4: Total Weighment (Vibrant Orange) -->
+                            <div class="rfid-card card-orange">
+                                <span class="rfid-card-title">Total Weighment</span>
+                                <div class="rfid-card-weight">1,768.890 <small>t</small></div>
+                                <span class="rfid-card-trips">Total Trips: 64</span>
+                            </div>
+                        </div>
+
+                        <!-- Analytics Charts Section (Dispatch & Internal line graphs) -->
+                        <div class="rfid-charts-grid margin-top-lg">
+                            <!-- Chart 1: Dispatch -->
+                            <div class="rfid-chart-card">
+                                <div class="chart-header">
+                                    <h3 class="chart-title">Dispatch</h3>
+                                    <div class="chart-legend">
+                                        <span class="legend-color-box legend-pink"></span> Dispatch (Mt)
+                                    </div>
+                                </div>
+                                <div class="chart-canvas-container">
+                                    <svg viewBox="0 0 500 200" class="chart-svg">
+                                        <line x1="40" y1="20" x2="480" y2="20" stroke="#f1f5f9" stroke-width="1"/>
+                                        <line x1="40" y1="60" x2="480" y2="60" stroke="#f1f5f9" stroke-width="1"/>
+                                        <line x1="40" y1="100" x2="480" y2="100" stroke="#f1f5f9" stroke-width="1"/>
+                                        <line x1="40" y1="140" x2="480" y2="140" stroke="#f1f5f9" stroke-width="1"/>
+                                        <line x1="40" y1="180" x2="480" y2="180" stroke="#cbd5e1" stroke-width="1"/>
+                                        
+                                        <text x="35" y="24" text-anchor="end" font-size="9" fill="#94a3b8">90,000</text>
+                                        <text x="35" y="64" text-anchor="end" font-size="9" fill="#94a3b8">70,000</text>
+                                        <text x="35" y="104" text-anchor="end" font-size="9" fill="#94a3b8">50,000</text>
+                                        <text x="35" y="144" text-anchor="end" font-size="9" fill="#94a3b8">20,000</text>
+                                        <text x="35" y="184" text-anchor="end" font-size="9" fill="#94a3b8">0</text>
+
+                                        <polyline points="60,24 130,38 200,178 270,180 340,180 410,180 470,180" fill="none" stroke="#ff4757" stroke-width="2.5"/>
+                                        <circle cx="60" cy="24" r="3.5" fill="#ff4757"/>
+                                        <circle cx="130" cy="38" r="3.5" fill="#ff4757"/>
+                                        <circle cx="200" cy="178" r="3.5" fill="#ff4757"/>
+
+                                        <text x="60" y="195" text-anchor="middle" font-size="9" fill="#64748b">Sun</text>
+                                        <text x="130" y="195" text-anchor="middle" font-size="9" fill="#64748b">Mon</text>
+                                        <text x="200" y="195" text-anchor="middle" font-size="9" fill="#64748b">Tues</text>
+                                        <text x="270" y="195" text-anchor="middle" font-size="9" fill="#64748b">Wed</text>
+                                        <text x="340" y="195" text-anchor="middle" font-size="9" fill="#64748b">Thu</text>
+                                        <text x="410" y="195" text-anchor="middle" font-size="9" fill="#64748b">Fri</text>
+                                        <text x="470" y="195" text-anchor="middle" font-size="9" fill="#64748b">Sat</text>
+                                    </svg>
+                                </div>
+                            </div>
+
+                            <!-- Chart 2: Internal -->
+                            <div class="rfid-chart-card">
+                                <div class="chart-header">
+                                    <h3 class="chart-title">Internal</h3>
+                                    <div class="chart-legend">
+                                        <span class="legend-color-box legend-teal"></span> Sending(Mt)
+                                        <span class="legend-color-box legend-blue margin-left-sm"></span> Receiving(Mt)
+                                    </div>
+                                </div>
+                                <div class="chart-canvas-container">
+                                    <svg viewBox="0 0 500 200" class="chart-svg">
+                                        <line x1="40" y1="20" x2="480" y2="20" stroke="#f1f5f9" stroke-width="1"/>
+                                        <line x1="40" y1="60" x2="480" y2="60" stroke="#f1f5f9" stroke-width="1"/>
+                                        <line x1="40" y1="100" x2="480" y2="100" stroke="#f1f5f9" stroke-width="1"/>
+                                        <line x1="40" y1="140" x2="480" y2="140" stroke="#f1f5f9" stroke-width="1"/>
+                                        <line x1="40" y1="180" x2="480" y2="180" stroke="#cbd5e1" stroke-width="1"/>
+
+                                        <text x="35" y="24" text-anchor="end" font-size="9" fill="#94a3b8">160,000</text>
+                                        <text x="35" y="64" text-anchor="end" font-size="9" fill="#94a3b8">120,000</text>
+                                        <text x="35" y="104" text-anchor="end" font-size="9" fill="#94a3b8">80,000</text>
+                                        <text x="35" y="144" text-anchor="end" font-size="9" fill="#94a3b8">40,000</text>
+                                        <text x="35" y="184" text-anchor="end" font-size="9" fill="#94a3b8">0</text>
+
+                                        <polyline points="60,24 130,48 200,178 270,180 340,180 410,180 470,180" fill="none" stroke="#00b894" stroke-width="2.5"/>
+                                        <circle cx="60" cy="24" r="3.5" fill="#00b894"/>
+                                        <circle cx="130" cy="48" r="3.5" fill="#00b894"/>
+                                        <circle cx="200" cy="178" r="3.5" fill="#00b894"/>
+
+                                        <polyline points="60,120 130,124 200,178 270,180 340,180 410,180 470,180" fill="none" stroke="#3b82f6" stroke-width="2.5"/>
+                                        <circle cx="60" cy="120" r="3.5" fill="#3b82f6"/>
+                                        <circle cx="130" cy="124" r="3.5" fill="#3b82f6"/>
+                                        <circle cx="200" cy="178" r="3.5" fill="#3b82f6"/>
+
+                                        <text x="60" y="195" text-anchor="middle" font-size="9" fill="#64748b">Sun</text>
+                                        <text x="130" y="195" text-anchor="middle" font-size="9" fill="#64748b">Mon</text>
+                                        <text x="200" y="195" text-anchor="middle" font-size="9" fill="#64748b">Tues</text>
+                                        <text x="270" y="195" text-anchor="middle" font-size="9" fill="#64748b">Wed</text>
+                                        <text x="340" y="195" text-anchor="middle" font-size="9" fill="#64748b">Thu</text>
+                                        <text x="410" y="195" text-anchor="middle" font-size="9" fill="#64748b">Fri</text>
+                                        <text x="470" y="195" text-anchor="middle" font-size="9" fill="#64748b">Sat</text>
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 4 Status Quadrant Tables (from RFID dashboard-2.png) -->
+                        <div class="rfid-tables-grid margin-top-lg">
+                            <!-- Table 1: Operation WBs (Today): 109/167 -->
+                            <div class="rfid-table-card">
+                                <h3 class="rfid-table-title green-title">Operation WBs (Today): 109/167</h3>
+                                <div class="table-scroll-wrapper">
+                                    <table class="rfid-mini-table">
+                                        <thead>
+                                            <tr>
+                                                <th style="width: 40px;">#</th>
+                                                <th style="width: 120px;">Area</th>
+                                                <th>Weighbridge</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for row in rfid_op_wbs %}
+                                            <tr>
+                                                <td class="text-center">{{ row.s_no }}</td>
+                                                <td>{{ row.area }}</td>
+                                                <td><a href="#" class="rfid-blue-link">{{ row.weighbridge }}</a></td>
+                                            </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <!-- Table 2: Non-Operation WBs (Today): 58/167 -->
+                            <div class="rfid-table-card">
+                                <h3 class="rfid-table-title red-title">Non-Operation WBs (Today): 58/167</h3>
+                                <div class="table-scroll-wrapper">
+                                    <table class="rfid-mini-table">
+                                        <thead>
+                                            <tr>
+                                                <th style="width: 40px;">#</th>
+                                                <th style="width: 120px;">Area</th>
+                                                <th>Weighbridge</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for row in rfid_non_op_wbs %}
+                                            <tr>
+                                                <td class="text-center">{{ row.s_no }}</td>
+                                                <td>{{ row.area }}</td>
+                                                <td><a href="#" class="rfid-blue-link">{{ row.weighbridge }}</a></td>
+                                            </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <!-- Table 3: Operation CPs (Today): 83/114 -->
+                            <div class="rfid-table-card">
+                                <h3 class="rfid-table-title green-title">Operation CPs (Today): 83/114</h3>
+                                <div class="table-scroll-wrapper">
+                                    <table class="rfid-mini-table">
+                                        <thead>
+                                            <tr>
+                                                <th style="width: 40px;">#</th>
+                                                <th style="width: 120px;">Area</th>
+                                                <th>Check-Post</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for row in rfid_op_cps %}
+                                            <tr>
+                                                <td class="text-center">{{ row.s_no }}</td>
+                                                <td>{{ row.area }}</td>
+                                                <td>{{ row.checkpost }}</td>
+                                            </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <!-- Table 4: Non-Operation CPs (Today): 31/114 -->
+                            <div class="rfid-table-card">
+                                <h3 class="rfid-table-title red-title">Non-Operation CPs (Today): 31/114</h3>
+                                <div class="table-scroll-wrapper">
+                                    <table class="rfid-mini-table">
+                                        <thead>
+                                            <tr>
+                                                <th style="width: 40px;">#</th>
+                                                <th style="width: 120px;">Area</th>
+                                                <th>Check-Post</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for row in rfid_non_op_cps %}
+                                            <tr>
+                                                <td class="text-center">{{ row.s_no }}</td>
+                                                <td>{{ row.area }}</td>
+                                                <td>{{ row.checkpost }}</td>
+                                            </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Page View: Irregular Weighments (Abnormal Weighment Report) -->
+                <div class="tab-content-panel" id="irregular-weighments-view" style="display: none;">
+                    <div class="irr-container">
+                        <!-- Top Main Nav Tabs -->
+                        <div class="irr-main-tabs">
+                            <button class="irr-main-tab active">SUMMARY</button>
+                            <button class="irr-main-tab">AREA-WISE REPORTS</button>
+                            <button class="irr-main-tab">WEIGHBRIDGE-WISE REPORTS</button>
+                            <button class="irr-main-tab">VEHICLE-WISE REPORTS</button>
+                        </div>
+
+                        <!-- Sub-Tabs under SUMMARY -->
+                        <div class="irr-sub-tabs-bar">
+                            <button class="irr-sub-tab active">DAILY SUMMARY</button>
+                            <button class="irr-sub-tab">WEEKLY SUMMARY</button>
+                            <button class="irr-sub-tab">MONTHLY SUMMARY</button>
+                            <button class="irr-sub-tab">CUSTOM RANGE</button>
+                        </div>
+
+                        <!-- Threshold Banner Box -->
+                        <div class="irr-threshold-box">
+                            <span class="threshold-label">Standard Deviation Threshold:</span>
+                            <div class="threshold-input-group">
+                                <input type="text" class="threshold-input" value="10.0%" readonly>
+                                <button class="btn-edit-threshold" title="Edit Threshold"><i class="fa-solid fa-pen-to-square"></i></button>
+                            </div>
+                        </div>
+
+                        <!-- Abnormal Deviations Today Banner -->
+                        <div class="irr-deviations-banner">
+                            <span class="deviations-label">Abnormal Deviations (Today):</span>
+                            <span class="deviations-count">24</span>
+                        </div>
+
+                        <!-- 3 Violation Summary Cards Grid -->
+                        <div class="irr-cards-grid">
+                            <!-- Card 1: Area with Most Deviations -->
+                            <div class="irr-summary-card">
+                                <div class="irr-card-top-header">
+                                    <span class="top-label">Total Areas:</span>
+                                    <span class="top-val">6</span>
+                                </div>
+                                <div class="irr-card-content-body">
+                                    <div class="irr-accent-tag">Area with Most Deviations</div>
+                                    <div class="irr-data-rows">
+                                        <div class="data-row"><span class="lbl">Area:</span> <strong class="val bold-val">Barka Sayal</strong></div>
+                                        <div class="data-row"><span class="lbl">Total Weighments:</span> <strong class="val">675</strong></div>
+                                        <div class="data-row"><span class="lbl">Tare Violations:</span> <strong class="val">0</strong></div>
+                                        <div class="data-row"><span class="lbl">Gross Violations:</span> <strong class="val">7</strong></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Card 2: WB with Most Violations -->
+                            <div class="irr-summary-card">
+                                <div class="irr-card-top-header">
+                                    <span class="top-label">Total Weighbridges:</span>
+                                    <span class="top-val">11</span>
+                                </div>
+                                <div class="irr-card-content-body">
+                                    <div class="irr-accent-tag">WB with Most Violations</div>
+                                    <div class="irr-data-rows">
+                                        <div class="data-row"><span class="lbl">WB:</span> <strong class="val bold-val">Kathara Colliery WB</strong></div>
+                                        <div class="data-row"><span class="lbl">Total Weighments:</span> <strong class="val">213</strong></div>
+                                        <div class="data-row"><span class="lbl">Tare Violations:</span> <strong class="val">0</strong></div>
+                                        <div class="data-row"><span class="lbl">Gross Violations:</span> <strong class="val">5</strong></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Card 3: Vehicle with Most Violations -->
+                            <div class="irr-summary-card">
+                                <div class="irr-card-top-header">
+                                    <span class="top-label">Total Vehicles:</span>
+                                    <span class="top-val">18</span>
+                                </div>
+                                <div class="irr-card-content-body">
+                                    <div class="irr-accent-tag">Vehicle with Most Violations</div>
+                                    <div class="irr-data-rows">
+                                        <div class="data-row"><span class="lbl">Vehicle Number:</span> <strong class="val bold-val">JH02BT5349</strong></div>
+                                        <div class="data-row"><span class="lbl">Total Weighments:</span> <strong class="val">4</strong></div>
+                                        <div class="data-row"><span class="lbl">Tare Violations:</span> <strong class="val">4</strong></div>
+                                        <div class="data-row"><span class="lbl">Gross Violations:</span> <strong class="val">0</strong></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Page View: Irregular Trips (Abnormal Trips Report) -->
+                <div class="tab-content-panel" id="irregular-trips-view" style="display: none;">
+                    <div class="irr-trips-container">
+                        <!-- Top Main Nav Tabs -->
+                        <div class="irr-main-tabs">
+                            <button class="irr-main-tab active">SUMMARY REPORTS</button>
+                            <button class="irr-main-tab">UNIT-WISE REPORTS</button>
+                        </div>
+
+                        <!-- Sub-Tabs under SUMMARY REPORTS -->
+                        <div class="irr-sub-tabs-bar">
+                            <button class="irr-sub-tab active">RECENT SUMMARY</button>
+                            <button class="irr-sub-tab">WEEKLY SUMMARY</button>
+                            <button class="irr-sub-tab">MONTHLY SUMMARY</button>
+                            <button class="irr-sub-tab">CUSTOM RANGE</button>
+                        </div>
+
+                        <!-- Section Title -->
+                        <div class="trips-title-header">
+                            <h2 class="trips-main-title">Recent Trips Summary</h2>
+                            <span class="trips-subtitle">Most Recent 1000 trips</span>
+                        </div>
+
+                        <!-- Top Overview Metric Banner (Trip Time Reports Overview IQR-Based) -->
+                        <div class="iqr-overview-box">
+                            <div class="iqr-header">
+                                <span class="iqr-title">Trip Time Reports Overview (IQR-Based)</span>
+                                <i class="fa-solid fa-circle-info iqr-info-icon" title="IQR-Based Analysis"></i>
+                            </div>
+                            <div class="iqr-metrics-grid">
+                                <div class="iqr-metric-col">
+                                    <span class="iqr-label">Irregular Trips</span>
+                                    <span class="iqr-val red-text">61</span>
+                                </div>
+                                <div class="iqr-metric-col">
+                                    <span class="iqr-label">Total Trips</span>
+                                    <span class="iqr-val blue-text">1000</span>
+                                </div>
+                                <div class="iqr-metric-col">
+                                    <span class="iqr-label">Normal Trips</span>
+                                    <span class="iqr-val green-text">939</span>
+                                </div>
+                                <div class="iqr-metric-col">
+                                    <span class="iqr-label">Trip Time Deviation Rate</span>
+                                    <span class="iqr-val red-text">6.1%</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 3 Category Cards Grid (Vehicles, Delivery Orders, Units) -->
+                        <div class="trips-category-grid margin-top-lg">
+                            <!-- Card 1: Vehicles -->
+                            <div class="trips-cat-card">
+                                <h3 class="cat-card-title">Vehicles</h3>
+                                <div class="cat-card-rows">
+                                    <div class="cat-row"><span class="lbl">Vehicles with Irregular Trips</span><strong class="val red-val">53</strong></div>
+                                    <div class="cat-row"><span class="lbl">Unique Vehicles</span><strong class="val blue-val">449</strong></div>
+                                </div>
+                            </div>
+
+                            <!-- Card 2: Delivery Orders -->
+                            <div class="trips-cat-card">
+                                <h3 class="cat-card-title">Delivery Orders</h3>
+                                <div class="cat-card-rows">
+                                    <div class="cat-row"><span class="lbl">DOs with Irregular Trips</span><strong class="val red-val">23</strong></div>
+                                    <div class="cat-row"><span class="lbl">Total Unique DOs</span><strong class="val blue-val">43</strong></div>
+                                </div>
+                            </div>
+
+                            <!-- Card 3: Units -->
+                            <div class="trips-cat-card">
+                                <h3 class="cat-card-title">Units</h3>
+                                <div class="cat-card-rows">
+                                    <div class="cat-row"><span class="lbl">Units with Irregular Trips</span><strong class="val red-val">18</strong></div>
+                                    <div class="cat-row"><span class="lbl">Total Unique Units</span><strong class="val blue-val">25</strong></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Table 1: Top Vehicles by Irregular Trips -->
+                        <div class="trips-table-section margin-top-xl">
+                            <h3 class="table-section-title">Top Vehicles by Irregular Trips</h3>
+                            <div class="table-responsive-card">
+                                <table class="trips-table">
+                                    <thead>
+                                        <tr>
+                                            <th>VEHICLE NUMBER</th>
+                                            <th>UNIT</th>
+                                            <th>DO NUMBER</th>
+                                            <th class="text-center">IRREGULAR TRIPS</th>
+                                            <th>SOURCE</th>
+                                            <th>DESTINATION</th>
+                                            <th class="text-center">ACTION</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for row in irregular_vehicles %}
+                                        <tr>
+                                            <td class="font-bold">{{ row.veh_no }}</td>
+                                            <td>{{ row.unit }}</td>
+                                            <td>{{ row.do_no }}</td>
+                                            <td class="text-center red-bold-text">{{ row.irr_trips }}</td>
+                                            <td>
+                                                <div class="location-cell">
+                                                    <span class="co-title">{{ row.src_co }}</span>
+                                                    <span class="wb-sub">WB: {{ row.src_wb }}</span>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="location-cell">
+                                                    <span class="co-title">{{ row.dst_co }}</span>
+                                                    <span class="wb-sub">WB: {{ row.dst_wb }}</span>
+                                                </div>
+                                            </td>
+                                            <td class="text-center">
+                                                <a href="#" class="action-view-link">
+                                                    <i class="fa-solid fa-table-cells action-icon"></i>
+                                                    <span>View records</span>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <!-- Table 2: Top Delivery Orders by Irregular Trip Times -->
+                        <div class="trips-table-section margin-top-xl">
+                            <h3 class="table-section-title">Top Delivery Orders by Irregular Trip Times</h3>
+                            <div class="table-responsive-card">
+                                <table class="trips-table">
+                                    <thead>
+                                        <tr>
+                                            <th>DO NUMBER</th>
+                                            <th>UNIT</th>
+                                            <th class="text-center">IRREGULAR TRIPS</th>
+                                            <th class="text-center"># VEHICLES</th>
+                                            <th>SOURCE</th>
+                                            <th>DESTINATION</th>
+                                            <th class="text-center">ACTION</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for row in irregular_dos %}
+                                        <tr>
+                                            <td class="font-bold">{{ row.do_no }}</td>
+                                            <td>{{ row.unit }}</td>
+                                            <td class="text-center red-bold-text">{{ row.irr_trips }}</td>
+                                            <td class="text-center">{{ row.num_vehicles }}</td>
+                                            <td>
+                                                <div class="location-cell">
+                                                    <span class="co-title">{{ row.src_co }}</span>
+                                                    <span class="wb-sub">WB: {{ row.src_wb }}</span>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="location-cell">
+                                                    <span class="co-title">{{ row.dst_co }}</span>
+                                                    <span class="wb-sub">WB: {{ row.dst_wb }}</span>
+                                                </div>
+                                            </td>
+                                            <td class="text-center">
+                                                <a href="#" class="action-view-link">
+                                                    <i class="fa-solid fa-table-cells action-icon"></i>
+                                                    <span>View records</span>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Page View: AI Driven Drone Monitoring Dashboard -->
+                <div class="tab-content-panel" id="drone-dashboard-view" style="display: none;">
+                    <div class="drone-dashboard-container">
+                        <!-- Top Navigation Sub-Tabs Bar -->
+                        <div class="drone-sub-nav-bar">
+                            <button class="drone-tab-btn active" data-drone-tab="dashboard"><i class="fa-solid fa-chart-line"></i> Dashboard</button>
+                            <button class="drone-tab-btn" data-drone-tab="features"><i class="fa-solid fa-layer-group"></i> Features</button>
+                            <button class="drone-tab-btn" data-drone-tab="sites"><i class="fa-solid fa-location-dot"></i> Sites</button>
+                            <button class="drone-tab-btn" data-drone-tab="reports"><i class="fa-solid fa-file-invoice"></i> Inferred Reports</button>
+                        </div>
+
+                        <!-- SUB-VIEW 1: Dashboard Overview (Default) -->
+                        <div class="drone-sub-view" id="droneSubViewDashboard">
+                            <div class="drone-header-bar margin-top-md">
+                                <div class="header-left-info">
+                                    <h1 class="drone-title">Dashboard</h1>
+                                    <span class="drone-subtitle">Analytics and monitoring overview</span>
+                                </div>
+                                <button class="btn-refresh-blue"><i class="fa-solid fa-arrows-rotate"></i> Refresh</button>
+                            </div>
+
+                            <!-- Top 4 Summary Cards Grid -->
+                            <div class="drone-cards-grid margin-top-md">
+                                <div class="drone-card">
+                                    <div class="card-text-block"><span class="card-label">Total Violations</span><span class="card-value">1898</span></div>
+                                    <div class="card-badge-circle badge-red"><i class="fa-solid fa-triangle-exclamation"></i></div>
+                                </div>
+                                <div class="drone-card">
+                                    <div class="card-text-block"><span class="card-label">Drone IDs</span><span class="card-value">336</span></div>
+                                    <div class="card-badge-circle badge-blue"><i class="fa-solid fa-wave-square"></i></div>
+                                </div>
+                                <div class="drone-card">
+                                    <div class="card-text-block"><span class="card-label">Locations</span><span class="card-value">70</span></div>
+                                    <div class="card-badge-circle badge-green"><i class="fa-solid fa-location-dot"></i></div>
+                                </div>
+                                <div class="drone-card">
+                                    <div class="card-text-block"><span class="card-label">Violation Types</span><span class="card-value">26</span></div>
+                                    <div class="card-badge-circle badge-purple"><i class="fa-solid fa-user-group"></i></div>
+                                </div>
+                            </div>
+
+                            <!-- Middle Row: 2 Analytics Charts -->
+                            <div class="drone-charts-row margin-top-lg">
+                                <div class="drone-chart-card">
+                                    <h3 class="chart-card-title">Violation Type Distribution</h3>
+                                    <div class="pie-chart-wrapper">
+                                        <svg viewBox="0 0 200 200" class="pie-svg">
+                                            <circle r="70" cx="100" cy="100" fill="transparent" stroke="#ff6b6b" stroke-width="40" stroke-dasharray="110 330" stroke-dashoffset="0" />
+                                            <circle r="70" cx="100" cy="100" fill="transparent" stroke="#4ecdc4" stroke-width="40" stroke-dasharray="75 365" stroke-dashoffset="-110" />
+                                            <circle r="70" cx="100" cy="100" fill="transparent" stroke="#45b7d1" stroke-width="40" stroke-dasharray="60 380" stroke-dashoffset="-185" />
+                                            <circle r="70" cx="100" cy="100" fill="transparent" stroke="#96ceb4" stroke-width="40" stroke-dasharray="45 395" stroke-dashoffset="-245" />
+                                            <circle r="70" cx="100" cy="100" fill="transparent" stroke="#ffeaa7" stroke-width="40" stroke-dasharray="50 390" stroke-dashoffset="-290" />
+                                            <circle r="70" cx="100" cy="100" fill="transparent" stroke="#a29bfe" stroke-width="40" stroke-dasharray="100 340" stroke-dashoffset="-340" />
+                                        </svg>
+                                    </div>
+                                    <div class="drone-legend-flex">
+                                        <span class="legend-pill"><span class="dot" style="background:#ff6b6b;"></span> cracks</span>
+                                        <span class="legend-pill"><span class="dot" style="background:#4ecdc4;"></span> exit_boom_barrier_open</span>
+                                        <span class="legend-pill"><span class="dot" style="background:#45b7d1;"></span> fire</span>
+                                        <span class="legend-pill"><span class="dot" style="background:#96ceb4;"></span> light_pole</span>
+                                        <span class="legend-pill"><span class="dot" style="background:#ffeaa7;"></span> lighting_arrangement</span>
+                                        <span class="legend-pill"><span class="dot" style="background:#a29bfe;"></span> lmv_tipper_plying_on_same_road</span>
+                                        <span class="legend-pill"><span class="dot" style="background:#fdcb6e;"></span> overcrowding_person</span>
+                                        <span class="legend-pill"><span class="dot" style="background:#6c5ce7;"></span> overhanging_loose_boulders</span>
+                                        <span class="legend-pill"><span class="dot" style="background:#74b9ff;"></span> person_near_edge_unsafe_area</span>
+                                        <span class="legend-pill"><span class="dot" style="background:#ff7675;"></span> person_unsafe</span>
+                                        <span class="legend-pill"><span class="dot" style="background:#00cec9;"></span> rest_shelter</span>
+                                        <span class="legend-pill"><span class="dot" style="background:#fd79a8;"></span> scrap_management</span>
+                                    </div>
+                                </div>
+
+                                <div class="drone-chart-card">
+                                    <h3 class="chart-card-title">Violations by Drone</h3>
+                                    <div class="bar-chart-wrapper">
+                                        <svg viewBox="0 0 500 240" class="bar-svg">
+                                            <line x1="30" y1="20" x2="480" y2="20" stroke="#f1f5f9"/><text x="20" y="24" text-anchor="end" font-size="10" fill="#94a3b8">8</text>
+                                            <line x1="30" y1="60" x2="480" y2="60" stroke="#f1f5f9"/><text x="20" y="64" text-anchor="end" font-size="10" fill="#94a3b8">6</text>
+                                            <line x1="30" y1="100" x2="480" y2="100" stroke="#f1f5f9"/><text x="20" y="104" text-anchor="end" font-size="10" fill="#94a3b8">4</text>
+                                            <line x1="30" y1="140" x2="480" y2="140" stroke="#f1f5f9"/><text x="20" y="144" text-anchor="end" font-size="10" fill="#94a3b8">2</text>
+                                            <line x1="30" y1="180" x2="480" y2="180" stroke="#cbd5e1"/><text x="20" y="184" text-anchor="end" font-size="10" fill="#94a3b8">0</text>
+
+                                            {% for i in range(1, 45) %}
+                                            <rect x="{{ 35 + i * 10 }}" y="{{ 60 + (i % 7) * 15 }}" width="3" height="{{ 120 - (i % 7) * 15 }}" fill="#3b82f6"/>
+                                            {% endfor %}
+
+                                            <text x="50" y="195" transform="rotate(35, 50, 195)" font-size="8" fill="#64748b">JARANGDIH_11-01-2026_2</text>
+                                            <text x="110" y="195" transform="rotate(35, 110, 195)" font-size="8" fill="#64748b">akk_ocp_2026-05-08_8</text>
+                                            <text x="170" y="195" transform="rotate(35, 170, 195)" font-size="8" fill="#64748b">amrapali_2026-07-09_1</text>
+                                            <text x="230" y="195" transform="rotate(35, 230, 195)" font-size="8" fill="#64748b">bukaro_2026-05-07_1</text>
+                                            <text x="290" y="195" transform="rotate(35, 290, 195)" font-size="8" fill="#64748b">dhori_2026-05-06_9</text>
+                                            <text x="350" y="195" transform="rotate(35, 350, 195)" font-size="8" fill="#64748b">giddi_c_argada_2026-05-12_5</text>
+                                            <text x="410" y="195" transform="rotate(35, 410, 195)" font-size="8" fill="#64748b">piparwar_2026-02-23_2</text>
+                                        </svg>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Bottom Line Chart -->
+                            <div class="drone-chart-card margin-top-lg">
+                                <h3 class="chart-card-title">Violations Over Time</h3>
+                                <div class="line-chart-wrapper">
+                                    <svg viewBox="0 0 800 180" class="line-svg">
+                                        <line x1="40" y1="20" x2="780" y2="20" stroke="#f1f5f9"/><text x="30" y="24" text-anchor="end" font-size="10" fill="#94a3b8">120</text>
+                                        <line x1="40" y1="70" x2="780" y2="70" stroke="#f1f5f9"/><text x="30" y="74" text-anchor="end" font-size="10" fill="#94a3b8">80</text>
+                                        <line x1="40" y1="120" x2="780" y2="120" stroke="#f1f5f9"/><text x="30" y="124" text-anchor="end" font-size="10" fill="#94a3b8">40</text>
+                                        <line x1="40" y1="160" x2="780" y2="160" stroke="#cbd5e1"/><text x="30" y="164" text-anchor="end" font-size="10" fill="#94a3b8">0</text>
+                                        <path d="M 50 150 Q 150 140 250 130 T 450 30 T 600 140 T 770 150" fill="none" stroke="#3b82f6" stroke-width="3"/>
+                                        <circle cx="450" cy="30" r="5" fill="#3b82f6" stroke="#ffffff" stroke-width="2"/>
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- SUB-VIEW 2: Features (from Drone features-1.png & Drone features-2.png) -->
+                        <div class="drone-sub-view" id="droneSubViewFeatures" style="display: none;">
+                            <div class="drone-header-bar margin-top-md">
+                                <div class="header-left-info">
+                                    <h1 class="drone-title">Features</h1>
+                                    <span class="drone-subtitle">Manage and monitor detection features</span>
+                                </div>
+                                <span class="features-total-badge">Total: 34 features</span>
+                            </div>
+
+                            <div class="drone-search-box margin-top-md">
+                                <i class="fa-solid fa-magnifying-glass search-icn"></i>
+                                <input type="text" placeholder="Search features..." class="drone-search-input">
+                            </div>
+
+                            <div class="features-cards-grid margin-top-lg">
+                                <!-- Card 1: Cracks -->
+                                <div class="feature-card">
+                                    <div class="feature-title-row"><i class="fa-solid fa-chart-simple blue-icon"></i> <h3>Cracks</h3></div>
+                                    <div class="feature-metrics-row">
+                                        <div class="f-metric"><span class="num red-num">16</span><span class="lbl">Violations</span></div>
+                                        <div class="f-metric"><span class="num blue-num">4</span><span class="lbl">Drones</span></div>
+                                        <div class="f-metric"><span class="num green-num">4</span><span class="lbl">Locations</span></div>
+                                    </div>
+                                    <div class="feature-footer"><span class="last-date">Last detected: 2/23/2026</span><a href="#" class="view-det-link"><i class="fa-solid fa-eye"></i> View Details</a></div>
+                                </div>
+
+                                <!-- Card 2: Crowding Of People -->
+                                <div class="feature-card">
+                                    <div class="feature-title-row"><i class="fa-solid fa-chart-simple blue-icon"></i> <h3>Crowding Of People</h3></div>
+                                    <div class="feature-metrics-row">
+                                        <div class="f-metric"><span class="num red-num">0</span><span class="lbl">Violations</span></div>
+                                        <div class="f-metric"><span class="num blue-num">0</span><span class="lbl">Drones</span></div>
+                                        <div class="f-metric"><span class="num green-num">0</span><span class="lbl">Locations</span></div>
+                                    </div>
+                                    <div class="feature-footer"><a href="#" class="view-det-link"><i class="fa-solid fa-eye"></i> View Details</a></div>
+                                </div>
+
+                                <!-- Card 3: Crowding Of Vehicles -->
+                                <div class="feature-card">
+                                    <div class="feature-title-row"><i class="fa-solid fa-chart-simple blue-icon"></i> <h3>Crowding Of Vehicles</h3></div>
+                                    <div class="feature-metrics-row">
+                                        <div class="f-metric"><span class="num red-num">0</span><span class="lbl">Violations</span></div>
+                                        <div class="f-metric"><span class="num blue-num">0</span><span class="lbl">Drones</span></div>
+                                        <div class="f-metric"><span class="num green-num">0</span><span class="lbl">Locations</span></div>
+                                    </div>
+                                    <div class="feature-footer"><a href="#" class="view-det-link"><i class="fa-solid fa-eye"></i> View Details</a></div>
+                                </div>
+
+                                <!-- Card 4: Exit Boom Barrier Open -->
+                                <div class="feature-card">
+                                    <div class="feature-title-row"><i class="fa-solid fa-chart-simple blue-icon"></i> <h3>Exit Boom Barrier Open</h3></div>
+                                    <div class="feature-metrics-row">
+                                        <div class="f-metric"><span class="num red-num">1</span><span class="lbl">Violations</span></div>
+                                        <div class="f-metric"><span class="num blue-num">1</span><span class="lbl">Drones</span></div>
+                                        <div class="f-metric"><span class="num green-num">1</span><span class="lbl">Locations</span></div>
+                                    </div>
+                                    <div class="feature-footer"><span class="last-date">Last detected: 2/7/2026</span><a href="#" class="view-det-link"><i class="fa-solid fa-eye"></i> View Details</a></div>
+                                </div>
+
+                                <!-- Card 5: Fire -->
+                                <div class="feature-card">
+                                    <div class="feature-title-row"><i class="fa-solid fa-chart-simple blue-icon"></i> <h3>Fire</h3></div>
+                                    <div class="feature-metrics-row">
+                                        <div class="f-metric"><span class="num red-num">5</span><span class="lbl">Violations</span></div>
+                                        <div class="f-metric"><span class="num blue-num">2</span><span class="lbl">Drones</span></div>
+                                        <div class="f-metric"><span class="num green-num">1</span><span class="lbl">Locations</span></div>
+                                    </div>
+                                    <div class="feature-footer"><span class="last-date">Last detected: 3/26/2026</span><a href="#" class="view-det-link"><i class="fa-solid fa-eye"></i> View Details</a></div>
+                                </div>
+
+                                <!-- Card 6: Fire Smoke -->
+                                <div class="feature-card">
+                                    <div class="feature-title-row"><i class="fa-solid fa-chart-simple blue-icon"></i> <h3>Fire Smoke</h3></div>
+                                    <div class="feature-metrics-row">
+                                        <div class="f-metric"><span class="num red-num">0</span><span class="lbl">Violations</span></div>
+                                        <div class="f-metric"><span class="num blue-num">0</span><span class="lbl">Drones</span></div>
+                                        <div class="f-metric"><span class="num green-num">0</span><span class="lbl">Locations</span></div>
+                                    </div>
+                                    <div class="feature-footer"><a href="#" class="view-det-link"><i class="fa-solid fa-eye"></i> View Details</a></div>
+                                </div>
+
+                                <!-- Card 7: Illegal mining pit -->
+                                <div class="feature-card">
+                                    <div class="feature-title-row"><i class="fa-solid fa-chart-simple blue-icon"></i> <h3>Illegal mining pit</h3></div>
+                                    <div class="feature-metrics-row">
+                                        <div class="f-metric"><span class="num red-num">0</span><span class="lbl">Violations</span></div>
+                                        <div class="f-metric"><span class="num blue-num">0</span><span class="lbl">Drones</span></div>
+                                        <div class="f-metric"><span class="num green-num">0</span><span class="lbl">Locations</span></div>
+                                    </div>
+                                    <div class="feature-footer"><a href="#" class="view-det-link"><i class="fa-solid fa-eye"></i> View Details</a></div>
+                                </div>
+
+                                <!-- Card 8: Light Pole -->
+                                <div class="feature-card">
+                                    <div class="feature-title-row"><i class="fa-solid fa-chart-simple blue-icon"></i> <h3>Light Pole</h3></div>
+                                    <div class="feature-metrics-row">
+                                        <div class="f-metric"><span class="num red-num">1</span><span class="lbl">Violations</span></div>
+                                        <div class="f-metric"><span class="num blue-num">1</span><span class="lbl">Drones</span></div>
+                                        <div class="f-metric"><span class="num green-num">1</span><span class="lbl">Locations</span></div>
+                                    </div>
+                                    <div class="feature-footer"><span class="last-date">Last detected: 5/6/2026</span><a href="#" class="view-det-link"><i class="fa-solid fa-eye"></i> View Details</a></div>
+                                </div>
+
+                                <!-- Card 9: Lighting Arrangement -->
+                                <div class="feature-card">
+                                    <div class="feature-title-row"><i class="fa-solid fa-chart-simple blue-icon"></i> <h3>Lighting Arrangement</h3></div>
+                                    <div class="feature-metrics-row">
+                                        <div class="f-metric"><span class="num red-num">157</span><span class="lbl">Violations</span></div>
+                                        <div class="f-metric"><span class="num blue-num">108</span><span class="lbl">Drones</span></div>
+                                        <div class="f-metric"><span class="num green-num">39</span><span class="lbl">Locations</span></div>
+                                    </div>
+                                    <div class="feature-footer"><span class="last-date">Last detected: 8/19/2026</span><a href="#" class="view-det-link"><i class="fa-solid fa-eye"></i> View Details</a></div>
+                                </div>
+
+                                <!-- Card 10: Lmv Tipper Plying On Same Road -->
+                                <div class="feature-card">
+                                    <div class="feature-title-row"><i class="fa-solid fa-chart-simple blue-icon"></i> <h3>Lmv Tipper Plying On Same Road</h3></div>
+                                    <div class="feature-metrics-row">
+                                        <div class="f-metric"><span class="num red-num">8</span><span class="lbl">Violations</span></div>
+                                        <div class="f-metric"><span class="num blue-num">8</span><span class="lbl">Drones</span></div>
+                                        <div class="f-metric"><span class="num green-num">6</span><span class="lbl">Locations</span></div>
+                                    </div>
+                                    <div class="feature-footer"><span class="last-date">Last detected: 7/15/2026</span><a href="#" class="view-det-link"><i class="fa-solid fa-eye"></i> View Details</a></div>
+                                </div>
+
+                                <!-- Card 11: Loose Boulder -->
+                                <div class="feature-card">
+                                    <div class="feature-title-row"><i class="fa-solid fa-chart-simple blue-icon"></i> <h3>Loose Boulder</h3></div>
+                                    <div class="feature-metrics-row">
+                                        <div class="f-metric"><span class="num red-num">0</span><span class="lbl">Violations</span></div>
+                                        <div class="f-metric"><span class="num blue-num">0</span><span class="lbl">Drones</span></div>
+                                        <div class="f-metric"><span class="num green-num">0</span><span class="lbl">Locations</span></div>
+                                    </div>
+                                    <div class="feature-footer"><a href="#" class="view-det-link"><i class="fa-solid fa-eye"></i> View Details</a></div>
+                                </div>
+
+                                <!-- Card 12: Overcrowding Person -->
+                                <div class="feature-card">
+                                    <div class="feature-title-row"><i class="fa-solid fa-chart-simple blue-icon"></i> <h3>Overcrowding Person</h3></div>
+                                    <div class="feature-metrics-row">
+                                        <div class="f-metric"><span class="num red-num">56</span><span class="lbl">Violations</span></div>
+                                        <div class="f-metric"><span class="num blue-num">35</span><span class="lbl">Drones</span></div>
+                                        <div class="f-metric"><span class="num green-num">24</span><span class="lbl">Locations</span></div>
+                                    </div>
+                                    <div class="feature-footer"><span class="last-date">Last detected: 8/18/2026</span><a href="#" class="view-det-link"><i class="fa-solid fa-eye"></i> View Details</a></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- SUB-VIEW 3: Sites (from Site management.png) -->
+                        <div class="drone-sub-view" id="droneSubViewSites" style="display: none;">
+                            <div class="drone-header-bar margin-top-md">
+                                <div class="header-left-info">
+                                    <h1 class="drone-title">Site Management</h1>
+                                    <span class="drone-subtitle">View mining sites and locations</span>
+                                </div>
+                            </div>
+
+                            <div class="sites-cards-grid margin-top-lg">
+                                <div class="site-card"><div class="site-card-header"><i class="fa-solid fa-location-dot blue-pin"></i> <h3>Amrapali</h3></div><div class="site-card-meta"><span><i class="fa-solid fa-video"></i> 0 video links</span><span>Created 2/28/2026</span></div></div>
+                                <div class="site-card"><div class="site-card-header"><i class="fa-solid fa-location-dot blue-pin"></i> <h3>Argada</h3></div><div class="site-card-meta"><span><i class="fa-solid fa-video"></i> 0 video links</span><span>Created 2/12/2026</span></div></div>
+                                <div class="site-card"><div class="site-card-header"><i class="fa-solid fa-location-dot blue-pin"></i> <h3>BNK Mines</h3></div><div class="site-card-meta"><span><i class="fa-solid fa-video"></i> 0 video links</span><span>Created 1/27/2026</span></div></div>
+                                <div class="site-card"><div class="site-card-header"><i class="fa-solid fa-location-dot blue-pin"></i> <h3>Barkasayal</h3></div><div class="site-card-meta"><span><i class="fa-solid fa-video"></i> 0 video links</span><span>Created 2/11/2026</span></div></div>
+                                <div class="site-card"><div class="site-card-header"><i class="fa-solid fa-location-dot blue-pin"></i> <h3>Bukaro</h3></div><div class="site-card-meta"><span><i class="fa-solid fa-video"></i> 0 video links</span><span>Created 1/27/2026</span></div></div>
+                                <div class="site-card"><div class="site-card-header"><i class="fa-solid fa-location-dot blue-pin"></i> <h3>Chandrgupt</h3></div><div class="site-card-meta"><span><i class="fa-solid fa-video"></i> 0 video links</span><span>Created 2/28/2026</span></div></div>
+                                <div class="site-card"><div class="site-card-header"><i class="fa-solid fa-location-dot blue-pin"></i> <h3>Dhori</h3></div><div class="site-card-meta"><span><i class="fa-solid fa-video"></i> 0 video links</span><span>Created 1/27/2026</span></div></div>
+                                <div class="site-card"><div class="site-card-header"><i class="fa-solid fa-location-dot blue-pin"></i> <h3>Giridih Kabribad</h3></div><div class="site-card-meta"><span><i class="fa-solid fa-video"></i> 0 video links</span><span>Created 2/3/2026</span></div></div>
+                                <div class="site-card"><div class="site-card-header"><i class="fa-solid fa-location-dot blue-pin"></i> <h3>Hazaribagh</h3></div><div class="site-card-meta"><span><i class="fa-solid fa-video"></i> 0 video links</span><span>Created 2/18/2026</span></div></div>
+                                <div class="site-card"><div class="site-card-header"><i class="fa-solid fa-location-dot blue-pin"></i> <h3>Jarangdih</h3></div><div class="site-card-meta"><span><i class="fa-solid fa-video"></i> 0 video links</span><span>Created 1/28/2026</span></div></div>
+                                <div class="site-card"><div class="site-card-header"><i class="fa-solid fa-location-dot blue-pin"></i> <h3>Jharkhand</h3></div><div class="site-card-meta"><span><i class="fa-solid fa-video"></i> 0 video links</span><span>Created 2/18/2026</span></div></div>
+                                <div class="site-card"><div class="site-card-header"><i class="fa-solid fa-location-dot blue-pin"></i> <h3>KHASMAHAL</h3></div><div class="site-card-meta"><span><i class="fa-solid fa-video"></i> 0 video links</span><span>Created 2/2/2026</span></div></div>
+                                <div class="site-card"><div class="site-card-header"><i class="fa-solid fa-location-dot blue-pin"></i> <h3>Karo</h3></div><div class="site-card-meta"><span><i class="fa-solid fa-video"></i> 0 video links</span><span>Created 2/14/2026</span></div></div>
+                                <div class="site-card"><div class="site-card-header"><i class="fa-solid fa-location-dot blue-pin"></i> <h3>Kathara</h3></div><div class="site-card-meta"><span><i class="fa-solid fa-video"></i> 0 video links</span><span>Created 2/18/2026</span></div></div>
+                                <div class="site-card"><div class="site-card-header"><i class="fa-solid fa-location-dot blue-pin"></i> <h3>Kuju</h3></div><div class="site-card-meta"><span><i class="fa-solid fa-video"></i> 0 video links</span><span>Created 2/12/2026</span></div></div>
+                            </div>
+                        </div>
+
+                        <!-- SUB-VIEW 4: Inferred Reports (from drone inferred report.png) -->
+                        <div class="drone-sub-view" id="droneSubViewReports" style="display: none;">
+                            <div class="drone-header-bar margin-top-md">
+                                <div class="header-left-info">
+                                    <h1 class="drone-title">Inferred Reports</h1>
+                                </div>
+                                <button class="btn-refresh-outline"><i class="fa-solid fa-arrows-rotate"></i> Refresh</button>
+                            </div>
+
+                            <!-- Filter Controls Box -->
+                            <div class="reports-filter-card margin-top-md">
+                                <div class="search-input-group">
+                                    <input type="text" placeholder="Search by filename, site, or comment..." class="reports-search-input">
+                                    <button class="btn-search-blue"><i class="fa-solid fa-magnifying-glass"></i> Search</button>
+                                </div>
+                                <div class="filter-controls-group">
+                                    <div class="date-filter-box">
+                                        <label>Date Filter:</label>
+                                        <input type="text" placeholder="dd-mm-yyyy" class="date-input">
+                                    </div>
+                                    <div class="site-filter-box">
+                                        <label>Site Filter:</label>
+                                        <select class="site-select">
+                                            <option>All Sites</option>
+                                            <option>Amrapali</option>
+                                            <option>Argada</option>
+                                            <option>Bukaro</option>
+                                            <option>Magadh</option>
+                                        </select>
+                                    </div>
+                                    <button class="btn-clear-filters"><i class="fa-solid fa-filter-circle-xmark"></i> Clear Filters</button>
+                                </div>
+                            </div>
+
+                            <!-- Reports Table Card -->
+                            <div class="reports-table-card margin-top-lg">
+                                <h3 class="reports-table-heading">Inferred Reports</h3>
+                                <div class="table-scroll-wrapper">
+                                    <table class="reports-table">
+                                        <thead>
+                                            <tr>
+                                                <th style="width: 50px;">S. NO.</th>
+                                                <th>FILE NAME</th>
+                                                <th class="text-center">ACTIONS</th>
+                                                <th>SITE NAME</th>
+                                                <th>REPORT DATE</th>
+                                                <th class="text-center">VIDEO LINK</th>
+                                                <th class="text-center">UPLOAD ATR</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td class="text-center">1</td>
+                                                <td><i class="fa-regular fa-file-pdf pdf-icn"></i> NK_19-08-2026.pdf</td>
+                                                <td class="text-center"><a href="#" class="action-eye-btn" title="View Report"><i class="fa-solid fa-eye"></i></a></td>
+                                                <td>nk mines</td>
+                                                <td>Aug 19, 2026</td>
+                                                <td class="text-center"><a href="#" class="blue-link-icon"><i class="fa-solid fa-link"></i> Link</a></td>
+                                                <td class="text-center"><button class="btn-upload-atr"><i class="fa-solid fa-arrow-up-from-bracket"></i> Upload ATR</button></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-center">2</td>
+                                                <td><i class="fa-regular fa-file-pdf pdf-icn"></i> AMRAPALI_18-08-2026.pdf</td>
+                                                <td class="text-center"><a href="#" class="action-eye-btn" title="View Report"><i class="fa-solid fa-eye"></i></a></td>
+                                                <td>Amrapali</td>
+                                                <td>Aug 18, 2026</td>
+                                                <td class="text-center"><a href="#" class="blue-link-icon"><i class="fa-solid fa-link"></i> Link</a></td>
+                                                <td class="text-center"><button class="btn-upload-atr"><i class="fa-solid fa-arrow-up-from-bracket"></i> Upload ATR</button></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-center">3</td>
+                                                <td><i class="fa-regular fa-file-pdf pdf-icn"></i> MAGHA_17-08-2026.pdf</td>
+                                                <td class="text-center"><a href="#" class="action-eye-btn" title="View Report"><i class="fa-solid fa-eye"></i></a></td>
+                                                <td>Magadh</td>
+                                                <td>Aug 17, 2026</td>
+                                                <td class="text-center"><a href="#" class="blue-link-icon"><i class="fa-solid fa-link"></i> Link</a></td>
+                                                <td class="text-center"><button class="btn-upload-atr"><i class="fa-solid fa-arrow-up-from-bracket"></i> Upload ATR</button></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-center">4</td>
+                                                <td><i class="fa-regular fa-file-pdf pdf-icn"></i> GIRDIH_13-08-2026.pdf</td>
+                                                <td class="text-center"><a href="#" class="action-eye-btn" title="View Report"><i class="fa-solid fa-eye"></i></a></td>
+                                                <td>Giridih Kabribad</td>
+                                                <td>Aug 13, 2026</td>
+                                                <td class="text-center"><a href="#" class="blue-link-icon"><i class="fa-solid fa-link"></i> Link</a></td>
+                                                <td class="text-center"><button class="btn-upload-atr"><i class="fa-solid fa-arrow-up-from-bracket"></i> Upload ATR</button></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-center">5</td>
+                                                <td><i class="fa-regular fa-file-pdf pdf-icn"></i> BUKARO_12-08-2026.pdf</td>
+                                                <td class="text-center"><a href="#" class="action-eye-btn" title="View Report"><i class="fa-solid fa-eye"></i></a></td>
+                                                <td>Bukaro</td>
+                                                <td>Aug 12, 2026</td>
+                                                <td class="text-center"><a href="#" class="blue-link-icon"><i class="fa-solid fa-link"></i> Link</a></td>
+                                                <td class="text-center"><button class="btn-upload-atr"><i class="fa-solid fa-arrow-up-from-bracket"></i> Upload ATR</button></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                        </div>
+                    </div>
+                </div>
+                </div>
+
+                <!-- Page View: Workers Attendance -->
+                <div class="tab-content-panel" id="workers-attendance-view" style="display: none;">
+                    <div class="workers-attendance-container">
+                        <!-- Top Header Bar -->
+                        <div class="attendance-top-header">
+                            <h1 class="attendance-title">Location Attendance Dashboard</h1>
+                            <div class="attendance-filter-group">
+                                <div class="date-picker-box">
+                                    <input type="text" class="date-input-field" value="25-08-2026" readonly>
+                                    <i class="fa-regular fa-calendar date-icon"></i>
+                                </div>
+                                <button class="btn-go-blue">Go</button>
+                            </div>
+                        </div>
+
+                        <!-- 3 Summary Cards Row -->
+                        <div class="attendance-cards-grid">
+                            <!-- Card 1: Active Member -->
+                            <div class="att-card">
+                                <div class="att-icon-box purple-icon">
+                                    <i class="fa-solid fa-users"></i>
+                                </div>
+                                <span class="att-card-label">Active Member</span>
+                                <span class="att-card-number">32489</span>
+                            </div>
+
+                            <!-- Card 2: Present (87%) -->
+                            <div class="att-card">
+                                <div class="att-icon-box black-icon">
+                                    <i class="fa-solid fa-user-check"></i>
+                                </div>
+                                <span class="att-card-label">Present</span>
+                                <span class="att-card-number">28265</span>
+                            </div>
+
+                            <!-- Card 3: Absent (13%) -->
+                            <div class="att-card">
+                                <div class="att-icon-box black-icon">
+                                    <i class="fa-solid fa-user-xmark"></i>
+                                </div>
+                                <span class="att-card-label">Absent</span>
+                                <span class="att-card-number">4224</span>
+                            </div>
+                        </div>
+
+                        <!-- Attendance Overview Section -->
+                        <div class="attendance-overview-card margin-top-lg">
+                            <h2 class="overview-section-title">Attendance Overview</h2>
+                            
+                            <div class="doughnut-chart-container">
+                                <div class="doughnut-wrapper">
+                                    <svg viewBox="0 0 200 200" class="attendance-svg-doughnut">
+                                        <!-- Background Ring (13% Absent - Dark Arc) -->
+                                        <circle cx="100" cy="100" r="70" fill="transparent" stroke="#1e293b" stroke-width="28" />
+                                        <!-- Foreground Ring (87% Present - Vibrant Orange #f59e0b) -->
+                                        <!-- Circumference = 2 * PI * 70 = 439.82. 87% of 439.82 = 382.64 -->
+                                        <circle cx="100" cy="100" r="70" fill="transparent" stroke="#f59e0b" stroke-width="28"
+                                                stroke-dasharray="382.64 439.82" stroke-dashoffset="0" transform="rotate(-90 100 100)" />
+                                        
+                                        <!-- Percentage labels inside doughnut matching screenshot structure -->
+                                        <text x="100" y="42" text-anchor="middle" font-size="12" font-weight="800" fill="#ffffff">13%</text>
+                                        <text x="100" y="170" text-anchor="middle" font-size="13" font-weight="800" fill="#0f172a">87%</text>
+                                    </svg>
+                                </div>
+                            </div>
+
+                            <!-- Floating More Details Button -->
+                            <div class="more-details-footer">
+                                <button class="btn-more-details-pill">More Details</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Custom JS -->
+    <script src="{{ url_for('static', path='js/main.js') }}"></script>
+</body>
+</html>
