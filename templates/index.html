@@ -2802,14 +2802,6 @@ body.alert-mode-active .user-name {
                                     <span class="badge badge-pink">Live</span>
                                 </a>
                             </li>
-                            <li class="nav-item has-sub">
-                                <a href="#" class="nav-link nav-link-red">
-                                    <i class="fa-solid fa-video nav-icon"></i>
-                                    <span class="nav-text">Camera View</span>
-                                    <span class="badge badge-pink">Live</span>
-                                    <i class="fa-solid fa-chevron-right arrow-icon"></i>
-                                </a>
-                            </li>
                             <li class="nav-item" data-view="drone-dashboard">
                                 <a href="#drone-dashboard" class="nav-link">
                                     <i class="fa-solid fa-plane-slant nav-icon"></i>
@@ -2847,31 +2839,178 @@ body.alert-mode-active .user-name {
                                     <span class="nav-text">Workers Attendance</span>
                                 </a>
                             </li>
-                            <li class="nav-item has-sub">
-                                <a href="#" class="nav-link nav-link-red">
+                            <!-- Blacklisted Vehicles Dropdown -->
+                            <li class="nav-item has-sub" id="blacklistedNavItem">
+                                <a href="#" class="nav-link" id="blacklistedNavLink">
                                     <i class="fa-solid fa-bars-no-heading nav-icon"></i>
                                     <span class="nav-text">Blacklisted Vehicles</span>
-                                    <i class="fa-solid fa-chevron-right arrow-icon"></i>
+                                    <i class="fa-solid fa-chevron-right arrow-icon" id="blacklistedArrow"></i>
                                 </a>
+                                <ul class="sub-nav-list" id="blacklistedSubList" style="display: none;">
+                                    <li class="sub-nav-item">
+                                        <a href="#" class="sub-nav-link">
+                                            <i class="fa-solid fa-angle-right nav-icon" style="font-size: 11px; margin-right: 8px;"></i>
+                                            <span class="sub-nav-text">View</span>
+                                        </a>
+                                    </li>
+                                    <li class="sub-nav-item">
+                                        <a href="#" class="sub-nav-link">
+                                            <i class="fa-solid fa-angle-right nav-icon" style="font-size: 11px; margin-right: 8px;"></i>
+                                            <span class="sub-nav-text">Add</span>
+                                        </a>
+                                    </li>
+                                    <li class="sub-nav-item">
+                                        <a href="#" class="sub-nav-link">
+                                            <i class="fa-solid fa-angle-right nav-icon" style="font-size: 11px; margin-right: 8px;"></i>
+                                            <span class="sub-nav-text">Remove</span>
+                                        </a>
+                                    </li>
+                                </ul>
                             </li>
-                            <li class="nav-item has-sub">
-                                <a href="#" class="nav-link nav-link-red">
+
+                            <!-- DO Operations Dropdown -->
+                            <li class="nav-item has-sub" id="doOpsNavItem">
+                                <a href="#" class="nav-link" id="doOpsNavLink">
                                     <i class="fa-solid fa-file-invoice nav-icon"></i>
                                     <span class="nav-text">DO Operations</span>
-                                    <i class="fa-solid fa-chevron-right arrow-icon"></i>
+                                    <i class="fa-solid fa-chevron-right arrow-icon" id="doOpsArrow"></i>
                                 </a>
+                                <ul class="sub-nav-list" id="doOpsSubList" style="display: none;">
+                                    <li class="sub-nav-item">
+                                        <a href="#" class="sub-nav-link">
+                                            <i class="fa-solid fa-angle-right nav-icon" style="font-size: 11px; margin-right: 8px;"></i>
+                                            <span class="sub-nav-text">Road Dispatch</span>
+                                        </a>
+                                    </li>
+                                    <li class="sub-nav-item">
+                                        <a href="#" class="sub-nav-link">
+                                            <i class="fa-solid fa-angle-right nav-icon" style="font-size: 11px; margin-right: 8px;"></i>
+                                            <span class="sub-nav-text">Internal DO</span>
+                                        </a>
+                                    </li>
+                                </ul>
                             </li>
-                            <li class="nav-item has-sub">
-                                <a href="#" class="nav-link nav-link-red">
+
+                            <!-- Configuration Dropdown -->
+                            <li class="nav-item has-sub" id="configNavItem">
+                                <a href="#" class="nav-link" id="configNavLink">
                                     <i class="fa-solid fa-gear nav-icon"></i>
                                     <span class="nav-text">Configuration</span>
-                                    <i class="fa-solid fa-chevron-right arrow-icon"></i>
+                                    <i class="fa-solid fa-chevron-right arrow-icon" id="configArrow"></i>
                                 </a>
+                                <ul class="sub-nav-list" id="configSubList" style="display: none;">
+                                    <li class="sub-nav-item">
+                                        <a href="#" class="sub-nav-link">
+                                            <i class="fa-solid fa-angle-right nav-icon" style="font-size: 11px; margin-right: 8px;"></i>
+                                            <span class="sub-nav-text">Area Master</span>
+                                        </a>
+                                    </li>
+                                    <li class="sub-nav-item">
+                                        <a href="#" class="sub-nav-link">
+                                            <i class="fa-solid fa-angle-right nav-icon" style="font-size: 11px; margin-right: 8px;"></i>
+                                            <span class="sub-nav-text">Plant Master</span>
+                                        </a>
+                                    </li>
+                                    <li class="sub-nav-item">
+                                        <a href="#" class="sub-nav-link">
+                                            <i class="fa-solid fa-angle-right nav-icon" style="font-size: 11px; margin-right: 8px;"></i>
+                                            <span class="sub-nav-text">Location Master</span>
+                                        </a>
+                                    </li>
+                                    <li class="sub-nav-item">
+                                        <a href="#" class="sub-nav-link">
+                                            <i class="fa-solid fa-angle-right nav-icon" style="font-size: 11px; margin-right: 8px;"></i>
+                                            <span class="sub-nav-text">WeighBridge Master</span>
+                                        </a>
+                                    </li>
+                                    <li class="sub-nav-item">
+                                        <a href="#" class="sub-nav-link">
+                                            <i class="fa-solid fa-angle-right nav-icon" style="font-size: 11px; margin-right: 8px;"></i>
+                                            <span class="sub-nav-text">Material Master</span>
+                                        </a>
+                                    </li>
+                                    <li class="sub-nav-item">
+                                        <a href="#" class="sub-nav-link">
+                                            <i class="fa-solid fa-angle-right nav-icon" style="font-size: 11px; margin-right: 8px;"></i>
+                                            <span class="sub-nav-text">Checkpost Master</span>
+                                        </a>
+                                    </li>
+                                    <li class="sub-nav-item">
+                                        <a href="#" class="sub-nav-link">
+                                            <i class="fa-solid fa-angle-right nav-icon" style="font-size: 11px; margin-right: 8px;"></i>
+                                            <span class="sub-nav-text">Contractor Master</span>
+                                        </a>
+                                    </li>
+                                    <li class="sub-nav-item">
+                                        <a href="#" class="sub-nav-link">
+                                            <i class="fa-solid fa-angle-right nav-icon" style="font-size: 11px; margin-right: 8px;"></i>
+                                            <span class="sub-nav-text">Vehicle Master</span>
+                                        </a>
+                                    </li>
+                                    <li class="sub-nav-item">
+                                        <a href="#" class="sub-nav-link">
+                                            <i class="fa-solid fa-angle-right nav-icon" style="font-size: 11px; margin-right: 8px;"></i>
+                                            <span class="sub-nav-text">User Master</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="nav-item has-sub" id="reportsNavItem">
+                                <a href="#" class="nav-link" id="reportsNavLink">
+                                    <i class="fa-solid fa-file-lines nav-icon"></i>
+                                    <span class="nav-text">Reports</span>
+                                    <i class="fa-solid fa-chevron-right arrow-icon" id="reportsArrow"></i>
+                                </a>
+                                <ul class="sub-nav-list" id="reportsSubList" style="display: none;">
+                                    <li class="sub-nav-item">
+                                        <a href="#" class="sub-nav-link">
+                                            <i class="fa-solid fa-angle-right nav-icon" style="font-size: 11px; margin-right: 8px;"></i>
+                                            <span class="sub-nav-text">Road Dispatch</span>
+                                        </a>
+                                    </li>
+                                    <li class="sub-nav-item">
+                                        <a href="#" class="sub-nav-link">
+                                            <i class="fa-solid fa-angle-right nav-icon" style="font-size: 11px; margin-right: 8px;"></i>
+                                            <span class="sub-nav-text">Internal Transport</span>
+                                        </a>
+                                    </li>
+                                    <li class="sub-nav-item">
+                                        <a href="#" class="sub-nav-link">
+                                            <i class="fa-solid fa-angle-right nav-icon" style="font-size: 11px; margin-right: 8px;"></i>
+                                            <span class="sub-nav-text">Checkpost Report</span>
+                                        </a>
+                                    </li>
+                                    <li class="sub-nav-item">
+                                        <a href="#" class="sub-nav-link">
+                                            <i class="fa-solid fa-angle-right nav-icon" style="font-size: 11px; margin-right: 8px;"></i>
+                                            <span class="sub-nav-text">Active Vehicle</span>
+                                        </a>
+                                    </li>
+                                    <li class="sub-nav-item">
+                                        <a href="#" class="sub-nav-link">
+                                            <i class="fa-solid fa-angle-right nav-icon" style="font-size: 11px; margin-right: 8px;"></i>
+                                            <span class="sub-nav-text">Reconcile Report</span>
+                                        </a>
+                                    </li>
+                                    <li class="sub-nav-item">
+                                        <a href="#" class="sub-nav-link">
+                                            <i class="fa-solid fa-angle-right nav-icon" style="font-size: 11px; margin-right: 8px;"></i>
+                                            <span class="sub-nav-text">Manual Operations</span>
+                                        </a>
+                                    </li>
+                                    <li class="sub-nav-item">
+                                        <a href="#" class="sub-nav-link">
+                                            <i class="fa-solid fa-angle-right nav-icon" style="font-size: 11px; margin-right: 8px;"></i>
+                                            <span class="sub-nav-text">Manual Boom Operations</span>
+                                        </a>
+                                    </li>
+                                </ul>
                             </li>
                             <li class="nav-item has-sub">
                                 <a href="#" class="nav-link nav-link-red">
-                                    <i class="fa-solid fa-chart-column nav-icon"></i>
-                                    <span class="nav-text">Reports</span>
+                                    <i class="fa-solid fa-video nav-icon"></i>
+                                    <span class="nav-text">Camera View</span>
+                                    <span class="badge badge-pink">Live</span>
                                     <i class="fa-solid fa-chevron-right arrow-icon"></i>
                                 </a>
                             </li>
@@ -5344,6 +5483,48 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
+
+    // Reports dropdown toggle (collapsed by default)
+    const reportsNavLink = document.getElementById('reportsNavLink');
+    const reportsSubList = document.getElementById('reportsSubList');
+    const reportsArrow = document.getElementById('reportsArrow');
+
+    if (reportsNavLink && reportsSubList) {
+        reportsSubList.style.display = 'none';
+        if (reportsArrow) reportsArrow.className = 'fa-solid fa-chevron-right arrow-icon';
+
+        reportsNavLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            const isHidden = reportsSubList.style.display === 'none' || getComputedStyle(reportsSubList).display === 'none';
+            reportsSubList.style.display = isHidden ? 'block' : 'none';
+            if (reportsArrow) {
+                reportsArrow.className = isHidden ? 'fa-solid fa-chevron-down arrow-icon' : 'fa-solid fa-chevron-right arrow-icon';
+            }
+        });
+    }
+
+    // Generic Dropdown Toggle Helper
+    function setupDropdownToggle(navLinkId, subListId, arrowId) {
+        const link = document.getElementById(navLinkId);
+        const list = document.getElementById(subListId);
+        const arrow = document.getElementById(arrowId);
+        if (link && list) {
+            list.style.display = 'none';
+            if (arrow) arrow.className = 'fa-solid fa-chevron-right arrow-icon';
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const isHidden = list.style.display === 'none' || getComputedStyle(list).display === 'none';
+                list.style.display = isHidden ? 'block' : 'none';
+                if (arrow) {
+                    arrow.className = isHidden ? 'fa-solid fa-chevron-down arrow-icon' : 'fa-solid fa-chevron-right arrow-icon';
+                }
+            });
+        }
+    }
+
+    setupDropdownToggle('blacklistedNavLink', 'blacklistedSubList', 'blacklistedArrow');
+    setupDropdownToggle('doOpsNavLink', 'doOpsSubList', 'doOpsArrow');
+    setupDropdownToggle('configNavLink', 'configSubList', 'configArrow');
 
     // Hash routing handler
     function handleHashRoute() {
