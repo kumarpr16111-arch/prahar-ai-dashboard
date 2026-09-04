@@ -11,35 +11,35 @@ app = FastAPI(title="TRACE Dashboard")
 USERS_DB = {
     "gm": {
         "password": "gm@trace2026",
-        "name": "Rajesh Sharma",
+        "name": "Satish Sharma",
         "designation": "General Manager",
         "role": "gm",
         "email": "gm@trace.gov.in"
     },
     "vigilance": {
         "password": "vigilance@trace2026",
-        "name": "Sunil Verma",
+        "name": "Pankaj Kumar Singh",
         "designation": "Vigilance Officer",
         "role": "vigilance",
         "email": "vigilance@trace.gov.in"
     },
     "surveillance": {
         "password": "surveillance@trace2026",
-        "name": "Amit Pathak",
+        "name": "Ramesh Gupta",
         "designation": "Surveillance Officer",
         "role": "surveillance",
         "email": "surveillance@trace.gov.in"
     },
     "dispatch": {
         "password": "dispatch@trace2026",
-        "name": "Pawan Roy",
+        "name": "Gajender Yadav",
         "designation": "Dispatch Officer (DO)",
         "role": "dispatch",
         "email": "dispatch@trace.gov.in"
     },
     "operator": {
         "password": "operator@trace2026",
-        "name": "Ramesh Yadav",
+        "name": "Manoj Munda",
         "designation": "Control Operator",
         "role": "operator",
         "email": "operator@trace.gov.in"
