@@ -1,13 +1,56 @@
-from fastapi import FastAPI, Request
+from fastapi import FastAPI, Request, Form, Response
+from fastapi.responses import RedirectResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 import os
+from typing import Optional
 
-app = FastAPI(title="Prahar AI Dashboard")
+app = FastAPI(title="TRACE Dashboard")
+
+# User Accounts & Role-Based Access Control (RBAC) - 5 Core Roles
+USERS_DB = {
+    "gm": {
+        "password": "gm@trace2026",
+        "name": "Rajesh Sharma",
+        "designation": "General Manager",
+        "role": "gm",
+        "email": "gm@trace.gov.in"
+    },
+    "vigilance": {
+        "password": "vigilance@trace2026",
+        "name": "Sunil Verma",
+        "designation": "Vigilance Officer",
+        "role": "vigilance",
+        "email": "vigilance@trace.gov.in"
+    },
+    "surveillance": {
+        "password": "surveillance@trace2026",
+        "name": "Amit Pathak",
+        "designation": "Surveillance Officer",
+        "role": "surveillance",
+        "email": "surveillance@trace.gov.in"
+    },
+    "dispatch": {
+        "password": "dispatch@trace2026",
+        "name": "Pawan Roy",
+        "designation": "Dispatch Officer (DO)",
+        "role": "dispatch",
+        "email": "dispatch@trace.gov.in"
+    },
+    "operator": {
+        "password": "operator@trace2026",
+        "name": "Ramesh Yadav",
+        "designation": "Control Operator",
+        "role": "operator",
+        "email": "operator@trace.gov.in"
+    }
+}
+
 
 # Setup static files and templates
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 app.mount("/static", StaticFiles(directory=os.path.join(BASE_DIR, "static")), name="static")
+app.mount("/media_screenshots", StaticFiles(directory=os.path.join(BASE_DIR, "Media screenshots")), name="media_screenshots")
 
 templates = Jinja2Templates(directory=os.path.join(BASE_DIR, "templates"))
 templates.env.cache = None
@@ -273,6 +316,11 @@ IRREGULAR_DOS_DATA = [
 
 @app.get("/")
 def read_root(request: Request):
+    session_user = request.cookies.get("session_user")
+    if not session_user or session_user not in USERS_DB:
+        return RedirectResponse(url="/login", status_code=303)
+
+    user_info = USERS_DB[session_user]
     return templates.TemplateResponse(
         request=request,
         name="index.html",
@@ -298,10 +346,92 @@ def read_root(request: Request):
             "irregular_vehicles": IRREGULAR_VEHICLES_DATA,
             "irregular_dos": IRREGULAR_DOS_DATA,
             "current_date": "2026-08-24",
-            "user_name": "General Manager"
+            "user_name": user_info["name"],
+            "user_designation": user_info["designation"],
+            "user_role": user_info["role"],
+            "user_id": session_user
         }
     )
+
+@app.get("/login")
+def get_login(request: Request):
+    session_user = request.cookies.get("session_user")
+    if session_user and session_user in USERS_DB:
+        return RedirectResponse(url="/", status_code=303)
+    return templates.TemplateResponse(
+        request=request,
+        name="login.html",
+        context={"error": None}
+    )
+
+@app.post("/login")
+async def post_login(
+    request: Request,
+    username: str = Form(""),
+    password: str = Form(""),
+    role: Optional[str] = Form(None)
+):
+    cleaned_user = username.strip().lower()
+    cleaned_pass = password.strip()
+    selected_role = role.strip().lower() if role else None
+
+    # If role is selected, verify that the credentials match that specific role
+    if selected_role and selected_role in USERS_DB:
+        user_info = USERS_DB[selected_role]
+        valid_identifiers = {
+            selected_role,
+            user_info.get("email", "").lower(),
+            f"{selected_role}@trace.gov.in",
+            f"{selected_role}@trace2026",
+            f"{selected_role}@trace.in"
+        }
+        if (cleaned_user in valid_identifiers or cleaned_user == selected_role) and user_info["password"] == cleaned_pass:
+            response = RedirectResponse(url="/", status_code=303)
+            response.set_cookie(key="session_user", value=selected_role, max_age=86400, httponly=True, samesite="lax")
+            response.set_cookie(key="user_role", value=user_info["role"], max_age=86400, samesite="lax")
+            response.set_cookie(key="user_name", value=user_info["name"], max_age=86400, samesite="lax")
+            response.set_cookie(key="user_designation", value=user_info["designation"], max_age=86400, samesite="lax")
+            return response
+        else:
+            return templates.TemplateResponse(
+                request=request,
+                name="login.html",
+                context={"error": f"Invalid Email/ID or Password for selected role '{user_info['designation']}'."}
+            )
+
+    # Direct match fallback if no role specified or generic login
+    for role_key, user_info in USERS_DB.items():
+        valid_identifiers = {
+            role_key,
+            user_info.get("email", "").lower(),
+            f"{role_key}@trace.gov.in",
+            f"{role_key}@trace2026",
+            f"{role_key}@trace.in"
+        }
+        if cleaned_user in valid_identifiers and user_info["password"] == cleaned_pass:
+            response = RedirectResponse(url="/", status_code=303)
+            response.set_cookie(key="session_user", value=role_key, max_age=86400, httponly=True, samesite="lax")
+            response.set_cookie(key="user_role", value=user_info["role"], max_age=86400, samesite="lax")
+            response.set_cookie(key="user_name", value=user_info["name"], max_age=86400, samesite="lax")
+            response.set_cookie(key="user_designation", value=user_info["designation"], max_age=86400, samesite="lax")
+            return response
+
+    return templates.TemplateResponse(
+        request=request,
+        name="login.html",
+        context={"error": "Invalid Role, User ID/Email, or Password. Please select a role and verify credentials."}
+    )
+
+@app.get("/logout")
+def get_logout():
+    response = RedirectResponse(url="/login", status_code=303)
+    response.delete_cookie("session_user")
+    response.delete_cookie("user_role")
+    response.delete_cookie("user_name")
+    response.delete_cookie("user_designation")
+    return response
 
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run("app:app", host="0.0.0.0", port=8000, reload=True)
+
