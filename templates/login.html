@@ -57,30 +57,19 @@
         .trace-logo-container {
             display: flex;
             align-items: center;
-            gap: 16px;
+            gap: 14px;
             color: #ffffff;
             text-decoration: none;
         }
 
-        .trace-emblem {
-            width: 46px;
-            height: 46px;
-            border-radius: 12px;
+        .trace-logo-img {
+            width: 48px;
+            height: 48px;
+            border-radius: 10px;
+            object-fit: cover;
             border: 2px solid #38bdf8;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: linear-gradient(135deg, #1e3a8a, #0284c7);
-            color: #ffffff;
-            font-size: 22px;
-            box-shadow: 0 0 15px rgba(56, 189, 248, 0.4);
-        }
-
-        .trace-brand-wrap {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
+            box-shadow: 0 0 12px rgba(56, 189, 248, 0.3);
+            background: #ffffff;
         }
 
         .trace-logo-main {
@@ -90,20 +79,12 @@
         }
 
         .trace-text {
-            font-size: 30px;
+            font-size: 28px;
             font-weight: 900;
             letter-spacing: 0.14em;
             color: #ffffff;
             line-height: 1;
             text-shadow: 0 2px 4px rgba(0,0,0,0.4);
-        }
-
-        .trace-subtext {
-            font-size: 11.5px;
-            font-weight: 500;
-            color: #94a3b8;
-            letter-spacing: 0.04em;
-            margin-top: 5px;
         }
 
         /* Main Container */
@@ -562,14 +543,9 @@
     <!-- Top Navy Banner with TRACE Branding -->
     <header class="top-banner">
         <div class="trace-logo-container">
-            <div class="trace-emblem">
-                <i class="fa-solid fa-gem"></i>
-            </div>
-            <div class="trace-brand-wrap">
-                <div class="trace-logo-main">
-                    <span class="trace-text">TRACE</span>
-                </div>
-                <span class="trace-subtext">Tracking and Reporting Analytics for Coal Extraction</span>
+            <img src="/static/media_screenshots/login_page_logo.jpeg" alt="TRACE Logo" class="trace-logo-img">
+            <div class="trace-logo-main">
+                <span class="trace-text">TRACE</span>
             </div>
         </div>
     </header>
