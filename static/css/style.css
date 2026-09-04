@@ -338,7 +338,9 @@ a {
 
 /* Badges */
 .badge {
-    padding: 2px 7px;
+    min-width: 44px;
+    height: 18px;
+    padding: 0 6px;
     font-size: 10px;
     font-weight: 700;
     border-radius: var(--radius-pill);
@@ -349,11 +351,19 @@ a {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    line-height: 1.25;
+    line-height: 1;
+    text-align: center;
+    box-sizing: border-box;
 }
 
-.nav-link .badge + .arrow-icon {
+/* Align badge column whether or not there is an arrow next to it */
+.nav-link > .badge:last-child {
+    margin-right: 22px;
+}
+
+.nav-link > .badge + .arrow-icon {
     margin-left: 8px;
+    margin-right: 0;
 }
 
 .badge-pink {
