@@ -422,6 +422,16 @@ async def post_login(
         context={"error": "Invalid Role, User ID/Email, or Password. Please select a role and verify credentials."}
     )
 
+import json
+
+@app.get("/api/audit-reports")
+def get_audit_reports():
+    manifest_path = os.path.join(BASE_DIR, "static", "reports_split", "manifest.json")
+    if os.path.exists(manifest_path):
+        with open(manifest_path, "r", encoding="utf-8") as f:
+            return json.load(f)
+    return []
+
 @app.get("/logout")
 def get_logout():
     response = RedirectResponse(url="/login", status_code=303)
