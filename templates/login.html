@@ -7,111 +7,139 @@
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
         :root {
-            --primary: #1e40af;
-            --primary-hover: #1d4ed8;
-            --primary-light: #eff6ff;
-            --accent-blue: #0284c7;
+            --primary: #0284c7;
+            --primary-dark: #0369a1;
+            --primary-light: #f0f9ff;
             --dark-navy: #0f172a;
             --card-border: #e2e8f0;
             --text-main: #0f172a;
             --text-muted: #64748b;
-            --bg-body: #f1f5f9;
+            --bg-body: #f8fafc;
         }
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Inter', 'Roboto', sans-serif;
+            font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
         }
 
         body {
             background-color: var(--bg-body);
-            background-image: radial-gradient(#cbd5e1 1px, transparent 1px);
+            background-image: radial-gradient(#cbd5e1 1.2px, transparent 1.2px);
             background-size: 24px 24px;
             min-height: 100vh;
             display: flex;
-            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 24px 16px;
             color: var(--text-main);
         }
 
-        /* Top Government/TRACE Header Banner */
-        .top-banner {
+        /* 2-Column Split Portal Card */
+        .login-split-wrapper {
             width: 100%;
-            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
-            padding: 16px 24px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
-            border-bottom: 2px solid #38bdf8;
-            position: relative;
-            z-index: 10;
-        }
-
-        .trace-logo-container {
-            display: flex;
-            align-items: center;
-            gap: 14px;
-            color: #ffffff;
-            text-decoration: none;
-        }
-
-        .trace-logo-img {
-            width: 62px;
-            height: 42px;
-            border-radius: 8px;
-            object-fit: contain;
-            border: 1.5px solid #38bdf8;
-            box-shadow: 0 0 12px rgba(56, 189, 248, 0.25);
+            max-width: 1060px;
             background: #ffffff;
-            padding: 2px 4px;
-        }
-
-        .trace-logo-main {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .trace-text {
-            font-size: 28px;
-            font-weight: 900;
-            letter-spacing: 0.14em;
-            color: #ffffff;
-            line-height: 1;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.4);
-        }
-
-        /* Main Container */
-        .main-content {
-            flex: 1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 36px 16px;
-        }
-
-        /* Clean White Portal Card */
-        .login-card {
-            width: 100%;
-            max-width: 470px;
-            background: #ffffff;
-            border-radius: 12px;
-            box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.08), 0 4px 12px -2px rgba(0, 0, 0, 0.04);
-            padding: 30px 32px;
+            border-radius: 16px;
+            box-shadow: 0 20px 45px -10px rgba(15, 23, 42, 0.08), 0 0 1px 1px rgba(15, 23, 42, 0.04);
             border: 1px solid var(--card-border);
+            display: grid;
+            grid-template-columns: 1fr 1.18fr;
+            overflow: hidden;
             position: relative;
+        }
+
+        /* Left Side: Brand Showcase */
+        .login-hero-side {
+            background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+            border-right: 1px solid #f1f5f9;
+            padding: 44px 36px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+        }
+
+        .login-hero-side::before {
+            content: '';
+            position: absolute;
+            top: -20%;
+            left: -20%;
+            width: 250px;
+            height: 250px;
+            background: radial-gradient(circle, rgba(2, 132, 199, 0.06) 0%, rgba(2, 132, 199, 0) 70%);
+            pointer-events: none;
+        }
+
+        .hero-logo-frame {
+            width: 100%;
+            max-width: 330px;
+            margin-bottom: 24px;
+            transition: transform 0.2s ease;
+        }
+
+        .hero-logo-frame:hover {
+            transform: scale(1.02);
+        }
+
+        .hero-logo-img {
+            width: 100%;
+            height: auto;
+            max-height: 260px;
+            object-fit: contain;
+            display: block;
+            margin: 0 auto;
+        }
+
+        .hero-info-group {
+            max-width: 320px;
+        }
+
+        .hero-brand-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: #f1f5f9;
+            border: 1px solid #e2e8f0;
+            color: #334155;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.03em;
+            margin-bottom: 10px;
+        }
+
+        .hero-brand-badge i {
+            color: #0284c7;
+        }
+
+        .hero-brand-desc {
+            font-size: 12.5px;
+            color: #64748b;
+            line-height: 1.5;
+            margin: 0;
+        }
+
+        /* Right Side: Form Features */
+        .login-form-side {
+            padding: 36px 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            background: #ffffff;
         }
 
         .card-header {
-            text-align: center;
-            margin-bottom: 22px;
+            margin-bottom: 20px;
         }
 
         .card-header .badge-tag {
@@ -120,27 +148,27 @@
             gap: 6px;
             background: #e0f2fe;
             color: #0369a1;
-            padding: 4px 10px;
+            padding: 3px 10px;
             border-radius: 20px;
             font-size: 11px;
             font-weight: 700;
-            letter-spacing: 0.04em;
+            letter-spacing: 0.03em;
             text-transform: uppercase;
-            margin-bottom: 8px;
+            margin-bottom: 6px;
             border: 1px solid #bae6fd;
         }
 
         .card-header h2 {
-            font-size: 19px;
+            font-family: 'Outfit', sans-serif;
+            font-size: 20px;
             font-weight: 700;
             color: #0f172a;
-            margin-bottom: 4px;
-            letter-spacing: -0.02em;
+            margin-bottom: 3px;
+            letter-spacing: -0.01em;
         }
 
         .card-header p {
             font-size: 12.5px;
-            font-style: italic;
             color: #64748b;
         }
 
@@ -149,24 +177,24 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            font-size: 12px;
+            font-size: 11.5px;
             font-weight: 700;
-            color: #1e293b;
-            margin-bottom: 10px;
+            color: #334155;
+            margin-bottom: 8px;
             text-transform: uppercase;
-            letter-spacing: 0.05em;
+            letter-spacing: 0.04em;
         }
 
         .step-label .step-num {
             background: #0284c7;
             color: #ffffff;
-            width: 20px;
-            height: 20px;
+            width: 18px;
+            height: 18px;
             border-radius: 50%;
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            font-size: 11px;
+            font-size: 10px;
             margin-right: 6px;
         }
 
@@ -176,7 +204,7 @@
         }
 
         .step-required {
-            font-size: 10.5px;
+            font-size: 10px;
             color: #ef4444;
             font-weight: 600;
             text-transform: none;
@@ -184,15 +212,15 @@
 
         /* 5 Roles Selector Section */
         .role-selection-section {
-            margin-bottom: 20px;
-            padding-bottom: 16px;
-            border-bottom: 1px dashed #cbd5e1;
+            margin-bottom: 16px;
+            padding-bottom: 14px;
+            border-bottom: 1px dashed #e2e8f0;
         }
 
         .role-grid {
             display: flex;
             flex-direction: column;
-            gap: 7px;
+            gap: 6px;
         }
 
         .role-chip {
@@ -213,76 +241,75 @@
         .chip-content {
             display: flex;
             align-items: center;
-            gap: 12px;
-            padding: 9px 12px;
+            gap: 10px;
+            padding: 8px 12px;
             background: #f8fafc;
-            border: 1.5px solid #e2e8f0;
-            border-radius: 8px;
-            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            transition: all 0.15s ease;
         }
 
         .role-chip:hover .chip-content {
-            border-color: #93c5fd;
-            background: #f0f7ff;
-            transform: translateY(-1px);
+            border-color: #cbd5e1;
+            background: #f1f5f9;
         }
 
         .role-chip input[type="radio"]:checked ~ .chip-content {
-            border-color: #2563eb;
-            background: #eff6ff;
-            box-shadow: 0 2px 6px rgba(37, 99, 235, 0.12);
+            border-color: #0284c7;
+            background: #f0f9ff;
+            box-shadow: 0 1px 4px rgba(2, 132, 199, 0.12);
         }
 
         .chip-num {
-            width: 22px;
-            height: 22px;
-            border-radius: 6px;
+            width: 20px;
+            height: 20px;
+            border-radius: 4px;
             background: #e2e8f0;
             color: #475569;
-            font-size: 11px;
+            font-size: 10px;
             font-weight: 700;
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: all 0.2s;
+            transition: all 0.15s;
         }
 
         .role-chip input[type="radio"]:checked ~ .chip-content .chip-num {
-            background: #2563eb;
+            background: #0284c7;
             color: #ffffff;
         }
 
         .chip-icon {
-            font-size: 15px;
+            font-size: 14px;
             color: #64748b;
-            width: 20px;
+            width: 18px;
             text-align: center;
-            transition: color 0.2s;
+            transition: color 0.15s;
         }
 
         .role-chip input[type="radio"]:checked ~ .chip-content .chip-icon {
-            color: #2563eb;
+            color: #0284c7;
         }
 
         .chip-text {
-            font-size: 13.5px;
+            font-size: 13px;
             font-weight: 600;
             color: #334155;
             flex: 1;
-            transition: color 0.2s;
+            transition: color 0.15s;
         }
 
         .role-chip input[type="radio"]:checked ~ .chip-content .chip-text {
-            color: #1e3a8a;
+            color: #0369a1;
             font-weight: 700;
         }
 
         .chip-check-icon {
-            font-size: 15px;
-            color: #2563eb;
+            font-size: 14px;
+            color: #0284c7;
             opacity: 0;
             transform: scale(0.6);
-            transition: all 0.2s;
+            transition: all 0.15s;
         }
 
         .role-chip input[type="radio"]:checked ~ .chip-content .chip-check-icon {
@@ -298,8 +325,8 @@
             background: #f8fafc;
             border: 1px solid #e2e8f0;
             border-radius: 6px;
-            padding: 8px 12px;
-            margin-bottom: 16px;
+            padding: 7px 12px;
+            margin-bottom: 14px;
             font-size: 11.5px;
         }
 
@@ -312,9 +339,9 @@
         }
 
         .btn-autofill {
-            background: #dbeafe;
-            color: #1d4ed8;
-            border: none;
+            background: #e0f2fe;
+            color: #0369a1;
+            border: 1px solid #bae6fd;
             padding: 3px 8px;
             border-radius: 4px;
             font-size: 10.5px;
@@ -324,19 +351,19 @@
         }
 
         .btn-autofill:hover {
-            background: #bfdbfe;
+            background: #bae6fd;
         }
 
         /* Form Inputs */
         .form-group {
-            margin-bottom: 15px;
+            margin-bottom: 13px;
         }
 
         .form-label {
             display: block;
-            font-size: 12.5px;
+            font-size: 12px;
             color: #334155;
-            margin-bottom: 5px;
+            margin-bottom: 4px;
             font-weight: 600;
         }
 
@@ -348,44 +375,44 @@
 
         .input-icon {
             position: absolute;
-            left: 12px;
+            left: 11px;
             color: #94a3b8;
-            font-size: 14px;
+            font-size: 13px;
             pointer-events: none;
-            transition: color 0.2s;
+            transition: color 0.15s;
         }
 
         .form-input {
             width: 100%;
             background-color: #f8fafc;
-            border: 1.5px solid #cbd5e1;
+            border: 1px solid #cbd5e1;
             border-radius: 6px;
-            padding: 10px 12px 10px 36px;
-            font-size: 13.5px;
+            padding: 9px 12px 9px 34px;
+            font-size: 13px;
             color: #0f172a;
             outline: none;
-            transition: all 0.2s;
+            transition: all 0.15s;
         }
 
         .form-input:focus {
             background-color: #ffffff;
-            border-color: #2563eb;
-            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+            border-color: #0284c7;
+            box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.12);
         }
 
         .form-input:focus + .input-icon,
         .input-wrapper:focus-within .input-icon {
-            color: #2563eb;
+            color: #0284c7;
         }
 
         .pwd-toggle-btn {
             position: absolute;
-            right: 12px;
+            right: 10px;
             background: none;
             border: none;
             color: #94a3b8;
             cursor: pointer;
-            font-size: 14px;
+            font-size: 13px;
             padding: 4px;
         }
 
@@ -398,13 +425,13 @@
             background-color: #fef2f2;
             border: 1px solid #fecaca;
             color: #b91c1c;
-            padding: 10px 14px;
+            padding: 9px 12px;
             border-radius: 6px;
-            font-size: 12.5px;
-            margin-bottom: 16px;
+            font-size: 12px;
+            margin-bottom: 14px;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
             animation: shake 0.3s ease;
         }
 
@@ -414,52 +441,52 @@
             75% { transform: translateX(4px); }
         }
 
-        /* Mock reCAPTCHA Box */
+        /* reCAPTCHA Box */
         .recaptcha-box {
-            background-color: #f9f9f9;
-            border: 1px solid #d3d3d3;
+            background-color: #fafafa;
+            border: 1px solid #d4d4d4;
             border-radius: 4px;
-            padding: 9px 14px;
+            padding: 8px 12px;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            margin-bottom: 18px;
+            margin-bottom: 16px;
             user-select: none;
             cursor: pointer;
-            transition: background-color 0.2s;
+            transition: background-color 0.15s;
         }
 
         .recaptcha-box:hover {
-            background-color: #f3f4f6;
+            background-color: #f4f4f5;
         }
 
         .recaptcha-left {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 10px;
         }
 
         .recaptcha-checkbox {
-            width: 24px;
-            height: 24px;
+            width: 22px;
+            height: 22px;
             border: 2px solid #c1c1c1;
             border-radius: 3px;
             background: #ffffff;
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: all 0.2s;
+            transition: all 0.15s;
         }
 
         .recaptcha-checkbox.checked {
-            border-color: #0f9d58;
-            background: #0f9d58;
+            border-color: #059669;
+            background: #059669;
             color: #ffffff;
         }
 
         .recaptcha-text {
-            font-size: 13px;
-            color: #282828;
+            font-size: 12.5px;
+            color: #262626;
             font-weight: 500;
         }
 
@@ -471,32 +498,32 @@
         }
 
         .recaptcha-brand i {
-            font-size: 20px;
-            color: #1a73e8;
+            font-size: 18px;
+            color: #0284c7;
             margin-bottom: 2px;
         }
 
         .recaptcha-brand span {
             font-size: 8px;
-            color: #555555;
+            color: #737373;
             line-height: 1.1;
         }
 
-        /* Clean Flat Blue Login Button */
+        /* Login Button */
         .btn-login {
             width: 100%;
-            background: linear-gradient(135deg, #1d4ed8 0%, #2563eb 100%);
+            background: #0284c7;
             color: #ffffff;
-            border: none;
+            border: 1px solid #0284c7;
             border-radius: 6px;
-            padding: 12px 16px;
-            font-size: 13.5px;
+            padding: 11px 16px;
+            font-size: 13px;
             font-weight: 700;
-            letter-spacing: 0.05em;
+            letter-spacing: 0.04em;
             text-transform: uppercase;
             cursor: pointer;
-            transition: all 0.2s;
-            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25);
+            transition: all 0.15s;
+            box-shadow: 0 2px 6px rgba(2, 132, 199, 0.2);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -504,60 +531,77 @@
         }
 
         .btn-login:hover {
-            background: linear-gradient(135deg, #1e40af 0%, #1d4ed8 100%);
-            box-shadow: 0 6px 16px rgba(37, 99, 235, 0.35);
-            transform: translateY(-1px);
-        }
-
-        .btn-login:active {
-            transform: translateY(0);
+            background: #0369a1;
+            border-color: #0369a1;
+            box-shadow: 0 4px 12px rgba(2, 132, 199, 0.3);
         }
 
         /* Card Bottom Credits */
         .card-footer {
-            margin-top: 20px;
+            margin-top: 16px;
             text-align: center;
-            font-size: 11.5px;
+            font-size: 11px;
             color: #64748b;
-            line-height: 1.6;
+            line-height: 1.5;
             border-top: 1px solid #f1f5f9;
-            padding-top: 14px;
+            padding-top: 12px;
         }
 
-        .card-footer .red-text {
-            color: #dc2626;
+        .card-footer .brand-highlight {
+            color: #0284c7;
             font-weight: 700;
         }
 
-        /* Responsive tweaks */
-        @media (max-width: 480px) {
-            .login-card {
-                padding: 24px 18px;
+        /* Responsive */
+        @media (max-width: 880px) {
+            .login-split-wrapper {
+                grid-template-columns: 1fr;
+                max-width: 480px;
             }
-            .trace-text {
-                font-size: 24px;
+
+            .login-hero-side {
+                padding: 28px 24px 20px 24px;
+                border-right: none;
+                border-bottom: 1px solid #e2e8f0;
+            }
+
+            .hero-logo-frame {
+                max-width: 200px;
+                margin-bottom: 12px;
+            }
+
+            .login-form-side {
+                padding: 24px 20px;
             }
         }
     </style>
 </head>
 <body>
-    <!-- Top Navy Banner with TRACE Branding -->
-    <header class="top-banner">
-        <div class="trace-logo-container">
-            <img src="/static/media_screenshots/login_page_logo.jpeg" alt="TRACE Logo" class="trace-logo-img">
-            <div class="trace-logo-main">
-                <span class="trace-text">TRACE</span>
+
+    <!-- 2-Column Split Portal Card -->
+    <div class="login-split-wrapper">
+        
+        <!-- Left Side: Brand Showcase -->
+        <div class="login-hero-side">
+            <div class="hero-logo-frame">
+                <img src="/static/media_screenshots/trace_main_logo.jpeg" alt="TRACE - Track. Analyze. Act." class="hero-logo-img">
+            </div>
+            <div class="hero-info-group">
+                <div class="hero-brand-badge">
+                    <i class="fa-solid fa-shield-halved"></i> Ministry of Coal & Mines Assurance
+                </div>
+                <p class="hero-brand-desc">
+                    Unified AI & IoT surveillance, real-time weighbridge reconciliation, and automated statutory audit ledgers.
+                </p>
             </div>
         </div>
-    </header>
 
-    <!-- Main Content Area -->
-    <main class="main-content">
-        <div class="login-card">
+        <!-- Right Side: Form Features -->
+        <div class="login-form-side">
             <!-- Header Title -->
             <div class="card-header">
                 <div class="badge-tag">
-                    <i class="fa-solid fa-shield-halved"></i> Secure Access Portal
+                    <i class="fa-solid fa-lock"></i> Secure Access Portal
                 </div>
                 <h2>Unified AI Based Mining Digital Platform</h2>
                 <p>Initiative by TRACE E&T Dept.</p>
@@ -572,7 +616,7 @@
 
             <!-- Login Form -->
             <form action="/login" method="POST" id="loginForm">
-                <!-- STEP 1: 5 ROLES ABOVE EMAIL & PASSWORD (NO DESCRIPTIONS) -->
+                <!-- STEP 1: 5 ROLES ABOVE EMAIL & PASSWORD -->
                 <div class="role-selection-section">
                     <div class="step-label">
                         <div class="step-text">
@@ -723,10 +767,10 @@
 
             <!-- Card Bottom Credits -->
             <div class="card-footer">
-                <div>Powered and Developed by <span class="red-text">TRACE</span> Digital Mines AI</div>
+                <div>Powered and Developed by <span class="brand-highlight">TRACE</span> Digital Mines AI</div>
             </div>
         </div>
-    </main>
+    </div>
 
     <script>
         // State management for role selection
@@ -760,12 +804,12 @@
             // Highlight input briefly
             const uInput = document.getElementById('username');
             const pInput = document.getElementById('password');
-            uInput.style.borderColor = '#2563eb';
-            pInput.style.borderColor = '#2563eb';
+            uInput.style.borderColor = '#0284c7';
+            pInput.style.borderColor = '#0284c7';
             setTimeout(() => {
                 uInput.style.borderColor = '';
                 pInput.style.borderColor = '';
-            }, 600);
+            }, 500);
         }
 
         function togglePasswordVisibility() {
