@@ -4157,7 +4157,8 @@ body.gis-mode-active .content-body {
 .gis-main-body {
     flex: 1;
     min-height: 0;
-    height: 100%;
+    height: calc(100vh - var(--header-height, 64px) - 58px);
+    max-height: calc(100vh - var(--header-height, 64px) - 58px);
     display: grid;
     grid-template-columns: 320px 1fr;
     gap: 0;
@@ -4179,6 +4180,7 @@ body.gis-mode-active .content-body {
     display: flex;
     flex-direction: column;
     height: 100%;
+    max-height: calc(100vh - var(--header-height, 64px) - 58px);
     min-height: 0;
     overflow: hidden;
     z-index: 10;
@@ -4271,7 +4273,9 @@ body.gis-mode-active .content-body {
 .gis-cam-scroll-list {
     flex: 1;
     min-height: 0;
+    max-height: calc(100vh - var(--header-height, 64px) - 58px - 85px);
     overflow-y: auto !important;
+    overflow-x: hidden !important;
     display: flex;
     flex-direction: column;
 }
