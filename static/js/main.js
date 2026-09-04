@@ -42,6 +42,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const vaCards = document.querySelectorAll('.va-sidebar-cards-list .mini-card');
     const overviewCards = document.querySelectorAll('#alertOverviewContainer .metric-card');
 
+    // Dynamic Header Title Updater
+    window.updateHeaderMainTitle = function(title) {
+        const headerTitle = document.getElementById('headerMainTitle') || document.querySelector('.header-main-title');
+        if (headerTitle) {
+            headerTitle.textContent = title;
+        }
+    };
+
     // Helper to update active state in sidebar navigation
     function setActiveSidebarNav(activeItem) {
         document.querySelectorAll('.sidebar-nav .nav-item').forEach(item => {
@@ -66,6 +74,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const summaryNavItem = document.getElementById('summaryNavItem');
         setActiveSidebarNav(summaryNavItem);
+
+        if (tabKey === 'weighbridge') updateHeaderMainTitle('WEIGHBRIDGE SUMMARY');
+        else if (tabKey === 'checkpost') updateHeaderMainTitle('CHECKPOST SUMMARY');
+        else if (tabKey === 'vts') updateHeaderMainTitle('VTS SUMMARY');
+        else updateHeaderMainTitle('SUMMARY DASHBOARD');
 
         topTabBtns.forEach(btn => {
             if (btn.getAttribute('data-content') === `${tabKey}-view`) {
@@ -101,6 +114,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (alertSidebarMenu) alertSidebarMenu.style.display = 'block';
         if (tabsCard) tabsCard.style.display = 'none';
         setActiveSidebarNav(alertDashboardItem);
+        updateHeaderMainTitle('ALERT DASHBOARD');
 
         tabPanels.forEach(panel => {
             if (panel.id === 'alert-dashboard-view') {
@@ -122,6 +136,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (alertSidebarMenu) alertSidebarMenu.style.display = 'none';
         if (tabsCard) tabsCard.style.display = 'none';
         setActiveSidebarNav(vtsDashboardItem);
+        updateHeaderMainTitle('VTS DASHBOARD');
 
         sidebarSummaryItems.forEach(item => item.classList.remove('active'));
 
@@ -143,6 +158,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (alertSidebarMenu) alertSidebarMenu.style.display = 'none';
         if (tabsCard) tabsCard.style.display = 'none';
         setActiveSidebarNav(rfidDashboardItem);
+        updateHeaderMainTitle('RFID DASHBOARD');
 
         sidebarSummaryItems.forEach(item => item.classList.remove('active'));
 
@@ -164,6 +180,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (alertSidebarMenu) alertSidebarMenu.style.display = 'none';
         if (tabsCard) tabsCard.style.display = 'none';
         setActiveSidebarNav(irregularWeighmentsItem);
+        updateHeaderMainTitle('IRREGULAR WEIGHMENTS');
 
         sidebarSummaryItems.forEach(item => item.classList.remove('active'));
 
@@ -185,6 +202,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (alertSidebarMenu) alertSidebarMenu.style.display = 'none';
         if (tabsCard) tabsCard.style.display = 'none';
         setActiveSidebarNav(irregularTripsItem);
+        updateHeaderMainTitle('IRREGULAR TRIPS');
 
         sidebarSummaryItems.forEach(item => item.classList.remove('active'));
 
@@ -206,6 +224,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (alertSidebarMenu) alertSidebarMenu.style.display = 'none';
         if (tabsCard) tabsCard.style.display = 'none';
         setActiveSidebarNav(droneDashboardItem);
+        updateHeaderMainTitle('AI DRIVEN DRONE MONITORING');
 
         sidebarSummaryItems.forEach(item => item.classList.remove('active'));
 
@@ -227,6 +246,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (alertSidebarMenu) alertSidebarMenu.style.display = 'none';
         if (tabsCard) tabsCard.style.display = 'none';
         setActiveSidebarNav(workersAttendanceItem);
+        updateHeaderMainTitle('WORKERS ATTENDANCE');
 
         sidebarSummaryItems.forEach(item => item.classList.remove('active'));
 
@@ -421,11 +441,24 @@ document.addEventListener('DOMContentLoaded', () => {
     bindViewClick(droneDashboardItem, showDroneDashboard);
     bindViewClick(workersAttendanceItem, showWorkersAttendance);
 
+    // Home navigation link
+    const homeNavLink = document.querySelector('.nav-item-home a');
+    if (homeNavLink) {
+        homeNavLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            const homeItem = document.querySelector('.nav-item-home');
+            setActiveSidebarNav(homeItem);
+            activateSummaryTab('weighbridge');
+            updateHeaderMainTitle('TRACE DIGITAL DASHBOARD');
+        });
+    }
+
     // Back Home button clicks
     if (btnBackHome) {
         btnBackHome.addEventListener('click', (e) => {
             e.preventDefault();
             activateSummaryTab('weighbridge');
+            updateHeaderMainTitle('TRACE DIGITAL DASHBOARD');
         });
     }
 
@@ -433,8 +466,28 @@ document.addEventListener('DOMContentLoaded', () => {
         vtsBtnHome.addEventListener('click', (e) => {
             e.preventDefault();
             activateSummaryTab('weighbridge');
+            updateHeaderMainTitle('TRACE DIGITAL DASHBOARD');
         });
     }
+
+    // Sub-nav items click handler (Blacklisted, DO Ops, Config, Reports)
+    document.querySelectorAll('.sub-nav-item a').forEach(subLink => {
+        subLink.addEventListener('click', function(e) {
+            const parentSubItem = this.closest('.sub-nav-item');
+            if (parentSubItem && (parentSubItem.hasAttribute('data-tab') || parentSubItem.hasAttribute('data-view') || parentSubItem.id === 'cameraGridNavItem' || parentSubItem.id === 'cameraGisNavItem')) {
+                return;
+            }
+            e.preventDefault();
+            const subText = this.querySelector('.sub-nav-text')?.textContent?.trim();
+            const parentNav = this.closest('.nav-item');
+            const parentText = parentNav?.querySelector('.nav-text')?.textContent?.trim();
+            if (subText && parentText) {
+                updateHeaderMainTitle(`${parentText.toUpperCase()} - ${subText.toUpperCase()}`);
+            } else if (subText) {
+                updateHeaderMainTitle(subText.toUpperCase());
+            }
+        });
+    });
 
     // Top Tab button clicks
     topTabBtns.forEach(btn => {
@@ -536,6 +589,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const cameraViewNavItem = document.getElementById('cameraViewNavItem');
         setActiveSidebarNav(cameraViewNavItem);
+        updateHeaderMainTitle('CAMERA VIEW (GRID)');
 
         sidebarSummaryItems.forEach(item => item.classList.remove('active'));
         if (cameraGridNavItem) cameraGridNavItem.classList.add('active');
@@ -562,6 +616,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const cameraViewNavItem = document.getElementById('cameraViewNavItem');
         setActiveSidebarNav(cameraViewNavItem);
+        updateHeaderMainTitle('GIS CAMERA VIEW');
 
         sidebarSummaryItems.forEach(item => item.classList.remove('active'));
         if (cameraGisNavItem) cameraGisNavItem.classList.add('active');
