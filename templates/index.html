@@ -54,7 +54,7 @@
     --green-accent: #059669;
 
     /* Layout & Borders */
-    --sidebar-width: 250px;
+    --sidebar-width: 270px;
     --sidebar-collapsed-width: 70px;
     --header-height: 64px;
     --transition-speed: 0.2s;
@@ -337,16 +337,20 @@ a {
 }
 
 .nav-text {
-    flex: 1;
+    flex: 1 1 auto;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    margin-right: 8px;
 }
 
 .arrow-icon {
     font-size: 11px;
-    margin-left: 8px;
+    margin-left: auto;
     color: #64748b;
+    flex-shrink: 0;
+    width: 14px;
+    text-align: right;
 }
 
 /* Badges */
@@ -356,18 +360,29 @@ a {
     font-weight: 700;
     border-radius: var(--radius-pill);
     text-transform: uppercase;
+    margin-left: auto;
+    letter-spacing: 0.04em;
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1.25;
+}
+
+.nav-link .badge + .arrow-icon {
     margin-left: 8px;
-    letter-spacing: 0.03em;
 }
 
 .badge-pink {
-    background-color: #f87171;
+    background: linear-gradient(135deg, #ef4444, #f43f5e);
     color: #ffffff;
+    box-shadow: 0 0 8px rgba(244, 63, 94, 0.4);
 }
 
 .badge-teal {
-    background-color: #059669;
+    background: linear-gradient(135deg, #059669, #10b981);
     color: #ffffff;
+    box-shadow: 0 0 8px rgba(16, 185, 129, 0.35);
 }
 
 /* Collapsed Sidebar State */
