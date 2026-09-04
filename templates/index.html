@@ -5654,6 +5654,15 @@ body.gis-mode-active .content-body {
                             </li>
                             {% endif %}
 
+                            {% if user_role in ['gm', 'vigilance', 'surveillance', 'dispatch', 'operator'] %}
+                            <li class="nav-item" data-view="digital-audit-trails" id="digitalAuditTrailsNavItem">
+                                <a href="#digital-audit-trails" class="nav-link" id="digitalAuditTrailsNavLink">
+                                    <i class="fa-solid fa-clock-rotate-left nav-icon"></i>
+                                    <span class="nav-text">Digital Audit Trails</span>
+                                </a>
+                            </li>
+                            {% endif %}
+
                             {% if user_role in ['gm', 'vigilance', 'surveillance', 'dispatch'] %}
                             <!-- Blacklisted Vehicles Dropdown -->
                             <li class="nav-item has-sub" id="blacklistedNavItem">
@@ -5840,14 +5849,7 @@ body.gis-mode-active .content-body {
 
 
 
-                            {% if user_role in ['gm', 'vigilance', 'surveillance', 'dispatch', 'operator'] %}
-                            <li class="nav-item" data-view="digital-audit-trails" id="digitalAuditTrailsNavItem">
-                                <a href="#digital-audit-trails" class="nav-link" id="digitalAuditTrailsNavLink">
-                                    <i class="fa-solid fa-clock-rotate-left nav-icon"></i>
-                                    <span class="nav-text">Digital Audit Trails</span>
-                                </a>
-                            </li>
-                            {% endif %}
+
                         </ul>
                     </div>
                 </div>
