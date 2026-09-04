@@ -426,7 +426,9 @@ a {
     display: flex;
     flex-direction: column;
     min-width: 0;
+    min-height: 100vh;
     background-color: var(--content-bg);
+    overflow-y: auto;
 }
 
 /* Top Navbar Header */
@@ -4020,36 +4022,23 @@ body.alert-mode-active .user-name {
 
 /* Single Viewport Lock for GIS View */
 body.gis-mode-active {
-    overflow: hidden !important;
-    height: 100vh !important;
-}
-
-body.gis-mode-active .sidebar {
-    height: 100vh !important;
-    max-height: 100vh !important;
-    position: sticky !important;
-    top: 0 !important;
-    overflow: hidden !important;
+    overflow: hidden;
 }
 
 body.gis-mode-active .sidebar-nav {
-    overflow-y: auto !important;
-    overflow-x: hidden !important;
-    height: calc(100vh - var(--header-height, 64px)) !important;
-    max-height: calc(100vh - var(--header-height, 64px)) !important;
-}
-
-body.gis-mode-active .main-wrapper {
-    height: 100vh !important;
-    overflow: hidden !important;
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 
 body.gis-mode-active .content-body {
     padding: 0 !important;
     margin: 0 !important;
-    height: calc(100vh - var(--header-height, 64px)) !important;
-    overflow: hidden !important;
     gap: 0 !important;
+}
+
+#camera-gis-view {
+    height: calc(100vh - var(--header-height, 64px));
+    overflow: hidden;
 }
 
 #camera-gis-view {
@@ -9086,6 +9075,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Function to activate Summary sub-tabs (Weighbridge, Checkpost, VTS)
     function activateSummaryTab(tabKey) {
         document.body.classList.remove('alert-mode-active');
+        document.body.classList.remove('gis-mode-active');
         if (mainSidebarMenu) mainSidebarMenu.style.display = 'block';
         if (alertSidebarMenu) alertSidebarMenu.style.display = 'none';
         if (tabsCard) tabsCard.style.display = 'block';
@@ -9128,6 +9118,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Function to show Alert Dashboard View Mode
     function showAlertDashboard(detectionType = 'All Types') {
         document.body.classList.add('alert-mode-active');
+        document.body.classList.remove('gis-mode-active');
         if (mainSidebarMenu) mainSidebarMenu.style.display = 'none';
         if (alertSidebarMenu) alertSidebarMenu.style.display = 'block';
         if (tabsCard) tabsCard.style.display = 'none';
@@ -9150,6 +9141,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Function to show VTS Dashboard View Mode
     function showVTSDashboard() {
         document.body.classList.remove('alert-mode-active');
+        document.body.classList.remove('gis-mode-active');
         if (mainSidebarMenu) mainSidebarMenu.style.display = 'block';
         if (alertSidebarMenu) alertSidebarMenu.style.display = 'none';
         if (tabsCard) tabsCard.style.display = 'none';
@@ -9172,6 +9164,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Function to show RFID Dashboard View Mode
     function showRFIDDashboard() {
         document.body.classList.remove('alert-mode-active');
+        document.body.classList.remove('gis-mode-active');
         if (mainSidebarMenu) mainSidebarMenu.style.display = 'block';
         if (alertSidebarMenu) alertSidebarMenu.style.display = 'none';
         if (tabsCard) tabsCard.style.display = 'none';
@@ -9194,6 +9187,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Function to show Irregular Weighments View Mode
     function showIrregularWeighments() {
         document.body.classList.remove('alert-mode-active');
+        document.body.classList.remove('gis-mode-active');
         if (mainSidebarMenu) mainSidebarMenu.style.display = 'block';
         if (alertSidebarMenu) alertSidebarMenu.style.display = 'none';
         if (tabsCard) tabsCard.style.display = 'none';
@@ -9216,6 +9210,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Function to show Irregular Trips View Mode
     function showIrregularTrips() {
         document.body.classList.remove('alert-mode-active');
+        document.body.classList.remove('gis-mode-active');
         if (mainSidebarMenu) mainSidebarMenu.style.display = 'block';
         if (alertSidebarMenu) alertSidebarMenu.style.display = 'none';
         if (tabsCard) tabsCard.style.display = 'none';
@@ -9238,6 +9233,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Function to show AI Driven Drone Monitoring Dashboard Mode
     function showDroneDashboard() {
         document.body.classList.remove('alert-mode-active');
+        document.body.classList.remove('gis-mode-active');
         if (mainSidebarMenu) mainSidebarMenu.style.display = 'block';
         if (alertSidebarMenu) alertSidebarMenu.style.display = 'none';
         if (tabsCard) tabsCard.style.display = 'none';
@@ -9260,6 +9256,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Function to show Workers Attendance View Mode
     function showWorkersAttendance() {
         document.body.classList.remove('alert-mode-active');
+        document.body.classList.remove('gis-mode-active');
         if (mainSidebarMenu) mainSidebarMenu.style.display = 'block';
         if (alertSidebarMenu) alertSidebarMenu.style.display = 'none';
         if (tabsCard) tabsCard.style.display = 'none';
