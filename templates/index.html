@@ -13,6 +13,8 @@
     <!-- Leaflet GIS Map Library -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <!-- Internal Delivery Order (DO) Dataset -->
+    <script src="/static/js/do_data.js"></script>
     <!-- Custom CSS -->
     <style>
 /* ==========================================================================
@@ -5680,6 +5682,538 @@ body.gis-mode-active .content-body {
     border-left: 3px solid #38bdf8 !important;
 }
 
+/* ========================================================
+   DO Operations Sub-Sub Menu & Multi-Tier Navigation Styles
+   ======================================================== */
+.sub-sub-nav-list {
+    list-style: none;
+    padding: 3px 0 5px 14px;
+    margin: 0;
+    background-color: rgba(0, 0, 0, 0.28);
+    border-left: 2px solid rgba(56, 189, 248, 0.25);
+    margin-left: 20px;
+    transition: all 0.2s ease;
+}
+
+.sub-sub-nav-item {
+    position: relative;
+    margin: 2px 0;
+}
+
+.sub-sub-nav-link {
+    display: flex;
+    align-items: center;
+    padding: 6px 12px;
+    color: #94a3b8;
+    font-size: 12px;
+    font-weight: 500;
+    text-decoration: none;
+    border-radius: 4px;
+    transition: all 0.15s ease;
+}
+
+.sub-sub-nav-link:hover {
+    color: #38bdf8 !important;
+    background-color: rgba(56, 189, 248, 0.08) !important;
+}
+
+.sub-sub-nav-item.active .sub-sub-nav-link,
+.sub-sub-nav-link.active {
+    color: #38bdf8 !important;
+    background-color: rgba(56, 189, 248, 0.14) !important;
+    font-weight: 600 !important;
+}
+
+/* ========================================================
+   Delivery Order (DO) Operations & Table View Styles
+   ======================================================== */
+.do-dashboard-container {
+    padding: 16px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.do-header-card {
+    background: #151a24;
+    border: 1px solid #232b3b;
+    border-radius: 6px;
+    padding: 18px 22px;
+}
+
+.do-header-main {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+}
+
+.do-section-tag {
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: #f97316;
+    background: rgba(249, 115, 22, 0.12);
+    border: 1px solid rgba(249, 115, 22, 0.3);
+    padding: 2px 8px;
+    border-radius: 3px;
+    display: inline-block;
+    margin-bottom: 6px;
+    text-transform: uppercase;
+}
+
+.do-page-title {
+    font-family: 'Outfit', sans-serif;
+    font-size: 21px;
+    font-weight: 700;
+    color: #f8fafc;
+    margin: 0 0 4px 0;
+}
+
+.do-page-subtitle {
+    font-size: 12.5px;
+    color: #94a3b8;
+    margin: 0;
+}
+
+.do-stats-row {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.do-stat-box {
+    background: #10141c;
+    border: 1px solid #232b3b;
+    border-radius: 6px;
+    padding: 10px 16px;
+    min-width: 130px;
+    display: flex;
+    flex-direction: column;
+}
+
+.do-stat-box .stat-number {
+    font-family: 'Outfit', sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    color: #38bdf8;
+    line-height: 1.2;
+}
+
+.do-stat-box .stat-label {
+    font-size: 11px;
+    color: #64748b;
+    margin-top: 3px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+/* Toolbar & Filters */
+.do-toolbar {
+    background: #151a24;
+    border: 1px solid #232b3b;
+    border-radius: 6px;
+    padding: 12px 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.do-toolbar-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex: 1;
+    min-width: 280px;
+    max-width: 600px;
+}
+
+.do-search-input-wrap {
+    position: relative;
+    width: 100%;
+}
+
+.do-search-input-wrap i.search-icon {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #64748b;
+    font-size: 12.5px;
+}
+
+.do-search-input {
+    width: 100%;
+    background: #0f141d;
+    border: 1px solid #283347;
+    border-radius: 4px;
+    padding: 8px 12px 8px 34px;
+    color: #f1f5f9;
+    font-size: 12.5px;
+    outline: none;
+    transition: all 0.15s;
+}
+
+.do-search-input:focus {
+    border-color: #38bdf8;
+    background: #141b26;
+}
+
+.btn-clear-do-search {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: #64748b;
+    cursor: pointer;
+    font-size: 11px;
+}
+
+.btn-clear-do-search:hover {
+    color: #f87171;
+}
+
+.do-toolbar-right {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.do-select-dropdown {
+    background: #0f141d;
+    border: 1px solid #283347;
+    border-radius: 4px;
+    padding: 7px 12px;
+    color: #e2e8f0;
+    font-size: 12px;
+    outline: none;
+    cursor: pointer;
+}
+
+.do-select-dropdown:focus {
+    border-color: #38bdf8;
+}
+
+.btn-do-action {
+    background: #18202d;
+    border: 1px solid #2c384e;
+    color: #cbd5e1;
+    padding: 7px 12px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.15s;
+}
+
+.btn-do-action:hover {
+    background: #243044;
+    color: #ffffff;
+    border-color: #38bdf8;
+}
+
+.btn-do-primary {
+    background: #0284c7;
+    border-color: #0284c7;
+    color: #ffffff;
+}
+
+.btn-do-primary:hover {
+    background: #0369a1;
+    border-color: #0369a1;
+}
+
+/* Results Meta & Active Filters */
+.do-results-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 12px;
+    color: #94a3b8;
+    padding: 0 4px;
+}
+
+/* Tabular Register Table Container (Matching Picture 2) */
+.do-table-card {
+    background: #151a24;
+    border: 1px solid #232b3b;
+    border-radius: 6px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+}
+
+.do-table-wrapper {
+    overflow-x: auto;
+    max-height: 640px;
+    position: relative;
+}
+
+.do-data-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    font-size: 11.5px;
+    color: #cbd5e1;
+    white-space: nowrap;
+    text-align: left;
+}
+
+/* Two-tier Sticky Headers */
+.do-data-table thead tr:first-child th {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: #1b2230;
+    color: #f1f5f9;
+    font-weight: 600;
+    padding: 8px 10px;
+    border-bottom: 1px solid #2c384e;
+    border-right: 1px solid #2c384e;
+    font-size: 11.5px;
+}
+
+.do-data-table thead tr:nth-child(2) th {
+    position: sticky;
+    top: 33px;
+    z-index: 9;
+    background: #151c28;
+    color: #94a3b8;
+    font-weight: 500;
+    padding: 6px 10px;
+    border-bottom: 2px solid #38bdf8;
+    border-right: 1px solid #243042;
+    font-size: 11px;
+}
+
+/* Group Headers */
+.do-data-table th.group-th {
+    text-align: center;
+    letter-spacing: 0.05em;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.do-data-table th.from-group {
+    background: #172436 !important;
+    color: #38bdf8 !important;
+    border-bottom: 2px solid #0284c7 !important;
+}
+
+.do-data-table th.to-group {
+    background: #14282a !important;
+    color: #34d399 !important;
+    border-bottom: 2px solid #059669 !important;
+}
+
+.do-data-table th.created-group {
+    background: #272318 !important;
+    color: #fbbf24 !important;
+    border-bottom: 2px solid #d97706 !important;
+}
+
+/* Sticky S.No column */
+.do-data-table th.sno-col {
+    position: sticky;
+    left: 0;
+    z-index: 20 !important;
+    width: 48px;
+    text-align: center;
+    background: #121620 !important;
+    border-right: 2px solid #2c384e !important;
+}
+
+.do-data-table td.sno-col {
+    position: sticky;
+    left: 0;
+    z-index: 5;
+    text-align: center;
+    font-weight: 600;
+    color: #64748b;
+    background: #0f131a !important;
+    border-right: 2px solid #2c384e !important;
+}
+
+/* Table Body Rows */
+.do-data-table td {
+    padding: 6px 10px;
+    border-bottom: 1px solid #1e2636;
+    border-right: 1px solid #1a2230;
+    background: #131822;
+    transition: background 0.1s;
+}
+
+.do-data-table tbody tr:nth-child(even) td {
+    background: #10141d;
+}
+
+.do-data-table tbody tr:hover td {
+    background: #1c2536 !important;
+    color: #ffffff;
+}
+
+.do-data-table td.dono-cell {
+    font-family: 'Inter', monospace;
+    font-weight: 700;
+    color: #38bdf8;
+    cursor: pointer;
+}
+
+.do-data-table td.dono-cell:hover {
+    text-decoration: underline;
+    color: #7dd3fc;
+}
+
+.do-data-table td.qty-cell {
+    text-align: right;
+    font-family: monospace;
+    font-size: 11px;
+    font-weight: 600;
+}
+
+.do-data-table td.qty-zero {
+    color: #64748b;
+}
+
+.do-data-table td.na-cell {
+    color: #475569;
+    font-style: normal;
+}
+
+.do-data-table td.date-cell {
+    font-family: monospace;
+    font-size: 11px;
+    color: #94a3b8;
+}
+
+.do-data-table td.user-cell {
+    color: #e2e8f0;
+    font-weight: 500;
+}
+
+/* Pagination Bar */
+.do-pagination-bar {
+    padding: 10px 18px;
+    background: #0f131c;
+    border-top: 1px solid #232b3b;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    font-size: 12px;
+    color: #94a3b8;
+}
+
+.do-page-buttons {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.do-page-btn {
+    background: #18202d;
+    border: 1px solid #283347;
+    color: #cbd5e1;
+    padding: 4px 10px;
+    border-radius: 4px;
+    font-size: 11.5px;
+    cursor: pointer;
+    transition: all 0.15s;
+}
+
+.do-page-btn:hover:not(:disabled) {
+    background: #0284c7;
+    color: #fff;
+    border-color: #0284c7;
+}
+
+.do-page-btn.active {
+    background: #0284c7;
+    color: #fff;
+    border-color: #0284c7;
+    font-weight: 600;
+}
+
+.do-page-btn:disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+}
+
+/* Form Styles for Add / Edit DO */
+.do-form-card {
+    background: #151a24;
+    border: 1px solid #232b3b;
+    border-radius: 6px;
+    padding: 22px 26px;
+}
+
+.do-form-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 16px;
+    margin-top: 16px;
+}
+
+.do-form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.do-form-label {
+    font-size: 12px;
+    font-weight: 600;
+    color: #cbd5e1;
+}
+
+.do-form-input,
+.do-form-select {
+    background: #0f141d;
+    border: 1px solid #283347;
+    border-radius: 4px;
+    padding: 9px 12px;
+    color: #f1f5f9;
+    font-size: 13px;
+    outline: none;
+    transition: border 0.15s;
+}
+
+.do-form-input:focus,
+.do-form-select:focus {
+    border-color: #38bdf8;
+    background: #141b26;
+}
+
+.do-form-section-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: #38bdf8;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding-bottom: 6px;
+    border-bottom: 1px solid #283347;
+    margin-top: 10px;
+    grid-column: 1 / -1;
+}
+
+.do-form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 24px;
+    padding-top: 16px;
+    border-top: 1px solid #232b3b;
+}
+
 </style>
 </head>
 <body>
@@ -5892,23 +6426,46 @@ body.gis-mode-active .content-body {
                             {% if user_role in ['gm', 'vigilance', 'dispatch'] %}
                             <!-- DO Operations Dropdown -->
                             <li class="nav-item has-sub" id="doOpsNavItem">
-                                <a href="#" class="nav-link" id="doOpsNavLink">
-                                    <i class="fa-solid fa-file-invoice nav-icon"></i>
-                                    <span class="nav-text">DO Operations</span>
-                                    <i class="fa-solid fa-chevron-right arrow-icon" id="doOpsArrow"></i>
+                                <a href="#" class="nav-link" id="doOpsNavLink" style="color: #f97316;">
+                                    <i class="fa-regular fa-folder-open nav-icon" style="color: #f97316;"></i>
+                                    <span class="nav-text" style="color: #f97316; font-weight: 600;">DO Operations</span>
+                                    <i class="fa-solid fa-chevron-down arrow-icon" id="doOpsArrow" style="color: #f97316;"></i>
                                 </a>
-                                <ul class="sub-nav-list" id="doOpsSubList" style="display: none;">
-                                    <li class="sub-nav-item">
-                                        <a href="#" class="sub-nav-link">
+                                <ul class="sub-nav-list" id="doOpsSubList" style="display: block;">
+                                    <li class="sub-nav-item" id="roadDispatchNavItem">
+                                        <a href="#" class="sub-nav-link" id="roadDispatchNavLink" onclick="event.preventDefault(); showRoadDispatchView();">
                                             <i class="fa-solid fa-angle-right nav-icon" style="font-size: 11px; margin-right: 8px;"></i>
                                             <span class="sub-nav-text">Road Dispatch</span>
+                                            <i class="fa-solid fa-chevron-right" style="font-size: 10px; margin-left: auto; color: #64748b;"></i>
                                         </a>
                                     </li>
-                                    <li class="sub-nav-item">
-                                        <a href="#" class="sub-nav-link">
-                                            <i class="fa-solid fa-angle-right nav-icon" style="font-size: 11px; margin-right: 8px;"></i>
-                                            <span class="sub-nav-text">Internal DO</span>
+                                    <li class="sub-nav-item has-sub-sub expanded" id="internalDoNavItem">
+                                        <a href="#" class="sub-nav-link" id="internalDoNavLink" style="color: #38bdf8;">
+                                            <i class="fa-solid fa-angle-right nav-icon" style="font-size: 11px; margin-right: 8px; color: #38bdf8;"></i>
+                                            <span class="sub-nav-text" style="font-weight: 600;">Internal DO</span>
+                                            <i class="fa-solid fa-chevron-down arrow-icon" id="internalDoArrow" style="font-size: 10px; margin-left: auto; color: #38bdf8;"></i>
                                         </a>
+                                        <!-- Internal DO Subheadings matching Picture 1 -->
+                                        <ul class="sub-sub-nav-list" id="internalDoSubList" style="display: block;">
+                                            <li class="sub-sub-nav-item active" id="subNavItemViewInternalDo">
+                                                <a href="#view-internal-do" class="sub-sub-nav-link active" onclick="event.preventDefault(); showViewInternalDO();">
+                                                    <i class="fa-solid fa-angle-right" style="font-size: 10px; margin-right: 8px; color: #38bdf8;"></i>
+                                                    <span class="sub-sub-nav-text">View Internal DO Data</span>
+                                                </a>
+                                            </li>
+                                            <li class="sub-sub-nav-item" id="subNavItemAddInternalDo">
+                                                <a href="#add-internal-do" class="sub-sub-nav-link" onclick="event.preventDefault(); showAddInternalDO();">
+                                                    <i class="fa-solid fa-angle-right" style="font-size: 10px; margin-right: 8px; color: #94a3b8;"></i>
+                                                    <span class="sub-sub-nav-text">Add Internal DO Data</span>
+                                                </a>
+                                            </li>
+                                            <li class="sub-sub-nav-item" id="subNavItemEditInternalDo">
+                                                <a href="#edit-internal-do" class="sub-sub-nav-link" onclick="event.preventDefault(); showEditInternalDO();">
+                                                    <i class="fa-solid fa-angle-right" style="font-size: 10px; margin-right: 8px; color: #94a3b8;"></i>
+                                                    <span class="sub-sub-nav-text">Edit DO or Map to WB</span>
+                                                </a>
+                                            </li>
+                                        </ul>
                                     </li>
                                 </ul>
                             </li>
@@ -9170,6 +9727,7 @@ body.gis-mode-active .content-body {
                     </div>
 
                     <!-- Results Summary Counter & Actions -->
+                    <!-- Results Summary Counter & Actions -->
                     <div class="audit-results-meta">
                         <span id="auditResultsCount">Showing <strong>50 of 50</strong> Verified Sectional Audit Documents</span>
                         <div class="audit-results-actions">
@@ -9181,6 +9739,282 @@ body.gis-mode-active .content-body {
                     <!-- 50 Split Audit Reports Grid -->
                     <div class="audit-reports-grid" id="auditReportsGrid">
                         <!-- Populated dynamically via JS -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- View Internal DO Data (Delivery Order Operations Register) -->
+            <div class="tab-content-panel" id="view-internal-do-view" style="display: none;">
+                <div class="do-dashboard-container">
+                    <!-- Clean Corporate Header -->
+                    <div class="do-header-card">
+                        <div class="do-header-main">
+                            <div class="do-header-text">
+                                <span class="do-section-tag"><i class="fa-solid fa-file-contract"></i> Internal Despatch Logistics</span>
+                                <h2 class="do-page-title">Internal Delivery Order (DO) Operations Register</h2>
+                                <p class="do-page-subtitle">
+                                    Central Coalfields Statutory Despatch Ledger • <strong>352 DO Allocations</strong> verified across Area Weighbridges & Checkposts.
+                                </p>
+                            </div>
+                            <div class="do-stats-row">
+                                <div class="do-stat-box">
+                                    <span class="stat-number" id="doKpiTotalCount">352</span>
+                                    <span class="stat-label">Total DOs</span>
+                                </div>
+                                <div class="do-stat-box">
+                                    <span class="stat-number" style="color: #34d399;" id="doKpiTotalOrderQty">176.54M</span>
+                                    <span class="stat-label">Order Qty (MT)</span>
+                                </div>
+                                <div class="do-stat-box">
+                                    <span class="stat-number" style="color: #fbbf24;" id="doKpiTotalBalanceQty">154.24M</span>
+                                    <span class="stat-label">Balance Qty (MT)</span>
+                                </div>
+                                <div class="do-stat-box">
+                                    <span class="stat-number" style="color: #38bdf8;">14 Areas</span>
+                                    <span class="stat-label">Mining Clusters</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Toolbar: Search, Filters & Actions -->
+                    <div class="do-toolbar">
+                        <div class="do-toolbar-left">
+                            <div class="do-search-input-wrap">
+                                <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                                <input type="text" id="doSearchInput" class="do-search-input" placeholder="Search DO #, Contractor, Grade, Area, Plant, WB, User..." oninput="handleDoSearch()">
+                                <button class="btn-clear-do-search" id="btnClearDoSearch" onclick="clearDoSearch()" style="display: none;"><i class="fa-solid fa-xmark"></i></button>
+                            </div>
+                        </div>
+
+                        <div class="do-toolbar-right">
+                            <select id="doAreaFilter" class="do-select-dropdown" onchange="handleDoFilter()">
+                                <option value="all">All Areas</option>
+                            </select>
+
+                            <select id="doGradeFilter" class="do-select-dropdown" onchange="handleDoFilter()">
+                                <option value="all">All Coal Grades</option>
+                            </select>
+
+                            <select id="doPageSizeSelect" class="do-select-dropdown" onchange="handleDoPageSize()">
+                                <option value="25">25 / Page</option>
+                                <option value="50" selected>50 / Page</option>
+                                <option value="100">100 / Page</option>
+                                <option value="all">All 352 Records</option>
+                            </select>
+
+                            <button class="btn-do-action" onclick="exportDoDataCsv()"><i class="fa-solid fa-file-csv"></i> Export CSV</button>
+                            <button class="btn-do-action" onclick="printDoTable()"><i class="fa-solid fa-print"></i> Print</button>
+                            <button class="btn-do-action btn-do-primary" onclick="showAddInternalDO()"><i class="fa-solid fa-plus"></i> Add New DO</button>
+                        </div>
+                    </div>
+
+                    <!-- Results Counter -->
+                    <div class="do-results-meta">
+                        <span id="doResultsCounter">Showing <strong>1–50</strong> of <strong>352</strong> Delivery Orders</span>
+                        <span id="doFilteredNotice" style="display:none; color:#38bdf8;">Filters active</span>
+                    </div>
+
+                    <!-- 19-Column Tabular Grid Matching Screenshot 2 -->
+                    <div class="do-table-card">
+                        <div class="do-table-wrapper">
+                            <table class="do-data-table" id="internalDoDataTable">
+                                <thead>
+                                    <tr>
+                                        <th rowspan="2" class="sno-col">#</th>
+                                        <th rowspan="2" onclick="sortDoTable('do_no')" style="cursor: pointer;" title="Click to sort by DO #">DO # <i class="fa-solid fa-sort" style="font-size: 9px; margin-left: 3px; color: #64748b;"></i></th>
+                                        <th rowspan="2" onclick="sortDoTable('contractor')" style="cursor: pointer;" title="Click to sort by Contractor">Contractor <i class="fa-solid fa-sort" style="font-size: 9px; margin-left: 3px; color: #64748b;"></i></th>
+                                        <th rowspan="2" onclick="sortDoTable('grade')" style="cursor: pointer;">Grade</th>
+                                        <th rowspan="2" onclick="sortDoTable('order_qty')" style="cursor: pointer; text-align: right;">Order Qty</th>
+                                        <th rowspan="2" onclick="sortDoTable('balance_qty')" style="cursor: pointer; text-align: right;">Balance Qty</th>
+                                        <th rowspan="2" onclick="sortDoTable('validity')" style="cursor: pointer;">Validity</th>
+                                        <!-- Group 1: From -->
+                                        <th colspan="5" class="group-th from-group"><i class="fa-solid fa-arrow-right-from-bracket"></i> From</th>
+                                        <!-- Group 2: To -->
+                                        <th colspan="5" class="group-th to-group"><i class="fa-solid fa-arrow-right-to-bracket"></i> To</th>
+                                        <!-- Group 3: Created -->
+                                        <th colspan="2" class="group-th created-group"><i class="fa-regular fa-clock"></i> Created</th>
+                                    </tr>
+                                    <tr>
+                                        <!-- Under From -->
+                                        <th class="from-sub">Area</th>
+                                        <th class="from-sub">Plant</th>
+                                        <th class="from-sub">Checkpost(s)</th>
+                                        <th class="from-sub">WB(s)</th>
+                                        <th class="from-sub">Location(s)</th>
+                                        <!-- Under To -->
+                                        <th class="to-sub">Area</th>
+                                        <th class="to-sub">Plant</th>
+                                        <th class="to-sub">Checkpost(s)</th>
+                                        <th class="to-sub">WB(s)</th>
+                                        <th class="to-sub">Location(s)</th>
+                                        <!-- Under Created -->
+                                        <th class="created-sub">User</th>
+                                        <th class="created-sub">On Date</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="internalDoTableBody">
+                                    <!-- Rendered dynamically via renderInternalDoTable() -->
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <!-- Pagination Footer -->
+                        <div class="do-pagination-bar">
+                            <div id="doPageInfoText">Page 1 of 8 (50 rows per page)</div>
+                            <div class="do-page-buttons" id="doPaginationControls">
+                                <!-- Rendered dynamically -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Add Internal DO Data View Panel -->
+            <div class="tab-content-panel" id="add-internal-do-view" style="display: none;">
+                <div class="do-dashboard-container">
+                    <div class="do-header-card">
+                        <span class="do-section-tag"><i class="fa-solid fa-plus-circle"></i> New Allocation</span>
+                        <h2 class="do-page-title">Add Internal DO Data</h2>
+                        <p class="do-page-subtitle">Create a new Internal Coal Delivery Order allocation across Central Coalfields weighbridges and checkposts.</p>
+                    </div>
+                    <div class="do-form-card">
+                        <form id="formAddInternalDo" onsubmit="handleCreateDoSubmit(event)">
+                            <div class="do-form-grid">
+                                <div class="do-form-section-title"><i class="fa-solid fa-file-invoice"></i> Primary DO Details</div>
+                                <div class="do-form-group">
+                                    <label class="do-form-label">DO Number *</label>
+                                    <input type="text" id="addDoNumber" class="do-form-input" placeholder="e.g. 3080250002" required>
+                                </div>
+                                <div class="do-form-group">
+                                    <label class="do-form-label">Contractor Code & Name *</label>
+                                    <input type="text" id="addDoContractor" class="do-form-input" placeholder="e.g. 10016590:M/s Dharti JV" required>
+                                </div>
+                                <div class="do-form-group">
+                                    <label class="do-form-label">Coal Grade *</label>
+                                    <input type="text" id="addDoGrade" class="do-form-input" placeholder="e.g. Washery Grade IV, G-1" required>
+                                </div>
+                                <div class="do-form-group">
+                                    <label class="do-form-label">Order Quantity (MT) *</label>
+                                    <input type="number" step="0.001" id="addDoOrderQty" class="do-form-input" placeholder="50000.000" required>
+                                </div>
+                                <div class="do-form-group">
+                                    <label class="do-form-label">Balance Quantity (MT)</label>
+                                    <input type="number" step="0.001" id="addDoBalanceQty" class="do-form-input" placeholder="50000.000">
+                                </div>
+                                <div class="do-form-group">
+                                    <label class="do-form-label">Validity Date *</label>
+                                    <input type="text" id="addDoValidity" class="do-form-input" placeholder="DD-MM-YYYY (e.g. 31-03-2027)" required>
+                                </div>
+
+                                <div class="do-form-section-title" style="color: #38bdf8;"><i class="fa-solid fa-arrow-right-from-bracket"></i> Source (From) Allocation</div>
+                                <div class="do-form-group">
+                                    <label class="do-form-label">From Area *</label>
+                                    <input type="text" id="addDoFromArea" class="do-form-input" placeholder="e.g. Kathara" required>
+                                </div>
+                                <div class="do-form-group">
+                                    <label class="do-form-label">From Plant / Mine *</label>
+                                    <input type="text" id="addDoFromPlant" class="do-form-input" placeholder="e.g. Jarangdih OC" required>
+                                </div>
+                                <div class="do-form-group">
+                                    <label class="do-form-label">From Checkpost(s)</label>
+                                    <input type="text" id="addDoFromCheckposts" class="do-form-input" placeholder="e.g. CP0511 CP0512 or NA">
+                                </div>
+                                <div class="do-form-group">
+                                    <label class="do-form-label">From Weighbridge(s)</label>
+                                    <input type="text" id="addDoFromWbs" class="do-form-input" placeholder="e.g. RD0801 RD0802 or NA">
+                                </div>
+                                <div class="do-form-group">
+                                    <label class="do-form-label">From Location(s)</label>
+                                    <input type="text" id="addDoFromLocations" class="do-form-input" placeholder="e.g. Jarangdih Stock or NA">
+                                </div>
+
+                                <div class="do-form-section-title" style="color: #34d399;"><i class="fa-solid fa-arrow-right-to-bracket"></i> Destination (To) Allocation</div>
+                                <div class="do-form-group">
+                                    <label class="do-form-label">To Area</label>
+                                    <input type="text" id="addDoToArea" class="do-form-input" placeholder="e.g. Kathara">
+                                </div>
+                                <div class="do-form-group">
+                                    <label class="do-form-label">To Plant / Siding</label>
+                                    <input type="text" id="addDoToPlant" class="do-form-input" placeholder="e.g. Swang Washery">
+                                </div>
+                                <div class="do-form-group">
+                                    <label class="do-form-label">To Checkpost(s)</label>
+                                    <input type="text" id="addDoToCheckposts" class="do-form-input" placeholder="e.g. CP0521 or NA">
+                                </div>
+                                <div class="do-form-group">
+                                    <label class="do-form-label">To Weighbridge(s)</label>
+                                    <input type="text" id="addDoToWbs" class="do-form-input" placeholder="e.g. RD0807 or NA">
+                                </div>
+                                <div class="do-form-group">
+                                    <label class="do-form-label">To Location(s)</label>
+                                    <input type="text" id="addDoToLocations" class="do-form-input" placeholder="e.g. SWANG WASHERY or NA">
+                                </div>
+                            </div>
+                            <div class="do-form-actions">
+                                <button type="button" class="btn-do-action" onclick="showViewInternalDO()">Cancel</button>
+                                <button type="submit" class="btn-do-action btn-do-primary"><i class="fa-solid fa-check"></i> Save & Log Delivery Order</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Edit DO or Map to WB View Panel -->
+            <div class="tab-content-panel" id="edit-internal-do-view" style="display: none;">
+                <div class="do-dashboard-container">
+                    <div class="do-header-card">
+                        <span class="do-section-tag"><i class="fa-solid fa-pen-to-square"></i> Weighbridge Mapping</span>
+                        <h2 class="do-page-title">Edit DO or Map to Weighbridge (WB)</h2>
+                        <p class="do-page-subtitle">Configure weighbridge routing, checkpost gates, and valid unloading sidings for active delivery orders.</p>
+                    </div>
+                    <div class="do-form-card">
+                        <div class="do-form-grid">
+                            <div class="do-form-section-title"><i class="fa-solid fa-magnifying-glass"></i> Select DO for Mapping</div>
+                            <div class="do-form-group" style="grid-column: 1 / -1;">
+                                <label class="do-form-label">Select Delivery Order</label>
+                                <select id="editDoSelector" class="do-form-select" onchange="populateEditDoForm(this.value)">
+                                    <option value="">-- Choose DO to configure --</option>
+                                </select>
+                            </div>
+                            <div class="do-form-group">
+                                <label class="do-form-label">Mapped Source Weighbridges (From WB)</label>
+                                <input type="text" id="editFromWbs" class="do-form-input" placeholder="e.g. RD0801 RD0802 RD0803">
+                            </div>
+                            <div class="do-form-group">
+                                <label class="do-form-label">Mapped Destination Weighbridges (To WB)</label>
+                                <input type="text" id="editToWbs" class="do-form-input" placeholder="e.g. RD1504 RD1505">
+                            </div>
+                            <div class="do-form-group">
+                                <label class="do-form-label">Assigned Source Checkposts</label>
+                                <input type="text" id="editFromCheckposts" class="do-form-input" placeholder="e.g. CP1101 CP1102">
+                            </div>
+                            <div class="do-form-group">
+                                <label class="do-form-label">Assigned Destination Checkposts</label>
+                                <input type="text" id="editToCheckposts" class="do-form-input" placeholder="e.g. CP1221 CP1222">
+                            </div>
+                        </div>
+                        <div class="do-form-actions">
+                            <button type="button" class="btn-do-action" onclick="showViewInternalDO()">Cancel</button>
+                            <button type="button" class="btn-do-action btn-do-primary" onclick="handleSaveDoMapping()"><i class="fa-solid fa-save"></i> Save Mapping Configuration</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Road Dispatch View Panel -->
+            <div class="tab-content-panel" id="road-dispatch-view" style="display: none;">
+                <div class="do-dashboard-container">
+                    <div class="do-header-card">
+                        <span class="do-section-tag"><i class="fa-solid fa-truck-moving"></i> Commercial Dispatch</span>
+                        <h2 class="do-page-title">Road Dispatch Operations</h2>
+                        <p class="do-page-subtitle">Commercial Road Coal Dispatch & Outward Weighment Assurance Portal.</p>
+                    </div>
+                    <div class="do-form-card" style="text-align: center; padding: 40px 20px;">
+                        <i class="fa-solid fa-truck-ramp-box" style="font-size: 42px; color: #38bdf8; margin-bottom: 16px;"></i>
+                        <h3 style="color: #f1f5f9; font-size: 18px; margin-bottom: 8px;">Road Dispatch Telemetry Ready</h3>
+                        <p style="color: #94a3b8; max-width: 500px; margin: 0 auto 20px auto; font-size: 13px;">Commercial external road dispatch orders are synced with CCL Weighbridge Gate telemetry and RFID vehicle passes.</p>
+                        <button class="btn-do-action btn-do-primary" onclick="showViewInternalDO()"><i class="fa-solid fa-table-list"></i> Go to View Internal DO Data</button>
                     </div>
                 </div>
             </div>
@@ -9835,6 +10669,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     setupDropdownToggle('blacklistedNavLink', 'blacklistedSubList', 'blacklistedArrow');
     setupDropdownToggle('doOpsNavLink', 'doOpsSubList', 'doOpsArrow');
+    setupDropdownToggle('internalDoNavLink', 'internalDoSubList', 'internalDoArrow');
     setupDropdownToggle('configNavLink', 'configSubList', 'configArrow');
     setupDropdownToggle('cameraViewNavLink', 'cameraViewSubList', 'cameraViewArrow');
 
@@ -10851,6 +11686,14 @@ document.addEventListener('DOMContentLoaded', () => {
             showVTSDashboard();
         } else if (hash === '#alert-dashboard') {
             showAlertDashboard('All Types');
+        } else if (hash === '#view-internal-do') {
+            showViewInternalDO();
+        } else if (hash === '#add-internal-do') {
+            showAddInternalDO();
+        } else if (hash === '#edit-internal-do') {
+            showEditInternalDO();
+        } else if (hash === '#road-dispatch') {
+            showRoadDispatchView();
         } else if (hash === '#checkpost' || hash === '#vts' || hash === '#weighbridge') {
             activateSummaryTab(hash.replace('#', ''));
         }
@@ -11522,6 +12365,582 @@ function showAuditToast(msg) {
     document.body.appendChild(toast);
     setTimeout(() => toast.remove(), 2200);
 }
+
+// ========================================================
+// Delivery Order (DO) Operations & Table Controller
+// ========================================================
+let allInternalDoRecords = (typeof INTERNAL_DO_DATA !== 'undefined') ? INTERNAL_DO_DATA : [];
+let currentDoSearchQuery = '';
+let currentDoAreaFilter = 'all';
+let currentDoGradeFilter = 'all';
+let currentDoPage = 1;
+let currentDoPageSize = 50;
+let currentDoSortColumn = '';
+let currentDoSortAsc = true;
+let isDoInitialized = false;
+
+window.showViewInternalDO = function() {
+    document.body.classList.remove('alert-mode-active');
+    document.body.classList.remove('gis-mode-active');
+    const mainSidebar = document.getElementById('mainSidebarMenu');
+    const alertSidebar = document.getElementById('alertSidebarMenu');
+    const topTabs = document.getElementById('topTabsCard') || document.querySelector('.tabs-card');
+    if (mainSidebar) mainSidebar.style.display = 'block';
+    if (alertSidebar) alertSidebar.style.display = 'none';
+    if (topTabs) topTabs.style.display = 'none';
+
+    // Highlight DO Operations and sub-sub item
+    const doOpsNavItem = document.getElementById('doOpsNavItem');
+    const doOpsSubList = document.getElementById('doOpsSubList');
+    const doOpsArrow = document.getElementById('doOpsArrow');
+    const internalDoNavItem = document.getElementById('internalDoNavItem');
+    const internalDoSubList = document.getElementById('internalDoSubList');
+    const internalDoArrow = document.getElementById('internalDoArrow');
+
+    if (doOpsSubList) doOpsSubList.style.display = 'block';
+    if (doOpsArrow) doOpsArrow.className = 'fa-solid fa-chevron-down arrow-icon';
+    if (internalDoSubList) internalDoSubList.style.display = 'block';
+    if (internalDoArrow) internalDoArrow.className = 'fa-solid fa-chevron-down arrow-icon';
+
+    document.querySelectorAll('.sub-sub-nav-item').forEach(el => el.classList.remove('active'));
+    document.querySelectorAll('.sub-sub-nav-link').forEach(el => el.classList.remove('active'));
+    document.getElementById('subNavItemViewInternalDo')?.classList.add('active');
+    document.getElementById('subNavItemViewInternalDo')?.querySelector('.sub-sub-nav-link')?.classList.add('active');
+
+    updateHeaderMainTitle('INTERNAL DELIVERY ORDER (DO) OPERATIONS');
+
+    document.querySelectorAll('.tab-content-panel').forEach(panel => {
+        if (panel.id === 'view-internal-do-view') {
+            panel.classList.add('active');
+            panel.style.display = 'block';
+        } else {
+            panel.classList.remove('active');
+            panel.style.display = 'none';
+        }
+    });
+
+    window.location.hash = '#view-internal-do';
+    initInternalDoData();
+};
+
+window.showAddInternalDO = function() {
+    document.body.classList.remove('alert-mode-active');
+    document.body.classList.remove('gis-mode-active');
+    const mainSidebar = document.getElementById('mainSidebarMenu');
+    const alertSidebar = document.getElementById('alertSidebarMenu');
+    const topTabs = document.getElementById('topTabsCard') || document.querySelector('.tabs-card');
+    if (mainSidebar) mainSidebar.style.display = 'block';
+    if (alertSidebar) alertSidebar.style.display = 'none';
+    if (topTabs) topTabs.style.display = 'none';
+
+    document.querySelectorAll('.sub-sub-nav-item').forEach(el => el.classList.remove('active'));
+    document.querySelectorAll('.sub-sub-nav-link').forEach(el => el.classList.remove('active'));
+    document.getElementById('subNavItemAddInternalDo')?.classList.add('active');
+    document.getElementById('subNavItemAddInternalDo')?.querySelector('.sub-sub-nav-link')?.classList.add('active');
+
+    updateHeaderMainTitle('ADD INTERNAL DO DATA');
+
+    document.querySelectorAll('.tab-content-panel').forEach(panel => {
+        if (panel.id === 'add-internal-do-view') {
+            panel.classList.add('active');
+            panel.style.display = 'block';
+        } else {
+            panel.classList.remove('active');
+            panel.style.display = 'none';
+        }
+    });
+
+    window.location.hash = '#add-internal-do';
+};
+
+window.showEditInternalDO = function() {
+    document.body.classList.remove('alert-mode-active');
+    document.body.classList.remove('gis-mode-active');
+    const mainSidebar = document.getElementById('mainSidebarMenu');
+    const alertSidebar = document.getElementById('alertSidebarMenu');
+    const topTabs = document.getElementById('topTabsCard') || document.querySelector('.tabs-card');
+    if (mainSidebar) mainSidebar.style.display = 'block';
+    if (alertSidebar) alertSidebar.style.display = 'none';
+    if (topTabs) topTabs.style.display = 'none';
+
+    document.querySelectorAll('.sub-sub-nav-item').forEach(el => el.classList.remove('active'));
+    document.querySelectorAll('.sub-sub-nav-link').forEach(el => el.classList.remove('active'));
+    document.getElementById('subNavItemEditInternalDo')?.classList.add('active');
+    document.getElementById('subNavItemEditInternalDo')?.querySelector('.sub-sub-nav-link')?.classList.add('active');
+
+    updateHeaderMainTitle('EDIT DO OR MAP TO WEIGHBRIDGE');
+
+    document.querySelectorAll('.tab-content-panel').forEach(panel => {
+        if (panel.id === 'edit-internal-do-view') {
+            panel.classList.add('active');
+            panel.style.display = 'block';
+        } else {
+            panel.classList.remove('active');
+            panel.style.display = 'none';
+        }
+    });
+
+    window.location.hash = '#edit-internal-do';
+    populateEditDoSelector();
+};
+
+window.showRoadDispatchView = function() {
+    document.body.classList.remove('alert-mode-active');
+    document.body.classList.remove('gis-mode-active');
+    const mainSidebar = document.getElementById('mainSidebarMenu');
+    const alertSidebar = document.getElementById('alertSidebarMenu');
+    const topTabs = document.getElementById('topTabsCard') || document.querySelector('.tabs-card');
+    if (mainSidebar) mainSidebar.style.display = 'block';
+    if (alertSidebar) alertSidebar.style.display = 'none';
+    if (topTabs) topTabs.style.display = 'none';
+
+    document.querySelectorAll('.sub-sub-nav-item').forEach(el => el.classList.remove('active'));
+    document.querySelectorAll('.sub-sub-nav-link').forEach(el => el.classList.remove('active'));
+    document.getElementById('roadDispatchNavItem')?.classList.add('active');
+
+    updateHeaderMainTitle('ROAD DISPATCH OPERATIONS');
+
+    document.querySelectorAll('.tab-content-panel').forEach(panel => {
+        if (panel.id === 'road-dispatch-view') {
+            panel.classList.add('active');
+            panel.style.display = 'block';
+        } else {
+            panel.classList.remove('active');
+            panel.style.display = 'none';
+        }
+    });
+
+    window.location.hash = '#road-dispatch';
+};
+
+window.initInternalDoData = async function() {
+    if (!allInternalDoRecords || allInternalDoRecords.length === 0) {
+        if (typeof INTERNAL_DO_DATA !== 'undefined' && INTERNAL_DO_DATA.length > 0) {
+            allInternalDoRecords = INTERNAL_DO_DATA;
+        } else {
+            try {
+                const res = await fetch('/static/do_data.json');
+                if (res.ok) {
+                    allInternalDoRecords = await res.json();
+                }
+            } catch (e) {
+                console.warn('DO data load error:', e);
+            }
+        }
+    }
+
+    populateDoFilterDropdowns();
+    updateDoKpis();
+    renderInternalDoTable();
+    isDoInitialized = true;
+};
+
+function populateDoFilterDropdowns() {
+    const areaSelect = document.getElementById('doAreaFilter');
+    const gradeSelect = document.getElementById('doGradeFilter');
+    if (!areaSelect || !gradeSelect || !allInternalDoRecords) return;
+
+    // Collect Unique Areas
+    const areas = new Set();
+    const grades = new Set();
+
+    allInternalDoRecords.forEach(r => {
+        if (r.from_area && r.from_area !== 'NA') areas.add(r.from_area.trim());
+        if (r.to_area && r.to_area !== 'NA') areas.add(r.to_area.trim());
+        if (r.grade && r.grade !== 'NA') {
+            r.grade.split(',').forEach(g => {
+                const gt = g.trim();
+                if (gt) grades.add(gt);
+            });
+        }
+    });
+
+    const sortedAreas = Array.from(areas).sort();
+    const sortedGrades = Array.from(grades).sort();
+
+    areaSelect.innerHTML = '<option value="all">All Areas (' + sortedAreas.length + ')</option>' + 
+        sortedAreas.map(a => `<option value="${a}">${a}</option>`).join('');
+
+    gradeSelect.innerHTML = '<option value="all">All Coal Grades (' + sortedGrades.length + ')</option>' + 
+        sortedGrades.map(g => `<option value="${g}">${g}</option>`).join('');
+}
+
+function updateDoKpis() {
+    if (!allInternalDoRecords) return;
+    const totalCountEl = document.getElementById('doKpiTotalCount');
+    const totalOrderEl = document.getElementById('doKpiTotalOrderQty');
+    const totalBalEl = document.getElementById('doKpiTotalBalanceQty');
+
+    let sumOrder = 0;
+    let sumBal = 0;
+
+    allInternalDoRecords.forEach(r => {
+        const o = parseFloat(r.order_qty) || 0;
+        const b = parseFloat(r.balance_qty) || 0;
+        sumOrder += o;
+        sumBal += b;
+    });
+
+    if (totalCountEl) totalCountEl.textContent = allInternalDoRecords.length;
+    if (totalOrderEl) totalOrderEl.textContent = (sumOrder / 1000000).toFixed(2) + 'M';
+    if (totalBalEl) totalBalEl.textContent = (sumBal / 1000000).toFixed(2) + 'M';
+}
+
+function getFilteredDoRecords() {
+    if (!allInternalDoRecords) return [];
+
+    return allInternalDoRecords.filter(item => {
+        // Search query filter
+        let matchQuery = true;
+        if (currentDoSearchQuery) {
+            const q = currentDoSearchQuery.toLowerCase();
+            matchQuery = (
+                (item.do_no && item.do_no.toLowerCase().includes(q)) ||
+                (item.contractor && item.contractor.toLowerCase().includes(q)) ||
+                (item.grade && item.grade.toLowerCase().includes(q)) ||
+                (item.from_area && item.from_area.toLowerCase().includes(q)) ||
+                (item.from_plant && item.from_plant.toLowerCase().includes(q)) ||
+                (item.from_checkposts && item.from_checkposts.toLowerCase().includes(q)) ||
+                (item.from_wbs && item.from_wbs.toLowerCase().includes(q)) ||
+                (item.from_locations && item.from_locations.toLowerCase().includes(q)) ||
+                (item.to_area && item.to_area.toLowerCase().includes(q)) ||
+                (item.to_plant && item.to_plant.toLowerCase().includes(q)) ||
+                (item.to_checkposts && item.to_checkposts.toLowerCase().includes(q)) ||
+                (item.to_wbs && item.to_wbs.toLowerCase().includes(q)) ||
+                (item.to_locations && item.to_locations.toLowerCase().includes(q)) ||
+                (item.created_user && item.created_user.toLowerCase().includes(q)) ||
+                (item.created_on && item.created_on.toLowerCase().includes(q))
+            );
+        }
+
+        // Area filter
+        let matchArea = true;
+        if (currentDoAreaFilter !== 'all') {
+            matchArea = (item.from_area === currentDoAreaFilter || item.to_area === currentDoAreaFilter);
+        }
+
+        // Grade filter
+        let matchGrade = true;
+        if (currentDoGradeFilter !== 'all') {
+            matchGrade = item.grade && item.grade.includes(currentDoGradeFilter);
+        }
+
+        return matchQuery && matchArea && matchGrade;
+    }).sort((a, b) => {
+        if (!currentDoSortColumn) return 0;
+        let valA = a[currentDoSortColumn] || '';
+        let valB = b[currentDoSortColumn] || '';
+
+        if (currentDoSortColumn === 'order_qty' || currentDoSortColumn === 'balance_qty' || currentDoSortColumn === 's_no') {
+            const numA = parseFloat(valA) || 0;
+            const numB = parseFloat(valB) || 0;
+            return currentDoSortAsc ? (numA - numB) : (numB - numA);
+        }
+
+        return currentDoSortAsc ? valA.localeCompare(valB) : valB.localeCompare(valA);
+    });
+}
+
+window.renderInternalDoTable = function() {
+    const tbody = document.getElementById('internalDoTableBody');
+    const counterEl = document.getElementById('doResultsCounter');
+    const paginationEl = document.getElementById('doPaginationControls');
+    const pageInfoEl = document.getElementById('doPageInfoText');
+    const filteredNotice = document.getElementById('doFilteredNotice');
+    if (!tbody) return;
+
+    const filtered = getFilteredDoRecords();
+    const totalRecords = filtered.length;
+
+    // Filter indicator
+    if (filteredNotice) {
+        filteredNotice.style.display = (currentDoSearchQuery || currentDoAreaFilter !== 'all' || currentDoGradeFilter !== 'all') ? 'inline-block' : 'none';
+    }
+
+    if (totalRecords === 0) {
+        tbody.innerHTML = `
+            <tr>
+                <td colspan="19" style="text-align: center; padding: 48px 20px; color: #64748b; background: #0f131a;">
+                    <i class="fa-solid fa-file-circle-xmark" style="font-size: 32px; color: #475569; margin-bottom: 8px;"></i>
+                    <div style="font-size: 14px; font-weight: 600; color: #94a3b8;">No Delivery Orders Matched</div>
+                    <div style="font-size: 12px; margin-top: 4px;">Try modifying your search or clearing active filters.</div>
+                </td>
+            </tr>
+        `;
+        if (counterEl) counterEl.innerHTML = `Showing <strong>0</strong> of <strong>${allInternalDoRecords.length}</strong> Delivery Orders`;
+        if (paginationEl) paginationEl.innerHTML = '';
+        if (pageInfoEl) pageInfoEl.textContent = 'No records';
+        return;
+    }
+
+    // Pagination calculations
+    const pageSize = currentDoPageSize === 'all' ? totalRecords : parseInt(currentDoPageSize, 10);
+    const totalPages = Math.ceil(totalRecords / pageSize) || 1;
+    if (currentDoPage > totalPages) currentDoPage = totalPages;
+    if (currentDoPage < 1) currentDoPage = 1;
+
+    const startIndex = (currentDoPage - 1) * pageSize;
+    const endIndex = Math.min(startIndex + pageSize, totalRecords);
+    const pageRows = filtered.slice(startIndex, endIndex);
+
+    if (counterEl) {
+        counterEl.innerHTML = `Showing <strong>${startIndex + 1}–${endIndex}</strong> of <strong>${totalRecords}</strong> Delivery Orders (Total Database: ${allInternalDoRecords.length})`;
+    }
+
+    if (pageInfoEl) {
+        pageInfoEl.innerHTML = `Page <strong>${currentDoPage}</strong> of <strong>${totalPages}</strong> • ${totalRecords} matching allocations`;
+    }
+
+    // Helper for NA formatting
+    const formatCell = (val) => {
+        if (!val || val.trim() === '' || val.trim() === 'NA') {
+            return `<span class="na-cell">NA</span>`;
+        }
+        return val;
+    };
+
+    const formatNum = (val) => {
+        if (!val) return '0.000';
+        const num = parseFloat(val);
+        if (isNaN(num)) return val;
+        const cls = num === 0 ? 'qty-zero' : '';
+        return `<span class="${cls}">${num.toLocaleString('en-IN', { minimumFractionDigits: 3, maximumFractionDigits: 3 })}</span>`;
+    };
+
+    tbody.innerHTML = pageRows.map(row => {
+        return `
+            <tr>
+                <td class="sno-col">${row.s_no}</td>
+                <td class="dono-cell" onclick="openDoDetailModal('${row.do_no}')" title="Click to view full DO routing details">${row.do_no}</td>
+                <td style="max-width: 240px; overflow: hidden; text-overflow: ellipsis;" title="${row.contractor}">${row.contractor}</td>
+                <td><span style="background: rgba(56, 189, 248, 0.1); color: #38bdf8; padding: 2px 6px; border-radius: 3px; font-weight: 500;">${row.grade || 'NA'}</span></td>
+                <td class="qty-cell">${formatNum(row.order_qty)}</td>
+                <td class="qty-cell">${formatNum(row.balance_qty)}</td>
+                <td class="date-cell">${row.validity || 'NA'}</td>
+                <!-- From Group -->
+                <td><strong>${formatCell(row.from_area)}</strong></td>
+                <td>${formatCell(row.from_plant)}</td>
+                <td>${formatCell(row.from_checkposts)}</td>
+                <td>${formatCell(row.from_wbs)}</td>
+                <td>${formatCell(row.from_locations)}</td>
+                <!-- To Group -->
+                <td><strong>${formatCell(row.to_area)}</strong></td>
+                <td>${formatCell(row.to_plant)}</td>
+                <td>${formatCell(row.to_checkposts)}</td>
+                <td>${formatCell(row.to_wbs)}</td>
+                <td>${formatCell(row.to_locations)}</td>
+                <!-- Created Group -->
+                <td class="user-cell"><i class="fa-regular fa-user" style="font-size: 10px; color: #94a3b8; margin-right: 4px;"></i>${formatCell(row.created_user)}</td>
+                <td class="date-cell">${formatCell(row.created_on)}</td>
+            </tr>
+        `;
+    }).join('');
+
+    // Render Pagination Controls
+    if (paginationEl) {
+        if (totalPages <= 1) {
+            paginationEl.innerHTML = '';
+        } else {
+            let html = '';
+            html += `<button class="do-page-btn" onclick="changeDoPage(1)" ${currentDoPage === 1 ? 'disabled' : ''} title="First Page"><i class="fa-solid fa-angles-left"></i></button>`;
+            html += `<button class="do-page-btn" onclick="changeDoPage(${currentDoPage - 1})" ${currentDoPage === 1 ? 'disabled' : ''} title="Previous Page"><i class="fa-solid fa-angle-left"></i> Prev</button>`;
+
+            // Dynamic Window of Pages
+            let startPage = Math.max(1, currentDoPage - 2);
+            let endPage = Math.min(totalPages, startPage + 4);
+            if (endPage - startPage < 4) {
+                startPage = Math.max(1, endPage - 4);
+            }
+
+            for (let p = startPage; p <= endPage; p++) {
+                html += `<button class="do-page-btn ${p === currentDoPage ? 'active' : ''}" onclick="changeDoPage(${p})">${p}</button>`;
+            }
+
+            html += `<button class="do-page-btn" onclick="changeDoPage(${currentDoPage + 1})" ${currentDoPage === totalPages ? 'disabled' : ''} title="Next Page">Next <i class="fa-solid fa-angle-right"></i></button>`;
+            html += `<button class="do-page-btn" onclick="changeDoPage(${totalPages})" ${currentDoPage === totalPages ? 'disabled' : ''} title="Last Page"><i class="fa-solid fa-angles-right"></i></button>`;
+            paginationEl.innerHTML = html;
+        }
+    }
+};
+
+window.handleDoSearch = function() {
+    const input = document.getElementById('doSearchInput');
+    const clearBtn = document.getElementById('btnClearDoSearch');
+    if (!input) return;
+
+    currentDoSearchQuery = input.value.trim();
+    if (clearBtn) {
+        clearBtn.style.display = currentDoSearchQuery ? 'block' : 'none';
+    }
+    currentDoPage = 1;
+    renderInternalDoTable();
+};
+
+window.clearDoSearch = function() {
+    const input = document.getElementById('doSearchInput');
+    const clearBtn = document.getElementById('btnClearDoSearch');
+    if (input) input.value = '';
+    if (clearBtn) clearBtn.style.display = 'none';
+    currentDoSearchQuery = '';
+    currentDoPage = 1;
+    renderInternalDoTable();
+};
+
+window.handleDoFilter = function() {
+    currentDoAreaFilter = document.getElementById('doAreaFilter')?.value || 'all';
+    currentDoGradeFilter = document.getElementById('doGradeFilter')?.value || 'all';
+    currentDoPage = 1;
+    renderInternalDoTable();
+};
+
+window.handleDoPageSize = function() {
+    currentDoPageSize = document.getElementById('doPageSizeSelect')?.value || '50';
+    currentDoPage = 1;
+    renderInternalDoTable();
+};
+
+window.changeDoPage = function(page) {
+    currentDoPage = page;
+    renderInternalDoTable();
+    const wrapper = document.querySelector('.do-table-wrapper');
+    if (wrapper) wrapper.scrollTop = 0;
+};
+
+window.sortDoTable = function(col) {
+    if (currentDoSortColumn === col) {
+        currentDoSortAsc = !currentDoSortAsc;
+    } else {
+        currentDoSortColumn = col;
+        currentDoSortAsc = true;
+    }
+    renderInternalDoTable();
+    showAuditToast(`Sorted table by ${col.toUpperCase()} (${currentDoSortAsc ? 'Ascending' : 'Descending'})`);
+};
+
+window.exportDoDataCsv = function() {
+    if (!allInternalDoRecords || allInternalDoRecords.length === 0) {
+        showAuditToast('No DO records to export.');
+        return;
+    }
+
+    const filtered = getFilteredDoRecords();
+    const headers = [
+        "S.No", "DO Number", "Contractor", "Grade", "Order Qty", "Balance Qty", "Validity",
+        "From Area", "From Plant", "From Checkposts", "From WBs", "From Locations",
+        "To Area", "To Plant", "To Checkposts", "To WBs", "To Locations",
+        "Created User", "Created On"
+    ];
+
+    const escapeCsv = (str) => {
+        if (!str) return '""';
+        const s = String(str).replace(/"/g, '""');
+        return `"${s}"`;
+    };
+
+    let csvContent = "data:text/csv;charset=utf-8," + headers.map(escapeCsv).join(",") + "\n";
+
+    filtered.forEach(r => {
+        const row = [
+            r.s_no, r.do_no, r.contractor, r.grade, r.order_qty, r.balance_qty, r.validity,
+            r.from_area, r.from_plant, r.from_checkposts, r.from_wbs, r.from_locations,
+            r.to_area, r.to_plant, r.to_checkposts, r.to_wbs, r.to_locations,
+            r.created_user, r.created_on
+        ];
+        csvContent += row.map(escapeCsv).join(",") + "\n";
+    });
+
+    const encodedUri = encodeURI(csvContent);
+    const link = document.createElement("a");
+    link.setAttribute("href", encodedUri);
+    link.setAttribute("download", `CCL_Internal_Delivery_Orders_Register_${filtered.length}_records.csv`);
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+    showAuditToast(`Exported ${filtered.length} DO records to CSV.`);
+};
+
+window.printDoTable = function() {
+    window.print();
+};
+
+window.openDoDetailModal = function(doNo) {
+    const doRec = allInternalDoRecords.find(r => r.do_no === doNo);
+    if (!doRec) return;
+
+    showAuditToast(`DO #${doRec.do_no}: ${doRec.contractor} (${doRec.from_plant} → ${doRec.to_plant || 'Local Siding'})`);
+};
+
+window.populateEditDoSelector = function() {
+    const select = document.getElementById('editDoSelector');
+    if (!select || !allInternalDoRecords) return;
+
+    select.innerHTML = '<option value="">-- Choose DO to configure --</option>' + 
+        allInternalDoRecords.map(r => `<option value="${r.do_no}">DO #${r.do_no} — ${r.contractor} (${r.from_plant})</option>`).join('');
+};
+
+window.populateEditDoForm = function(doNo) {
+    if (!doNo) return;
+    const r = allInternalDoRecords.find(item => item.do_no === doNo);
+    if (!r) return;
+
+    const fromWbs = document.getElementById('editFromWbs');
+    const toWbs = document.getElementById('editToWbs');
+    const fromCps = document.getElementById('editFromCheckposts');
+    const toCps = document.getElementById('editToCheckposts');
+
+    if (fromWbs) fromWbs.value = r.from_wbs || '';
+    if (toWbs) toWbs.value = r.to_wbs || '';
+    if (fromCps) fromCps.value = r.from_checkposts || '';
+    if (toCps) toCps.value = r.to_checkposts || '';
+};
+
+window.handleSaveDoMapping = function() {
+    const doNo = document.getElementById('editDoSelector')?.value;
+    if (!doNo) {
+        showAuditToast('Please select a DO to configure.');
+        return;
+    }
+
+    const r = allInternalDoRecords.find(item => item.do_no === doNo);
+    if (r) {
+        r.from_wbs = document.getElementById('editFromWbs')?.value || 'NA';
+        r.to_wbs = document.getElementById('editToWbs')?.value || 'NA';
+        r.from_checkposts = document.getElementById('editFromCheckposts')?.value || 'NA';
+        r.to_checkposts = document.getElementById('editToCheckposts')?.value || 'NA';
+        showAuditToast(`✅ Mapping saved for DO #${doNo}`);
+        setTimeout(showViewInternalDO, 400);
+    }
+};
+
+window.handleCreateDoSubmit = function(e) {
+    e.preventDefault();
+    const newDo = {
+        s_no: String(allInternalDoRecords.length + 1),
+        do_no: document.getElementById('addDoNumber')?.value || 'DO-' + Date.now(),
+        contractor: document.getElementById('addDoContractor')?.value || 'Internal Contractor',
+        grade: document.getElementById('addDoGrade')?.value || 'Washery Grade IV',
+        order_qty: parseFloat(document.getElementById('addDoOrderQty')?.value || '0').toFixed(3),
+        balance_qty: parseFloat(document.getElementById('addDoBalanceQty')?.value || document.getElementById('addDoOrderQty')?.value || '0').toFixed(3),
+        validity: document.getElementById('addDoValidity')?.value || '31-12-2027',
+        from_area: document.getElementById('addDoFromArea')?.value || 'Kathara',
+        from_plant: document.getElementById('addDoFromPlant')?.value || 'Local Mine',
+        from_checkposts: document.getElementById('addDoFromCheckposts')?.value || 'NA',
+        from_wbs: document.getElementById('addDoFromWbs')?.value || 'NA',
+        from_locations: document.getElementById('addDoFromLocations')?.value || 'NA',
+        to_area: document.getElementById('addDoToArea')?.value || 'Kathara',
+        to_plant: document.getElementById('addDoToPlant')?.value || 'Washery Siding',
+        to_checkposts: document.getElementById('addDoToCheckposts')?.value || 'NA',
+        to_wbs: document.getElementById('addDoToWbs')?.value || 'NA',
+        to_locations: document.getElementById('addDoToLocations')?.value || 'NA',
+        created_user: 'Central DO Dispatch Officer',
+        created_on: new Date().toLocaleDateString('en-GB') + ' ' + new Date().toLocaleTimeString('en-GB')
+    };
+
+    allInternalDoRecords.unshift(newDo);
+    showAuditToast(`✅ Delivery Order #${newDo.do_no} created successfully!`);
+    document.getElementById('formAddInternalDo')?.reset();
+    setTimeout(showViewInternalDO, 400);
+};
 
 // =========================================================================
 // SUPABASE REAL-TIME TELEMETRY & LIVE DEMO ENGINE
