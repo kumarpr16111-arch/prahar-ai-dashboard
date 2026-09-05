@@ -337,16 +337,17 @@ a {
 }
 
 /* Badges */
+/* Telemetry & Status Micro-Badges (Sleek Engineering Tags) */
 .badge {
-    min-width: 44px;
+    min-width: 36px;
     height: 18px;
     padding: 0 6px;
-    font-size: 10px;
+    font-size: 9.5px;
     font-weight: 700;
-    border-radius: var(--radius-pill);
+    border-radius: 3px;
     text-transform: uppercase;
     margin-left: auto;
-    letter-spacing: 0.04em;
+    letter-spacing: 0.05em;
     flex-shrink: 0;
     display: inline-flex;
     align-items: center;
@@ -354,6 +355,7 @@ a {
     line-height: 1;
     text-align: center;
     box-sizing: border-box;
+    border: 1px solid transparent;
 }
 
 /* Align badge column whether or not there is an arrow next to it */
@@ -366,16 +368,35 @@ a {
     margin-right: 0;
 }
 
-.badge-pink {
-    background: linear-gradient(135deg, #ef4444, #f43f5e);
-    color: #ffffff;
-    box-shadow: 0 0 8px rgba(244, 63, 94, 0.4);
+.badge-pink,
+.badge-live {
+    background: rgba(239, 68, 68, 0.12);
+    color: #f87171;
+    border: 1px solid rgba(239, 68, 68, 0.28);
+    box-shadow: none;
 }
 
-.badge-teal {
-    background: linear-gradient(135deg, #059669, #10b981);
-    color: #ffffff;
-    box-shadow: 0 0 8px rgba(16, 185, 129, 0.35);
+.badge-ai {
+    background: rgba(56, 189, 248, 0.12);
+    color: #38bdf8;
+    border: 1px solid rgba(56, 189, 248, 0.28);
+    box-shadow: none;
+}
+
+.badge-teal,
+.badge-teal-pill {
+    background: rgba(16, 185, 129, 0.12);
+    color: #34d399;
+    border: 1px solid rgba(16, 185, 129, 0.28);
+    box-shadow: none;
+    border-radius: 3px;
+}
+
+/* Header Action Buttons */
+.btn-logout:hover {
+    background: rgba(239, 68, 68, 0.1) !important;
+    border-color: rgba(239, 68, 68, 0.35) !important;
+    color: #f87171 !important;
 }
 
 /* Collapsed Sidebar State */
@@ -470,7 +491,7 @@ a {
     background: #1e2430;
     border: 1px solid #2d3748;
     padding: 7px 14px;
-    border-radius: var(--radius-pill);
+    border-radius: var(--radius-sm);
     font-size: 12.5px;
     font-weight: 600;
     color: #93c5fd;
@@ -842,13 +863,13 @@ body.alert-mode-active .user-name {
 }
 
 .live-status-pill {
-    background: rgba(56, 189, 248, 0.15);
-    border: 1px solid #38bdf8;
+    background: rgba(56, 189, 248, 0.1);
+    border: 1px solid rgba(56, 189, 248, 0.3);
     color: #38bdf8;
-    padding: 4px 12px;
-    border-radius: var(--radius-pill);
-    font-size: 11.5px;
-    font-weight: 700;
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: 600;
     display: flex;
     align-items: center;
     gap: 6px;
@@ -892,7 +913,7 @@ body.alert-mode-active .user-name {
     gap: 10px;
     background: #1f2937;
     padding: 6px 14px;
-    border-radius: var(--radius-pill);
+    border-radius: var(--radius-sm);
     border: 1px solid #374151;
 }
 
@@ -917,8 +938,8 @@ body.alert-mode-active .user-name {
     color: #ffffff;
     font-size: 10px;
     font-weight: 700;
-    padding: 2px 7px;
-    border-radius: var(--radius-pill);
+    padding: 2px 6px;
+    border-radius: 3px;
 }
 
 .filter-dropdown {
@@ -2241,7 +2262,7 @@ body.alert-mode-active .user-name {
     color: #64748b;
     background: #bfdbfe;
     padding: 6px 14px;
-    border-radius: var(--radius-pill);
+    border-radius: var(--radius-sm);
 }
 
 .drone-search-box {
@@ -3293,10 +3314,10 @@ body.alert-mode-active .user-name {
     background: #0284c7;
     color: #ffffff;
     border: none;
-    border-radius: var(--radius-pill);
-    padding: 9px 24px;
-    font-size: 13.5px;
-    font-weight: 700;
+    border-radius: var(--radius-sm);
+    padding: 8px 18px;
+    font-size: 13px;
+    font-weight: 600;
     cursor: pointer;
     box-shadow: var(--shadow-crisp);
     transition: all 0.15s ease;

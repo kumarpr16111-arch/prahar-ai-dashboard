@@ -5725,7 +5725,7 @@ body.gis-mode-active .content-body {
                                 <a href="#alert-dashboard" class="nav-link">
                                     <i class="fa-solid fa-bell nav-icon"></i>
                                     <span class="nav-text">Alert Dashboard</span>
-                                    <span class="badge badge-pink">Live</span>
+                                    <span class="badge badge-live">Live</span>
                                 </a>
                             </li>
                             {% endif %}
@@ -5745,7 +5745,7 @@ body.gis-mode-active .content-body {
                                         <line x1="2" y1="19" x2="8" y2="19"/>
                                     </svg>
                                     <span class="nav-text">AI Driven Drone Monitoring</span>
-                                    <span class="badge badge-pink">AI</span>
+                                    <span class="badge badge-ai">AI</span>
                                 </a>
                             </li>
                             {% endif %}
@@ -5756,7 +5756,7 @@ body.gis-mode-active .content-body {
                                 <a href="#" class="nav-link" id="cameraViewNavLink">
                                     <i class="fa-solid fa-video nav-icon"></i>
                                     <span class="nav-text">Camera View</span>
-                                    <span class="badge badge-pink">Live</span>
+                                    <span class="badge badge-live">Live</span>
                                     <i class="fa-solid fa-chevron-right arrow-icon" id="cameraViewArrow"></i>
                                 </a>
                                 <ul class="sub-nav-list" id="cameraViewSubList" style="display: none;">
@@ -6095,20 +6095,20 @@ body.gis-mode-active .content-body {
                         </button>
                     </div>
 
-                    <div class="user-profile-group" style="display: flex; align-items: center; gap: 14px;">
+                    <div class="user-profile-group" style="display: flex; align-items: center; gap: 12px;">
                         <div class="user-profile" style="display: flex; align-items: center; gap: 10px;">
-                            <div class="avatar" style="background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%); color: #fff; width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px;">
+                            <div class="avatar" style="background: #141b29; color: #38bdf8; width: 34px; height: 34px; border-radius: 6px; border: 1px solid #243042; display: flex; align-items: center; justify-content: center; font-size: 13px;">
                                 <i class="fa-solid fa-user-shield"></i>
                             </div>
                             <div style="display: flex; flex-direction: column; text-align: left; line-height: 1.25;">
-                                <span class="user-name" style="font-weight: 700; font-size: 13.5px; color: var(--text-main);">{{ user_name }}</span>
-                                <span class="user-role-badge" style="font-size: 10px; font-weight: 700; padding: 2px 7px; border-radius: 4px; display: inline-block; width: fit-content; text-transform: uppercase; letter-spacing: 0.04em; margin-top: 2px; {% if user_role == 'gm' %}background: rgba(245, 158, 11, 0.16); color: #d97706; border: 1px solid rgba(245, 158, 11, 0.35);{% elif user_role == 'vigilance' %}background: rgba(16, 185, 129, 0.16); color: #059669; border: 1px solid rgba(16, 185, 129, 0.35);{% elif user_role == 'surveillance' %}background: rgba(2, 132, 199, 0.16); color: #0284c7; border: 1px solid rgba(2, 132, 199, 0.35);{% elif user_role == 'dispatch' %}background: rgba(147, 51, 234, 0.16); color: #9333ea; border: 1px solid rgba(147, 51, 234, 0.35);{% else %}background: rgba(225, 29, 72, 0.16); color: #e11d48; border: 1px solid rgba(225, 29, 72, 0.35);{% endif %}">
+                                <span class="user-name" style="font-weight: 600; font-size: 13px; color: #f1f5f9;">{{ user_name }}</span>
+                                <span class="user-role-badge" style="font-size: 9.5px; font-weight: 600; padding: 2px 6px; border-radius: 3px; display: inline-block; width: fit-content; text-transform: uppercase; letter-spacing: 0.05em; margin-top: 2px; background: #141b29; border: 1px solid #243042; {% if user_role == 'gm' %}color: #38bdf8;{% elif user_role == 'vigilance' %}color: #34d399;{% elif user_role == 'surveillance' %}color: #38bdf8;{% elif user_role == 'dispatch' %}color: #a78bfa;{% else %}color: #f87171;{% endif %}">
                                     {{ user_designation }}
                                 </span>
                             </div>
                         </div>
-                        <a href="/logout" class="btn-logout" title="Sign Out of TRACE" style="display: inline-flex; align-items: center; gap: 6px; padding: 7px 13px; background: rgba(239, 68, 68, 0.08); border: 1px solid rgba(239, 68, 68, 0.25); border-radius: 8px; color: #dc2626; font-size: 12px; font-weight: 600; text-decoration: none; transition: all 0.2s;">
-                            <i class="fa-solid fa-power-off"></i>
+                        <a href="/logout" class="btn-logout" title="Sign Out of TRACE" style="display: inline-flex; align-items: center; gap: 6px; padding: 6px 10px; background: rgba(255, 255, 255, 0.03); border: 1px solid #243042; border-radius: 4px; color: #94a3b8; font-size: 11.5px; font-weight: 500; text-decoration: none; transition: all 0.15s;">
+                            <i class="fa-solid fa-power-off" style="font-size: 11px;"></i>
                             <span>Sign Out</span>
                         </a>
                     </div>
