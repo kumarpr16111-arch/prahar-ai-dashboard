@@ -22,21 +22,21 @@
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Outfit:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
 
 :root {
-    /* Subtle, Easy-on-the-Eye Palette */
-    --sidebar-bg: #1e293b;
-    --sidebar-header-bg: #172030;
+    /* Master Black / Slate Grey Palette for Sidebar & Home Page */
+    --sidebar-bg: #111317;
+    --sidebar-header-bg: #0d0f14;
     --sidebar-text: #94a3b8;
     --sidebar-text-hover: #ffffff;
-    --sidebar-active-bg: #0284c7;
-    --sidebar-section-title: #38bdf8;
-    --sidebar-border: #2d3a4f;
+    --sidebar-active-bg: #1e2430;
+    --sidebar-section-title: #64748b;
+    --sidebar-border: #1e232d;
     
-    /* Soft Canvas & Card Colors */
-    --content-bg: #f8fafc;
-    --card-bg: #ffffff;
-    --text-main: #1e293b;
-    --text-muted: #64748b;
-    --text-link: #0284c7;
+    /* Home Canvas & Analytics Card Colors */
+    --content-bg: #131720;
+    --card-bg: #1a202c;
+    --text-main: #f1f5f9;
+    --text-muted: #94a3b8;
+    --text-link: #38bdf8;
     
     /* Soft Hued Accents */
     --primary: #0284c7;
@@ -45,10 +45,10 @@
     --accent-orange: #d97706;
     --accent-red: #f87171;
     
-    /* Table & Status Colors */
-    --table-header-bg: #f1f5f9;
-    --table-border: #e2e8f0;
-    --table-row-hover: #f8fafc;
+    /* Home Table Colors (Alternating Dark Slate Rows) */
+    --table-header-bg: #151a24;
+    --table-border: #232b3b;
+    --table-row-hover: #2a3449;
     --badge-pink: #f87171;
     --badge-teal: #059669;
     --green-accent: #059669;
@@ -64,8 +64,8 @@
     --radius-lg: 14px;
     --radius-pill: 9999px;
     
-    --border-crisp: 1px solid #e2e8f0;
-    --shadow-crisp: 0 1px 3px 0 rgba(15, 23, 42, 0.04);
+    --border-crisp: 1px solid #232b3b;
+    --shadow-crisp: 0 4px 16px rgba(0, 0, 0, 0.4);
     
     /* Typography Pairing */
     --font-heading: 'Outfit', 'Plus Jakarta Sans', system-ui, sans-serif;
@@ -434,13 +434,14 @@ a {
 /* Top Navbar Header */
 .top-navbar {
     height: var(--header-height);
-    background-color: #ffffff;
-    border-bottom: 1px solid #e2e8f0;
+    background: linear-gradient(180deg, #181d27 0%, #12151d 100%);
+    border-bottom: 1px solid #232b3b;
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 0 24px;
-    box-shadow: var(--shadow-crisp);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+    z-index: 50;
 }
 
 .header-titles {
@@ -449,15 +450,16 @@ a {
 }
 
 .header-main-title {
-    font-size: 18.5px;
-    font-weight: 700;
-    color: #1e293b;
-    letter-spacing: -0.01em;
+    font-size: 18px;
+    font-weight: 800;
+    color: #ffffff;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
 }
 
 .header-subtitle {
     font-size: 12px;
-    color: var(--text-muted);
+    color: #94a3b8;
     margin-top: 1px;
 }
 
@@ -468,31 +470,31 @@ a {
 }
 
 .btn-action {
-    background: #ffffff;
-    border: 1px solid #cbd5e1;
+    background: #1e2430;
+    border: 1px solid #2d3748;
     padding: 7px 14px;
-    border-radius: var(--radius-sm);
-    font-size: 13px;
+    border-radius: var(--radius-pill);
+    font-size: 12.5px;
     font-weight: 600;
-    color: #334155;
+    color: #cbd5e1;
     cursor: pointer;
     display: flex;
     align-items: center;
     gap: 6px;
     transition: all 0.15s ease;
-    box-shadow: var(--shadow-crisp);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.3);
 }
 
 .btn-action:hover {
-    background-color: #f8fafc;
-    border-color: #0284c7;
-    color: #0284c7;
+    background-color: #252d3d;
+    border-color: #38bdf8;
+    color: #ffffff;
 }
 
 .action-divider {
     width: 1px;
     height: 24px;
-    background-color: #e2e8f0;
+    background-color: #232b3b;
 }
 
 .icon-group {
@@ -507,7 +509,7 @@ a {
     border-radius: var(--radius-sm);
     border: 1px solid transparent;
     background: transparent;
-    color: #64748b;
+    color: #94a3b8;
     font-size: 15px;
     cursor: pointer;
     display: flex;
@@ -518,9 +520,9 @@ a {
 }
 
 .icon-btn:hover, .icon-btn.active {
-    color: #1e293b;
-    background-color: #f1f5f9;
-    border-color: #cbd5e1;
+    color: #38bdf8;
+    background-color: #1e2430;
+    border-color: #2d3748;
 }
 
 .mini-caret {
@@ -540,19 +542,19 @@ a {
     width: 36px;
     height: 36px;
     border-radius: 50%;
-    background-color: #334155;
+    background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
     color: #ffffff;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 15px;
-    font-weight: 600;
+    font-size: 14px;
+    font-weight: 700;
 }
 
 .user-name {
-    font-weight: 600;
-    font-size: 14px;
-    color: #1e293b;
+    font-weight: 700;
+    font-size: 13.5px;
+    color: #ffffff;
 }
 
 /* ==========================================================================
@@ -5485,6 +5487,156 @@ body.gis-mode-active .content-body {
     font-size: 10.5px;
     color: #64748b;
 }
+
+/* Home & Sidebar Refinements */
+.brand-logo-img {
+    height: 32px;
+    width: 32px;
+    object-fit: contain;
+    border-radius: 4px;
+    display: block;
+}
+
+.tabs-card {
+    background: transparent !important;
+    border-radius: 0 !important;
+    border: none !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+    padding: 0 0 2px 0 !important;
+    box-shadow: none !important;
+}
+
+.tab-btn {
+    padding: 8px 14px !important;
+    background: transparent !important;
+    border: none !important;
+    border-bottom: 2px solid transparent !important;
+    font-size: 13.5px !important;
+    font-weight: 600 !important;
+    color: #94a3b8 !important;
+}
+
+.tab-btn:hover {
+    color: #ffffff !important;
+}
+
+.tab-btn.active {
+    color: #38bdf8 !important;
+    font-weight: 700 !important;
+    border-bottom-color: #38bdf8 !important;
+}
+
+.analytics-card {
+    background: #1a202c !important;
+    border: 1px solid #262f3f !important;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4) !important;
+}
+
+.analytics-card .card-header {
+    background-color: #151a24 !important;
+    border-bottom: 1px solid #232b3b !important;
+    padding: 16px 20px 12px 20px !important;
+}
+
+.analytics-card .card-title {
+    color: #ffffff !important;
+    font-size: 18px !important;
+}
+
+.period-badge {
+    color: #f59e0b !important;
+    font-size: 12.5px !important;
+}
+
+.period-label {
+    color: #f59e0b !important;
+}
+
+.analytics-card .card-body {
+    background-color: #1a202c !important;
+    padding: 20px !important;
+}
+
+.section-subheading {
+    color: #e2e8f0 !important;
+    font-size: 14.5px !important;
+}
+
+.table-responsive {
+    border: 1px solid #232b3b !important;
+    background-color: #1a202c !important;
+}
+
+.data-table th {
+    background-color: #151a24 !important;
+    color: #94a3b8 !important;
+    border: 1px solid #232b3b !important;
+    font-size: 12px !important;
+}
+
+.data-table td {
+    border: 1px solid #232b3b !important;
+    color: #e2e8f0 !important;
+    padding: 9px 14px !important;
+}
+
+.data-table tbody tr:nth-child(odd) {
+    background-color: #1a202c !important;
+}
+
+.data-table tbody tr:nth-child(even) {
+    background-color: #202738 !important;
+}
+
+.data-table tbody tr:hover {
+    background-color: #2a3449 !important;
+}
+
+.data-table td.total-cell,
+.data-table td:last-child {
+    color: #38bdf8 !important;
+    font-weight: 600 !important;
+}
+
+.data-table .total-row,
+.data-table .summary-total-row {
+    background-color: #151a24 !important;
+    font-weight: 700 !important;
+}
+
+.data-table .total-row td,
+.data-table .summary-total-row td {
+    border-top: 2px solid #38bdf8 !important;
+    color: #ffffff !important;
+}
+
+.table-link {
+    color: #e2e8f0 !important;
+}
+
+.table-link:hover {
+    color: #38bdf8 !important;
+}
+
+.sub-nav-list {
+    background-color: #0c0e12 !important;
+}
+
+.sub-nav-link {
+    color: #8291a5 !important;
+}
+
+.sub-nav-link:hover {
+    color: #ffffff !important;
+    background-color: rgba(255, 255, 255, 0.05) !important;
+}
+
+.sub-nav-item.active .sub-nav-link {
+    color: #ffffff !important;
+    background-color: #1e2430 !important;
+    border-left: 3px solid #38bdf8 !important;
+}
+
 </style>
 </head>
 <body>
@@ -5494,7 +5646,7 @@ body.gis-mode-active .content-body {
             <div class="sidebar-header">
                 <div class="brand">
                     <div class="brand-logo">
-                        <i class="fa-solid fa-shield-halved"></i>
+                        <img src="/static/media_screenshots/trace_main_logo.jpeg" alt="TRACE Logo" class="brand-logo-img">
                     </div>
                     <div class="brand-info">
                         <span class="brand-title">TRACE</span>
@@ -6457,7 +6609,7 @@ body.gis-mode-active .content-body {
                                     </div>
                                     <div class="metric-card dark-card" data-card-type="Intrusion Detection">
                                         <div class="card-metric-info"><span class="metric-number">0</span><span class="metric-label">INTRUSION DE...</span></div>
-                                        <div class="metric-icon-circle"><i class="fa-solid fa-shield-halved"></i></div>
+                                        <div class="metric-icon-circle"><img src="/static/media_screenshots/trace_main_logo.jpeg" alt="TRACE Logo" class="brand-logo-img"></div>
                                     </div>
                                     <div class="metric-card dark-card" data-card-type="Traffic Congestion">
                                         <div class="card-metric-info"><span class="metric-number">0</span><span class="metric-label">TRAFFIC CONG...</span></div>
@@ -6615,7 +6767,7 @@ body.gis-mode-active .content-body {
                                     <div class="metric-card dark-card mini-card" data-va-type="Crowd"><div class="card-metric-info"><span class="metric-number">0</span><span class="metric-label">CROWD DETECTION</span></div><div class="metric-icon-circle"><i class="fa-solid fa-users"></i></div></div>
                                     <div class="metric-card dark-card mini-card" data-va-type="Vehicle Detection" id="vaCardVehicle"><div class="card-metric-info"><span class="metric-number">0</span><span class="metric-label">VEHICLE DETECTION</span></div><div class="metric-icon-circle"><i class="fa-solid fa-car"></i></div></div>
                                     <div class="metric-card dark-card mini-card" data-va-type="Person Detection"><div class="card-metric-info"><span class="metric-number">0</span><span class="metric-label">PERSON DETECTION</span></div><div class="metric-icon-circle"><i class="fa-solid fa-user"></i></div></div>
-                                    <div class="metric-card dark-card mini-card" data-va-type="Intrusion Detection"><div class="card-metric-info"><span class="metric-number">0</span><span class="metric-label">INTRUSION DETECTION</span></div><div class="metric-icon-circle"><i class="fa-solid fa-shield-halved"></i></div></div>
+                                    <div class="metric-card dark-card mini-card" data-va-type="Intrusion Detection"><div class="card-metric-info"><span class="metric-number">0</span><span class="metric-label">INTRUSION DETECTION</span></div><div class="metric-icon-circle"><img src="/static/media_screenshots/trace_main_logo.jpeg" alt="TRACE Logo" class="brand-logo-img"></div></div>
                                     <div class="metric-card dark-card mini-card" data-va-type="Traffic Congestion"><div class="card-metric-info"><span class="metric-number">0</span><span class="metric-label">TRAFFIC CONGESTION</span></div><div class="metric-icon-circle"><i class="fa-solid fa-traffic-light"></i></div></div>
                                     <div class="metric-card dark-card mini-card" data-va-type="Loaded-Unloaded Alerts"><div class="card-metric-info"><span class="metric-number">0</span><span class="metric-label">LOADED-UNLOADED AL...</span></div><div class="metric-icon-circle"><i class="fa-solid fa-truck-ramp-box"></i></div></div>
                                     <div class="metric-card dark-card mini-card" data-va-type="Camera Tampering"><div class="card-metric-info"><span class="metric-number">0</span><span class="metric-label">CAMERA TAMPERING</span></div><div class="metric-icon-circle"><i class="fa-solid fa-video-slash"></i></div></div>
@@ -7788,7 +7940,7 @@ body.gis-mode-active .content-body {
                                                                             <span>2026-08-19 11:32:05 UTC</span>
                                                                         </div>
                                                                         <div class="hud-bottom-bar">
-                                                                            <span class="ai-detection-tag"><i class="fa-solid fa-shield-halved"></i> AI: Boundary Perimeter Safe (99.1%)</span>
+                                                                            <span class="ai-detection-tag"><img src="/static/media_screenshots/trace_main_logo.jpeg" alt="TRACE Logo" class="brand-logo-img"> AI: Boundary Perimeter Safe (99.1%)</span>
                                                                             <span>60 FPS</span>
                                                                         </div>
                                                                     </div>
@@ -8397,7 +8549,7 @@ body.gis-mode-active .content-body {
                                         <span class="cam-name">NK Mines • Coal Stockpile Platform</span>
                                     </div>
                                     <div class="cam-card-tags">
-                                        <span class="tag-ai-active"><i class="fa-solid fa-shield-halved"></i> PERIMETER (99.1%)</span>
+                                        <span class="tag-ai-active"><img src="/static/media_screenshots/trace_main_logo.jpeg" alt="TRACE Logo" class="brand-logo-img"> PERIMETER (99.1%)</span>
                                         <span class="tag-fps">60 FPS</span>
                                     </div>
                                 </div>
@@ -8958,7 +9110,7 @@ body.gis-mode-active .content-body {
                         <span id="auditResultsCount">Showing <strong>50 of 50</strong> Verified Sectional Audit Documents</span>
                         <div class="audit-results-actions">
                             <button class="btn-audit-meta" onclick="exportAuditManifestJson()"><i class="fa-solid fa-code"></i> Export Manifest JSON</button>
-                            <button class="btn-audit-meta" onclick="verifyAllBlockchainHashes()"><i class="fa-solid fa-shield-halved"></i> Verify All 50 Hashes</button>
+                            <button class="btn-audit-meta" onclick="verifyAllBlockchainHashes()"><img src="/static/media_screenshots/trace_main_logo.jpeg" alt="TRACE Logo" class="brand-logo-img"> Verify All 50 Hashes</button>
                         </div>
                     </div>
 
@@ -8980,7 +9132,7 @@ body.gis-mode-active .content-body {
                     <div class="modal-badge-row">
                         <span class="modal-badge-tag" id="modalYearBadge">FY 2025-26</span>
                         <span class="modal-badge-section" id="modalSectionBadge">Section 3 of 10</span>
-                        <span class="modal-badge-status"><i class="fa-solid fa-shield-halved"></i> IMMUTABLE LEDGER VERIFIED</span>
+                        <span class="modal-badge-status"><img src="/static/media_screenshots/trace_main_logo.jpeg" alt="TRACE Logo" class="brand-logo-img"> IMMUTABLE LEDGER VERIFIED</span>
                     </div>
                     <h3 id="modalReportTitle">FY 2025-26 Weighbridge Net Weight Reconciliation & Telemetry</h3>
                     <p id="modalReportMeta">Pages 81–120 (40 pgs) • SHA-256: 7f4a9b... • Block BLK-880427</p>
