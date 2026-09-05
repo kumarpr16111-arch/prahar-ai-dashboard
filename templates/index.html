@@ -15,6 +15,8 @@
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <!-- Internal Delivery Order (DO) Dataset -->
     <script src="/static/js/do_data.js"></script>
+    <!-- TRACE Configuration Masters Dataset -->
+    <script src="/static/js/config_masters.js"></script>
     <!-- Custom CSS -->
     <style>
 /* ==========================================================================
@@ -6452,72 +6454,46 @@ body.gis-mode-active .content-body {
                                 </ul>
                             </li>
 
-                            {% if user_role in ['gm'] %}
-                            <!-- Configuration Dropdown -->
+                            <!-- Configuration Dropdown (Area, Plant, Location, WeighBridge, Checkpost Masters) -->
                             <li class="nav-item has-sub" id="configNavItem">
-                                <a href="#" class="nav-link" id="configNavLink">
-                                    <i class="fa-solid fa-gear nav-icon"></i>
-                                    <span class="nav-text">Configuration</span>
-                                    <i class="fa-solid fa-chevron-right arrow-icon" id="configArrow"></i>
+                                <a href="#" class="nav-link" id="configNavLink" onclick="event.preventDefault(); toggleConfigDropdown(event);" style="color: #06b6d4; cursor: pointer;">
+                                    <i class="fa-solid fa-gear nav-icon" style="color: #06b6d4;"></i>
+                                    <span class="nav-text" style="color: #06b6d4; font-weight: 600;">Configuration</span>
+                                    <i class="fa-solid fa-chevron-right arrow-icon" id="configArrow" style="color: #06b6d4;"></i>
                                 </a>
                                 <ul class="sub-nav-list" id="configSubList" style="display: none;">
-                                    <li class="sub-nav-item">
-                                        <a href="#" class="sub-nav-link">
-                                            <i class="fa-solid fa-angle-right nav-icon" style="font-size: 11px; margin-right: 8px;"></i>
+                                    <li class="sub-nav-item" id="configAreaNavItem">
+                                        <a href="#config-area" class="sub-nav-link" onclick="event.preventDefault(); showConfigArea();">
+                                            <i class="fa-solid fa-mountain-city nav-icon" style="font-size: 11px; margin-right: 8px; color: #38bdf8;"></i>
                                             <span class="sub-nav-text">Area Master</span>
                                         </a>
                                     </li>
-                                    <li class="sub-nav-item">
-                                        <a href="#" class="sub-nav-link">
-                                            <i class="fa-solid fa-angle-right nav-icon" style="font-size: 11px; margin-right: 8px;"></i>
+                                    <li class="sub-nav-item" id="configPlantNavItem">
+                                        <a href="#config-plant" class="sub-nav-link" onclick="event.preventDefault(); showConfigPlant();">
+                                            <i class="fa-solid fa-industry nav-icon" style="font-size: 11px; margin-right: 8px; color: #34d399;"></i>
                                             <span class="sub-nav-text">Plant Master</span>
                                         </a>
                                     </li>
-                                    <li class="sub-nav-item">
-                                        <a href="#" class="sub-nav-link">
-                                            <i class="fa-solid fa-angle-right nav-icon" style="font-size: 11px; margin-right: 8px;"></i>
+                                    <li class="sub-nav-item" id="configLocationNavItem">
+                                        <a href="#config-location" class="sub-nav-link" onclick="event.preventDefault(); showConfigLocation();">
+                                            <i class="fa-solid fa-location-dot nav-icon" style="font-size: 11px; margin-right: 8px; color: #f59e0b;"></i>
                                             <span class="sub-nav-text">Location Master</span>
                                         </a>
                                     </li>
-                                    <li class="sub-nav-item">
-                                        <a href="#" class="sub-nav-link">
-                                            <i class="fa-solid fa-angle-right nav-icon" style="font-size: 11px; margin-right: 8px;"></i>
+                                    <li class="sub-nav-item" id="configWeighbridgeNavItem">
+                                        <a href="#config-weighbridge" class="sub-nav-link" onclick="event.preventDefault(); showConfigWeighbridge();">
+                                            <i class="fa-solid fa-scale-balanced nav-icon" style="font-size: 11px; margin-right: 8px; color: #a855f7;"></i>
                                             <span class="sub-nav-text">WeighBridge Master</span>
                                         </a>
                                     </li>
-                                    <li class="sub-nav-item">
-                                        <a href="#" class="sub-nav-link">
-                                            <i class="fa-solid fa-angle-right nav-icon" style="font-size: 11px; margin-right: 8px;"></i>
-                                            <span class="sub-nav-text">Material Master</span>
-                                        </a>
-                                    </li>
-                                    <li class="sub-nav-item">
-                                        <a href="#" class="sub-nav-link">
-                                            <i class="fa-solid fa-angle-right nav-icon" style="font-size: 11px; margin-right: 8px;"></i>
+                                    <li class="sub-nav-item" id="configCheckpostNavItem">
+                                        <a href="#config-checkpost" class="sub-nav-link" onclick="event.preventDefault(); showConfigCheckpost();">
+                                            <i class="fa-solid fa-shield-halved nav-icon" style="font-size: 11px; margin-right: 8px; color: #f87171;"></i>
                                             <span class="sub-nav-text">Checkpost Master</span>
-                                        </a>
-                                    </li>
-                                    <li class="sub-nav-item">
-                                        <a href="#" class="sub-nav-link">
-                                            <i class="fa-solid fa-angle-right nav-icon" style="font-size: 11px; margin-right: 8px;"></i>
-                                            <span class="sub-nav-text">Contractor Master</span>
-                                        </a>
-                                    </li>
-                                    <li class="sub-nav-item">
-                                        <a href="#" class="sub-nav-link">
-                                            <i class="fa-solid fa-angle-right nav-icon" style="font-size: 11px; margin-right: 8px;"></i>
-                                            <span class="sub-nav-text">Vehicle Master</span>
-                                        </a>
-                                    </li>
-                                    <li class="sub-nav-item">
-                                        <a href="#" class="sub-nav-link">
-                                            <i class="fa-solid fa-angle-right nav-icon" style="font-size: 11px; margin-right: 8px;"></i>
-                                            <span class="sub-nav-text">User Master</span>
                                         </a>
                                     </li>
                                 </ul>
                             </li>
-                            {% endif %}
 
                             {% if user_role in ['gm', 'vigilance', 'surveillance'] %}
                             <li class="nav-item has-sub" id="reportsNavItem">
@@ -9996,9 +9972,972 @@ body.gis-mode-active .content-body {
                         <h3 style="color: #f1f5f9; font-size: 18px; margin-bottom: 8px;">Road Dispatch Telemetry Ready</h3>
                         <p style="color: #94a3b8; max-width: 500px; margin: 0 auto 20px auto; font-size: 13px;">Commercial external road dispatch orders are synced with CCL Weighbridge Gate telemetry and RFID vehicle passes.</p>
                         <button class="btn-do-action btn-do-primary" onclick="showViewInternalDO()"><i class="fa-solid fa-table-list"></i> Go to View Internal DO Data</button>
+                <!-- ========================================================
+                     1. Area Master Configuration View Panel (Mining Areas)
+                     ======================================================== -->
+                <div class="tab-content-panel" id="config-area-view" style="display: none;">
+                    <div class="config-dashboard-container">
+                        <div class="config-header-card">
+                            <div class="config-header-left">
+                                <div class="config-icon-box" style="color: #38bdf8; background: rgba(56, 189, 248, 0.12); border-color: rgba(56, 189, 248, 0.3);">
+                                    <i class="fa-solid fa-mountain-city"></i>
+                                </div>
+                                <div>
+                                    <h2 class="config-title">Area Master (Mining Areas)</h2>
+                                    <p class="config-subtitle">Configure major administrative mining areas, regional headquarters, annual production targets, and General Managers in-charge.</p>
+                                </div>
+                            </div>
+                            <div class="config-stats-row">
+                                <div class="config-stat-box">
+                                    <span class="config-stat-num" id="areaKpiCount" style="color: #38bdf8;">14</span>
+                                    <span class="config-stat-lbl">Mining Areas</span>
+                                </div>
+                                <div class="config-stat-box">
+                                    <span class="config-stat-num" id="areaKpiMines" style="color: #34d399;">50</span>
+                                    <span class="config-stat-lbl">Connected Plants</span>
+                                </div>
+                                <div class="config-stat-box">
+                                    <span class="config-stat-num" id="areaKpiTarget" style="color: #fbbf24;">318.9 MT</span>
+                                    <span class="config-stat-lbl">Annual Target</span>
+                                </div>
+                                <div class="config-stat-box">
+                                    <span class="config-stat-num" style="color: #a855f7;">100%</span>
+                                    <span class="config-stat-lbl">GIS Bounded</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Interactive Area Overview & Production Targets Widget -->
+                        <div class="config-interactive-grid">
+                            <div class="config-widget-card">
+                                <div class="config-widget-header">
+                                    <span class="config-widget-title"><i class="fa-solid fa-chart-column" style="color: #38bdf8;"></i> Area Production & Dispatch Quotas</span>
+                                    <span class="config-live-badge"><span class="config-live-pulse"></span> FY 2026-27 Active</span>
+                                </div>
+                                <div style="display: flex; flex-direction: column; gap: 8px;">
+                                    <div style="display: flex; justify-content: space-between; font-size: 12px; color: #94a3b8;">
+                                        <span>Amrapali & Chandragupta (Highest Target):</span>
+                                        <strong style="color: #38bdf8;">40.0 MTPA (12.5% share)</strong>
+                                    </div>
+                                    <div style="background: #1e293b; height: 6px; border-radius: 3px; overflow: hidden;">
+                                        <div style="background: linear-gradient(90deg, #0284c7, #38bdf8); width: 85%; height: 100%;"></div>
+                                    </div>
+                                    <div style="display: flex; justify-content: space-between; font-size: 12px; color: #94a3b8; margin-top: 4px;">
+                                        <span>Magadh & Sanghmitra Area:</span>
+                                        <strong style="color: #34d399;">35.0 MTPA (11.0% share)</strong>
+                                    </div>
+                                    <div style="background: #1e293b; height: 6px; border-radius: 3px; overflow: hidden;">
+                                        <div style="background: linear-gradient(90deg, #059669, #34d399); width: 75%; height: 100%;"></div>
+                                    </div>
+                                    <div style="display: flex; justify-content: space-between; font-size: 12px; color: #94a3b8; margin-top: 4px;">
+                                        <span>Piparwar & Kathara Clusters:</span>
+                                        <strong style="color: #fbbf24;">48.5 MTPA combined</strong>
+                                    </div>
+                                    <div style="background: #1e293b; height: 6px; border-radius: 3px; overflow: hidden;">
+                                        <div style="background: linear-gradient(90deg, #d97706, #fbbf24); width: 68%; height: 100%;"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="config-widget-card">
+                                <div class="config-widget-header">
+                                    <span class="config-widget-title"><i class="fa-solid fa-map-location-dot" style="color: #34d399;"></i> Mining Cluster Spatial Summary</span>
+                                    <button class="btn-config-secondary" style="font-size: 11px; padding: 3px 8px;" onclick="showCameraGISView()"><i class="fa-solid fa-earth-americas"></i> Open Full GIS</button>
+                                </div>
+                                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; font-size: 11.5px;">
+                                    <div class="scale-meta-item">
+                                        <span>Total Mining Zones:</span>
+                                        <span>14 Clusters</span>
+                                    </div>
+                                    <div class="scale-meta-item">
+                                        <span>Opencast Pits (OCP):</span>
+                                        <span style="color: #38bdf8;">28 Pits</span>
+                                    </div>
+                                    <div class="scale-meta-item">
+                                        <span>Underground Mines (UG):</span>
+                                        <span style="color: #fbbf24;">8 Inclines</span>
+                                    </div>
+                                    <div class="scale-meta-item">
+                                        <span>Heavy Washeries:</span>
+                                        <span style="color: #34d399;">6 Plants</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Toolbar -->
+                        <div class="config-toolbar">
+                            <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
+                                <div class="config-search-box">
+                                    <i class="fa-solid fa-magnifying-glass"></i>
+                                    <input type="text" id="areaSearchInput" class="config-search-input" placeholder="Search Mining Area, GM, HQ..." oninput="handleAreaSearch()">
+                                </div>
+                                <select id="areaStatusFilter" class="config-filter-select" onchange="handleAreaSearch()">
+                                    <option value="all">All Statuses</option>
+                                    <option value="Operational">Operational</option>
+                                    <option value="Maintenance">Maintenance</option>
+                                </select>
+                            </div>
+                            <div style="display: flex; gap: 8px;">
+                                <button class="btn-config-secondary" onclick="exportMasterCsv('areas')"><i class="fa-solid fa-file-arrow-down"></i> Export Areas</button>
+                                <button class="btn-config-primary" onclick="openAddAreaModal()"><i class="fa-solid fa-plus"></i> Add Mining Area</button>
+                            </div>
+                        </div>
+
+                        <!-- Area Master Table -->
+                        <div class="config-table-card">
+                            <div class="config-table-scroll">
+                                <table class="config-data-table" id="areaMasterTable">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Area Code</th>
+                                            <th>Mining Area Name</th>
+                                            <th>General Manager / Staff Officer</th>
+                                            <th>Regional Headquarters</th>
+                                            <th>Annual Target (MT)</th>
+                                            <th>Connected Plants</th>
+                                            <th>GPS Coordinates</th>
+                                            <th>Status</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="areaMasterTableBody">
+                                        <!-- Dynamically Populated -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
+
+                <!-- ========================================================
+                     2. Plant Master Configuration View Panel (Coal Plants)
+                     ======================================================== -->
+                <div class="tab-content-panel" id="config-plant-view" style="display: none;">
+                    <div class="config-dashboard-container">
+                        <div class="config-header-card">
+                            <div class="config-header-left">
+                                <div class="config-icon-box" style="color: #34d399; background: rgba(52, 211, 153, 0.12); border-color: rgba(52, 211, 153, 0.3);">
+                                    <i class="fa-solid fa-industry"></i>
+                                </div>
+                                <div>
+                                    <h2 class="config-title">Plant Master (Coal Plants)</h2>
+                                    <p class="config-subtitle">Configure coal plants within mining areas: Opencast Mines (OCP), Underground Mines (UG), Coal Washeries, CHPs, and Coke Plants.</p>
+                                </div>
+                            </div>
+                            <div class="config-stats-row">
+                                <div class="config-stat-box">
+                                    <span class="config-stat-num" id="plantKpiTotal" style="color: #34d399;">50</span>
+                                    <span class="config-stat-lbl">Total Plants</span>
+                                </div>
+                                <div class="config-stat-box">
+                                    <span class="config-stat-num" style="color: #38bdf8;">28 OCP</span>
+                                    <span class="config-stat-lbl">Opencast</span>
+                                </div>
+                                <div class="config-stat-box">
+                                    <span class="config-stat-num" style="color: #fbbf24;">8 UG</span>
+                                    <span class="config-stat-lbl">Underground</span>
+                                </div>
+                                <div class="config-stat-box">
+                                    <span class="config-stat-num" style="color: #a855f7;">6 Washery</span>
+                                    <span class="config-stat-lbl">Coal Washeries</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Interactive Plant Throughput & Washery Yield Simulator -->
+                        <div class="config-interactive-grid">
+                            <div class="config-widget-card">
+                                <div class="config-widget-header">
+                                    <span class="config-widget-title"><i class="fa-solid fa-filter" style="color: #34d399;"></i> Washery Throughput & Yield Simulator</span>
+                                    <span class="config-live-badge"><span class="config-live-pulse"></span> Dense Media Circuit</span>
+                                </div>
+                                <div style="display: flex; flex-direction: column; gap: 10px;">
+                                    <div class="slider-group">
+                                        <label><span>Raw ROM Feed Rate:</span><strong id="plantRomFeedDisplay" style="color: #38bdf8;">12,500 TPD</strong></label>
+                                        <input type="range" id="plantRomFeedSlider" min="2000" max="30000" step="500" value="12500" oninput="updateWasherySim()">
+                                    </div>
+                                    <div class="slider-group">
+                                        <label><span>Clean Coal Yield Efficiency:</span><strong id="plantYieldDisplay" style="color: #34d399;">48.5 %</strong></label>
+                                        <input type="range" id="plantYieldSlider" min="25" max="75" step="0.5" value="48.5" oninput="updateWasherySim()">
+                                    </div>
+                                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 4px;">
+                                        <div class="scale-meta-item">
+                                            <span>Est. Clean Coal Yield:</span>
+                                            <span id="simCleanCoalOutput" style="color: #34d399; font-size: 14px;">6,062.5 MT/Day</span>
+                                        </div>
+                                        <div class="scale-meta-item">
+                                            <span>Reject / Slurry Output:</span>
+                                            <span id="simRejectOutput" style="color: #f87171; font-size: 14px;">6,437.5 MT/Day</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="config-widget-card">
+                                <div class="config-widget-header">
+                                    <span class="config-widget-title"><i class="fa-solid fa-boxes-stacked" style="color: #fbbf24;"></i> Plant Capacity Classification</span>
+                                    <span style="font-size: 11px; color: #94a3b8;">Central Coalfields</span>
+                                </div>
+                                <div style="display: flex; flex-direction: column; gap: 8px; font-size: 12px;">
+                                    <div style="display:flex; justify-content:space-between; padding: 6px 10px; background:#0b1019; border-radius:4px; border:1px solid #1f293d;">
+                                        <span><i class="fa-solid fa-circle" style="color: #38bdf8; font-size: 8px;"></i> Opencast Mines (OCP):</span>
+                                        <strong>15,000 TPD avg.</strong>
+                                    </div>
+                                    <div style="display:flex; justify-content:space-between; padding: 6px 10px; background:#0b1019; border-radius:4px; border:1px solid #1f293d;">
+                                        <span><i class="fa-solid fa-circle" style="color: #fbbf24; font-size: 8px;"></i> Underground Mines (UG):</span>
+                                        <strong>3,500 TPD avg.</strong>
+                                    </div>
+                                    <div style="display:flex; justify-content:space-between; padding: 6px 10px; background:#0b1019; border-radius:4px; border:1px solid #1f293d;">
+                                        <span><i class="fa-solid fa-circle" style="color: #34d399; font-size: 8px;"></i> Heavy Coal Washeries:</span>
+                                        <strong>8,500 TPD avg.</strong>
+                                    </div>
+                                    <div style="display:flex; justify-content:space-between; padding: 6px 10px; background:#0b1019; border-radius:4px; border:1px solid #1f293d;">
+                                        <span><i class="fa-solid fa-circle" style="color: #a855f7; font-size: 8px;"></i> Rapid Silo & Siding CHPs:</span>
+                                        <strong>25,000 TPD avg.</strong>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Toolbar -->
+                        <div class="config-toolbar">
+                            <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
+                                <div class="config-search-box">
+                                    <i class="fa-solid fa-magnifying-glass"></i>
+                                    <input type="text" id="plantSearchInput" class="config-search-input" placeholder="Search Plant Name, Area, Code..." oninput="handlePlantSearch()">
+                                </div>
+                                <select id="plantAreaFilter" class="config-filter-select" onchange="handlePlantSearch()">
+                                    <option value="all">All Mining Areas</option>
+                                    <!-- Populated via JS -->
+                                </select>
+                                <select id="plantTypeFilter" class="config-filter-select" onchange="handlePlantSearch()">
+                                    <option value="all">All Plant Types</option>
+                                    <option value="Opencast Mine (OCP)">Opencast Mine (OCP)</option>
+                                    <option value="Underground Mine (UG)">Underground Mine (UG)</option>
+                                    <option value="Coal Washery">Coal Washery</option>
+                                    <option value="CHP & Siding">CHP & Siding</option>
+                                    <option value="Coke Plant">Coke Plant</option>
+                                </select>
+                            </div>
+                            <div style="display: flex; gap: 8px;">
+                                <button class="btn-config-secondary" onclick="exportMasterCsv('plants')"><i class="fa-solid fa-file-arrow-down"></i> Export Plants</button>
+                                <button class="btn-config-primary" onclick="openAddPlantModal()"><i class="fa-solid fa-plus"></i> Register Coal Plant</button>
+                            </div>
+                        </div>
+
+                        <!-- Plant Master Table -->
+                        <div class="config-table-card">
+                            <div class="config-table-scroll">
+                                <table class="config-data-table" id="plantMasterTable">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Plant Code</th>
+                                            <th>Coal Plant Name</th>
+                                            <th>Parent Mining Area</th>
+                                            <th>Plant Type</th>
+                                            <th>Rated Capacity (TPD)</th>
+                                            <th>GPS Latitude</th>
+                                            <th>GPS Longitude</th>
+                                            <th>Status</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="plantMasterTableBody">
+                                        <!-- Dynamically Populated -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ========================================================
+                     3. Location Master Configuration View Panel (GPS Coordinates)
+                     ======================================================== -->
+                <div class="tab-content-panel" id="config-location-view" style="display: none;">
+                    <div class="config-dashboard-container">
+                        <div class="config-header-card">
+                            <div class="config-header-left">
+                                <div class="config-icon-box" style="color: #f59e0b; background: rgba(245, 158, 11, 0.12); border-color: rgba(245, 158, 11, 0.3);">
+                                    <i class="fa-solid fa-location-dot"></i>
+                                </div>
+                                <div>
+                                    <h2 class="config-title">Location Master (Particular Coordinates & POIs)</h2>
+                                    <p class="config-subtitle">Configure exact GPS coordinates, geofence radius boundaries, coal face points, stock heaps, silos, and railway sidings.</p>
+                                </div>
+                            </div>
+                            <div class="config-stats-row">
+                                <div class="config-stat-box">
+                                    <span class="config-stat-num" id="locKpiTotal" style="color: #f59e0b;">133</span>
+                                    <span class="config-stat-lbl">Mapped Points</span>
+                                </div>
+                                <div class="config-stat-box">
+                                    <span class="config-stat-num" style="color: #38bdf8;">48 Stocks</span>
+                                    <span class="config-stat-lbl">Coal Heaps</span>
+                                </div>
+                                <div class="config-stat-box">
+                                    <span class="config-stat-num" style="color: #34d399;">32 Sidings</span>
+                                    <span class="config-stat-lbl">Rail Sidings</span>
+                                </div>
+                                <div class="config-stat-box">
+                                    <span class="config-stat-num" style="color: #a855f7;">28 Silos</span>
+                                    <span class="config-stat-lbl">Crushers & Silos</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Interactive GPS Coordinate Pin Dropper & Geofence Slider Widget -->
+                        <div class="config-interactive-grid">
+                            <div class="config-widget-card">
+                                <div class="config-widget-header">
+                                    <span class="config-widget-title"><i class="fa-solid fa-crosshairs" style="color: #f59e0b;"></i> Interactive GPS Coordinate Tool</span>
+                                    <span class="config-live-badge"><i class="fa-solid fa-satellite"></i> WGS-84 Precision</span>
+                                </div>
+                                <div class="location-picker-widget">
+                                    <div class="coord-display-row">
+                                        <div class="coord-input-box">
+                                            <span>LAT:</span>
+                                            <strong id="simPickerLat">23.7541° N</strong>
+                                        </div>
+                                        <div class="coord-input-box">
+                                            <span>LNG:</span>
+                                            <strong id="simPickerLng">85.8643° E</strong>
+                                        </div>
+                                    </div>
+                                    <div class="slider-group">
+                                        <label><span>Geofence Boundary Radius:</span><strong id="locRadiusDisplay" style="color: #38bdf8;">150 meters</strong></label>
+                                        <input type="range" id="locRadiusSlider" min="30" max="800" step="10" value="150" oninput="updateLocRadiusSim()">
+                                    </div>
+                                    <div style="display:flex; justify-content:space-between; align-items:center; font-size:11px; color:#94a3b8; padding-top:4px;">
+                                        <span><i class="fa-solid fa-circle-check text-green"></i> Auto-detection zone inside ±0.0015° deg</span>
+                                        <button class="btn-config-secondary" style="font-size: 10.5px; padding: 4px 8px;" onclick="randomizeGpsPin()"><i class="fa-solid fa-arrows-rotate"></i> Pick Test Pin</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="config-widget-card">
+                                <div class="config-widget-header">
+                                    <span class="config-widget-title"><i class="fa-solid fa-layer-group" style="color: #38bdf8;"></i> Coordinate Classification Breakdown</span>
+                                    <span style="font-size: 11px; color: #94a3b8;">High Security Zones</span>
+                                </div>
+                                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; font-size: 11.5px;">
+                                    <div class="scale-meta-item">
+                                        <span>Active Mining Face:</span>
+                                        <span style="color: #f87171;">25 GPS Points</span>
+                                    </div>
+                                    <div class="scale-meta-item">
+                                        <span>Coal Stock Piles:</span>
+                                        <span style="color: #fbbf24;">48 GPS Points</span>
+                                    </div>
+                                    <div class="scale-meta-item">
+                                        <span>Railway Sidings:</span>
+                                        <span style="color: #34d399;">32 GPS Points</span>
+                                    </div>
+                                    <div class="scale-meta-item">
+                                        <span>Automated Silos:</span>
+                                        <span style="color: #38bdf8;">28 GPS Points</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Toolbar -->
+                        <div class="config-toolbar">
+                            <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
+                                <div class="config-search-box">
+                                    <i class="fa-solid fa-magnifying-glass"></i>
+                                    <input type="text" id="locSearchInput" class="config-search-input" placeholder="Search Location, Plant, Area..." oninput="handleLocSearch()">
+                                </div>
+                                <select id="locAreaFilter" class="config-filter-select" onchange="handleLocSearch()">
+                                    <option value="all">All Mining Areas</option>
+                                    <!-- Populated via JS -->
+                                </select>
+                                <select id="locCategoryFilter" class="config-filter-select" onchange="handleLocSearch()">
+                                    <option value="all">All Location Categories</option>
+                                    <option value="Coal Stock Pile">Coal Stock Pile</option>
+                                    <option value="Active Mining Face">Active Mining Face</option>
+                                    <option value="Railway Coal Siding">Railway Coal Siding</option>
+                                    <option value="Automated Silo Rapid Loading">Automated Silo Rapid Loading</option>
+                                    <option value="Crushing / Hopper Plant">Crushing / Hopper Plant</option>
+                                    <option value="Waste / Overburden Dump">Waste / Overburden Dump</option>
+                                </select>
+                            </div>
+                            <div style="display: flex; gap: 8px;">
+                                <button class="btn-config-secondary" onclick="exportMasterCsv('locations')"><i class="fa-solid fa-file-arrow-down"></i> Export Coordinates</button>
+                                <button class="btn-config-primary" onclick="openAddLocationModal()"><i class="fa-solid fa-plus"></i> Add GPS Coordinate</button>
+                            </div>
+                        </div>
+
+                        <!-- Location Master Table -->
+                        <div class="config-table-card">
+                            <div class="config-table-scroll">
+                                <table class="config-data-table" id="locationMasterTable">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Location ID</th>
+                                            <th>Coordinate Location Name</th>
+                                            <th>Category</th>
+                                            <th>Parent Plant</th>
+                                            <th>Mining Area</th>
+                                            <th>GPS Latitude</th>
+                                            <th>GPS Longitude</th>
+                                            <th>Geofence Radius (m)</th>
+                                            <th>Status</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="locationMasterTableBody">
+                                        <!-- Dynamically Populated -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ========================================================
+                     4. WeighBridge Master Configuration View Panel
+                     ======================================================== -->
+                <div class="tab-content-panel" id="config-weighbridge-view" style="display: none;">
+                    <div class="config-dashboard-container">
+                        <div class="config-header-card">
+                            <div class="config-header-left">
+                                <div class="config-icon-box" style="color: #a855f7; background: rgba(168, 85, 247, 0.12); border-color: rgba(168, 85, 247, 0.3);">
+                                    <i class="fa-solid fa-scale-balanced"></i>
+                                </div>
+                                <div>
+                                    <h2 class="config-title">WeighBridge Master (Weighting Scales & Bridges)</h2>
+                                    <p class="config-subtitle">Configure heavy industrial road weighbridges, load cell calibration, gross/tare tolerance margins, and dual IP camera bindings.</p>
+                                </div>
+                            </div>
+                            <div class="config-stats-row">
+                                <div class="config-stat-box">
+                                    <span class="config-stat-num" id="wbKpiTotal" style="color: #a855f7;">161</span>
+                                    <span class="config-stat-lbl">Weighbridges</span>
+                                </div>
+                                <div class="config-stat-box">
+                                    <span class="config-stat-num" id="wbKpiOnline" style="color: #34d399;">158 Live</span>
+                                    <span class="config-stat-lbl">Online Status</span>
+                                </div>
+                                <div class="config-stat-box">
+                                    <span class="config-stat-num" style="color: #38bdf8;">100 MT</span>
+                                    <span class="config-stat-lbl">Max Capacity</span>
+                                </div>
+                                <div class="config-stat-box">
+                                    <span class="config-stat-num" style="color: #fbbf24;">±20 kg</span>
+                                    <span class="config-stat-lbl">DGMS Tolerance</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Interactive Weighbridge Scale Telemetry & Live Calibrator -->
+                        <div class="config-interactive-grid">
+                            <div class="config-widget-card">
+                                <div class="config-widget-header">
+                                    <span class="config-widget-title"><i class="fa-solid fa-display" style="color: #a855f7;"></i> Live Scale Digital Readout Simulator</span>
+                                    <span class="config-live-badge"><span class="config-live-pulse"></span> Bridge RD1504</span>
+                                </div>
+                                <div class="digital-scale-hud">
+                                    <div class="digital-scale-screen">
+                                        <span class="scale-weight-digits" id="liveScaleDisplay">42.840</span>
+                                        <span class="scale-weight-unit">MT (GROSS)</span>
+                                    </div>
+                                    <div class="scale-meta-grid">
+                                        <div class="scale-meta-item">
+                                            <span>Tare Weight:</span>
+                                            <span id="scaleTareVal">14.220 MT</span>
+                                        </div>
+                                        <div class="scale-meta-item">
+                                            <span>Net Payload:</span>
+                                            <span id="scaleNetVal" style="color: #34d399;">28.620 MT</span>
+                                        </div>
+                                        <div class="scale-meta-item">
+                                            <span>Zero Drift:</span>
+                                            <span id="scaleDriftVal" style="color: #38bdf8;">+0.0 kg (OK)</span>
+                                        </div>
+                                    </div>
+                                    <div style="display:flex; justify-content:space-between; gap:8px; margin-top:2px;">
+                                        <button class="btn-config-secondary" style="flex:1; font-size:11px;" onclick="triggerSimulateScaleWeight()"><i class="fa-solid fa-truck"></i> Simulate Truck Scale</button>
+                                        <button class="btn-config-primary" style="flex:1; font-size:11px; background:#a855f7;" onclick="zeroCalibrateScale()"><i class="fa-solid fa-arrows-rotate"></i> Zero Calibrate</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="config-widget-card">
+                                <div class="config-widget-header">
+                                    <span class="config-widget-title"><i class="fa-solid fa-video" style="color: #38bdf8;"></i> ANPR & Load Cell Hardware Diagnostics</span>
+                                    <span class="config-live-badge"><i class="fa-solid fa-network-wired"></i> Subnet 192.168.10.x</span>
+                                </div>
+                                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; font-size: 11.5px;">
+                                    <div class="scale-meta-item">
+                                        <span>Dual CCTV ANPR:</span>
+                                        <span style="color: #34d399;">Front & Top Active</span>
+                                    </div>
+                                    <div class="scale-meta-item">
+                                        <span>Load Cells Health:</span>
+                                        <span style="color: #34d399;">99.8% (4x 30T Cells)</span>
+                                    </div>
+                                    <div class="scale-meta-item">
+                                        <span>Anti-Tamper Sensor:</span>
+                                        <span style="color: #34d399;">Optical IR Beam Intact</span>
+                                    </div>
+                                    <div class="scale-meta-item">
+                                        <span>Last Audit Sync:</span>
+                                        <span style="color: #38bdf8;">Live Push to TRACE</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Toolbar -->
+                        <div class="config-toolbar">
+                            <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
+                                <div class="config-search-box">
+                                    <i class="fa-solid fa-magnifying-glass"></i>
+                                    <input type="text" id="wbSearchInput" class="config-search-input" placeholder="Search Scale Code (e.g. RD1504), Area..." oninput="handleWbSearch()">
+                                </div>
+                                <select id="wbAreaFilter" class="config-filter-select" onchange="handleWbSearch()">
+                                    <option value="all">All Mining Areas</option>
+                                    <!-- Populated via JS -->
+                                </select>
+                                <select id="wbStatusFilter" class="config-filter-select" onchange="handleWbSearch()">
+                                    <option value="all">All Scale Statuses</option>
+                                    <option value="Online">Online / Calibrated</option>
+                                    <option value="Calibration">Under Calibration</option>
+                                </select>
+                            </div>
+                            <div style="display: flex; gap: 8px;">
+                                <button class="btn-config-secondary" onclick="exportMasterCsv('weighbridges')"><i class="fa-solid fa-file-arrow-down"></i> Export Weighbridges</button>
+                                <button class="btn-config-primary" onclick="openAddWeighbridgeModal()"><i class="fa-solid fa-plus"></i> Add Weighbridge</button>
+                            </div>
+                        </div>
+
+                        <!-- WeighBridge Master Table -->
+                        <div class="config-table-card">
+                            <div class="config-table-scroll">
+                                <table class="config-data-table" id="weighbridgeMasterTable">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Scale Code</th>
+                                            <th>WeighBridge Name</th>
+                                            <th>Parent Plant</th>
+                                            <th>Mining Area</th>
+                                            <th>Scale Structure</th>
+                                            <th>Max Capacity (MT)</th>
+                                            <th>Tolerance (kg)</th>
+                                            <th>CCTV Cameras</th>
+                                            <th>Static IP</th>
+                                            <th>Status</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="weighbridgeMasterTableBody">
+                                        <!-- Dynamically Populated -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ========================================================
+                     5. Checkpost Master Configuration View Panel
+                     ======================================================== -->
+                <div class="tab-content-panel" id="config-checkpost-view" style="display: none;">
+                    <div class="config-dashboard-container">
+                        <div class="config-header-card">
+                            <div class="config-header-left">
+                                <div class="config-icon-box" style="color: #f87171; background: rgba(248, 113, 113, 0.12); border-color: rgba(248, 113, 113, 0.3);">
+                                    <i class="fa-solid fa-shield-halved"></i>
+                                </div>
+                                <div>
+                                    <h2 class="config-title">Checkpost Master (Security Checkposts)</h2>
+                                    <p class="config-subtitle">Configure security checkposts, automated boom barrier controllers, long-range RFID tag scanners, and ANPR access gates.</p>
+                                </div>
+                            </div>
+                            <div class="config-stats-row">
+                                <div class="config-stat-box">
+                                    <span class="config-stat-num" id="cpKpiTotal" style="color: #f87171;">96</span>
+                                    <span class="config-stat-lbl">Checkposts</span>
+                                </div>
+                                <div class="config-stat-box">
+                                    <span class="config-stat-num" style="color: #34d399;">96 Auto</span>
+                                    <span class="config-stat-lbl">Boom Barriers</span>
+                                </div>
+                                <div class="config-stat-box">
+                                    <span class="config-stat-num" style="color: #38bdf8;">100%</span>
+                                    <span class="config-stat-lbl">RFID Online</span>
+                                </div>
+                                <div class="config-stat-box">
+                                    <span class="config-stat-num" id="cpKpiPasses" style="color: #fbbf24;">18,490</span>
+                                    <span class="config-stat-lbl">Today's Passes</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Interactive Boom Barrier & RFID Scanner Controller -->
+                        <div class="config-interactive-grid">
+                            <div class="config-widget-card">
+                                <div class="config-widget-header">
+                                    <span class="config-widget-title"><i class="fa-solid fa-torii-gate" style="color: #f87171;"></i> Live Boom Barrier & RFID Controller</span>
+                                    <span class="config-live-badge" id="barrierLiveStatusBadge"><span class="config-live-pulse"></span> Gate CP1101 [AUTO]</span>
+                                </div>
+                                <div class="barrier-visualizer-box">
+                                    <div class="barrier-graphic-wrap">
+                                        <div class="barrier-housing"></div>
+                                        <div class="barrier-arm" id="interactiveBarrierArm"></div>
+                                        <div class="barrier-signal-light" id="barrierSignalLight"></div>
+                                    </div>
+                                    <div style="display: flex; gap: 8px; width: 100%;">
+                                        <button class="btn-config-primary" style="flex: 1; background: #059669; font-size: 11px;" onclick="toggleBarrierGate(true)"><i class="fa-solid fa-lock-open"></i> Open Barrier</button>
+                                        <button class="btn-config-secondary" style="flex: 1; font-size: 11px; background: #dc2626; color: #fff; border-color: #ef4444;" onclick="toggleBarrierGate(false)"><i class="fa-solid fa-lock"></i> Close Barrier</button>
+                                        <button class="btn-config-secondary" style="flex: 1; font-size: 11px;" onclick="simulateRfidPass()"><i class="fa-solid fa-id-badge"></i> Swipe RFID</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="config-widget-card">
+                                <div class="config-widget-header">
+                                    <span class="config-widget-title"><i class="fa-solid fa-tower-broadcast" style="color: #38bdf8;"></i> Security Access Audit Feed</span>
+                                    <span style="font-size: 11px; color: #34d399;"><i class="fa-solid fa-circle-check"></i> Vigilance Active</span>
+                                </div>
+                                <div style="display: flex; flex-direction: column; gap: 6px; font-size: 11.5px;">
+                                    <div style="display:flex; justify-content:space-between; padding:6px 10px; background:#0b1019; border-radius:4px; border:1px solid #1f293d;">
+                                        <span><strong style="color:#38bdf8;">JH01-DB-4821</strong> (DO 3080250001):</span>
+                                        <span style="color:#34d399;">Gate Clear • Auto-Pass</span>
+                                    </div>
+                                    <div style="display:flex; justify-content:space-between; padding:6px 10px; background:#0b1019; border-radius:4px; border:1px solid #1f293d;">
+                                        <span><strong style="color:#38bdf8;">JH02-CC-1904</strong> (DO 3137250001):</span>
+                                        <span style="color:#34d399;">Gate Clear • Auto-Pass</span>
+                                    </div>
+                                    <div style="display:flex; justify-content:space-between; padding:6px 10px; background:#0b1019; border-radius:4px; border:1px solid #1f293d;">
+                                        <span><strong style="color:#fbbf24;">JH05-KK-8812</strong> (DO 3059250004):</span>
+                                        <span style="color:#38bdf8;">Weighment Reconciled</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Toolbar -->
+                        <div class="config-toolbar">
+                            <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
+                                <div class="config-search-box">
+                                    <i class="fa-solid fa-magnifying-glass"></i>
+                                    <input type="text" id="cpSearchInput" class="config-search-input" placeholder="Search Checkpost (e.g. CP1101), Area, Guard..." oninput="handleCpSearch()">
+                                </div>
+                                <select id="cpAreaFilter" class="config-filter-select" onchange="handleCpSearch()">
+                                    <option value="all">All Mining Areas</option>
+                                    <!-- Populated via JS -->
+                                </select>
+                            </div>
+                            <div style="display: flex; gap: 8px;">
+                                <button class="btn-config-secondary" onclick="exportMasterCsv('checkposts')"><i class="fa-solid fa-file-arrow-down"></i> Export Checkposts</button>
+                                <button class="btn-config-primary" onclick="openAddCheckpostModal()"><i class="fa-solid fa-plus"></i> Add Security Checkpost</button>
+                            </div>
+                        </div>
+
+                        <!-- Checkpost Master Table -->
+                        <div class="config-table-card">
+                            <div class="config-table-scroll">
+                                <table class="config-data-table" id="checkpostMasterTable">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Checkpost Code</th>
+                                            <th>Checkpost Name</th>
+                                            <th>Parent Plant</th>
+                                            <th>Mining Area</th>
+                                            <th>Gate Lane Direction</th>
+                                            <th>Boom Barrier State</th>
+                                            <th>RFID Scanner Status</th>
+                                            <th>Guard In-Charge</th>
+                                            <th>Today's Passes</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="checkpostMasterTableBody">
+                                        <!-- Dynamically Populated -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ========================================================
+                     Configuration Creation & Registration Modals
+                     ======================================================== -->
+                <!-- 1. Add Mining Area Modal -->
+                <div class="config-modal-overlay" id="addAreaModal" style="display: none;">
+                    <div class="config-modal-dialog">
+                        <div class="config-modal-header">
+                            <h3 class="config-modal-title"><i class="fa-solid fa-mountain-city" style="color: #38bdf8;"></i> Add Mining Area</h3>
+                            <button class="config-modal-close" onclick="closeConfigModal('addAreaModal')"><i class="fa-solid fa-xmark"></i></button>
+                        </div>
+                        <form id="formAddArea" onsubmit="handleSaveArea(event)">
+                            <div class="config-modal-body">
+                                <div>
+                                    <label class="do-form-label">Area Code</label>
+                                    <input type="text" id="newAreaCode" class="do-form-input" placeholder="e.g. AR-TND" required>
+                                </div>
+                                <div>
+                                    <label class="do-form-label">Mining Area Name</label>
+                                    <input type="text" id="newAreaName" class="do-form-input" placeholder="e.g. Tandwa Coalfield" required>
+                                </div>
+                                <div>
+                                    <label class="do-form-label">General Manager / SO</label>
+                                    <input type="text" id="newAreaGm" class="do-form-input" placeholder="e.g. R. K. Verma, GM" required>
+                                </div>
+                                <div>
+                                    <label class="do-form-label">Regional HQ Office</label>
+                                    <input type="text" id="newAreaHq" class="do-form-input" placeholder="e.g. Tandwa Complex" required>
+                                </div>
+                                <div>
+                                    <label class="do-form-label">Annual Target (MTPA)</label>
+                                    <input type="number" step="0.1" id="newAreaTarget" class="do-form-input" placeholder="e.g. 25.0" required>
+                                </div>
+                                <div>
+                                    <label class="do-form-label">Status</label>
+                                    <select id="newAreaStatus" class="do-form-select">
+                                        <option value="Operational">Operational</option>
+                                        <option value="Maintenance">Maintenance</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="config-modal-footer">
+                                <button type="button" class="btn-config-secondary" onclick="closeConfigModal('addAreaModal')">Cancel</button>
+                                <button type="submit" class="btn-config-primary"><i class="fa-solid fa-check"></i> Save Mining Area</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- 2. Add Coal Plant Modal -->
+                <div class="config-modal-overlay" id="addPlantModal" style="display: none;">
+                    <div class="config-modal-dialog">
+                        <div class="config-modal-header">
+                            <h3 class="config-modal-title"><i class="fa-solid fa-industry" style="color: #34d399;"></i> Register New Coal Plant</h3>
+                            <button class="config-modal-close" onclick="closeConfigModal('addPlantModal')"><i class="fa-solid fa-xmark"></i></button>
+                        </div>
+                        <form id="formAddPlant" onsubmit="handleSavePlant(event)">
+                            <div class="config-modal-body">
+                                <div>
+                                    <label class="do-form-label">Plant Code</label>
+                                    <input type="text" id="newPlantCode" class="do-form-input" placeholder="e.g. PLT-TNDOCP" required>
+                                </div>
+                                <div>
+                                    <label class="do-form-label">Plant Name</label>
+                                    <input type="text" id="newPlantName" class="do-form-input" placeholder="e.g. Tandwa Opencast" required>
+                                </div>
+                                <div>
+                                    <label class="do-form-label">Parent Mining Area</label>
+                                    <select id="newPlantArea" class="do-form-select" required>
+                                        <!-- Populated dynamically -->
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="do-form-label">Plant Type</label>
+                                    <select id="newPlantType" class="do-form-select">
+                                        <option value="Opencast Mine (OCP)">Opencast Mine (OCP)</option>
+                                        <option value="Underground Mine (UG)">Underground Mine (UG)</option>
+                                        <option value="Coal Washery">Coal Washery</option>
+                                        <option value="CHP & Siding">CHP & Siding</option>
+                                        <option value="Coke Plant">Coke Plant</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="do-form-label">Rated Capacity (TPD)</label>
+                                    <input type="number" id="newPlantCapacity" class="do-form-input" placeholder="e.g. 15000" required>
+                                </div>
+                                <div>
+                                    <label class="do-form-label">Status</label>
+                                    <select id="newPlantStatus" class="do-form-select">
+                                        <option value="Online">Online / Operational</option>
+                                        <option value="Maintenance">Maintenance</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="config-modal-footer">
+                                <button type="button" class="btn-config-secondary" onclick="closeConfigModal('addPlantModal')">Cancel</button>
+                                <button type="submit" class="btn-config-primary"><i class="fa-solid fa-check"></i> Register Plant</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- 3. Add GPS Location Point Modal -->
+                <div class="config-modal-overlay" id="addLocationModal" style="display: none;">
+                    <div class="config-modal-dialog">
+                        <div class="config-modal-header">
+                            <h3 class="config-modal-title"><i class="fa-solid fa-location-dot" style="color: #f59e0b;"></i> Add GPS Coordinate Location</h3>
+                            <button class="config-modal-close" onclick="closeConfigModal('addLocationModal')"><i class="fa-solid fa-xmark"></i></button>
+                        </div>
+                        <form id="formAddLocation" onsubmit="handleSaveLocation(event)">
+                            <div class="config-modal-body">
+                                <div>
+                                    <label class="do-form-label">Location ID</label>
+                                    <input type="text" id="newLocId" class="do-form-input" placeholder="e.g. LOC-134" required>
+                                </div>
+                                <div>
+                                    <label class="do-form-label">Location Name</label>
+                                    <input type="text" id="newLocName" class="do-form-input" placeholder="e.g. Coal Stock Heap No 25" required>
+                                </div>
+                                <div>
+                                    <label class="do-form-label">Category</label>
+                                    <select id="newLocCategory" class="do-form-select">
+                                        <option value="Coal Stock Pile">Coal Stock Pile</option>
+                                        <option value="Active Mining Face">Active Mining Face</option>
+                                        <option value="Railway Coal Siding">Railway Coal Siding</option>
+                                        <option value="Automated Silo Rapid Loading">Automated Silo Rapid Loading</option>
+                                        <option value="Crushing / Hopper Plant">Crushing / Hopper Plant</option>
+                                        <option value="Waste / Overburden Dump">Waste / Overburden Dump</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="do-form-label">Parent Mining Area</label>
+                                    <select id="newLocArea" class="do-form-select" required>
+                                        <!-- Populated dynamically -->
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="do-form-label">GPS Latitude</label>
+                                    <input type="number" step="0.0001" id="newLocLat" class="do-form-input" placeholder="e.g. 23.7541" required>
+                                </div>
+                                <div>
+                                    <label class="do-form-label">GPS Longitude</label>
+                                    <input type="number" step="0.0001" id="newLocLng" class="do-form-input" placeholder="e.g. 85.8643" required>
+                                </div>
+                                <div>
+                                    <label class="do-form-label">Geofence Radius (meters)</label>
+                                    <input type="number" id="newLocRadius" class="do-form-input" placeholder="e.g. 150" value="150" required>
+                                </div>
+                                <div>
+                                    <label class="do-form-label">Status</label>
+                                    <select id="newLocStatus" class="do-form-select">
+                                        <option value="Active">Active</option>
+                                        <option value="Inactive">Inactive</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="config-modal-footer">
+                                <button type="button" class="btn-config-secondary" onclick="closeConfigModal('addLocationModal')">Cancel</button>
+                                <button type="submit" class="btn-config-primary"><i class="fa-solid fa-check"></i> Save Coordinate Point</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- 4. Add WeighBridge Scale Modal -->
+                <div class="config-modal-overlay" id="addWeighbridgeModal" style="display: none;">
+                    <div class="config-modal-dialog">
+                        <div class="config-modal-header">
+                            <h3 class="config-modal-title"><i class="fa-solid fa-scale-balanced" style="color: #a855f7;"></i> Add WeighBridge Scale</h3>
+                            <button class="config-modal-close" onclick="closeConfigModal('addWeighbridgeModal')"><i class="fa-solid fa-xmark"></i></button>
+                        </div>
+                        <form id="formAddWeighbridge" onsubmit="handleSaveWeighbridge(event)">
+                            <div class="config-modal-body">
+                                <div>
+                                    <label class="do-form-label">Scale Code</label>
+                                    <input type="text" id="newWbCode" class="do-form-input" placeholder="e.g. RD1509" required>
+                                </div>
+                                <div>
+                                    <label class="do-form-label">WeighBridge Name</label>
+                                    <input type="text" id="newWbName" class="do-form-input" placeholder="e.g. Electronic Weighbridge RD1509" required>
+                                </div>
+                                <div>
+                                    <label class="do-form-label">Parent Mining Area</label>
+                                    <select id="newWbArea" class="do-form-select" required>
+                                        <!-- Populated dynamically -->
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="do-form-label">Scale Structure</label>
+                                    <select id="newWbType" class="do-form-select">
+                                        <option value="Pitless Static Scale (100 MT)">Pitless Static Scale (100 MT)</option>
+                                        <option value="Pit Type Scale (120 MT)">Pit Type Scale (120 MT)</option>
+                                        <option value="In-Motion Rail Weighbridge">In-Motion Rail Weighbridge</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="do-form-label">Max Capacity (MT)</label>
+                                    <input type="number" id="newWbCapacity" class="do-form-input" value="100" required>
+                                </div>
+                                <div>
+                                    <label class="do-form-label">Tolerance Margin (kg)</label>
+                                    <input type="number" id="newWbTolerance" class="do-form-input" value="20" required>
+                                </div>
+                                <div>
+                                    <label class="do-form-label">ANPR CCTV Cameras Bound</label>
+                                    <input type="number" id="newWbCameras" class="do-form-input" value="2" required>
+                                </div>
+                                <div>
+                                    <label class="do-form-label">Static Subnet IP</label>
+                                    <input type="text" id="newWbIp" class="do-form-input" placeholder="e.g. 192.168.10.182" required>
+                                </div>
+                            </div>
+                            <div class="config-modal-footer">
+                                <button type="button" class="btn-config-secondary" onclick="closeConfigModal('addWeighbridgeModal')">Cancel</button>
+                                <button type="submit" class="btn-config-primary"><i class="fa-solid fa-check"></i> Add Weighbridge Scale</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- 5. Add Security Checkpost Modal -->
+                <div class="config-modal-overlay" id="addCheckpostModal" style="display: none;">
+                    <div class="config-modal-dialog">
+                        <div class="config-modal-header">
+                            <h3 class="config-modal-title"><i class="fa-solid fa-shield-halved" style="color: #f87171;"></i> Add Security Checkpost</h3>
+                            <button class="config-modal-close" onclick="closeConfigModal('addCheckpostModal')"><i class="fa-solid fa-xmark"></i></button>
+                        </div>
+                        <form id="formAddCheckpost" onsubmit="handleSaveCheckpost(event)">
+                            <div class="config-modal-body">
+                                <div>
+                                    <label class="do-form-label">Checkpost Code</label>
+                                    <input type="text" id="newCpCode" class="do-form-input" placeholder="e.g. CP1109" required>
+                                </div>
+                                <div>
+                                    <label class="do-form-label">Checkpost Name</label>
+                                    <input type="text" id="newCpName" class="do-form-input" placeholder="e.g. Main North Security Gate" required>
+                                </div>
+                                <div>
+                                    <label class="do-form-label">Parent Mining Area</label>
+                                    <select id="newCpArea" class="do-form-select" required>
+                                        <!-- Populated dynamically -->
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="do-form-label">Lane Direction</label>
+                                    <select id="newCpLane" class="do-form-select">
+                                        <option value="Entry / Exit Bi-Directional">Entry / Exit Bi-Directional</option>
+                                        <option value="Inbound Dedicated Entry">Inbound Dedicated Entry</option>
+                                        <option value="Outbound Dedicated Exit">Outbound Dedicated Exit</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="do-form-label">Guard In-Charge</label>
+                                    <input type="text" id="newCpGuard" class="do-form-input" placeholder="e.g. Sub-Inspector Security" required>
+                                </div>
+                                <div>
+                                    <label class="do-form-label">Boom Barrier Mode</label>
+                                    <select id="newCpBarrier" class="do-form-select">
+                                        <option value="AUTO">AUTO (RFID Automated)</option>
+                                        <option value="MANUAL">MANUAL (Guard Override)</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="config-modal-footer">
+                                <button type="button" class="btn-config-secondary" onclick="closeConfigModal('addCheckpostModal')">Cancel</button>
+                                <button type="submit" class="btn-config-primary"><i class="fa-solid fa-check"></i> Add Checkpost</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
             </div> <!-- Close content-body -->
         </main>
     </div>
@@ -13122,6 +14061,684 @@ function toggleDemoConsole() {
     }
 }
 
+// ========================================================
+// Configuration Masters Controller (Area, Plant, Location, WeighBridge, Checkpost)
+// ========================================================
+let configMasters = (typeof CONFIG_MASTERS_DATA !== 'undefined') ? CONFIG_MASTERS_DATA : {
+    areas: [], plants: [], locations: [], weighbridges: [], checkposts: []
+};
+
+// Toggle Configuration Dropdown
+window.toggleConfigDropdown = function(e) {
+    if (e) e.preventDefault();
+    const list = document.getElementById('configSubList');
+    const arrow = document.getElementById('configArrow');
+    if (list) {
+        const isHidden = list.style.display === 'none' || getComputedStyle(list).display === 'none';
+        list.style.display = isHidden ? 'block' : 'none';
+        if (arrow) {
+            arrow.className = isHidden ? 'fa-solid fa-chevron-down arrow-icon' : 'fa-solid fa-chevron-right arrow-icon';
+        }
+    }
+};
+
+// Generic helper to activate a configuration view
+function activateConfigView(viewId, navItemId, headerTitle) {
+    document.body.classList.remove('alert-mode-active');
+    document.body.classList.remove('gis-mode-active');
+    const mainSidebar = document.getElementById('mainSidebarMenu');
+    const alertSidebar = document.getElementById('alertSidebarMenu');
+    const topTabs = document.getElementById('topTabsCard') || document.querySelector('.tabs-card');
+    if (mainSidebar) mainSidebar.style.display = 'block';
+    if (alertSidebar) alertSidebar.style.display = 'none';
+    if (topTabs) topTabs.style.display = 'none';
+
+    // Ensure config dropdown is expanded
+    const configSubList = document.getElementById('configSubList');
+    const configArrow = document.getElementById('configArrow');
+    const configNavItem = document.getElementById('configNavItem');
+    if (configSubList) configSubList.style.display = 'block';
+    if (configArrow) configArrow.className = 'fa-solid fa-chevron-down arrow-icon';
+
+    // Clear active state across all sidebar items
+    document.querySelectorAll('.sub-nav-item').forEach(el => el.classList.remove('active'));
+    document.querySelectorAll('.sub-nav-link').forEach(el => el.classList.remove('active'));
+    document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+    if (configNavItem) configNavItem.classList.add('active');
+
+    const activeItem = document.getElementById(navItemId);
+    if (activeItem) {
+        activeItem.classList.add('active');
+        activeItem.querySelector('.sub-nav-link')?.classList.add('active');
+    }
+
+    updateHeaderMainTitle(headerTitle);
+
+    document.querySelectorAll('.tab-content-panel').forEach(panel => {
+        if (panel.id === viewId) {
+            panel.classList.add('active');
+            panel.style.display = 'block';
+        } else {
+            panel.classList.remove('active');
+            panel.style.display = 'none';
+        }
+    });
+
+    populateMasterAreaDropdowns();
+}
+
+// 1. Show Area Master View
+window.showConfigArea = function() {
+    activateConfigView('config-area-view', 'configAreaNavItem', 'AREA MASTER CONFIGURATION');
+    window.location.hash = '#config-area';
+    renderAreaMasterTable();
+};
+
+// 2. Show Plant Master View
+window.showConfigPlant = function() {
+    activateConfigView('config-plant-view', 'configPlantNavItem', 'PLANT MASTER CONFIGURATION');
+    window.location.hash = '#config-plant';
+    renderPlantMasterTable();
+};
+
+// 3. Show Location Master View
+window.showConfigLocation = function() {
+    activateConfigView('config-location-view', 'configLocationNavItem', 'LOCATION MASTER (COORDINATES)');
+    window.location.hash = '#config-location';
+    renderLocationMasterTable();
+};
+
+// 4. Show WeighBridge Master View
+window.showConfigWeighbridge = function() {
+    activateConfigView('config-weighbridge-view', 'configWeighbridgeNavItem', 'WEIGHBRIDGE MASTER CONFIGURATION');
+    window.location.hash = '#config-weighbridge';
+    renderWeighbridgeMasterTable();
+};
+
+// 5. Show Checkpost Master View
+window.showConfigCheckpost = function() {
+    activateConfigView('config-checkpost-view', 'configCheckpostNavItem', 'SECURITY CHECKPOST MASTER CONFIGURATION');
+    window.location.hash = '#config-checkpost';
+    renderCheckpostMasterTable();
+};
+
+// Populate Area Dropdowns in Filters & Modals
+function populateMasterAreaDropdowns() {
+    if (!configMasters || !configMasters.areas) return;
+    const areas = configMasters.areas;
+    const areaOptions = areas.map(a => `<option value="${a.name}">${a.name}</option>`).join('');
+
+    const plantAreaFilter = document.getElementById('plantAreaFilter');
+    if (plantAreaFilter && plantAreaFilter.children.length <= 1) {
+        plantAreaFilter.innerHTML = '<option value="all">All Mining Areas (' + areas.length + ')</option>' + areaOptions;
+    }
+
+    const locAreaFilter = document.getElementById('locAreaFilter');
+    if (locAreaFilter && locAreaFilter.children.length <= 1) {
+        locAreaFilter.innerHTML = '<option value="all">All Mining Areas (' + areas.length + ')</option>' + areaOptions;
+    }
+
+    const wbAreaFilter = document.getElementById('wbAreaFilter');
+    if (wbAreaFilter && wbAreaFilter.children.length <= 1) {
+        wbAreaFilter.innerHTML = '<option value="all">All Mining Areas (' + areas.length + ')</option>' + areaOptions;
+    }
+
+    const cpAreaFilter = document.getElementById('cpAreaFilter');
+    if (cpAreaFilter && cpAreaFilter.children.length <= 1) {
+        cpAreaFilter.innerHTML = '<option value="all">All Mining Areas (' + areas.length + ')</option>' + areaOptions;
+    }
+
+    // Modal Dropdowns
+    ['newPlantArea', 'newLocArea', 'newWbArea', 'newCpArea'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el && el.children.length === 0) {
+            el.innerHTML = areaOptions;
+        }
+    });
+}
+
+// ----------------------------------------------------
+// Area Master Table Renderer & Search
+// ----------------------------------------------------
+window.renderAreaMasterTable = function() {
+    const tbody = document.getElementById('areaMasterTableBody');
+    if (!tbody || !configMasters.areas) return;
+
+    const query = (document.getElementById('areaSearchInput')?.value || '').toLowerCase().trim();
+    const status = document.getElementById('areaStatusFilter')?.value || 'all';
+
+    let filtered = configMasters.areas.filter(a => {
+        const matchQ = !query || a.name.toLowerCase().includes(query) || a.id.toLowerCase().includes(query) || a.gm_incharge.toLowerCase().includes(query);
+        const matchS = status === 'all' || a.status === status;
+        return matchQ && matchS;
+    });
+
+    if (filtered.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="10" style="text-align:center; padding:30px; color:#64748b;">No mining areas found matching search criteria.</td></tr>`;
+        return;
+    }
+
+    tbody.innerHTML = filtered.map((a, idx) => `
+        <tr>
+            <td style="color:#64748b; font-weight:600;">${idx + 1}</td>
+            <td><strong style="color:#38bdf8; font-family:monospace;">${a.id}</strong></td>
+            <td style="font-weight:600; color:#f1f5f9;">${a.name}</td>
+            <td><i class="fa-regular fa-user" style="color:#94a3b8; font-size:11px; margin-right:4px;"></i> ${a.gm_incharge}</td>
+            <td style="color:#94a3b8;">${a.hq_office || a.name + ' Complex'}</td>
+            <td style="font-weight:700; color:#fbbf24;">${a.target_annual_mt} MTPA</td>
+            <td><span class="config-badge config-badge-blue">${a.active_mines_count || 3} Plants</span></td>
+            <td style="color:#64748b; font-family:monospace; font-size:11.5px;">${a.lat}° N, ${a.lng}° E</td>
+            <td><span class="config-badge ${a.status === 'Operational' ? 'config-badge-green' : 'config-badge-amber'}"><i class="fa-solid fa-circle" style="font-size:6px;"></i> ${a.status}</span></td>
+            <td>
+                <div class="config-row-actions">
+                    <button class="btn-icon-action" title="View Plants" onclick="filterPlantsByArea('${a.name}')"><i class="fa-solid fa-industry"></i></button>
+                    <button class="btn-icon-action" title="View on Map" onclick="showCameraGISView()"><i class="fa-solid fa-location-crosshairs"></i></button>
+                </div>
+            </td>
+        </tr>
+    `).join('');
+
+    document.getElementById('areaKpiCount').textContent = configMasters.areas.length;
+};
+
+window.handleAreaSearch = function() {
+    renderAreaMasterTable();
+};
+
+function filterPlantsByArea(areaName) {
+    showConfigPlant();
+    const select = document.getElementById('plantAreaFilter');
+    if (select) {
+        select.value = areaName;
+        handlePlantSearch();
+    }
+}
+
+// ----------------------------------------------------
+// Plant Master Table Renderer & Search
+// ----------------------------------------------------
+window.renderPlantMasterTable = function() {
+    const tbody = document.getElementById('plantMasterTableBody');
+    if (!tbody || !configMasters.plants) return;
+
+    const query = (document.getElementById('plantSearchInput')?.value || '').toLowerCase().trim();
+    const area = document.getElementById('plantAreaFilter')?.value || 'all';
+    const type = document.getElementById('plantTypeFilter')?.value || 'all';
+
+    let filtered = configMasters.plants.filter(p => {
+        const matchQ = !query || p.name.toLowerCase().includes(query) || p.code.toLowerCase().includes(query) || p.area.toLowerCase().includes(query);
+        const matchA = area === 'all' || p.area === area;
+        const matchT = type === 'all' || p.type === type;
+        return matchQ && matchA && matchT;
+    });
+
+    if (filtered.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="10" style="text-align:center; padding:30px; color:#64748b;">No coal plants found matching search criteria.</td></tr>`;
+        return;
+    }
+
+    tbody.innerHTML = filtered.map((p, idx) => {
+        let badgeClass = 'config-badge-blue';
+        if (p.type.includes('Washery')) badgeClass = 'config-badge-purple';
+        else if (p.type.includes('Underground')) badgeClass = 'config-badge-amber';
+        else if (p.type.includes('CHP')) badgeClass = 'config-badge-green';
+
+        return `
+            <tr>
+                <td style="color:#64748b; font-weight:600;">${idx + 1}</td>
+                <td><strong style="color:#34d399; font-family:monospace;">${p.code}</strong></td>
+                <td style="font-weight:600; color:#f1f5f9;">${p.name}</td>
+                <td><span class="config-badge config-badge-blue">${p.area}</span></td>
+                <td><span class="config-badge ${badgeClass}">${p.type}</span></td>
+                <td style="font-weight:600; color:#38bdf8;">${Number(p.daily_capacity_tpd).toLocaleString()} TPD</td>
+                <td style="color:#64748b; font-family:monospace; font-size:11.5px;">${p.lat}° N</td>
+                <td style="color:#64748b; font-family:monospace; font-size:11.5px;">${p.lng}° E</td>
+                <td><span class="config-badge ${p.status === 'Online' ? 'config-badge-green' : 'config-badge-amber'}"><i class="fa-solid fa-circle" style="font-size:6px;"></i> ${p.status}</span></td>
+                <td>
+                    <div class="config-row-actions">
+                        <button class="btn-icon-action" title="View Locations" onclick="filterLocationsByPlant('${p.name}')"><i class="fa-solid fa-location-dot"></i></button>
+                        <button class="btn-icon-action" title="View GIS" onclick="showCameraGISView()"><i class="fa-solid fa-map"></i></button>
+                    </div>
+                </td>
+            </tr>
+        `;
+    }).join('');
+
+    document.getElementById('plantKpiTotal').textContent = configMasters.plants.length;
+};
+
+window.handlePlantSearch = function() {
+    renderPlantMasterTable();
+};
+
+function filterLocationsByPlant(plantName) {
+    showConfigLocation();
+    const input = document.getElementById('locSearchInput');
+    if (input) {
+        input.value = plantName;
+        handleLocSearch();
+    }
+}
+
+// Interactive Washery Yield Simulator
+window.updateWasherySim = function() {
+    const feed = Number(document.getElementById('plantRomFeedSlider')?.value || 12500);
+    const yieldEff = Number(document.getElementById('plantYieldSlider')?.value || 48.5);
+
+    document.getElementById('plantRomFeedDisplay').textContent = feed.toLocaleString() + ' TPD';
+    document.getElementById('plantYieldDisplay').textContent = yieldEff.toFixed(1) + ' %';
+
+    const clean = (feed * (yieldEff / 100)).toFixed(1);
+    const reject = (feed - clean).toFixed(1);
+
+    document.getElementById('simCleanCoalOutput').textContent = Number(clean).toLocaleString() + ' MT/Day';
+    document.getElementById('simRejectOutput').textContent = Number(reject).toLocaleString() + ' MT/Day';
+};
+
+// ----------------------------------------------------
+// Location Master Table Renderer & Search
+// ----------------------------------------------------
+window.renderLocationMasterTable = function() {
+    const tbody = document.getElementById('locationMasterTableBody');
+    if (!tbody || !configMasters.locations) return;
+
+    const query = (document.getElementById('locSearchInput')?.value || '').toLowerCase().trim();
+    const area = document.getElementById('locAreaFilter')?.value || 'all';
+    const cat = document.getElementById('locCategoryFilter')?.value || 'all';
+
+    let filtered = configMasters.locations.filter(l => {
+        const matchQ = !query || l.name.toLowerCase().includes(query) || l.id.toLowerCase().includes(query) || l.plant.toLowerCase().includes(query) || l.area.toLowerCase().includes(query);
+        const matchA = area === 'all' || l.area === area;
+        const matchC = cat === 'all' || l.category === cat;
+        return matchQ && matchA && matchC;
+    });
+
+    if (filtered.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="11" style="text-align:center; padding:30px; color:#64748b;">No coordinate locations found matching search criteria.</td></tr>`;
+        return;
+    }
+
+    tbody.innerHTML = filtered.map((l, idx) => {
+        let badgeClass = 'config-badge-amber';
+        if (l.category.includes('Face')) badgeClass = 'config-badge-red';
+        else if (l.category.includes('Siding')) badgeClass = 'config-badge-green';
+        else if (l.category.includes('Silo')) badgeClass = 'config-badge-blue';
+
+        return `
+            <tr>
+                <td style="color:#64748b; font-weight:600;">${idx + 1}</td>
+                <td><strong style="color:#f59e0b; font-family:monospace;">${l.id}</strong></td>
+                <td style="font-weight:600; color:#f1f5f9;">${l.name}</td>
+                <td><span class="config-badge ${badgeClass}">${l.category}</span></td>
+                <td>${l.plant}</td>
+                <td><span class="config-badge config-badge-blue">${l.area}</span></td>
+                <td style="color:#64748b; font-family:monospace; font-size:11.5px;">${l.lat}° N</td>
+                <td style="color:#64748b; font-family:monospace; font-size:11.5px;">${l.lng}° E</td>
+                <td style="color:#38bdf8; font-weight:600;">${l.radius_meters} m</td>
+                <td><span class="config-badge config-badge-green"><i class="fa-solid fa-circle" style="font-size:6px;"></i> ${l.status}</span></td>
+                <td>
+                    <div class="config-row-actions">
+                        <button class="btn-icon-action" title="View Geofence Pin" onclick="inspectGpsPin('${l.name}', ${l.lat}, ${l.lng}, ${l.radius_meters})"><i class="fa-solid fa-crosshairs"></i></button>
+                    </div>
+                </td>
+            </tr>
+        `;
+    }).join('');
+
+    document.getElementById('locKpiTotal').textContent = configMasters.locations.length;
+};
+
+window.handleLocSearch = function() {
+    renderLocationMasterTable();
+};
+
+window.updateLocRadiusSim = function() {
+    const r = document.getElementById('locRadiusSlider')?.value || 150;
+    document.getElementById('locRadiusDisplay').textContent = r + ' meters';
+};
+
+window.randomizeGpsPin = function() {
+    const lats = [23.7541, 23.7032, 23.7712, 23.9937, 23.7221, 23.6341, 23.8541];
+    const lngs = [85.8643, 85.3421, 85.9814, 85.3621, 85.5012, 85.3512, 84.9812];
+    const idx = Math.floor(Math.random() * lats.length);
+    document.getElementById('simPickerLat').textContent = lats[idx].toFixed(4) + '° N';
+    document.getElementById('simPickerLng').textContent = lngs[idx].toFixed(4) + '° E';
+    showAuditToast('📍 Coordinate Pin Picked: ' + lats[idx].toFixed(4) + '° N, ' + lngs[idx].toFixed(4) + '° E');
+};
+
+function inspectGpsPin(name, lat, lng, radius) {
+    document.getElementById('simPickerLat').textContent = lat + '° N';
+    document.getElementById('simPickerLng').textContent = lng + '° E';
+    document.getElementById('locRadiusSlider').value = radius;
+    document.getElementById('locRadiusDisplay').textContent = radius + ' meters';
+    showAuditToast('📍 Selected Location: ' + name + ' (Radius ' + radius + 'm)');
+}
+
+// ----------------------------------------------------
+// WeighBridge Master Table Renderer & Search
+// ----------------------------------------------------
+window.renderWeighbridgeMasterTable = function() {
+    const tbody = document.getElementById('weighbridgeMasterTableBody');
+    if (!tbody || !configMasters.weighbridges) return;
+
+    const query = (document.getElementById('wbSearchInput')?.value || '').toLowerCase().trim();
+    const area = document.getElementById('wbAreaFilter')?.value || 'all';
+    const status = document.getElementById('wbStatusFilter')?.value || 'all';
+
+    let filtered = configMasters.weighbridges.filter(w => {
+        const matchQ = !query || w.code.toLowerCase().includes(query) || w.name.toLowerCase().includes(query) || w.plant.toLowerCase().includes(query) || w.area.toLowerCase().includes(query);
+        const matchA = area === 'all' || w.area === area;
+        const matchS = status === 'all' || w.status === status;
+        return matchQ && matchA && matchS;
+    });
+
+    if (filtered.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="12" style="text-align:center; padding:30px; color:#64748b;">No weighbridges found matching search criteria.</td></tr>`;
+        return;
+    }
+
+    tbody.innerHTML = filtered.map((w, idx) => `
+        <tr>
+            <td style="color:#64748b; font-weight:600;">${idx + 1}</td>
+            <td><strong style="color:#a855f7; font-family:monospace; font-size:13px;">${w.code}</strong></td>
+            <td style="font-weight:600; color:#f1f5f9;">${w.name}</td>
+            <td>${w.plant}</td>
+            <td><span class="config-badge config-badge-blue">${w.area}</span></td>
+            <td><span class="config-badge config-badge-purple">${w.type}</span></td>
+            <td style="font-weight:700; color:#fbbf24;">${w.capacity_mt} MT</td>
+            <td style="color:#94a3b8;">±${w.tolerance_kg} kg</td>
+            <td><span class="config-badge config-badge-green"><i class="fa-solid fa-video"></i> ${w.cameras} Dual ANPR</span></td>
+            <td style="color:#64748b; font-family:monospace;">${w.ip_address || '192.168.10.x'}</td>
+            <td><span class="config-badge ${w.status === 'Online' ? 'config-badge-green' : 'config-badge-amber'}"><i class="fa-solid fa-circle" style="font-size:6px;"></i> ${w.status}</span></td>
+            <td>
+                <div class="config-row-actions">
+                    <button class="btn-icon-action" title="Simulate Scale Weighment" onclick="testWeighbridgeScale('${w.code}')"><i class="fa-solid fa-scale-balanced"></i></button>
+                    <button class="btn-icon-action" title="Zero Calibration" onclick="zeroCalibrateScale('${w.code}')"><i class="fa-solid fa-arrows-rotate"></i></button>
+                </div>
+            </td>
+        </tr>
+    `).join('');
+
+    document.getElementById('wbKpiTotal').textContent = configMasters.weighbridges.length;
+};
+
+window.handleWbSearch = function() {
+    renderWeighbridgeMasterTable();
+};
+
+// Interactive Weighbridge HUD Simulator
+window.triggerSimulateScaleWeight = function() {
+    const grossWeights = [38.450, 42.840, 45.120, 52.340, 39.800, 48.920, 44.500];
+    const tares = [12.800, 14.220, 15.100, 16.400, 13.900, 15.200, 14.800];
+    const idx = Math.floor(Math.random() * grossWeights.length);
+    const gross = grossWeights[idx];
+    const tare = tares[idx];
+    const net = (gross - tare).toFixed(3);
+
+    document.getElementById('liveScaleDisplay').textContent = gross.toFixed(3);
+    document.getElementById('scaleTareVal').textContent = tare.toFixed(3) + ' MT';
+    document.getElementById('scaleNetVal').textContent = net + ' MT';
+    document.getElementById('scaleDriftVal').textContent = '+0.0 kg (OK)';
+
+    showAuditToast('⚖️ Live Scale RD1504: Gross ' + gross.toFixed(3) + ' MT • Net ' + net + ' MT');
+};
+
+window.zeroCalibrateScale = function(code) {
+    const wb = code || 'RD1504';
+    document.getElementById('liveScaleDisplay').textContent = '00.000';
+    document.getElementById('scaleDriftVal').textContent = '0.0 kg (Calibrated)';
+    showAuditToast('✅ Weighbridge Scale ' + wb + ' Zero Calibrated Successfully (DGMS Verified)');
+};
+
+function testWeighbridgeScale(code) {
+    triggerSimulateScaleWeight();
+    showAuditToast('🔍 Live Telemetry Connected to Weighbridge ' + code);
+}
+
+// ----------------------------------------------------
+// Checkpost Master Table Renderer & Search
+// ----------------------------------------------------
+window.renderCheckpostMasterTable = function() {
+    const tbody = document.getElementById('checkpostMasterTableBody');
+    if (!tbody || !configMasters.checkposts) return;
+
+    const query = (document.getElementById('cpSearchInput')?.value || '').toLowerCase().trim();
+    const area = document.getElementById('cpAreaFilter')?.value || 'all';
+
+    let filtered = configMasters.checkposts.filter(c => {
+        const matchQ = !query || c.code.toLowerCase().includes(query) || c.name.toLowerCase().includes(query) || c.plant.toLowerCase().includes(query) || c.area.toLowerCase().includes(query) || c.guard_incharge.toLowerCase().includes(query);
+        const matchA = area === 'all' || c.area === area;
+        return matchQ && matchA;
+    });
+
+    if (filtered.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="11" style="text-align:center; padding:30px; color:#64748b;">No security checkposts found matching search criteria.</td></tr>`;
+        return;
+    }
+
+    tbody.innerHTML = filtered.map((c, idx) => `
+        <tr>
+            <td style="color:#64748b; font-weight:600;">${idx + 1}</td>
+            <td><strong style="color:#f87171; font-family:monospace; font-size:13px;">${c.code}</strong></td>
+            <td style="font-weight:600; color:#f1f5f9;">${c.name}</td>
+            <td>${c.plant}</td>
+            <td><span class="config-badge config-badge-blue">${c.area}</span></td>
+            <td style="color:#94a3b8; font-size:11.5px;">${c.lane}</td>
+            <td><span class="config-badge ${c.barrier_status === 'AUTO' ? 'config-badge-green' : 'config-badge-amber'}"><i class="fa-solid fa-lock"></i> ${c.barrier_status}</span></td>
+            <td><span class="config-badge config-badge-green"><i class="fa-solid fa-id-badge"></i> RFID ${c.rfid_status}</span></td>
+            <td><i class="fa-solid fa-user-shield" style="color:#94a3b8; font-size:11px; margin-right:4px;"></i> ${c.guard_incharge}</td>
+            <td style="font-weight:700; color:#38bdf8;">${c.daily_passes} Passes</td>
+            <td>
+                <div class="config-row-actions">
+                    <button class="btn-icon-action" title="Trigger Barrier Open" onclick="toggleBarrierGate(true, '${c.code}')"><i class="fa-solid fa-torii-gate"></i></button>
+                    <button class="btn-icon-action" title="Ping RFID Reader" onclick="simulateRfidPass('${c.code}')"><i class="fa-solid fa-tower-broadcast"></i></button>
+                </div>
+            </td>
+        </tr>
+    `).join('');
+
+    document.getElementById('cpKpiTotal').textContent = configMasters.checkposts.length;
+};
+
+window.handleCpSearch = function() {
+    renderCheckpostMasterTable();
+};
+
+// Interactive Boom Barrier & RFID Simulator
+window.toggleBarrierGate = function(open, code) {
+    const cp = code || 'CP1101';
+    const arm = document.getElementById('interactiveBarrierArm');
+    const light = document.getElementById('barrierSignalLight');
+    const badge = document.getElementById('barrierLiveStatusBadge');
+
+    if (open) {
+        arm?.classList.add('barrier-open');
+        light?.classList.add('signal-green');
+        if (badge) badge.innerHTML = `<span class="config-live-pulse" style="background:#10b981;"></span> Gate ${cp} [OPEN / PASS]`;
+        showAuditToast('🟢 Checkpost ' + cp + ': Boom Barrier OPENED (Passage Authorized)');
+    } else {
+        arm?.classList.remove('barrier-open');
+        light?.classList.remove('signal-green');
+        if (badge) badge.innerHTML = `<span class="config-live-pulse" style="background:#ef4444;"></span> Gate ${cp} [LOCKED / STOP]`;
+        showAuditToast('🔴 Checkpost ' + cp + ': Boom Barrier CLOSED & LOCKED');
+    }
+};
+
+window.simulateRfidPass = function(code) {
+    const cp = code || 'CP1101';
+    toggleBarrierGate(true, cp);
+    const truckNums = ['JH01-DB-4821', 'JH02-CC-1904', 'JH05-KK-8812', 'JH10-AX-9944', 'JH09-EZ-3312'];
+    const truck = truckNums[Math.floor(Math.random() * truckNums.length)];
+    showAuditToast('📡 RFID Scanned at ' + cp + ': ' + truck + ' • Valid DO Verified');
+    setTimeout(() => toggleBarrierGate(false, cp), 3000);
+};
+
+// ----------------------------------------------------
+// Modal Openers & Form Submit Handlers
+// ----------------------------------------------------
+window.closeConfigModal = function(modalId) {
+    const modal = document.getElementById(modalId);
+    if (modal) modal.style.display = 'none';
+};
+
+window.openAddAreaModal = function() {
+    document.getElementById('addAreaModal').style.display = 'flex';
+};
+
+window.openAddPlantModal = function() {
+    populateMasterAreaDropdowns();
+    document.getElementById('addPlantModal').style.display = 'flex';
+};
+
+window.openAddLocationModal = function() {
+    populateMasterAreaDropdowns();
+    document.getElementById('addLocationModal').style.display = 'flex';
+};
+
+window.openAddWeighbridgeModal = function() {
+    populateMasterAreaDropdowns();
+    document.getElementById('addWeighbridgeModal').style.display = 'flex';
+};
+
+window.openAddCheckpostModal = function() {
+    populateMasterAreaDropdowns();
+    document.getElementById('addCheckpostModal').style.display = 'flex';
+};
+
+// Save Area
+window.handleSaveArea = function(e) {
+    e.preventDefault();
+    const newArea = {
+        id: document.getElementById('newAreaCode').value.trim(),
+        name: document.getElementById('newAreaName').value.trim(),
+        gm_incharge: document.getElementById('newAreaGm').value.trim(),
+        hq_office: document.getElementById('newAreaHq').value.trim(),
+        target_annual_mt: Number(document.getElementById('newAreaTarget').value || 15),
+        lat: 23.7500,
+        lng: 85.5000,
+        status: document.getElementById('newAreaStatus').value,
+        active_mines_count: 1
+    };
+
+    configMasters.areas.unshift(newArea);
+    closeConfigModal('addAreaModal');
+    renderAreaMasterTable();
+    showAuditToast('✅ Mining Area ' + newArea.name + ' (' + newArea.id + ') Registered Successfully');
+    document.getElementById('formAddArea').reset();
+};
+
+// Save Plant
+window.handleSavePlant = function(e) {
+    e.preventDefault();
+    const newPlant = {
+        code: document.getElementById('newPlantCode').value.trim(),
+        name: document.getElementById('newPlantName').value.trim(),
+        area: document.getElementById('newPlantArea').value,
+        type: document.getElementById('newPlantType').value,
+        daily_capacity_tpd: Number(document.getElementById('newPlantCapacity').value || 10000),
+        lat: 23.7500,
+        lng: 85.5000,
+        status: document.getElementById('newPlantStatus').value,
+        contact: 'Plant Manager'
+    };
+
+    configMasters.plants.unshift(newPlant);
+    closeConfigModal('addPlantModal');
+    renderPlantMasterTable();
+    showAuditToast('✅ Coal Plant ' + newPlant.name + ' (' + newPlant.code + ') Registered Successfully');
+    document.getElementById('formAddPlant').reset();
+};
+
+// Save Location Point
+window.handleSaveLocation = function(e) {
+    e.preventDefault();
+    const newLoc = {
+        id: document.getElementById('newLocId').value.trim(),
+        name: document.getElementById('newLocName').value.trim(),
+        category: document.getElementById('newLocCategory').value,
+        plant: 'Main Mining Pit',
+        area: document.getElementById('newLocArea').value,
+        lat: Number(document.getElementById('newLocLat').value || 23.7541),
+        lng: Number(document.getElementById('newLocLng').value || 85.8643),
+        radius_meters: Number(document.getElementById('newLocRadius').value || 150),
+        status: document.getElementById('newLocStatus').value
+    };
+
+    configMasters.locations.unshift(newLoc);
+    closeConfigModal('addLocationModal');
+    renderLocationMasterTable();
+    showAuditToast('✅ GPS Coordinate Point ' + newLoc.name + ' (' + newLoc.id + ') Saved');
+    document.getElementById('formAddLocation').reset();
+};
+
+// Save Weighbridge
+window.handleSaveWeighbridge = function(e) {
+    e.preventDefault();
+    const newWb = {
+        code: document.getElementById('newWbCode').value.trim(),
+        name: document.getElementById('newWbName').value.trim(),
+        plant: 'Operational Mine',
+        area: document.getElementById('newWbArea').value,
+        type: document.getElementById('newWbType').value,
+        capacity_mt: Number(document.getElementById('newWbCapacity').value || 100),
+        tolerance_kg: Number(document.getElementById('newWbTolerance').value || 20),
+        cameras: Number(document.getElementById('newWbCameras').value || 2),
+        ip_address: document.getElementById('newWbIp').value.trim(),
+        status: 'Online',
+        live_drift_kg: 0.0,
+        last_calibration: '05-09-2026'
+    };
+
+    configMasters.weighbridges.unshift(newWb);
+    closeConfigModal('addWeighbridgeModal');
+    renderWeighbridgeMasterTable();
+    showAuditToast('✅ WeighBridge ' + newWb.code + ' Scale Bound & Calibrated Successfully');
+    document.getElementById('formAddWeighbridge').reset();
+};
+
+// Save Checkpost
+window.handleSaveCheckpost = function(e) {
+    e.preventDefault();
+    const newCp = {
+        code: document.getElementById('newCpCode').value.trim(),
+        name: document.getElementById('newCpName').value.trim(),
+        plant: 'Main Security Zone',
+        area: document.getElementById('newCpArea').value,
+        lane: document.getElementById('newCpLane').value,
+        barrier_status: document.getElementById('newCpBarrier').value,
+        rfid_status: 'Online',
+        guard_incharge: document.getElementById('newCpGuard').value.trim(),
+        daily_passes: 150
+    };
+
+    configMasters.checkposts.unshift(newCp);
+    closeConfigModal('addCheckpostModal');
+    renderCheckpostMasterTable();
+    showAuditToast('✅ Security Checkpost ' + newCp.code + ' Registered & Active');
+    document.getElementById('formAddCheckpost').reset();
+};
+
+// Export Master CSV
+window.exportMasterCsv = function(type) {
+    if (!configMasters || !configMasters[type]) return;
+    const items = configMasters[type];
+    if (items.length === 0) return;
+
+    const headers = Object.keys(items[0]);
+    let csv = headers.join(',') + '\n';
+    items.forEach(it => {
+        const row = headers.map(h => `"${String(it[h] || '').replace(/"/g, '""')}"`);
+        csv += row.join(',') + '\n';
+    });
+
+    const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = `TRACE_${type}_master_export.csv`;
+    link.click();
+    showAuditToast('📥 ' + type.toUpperCase() + ' Master CSV Exported Successfully');
+};
+
 // Auto-poll Supabase every 5 seconds
 setInterval(fetchLiveAlerts, 5000);
 setTimeout(fetchLiveAlerts, 500);
@@ -13139,6 +14756,16 @@ function handleHashRoute() {
         showEditInternalDO();
     } else if (hash === '#road-dispatch') {
         showRoadDispatchView();
+    } else if (hash === '#config-area') {
+        showConfigArea();
+    } else if (hash === '#config-plant') {
+        showConfigPlant();
+    } else if (hash === '#config-location') {
+        showConfigLocation();
+    } else if (hash === '#config-weighbridge') {
+        showConfigWeighbridge();
+    } else if (hash === '#config-checkpost') {
+        showConfigCheckpost();
     }
 }
 window.addEventListener('hashchange', handleHashRoute);
