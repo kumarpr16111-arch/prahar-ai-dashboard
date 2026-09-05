@@ -416,40 +416,45 @@
             object-fit: cover;
         }
 
-        /* Logo Positioned in the Left Portion of the Artwork Side (To the left of blue lines) */
+        /* Logo Stack Positioned in the Middle Left Portion of the Artwork Side */
         .artwork-logo-badge {
             position: absolute;
-            top: 40px;
+            top: 50%;
             left: 36px;
+            transform: translateY(-50%);
             display: flex;
+            flex-direction: column;
             align-items: center;
-            gap: 14px;
-            background: rgba(15, 23, 42, 0.75);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 12px 18px;
-            border-radius: 16px;
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4), 0 0 20px rgba(2, 132, 199, 0.15);
+            justify-content: center;
+            text-align: center;
+            background: rgba(15, 23, 42, 0.72);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            padding: 22px 24px;
+            border-radius: 20px;
+            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5), 0 0 25px rgba(2, 132, 199, 0.18);
             z-index: 5;
-            transition: transform 0.2s ease;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
         }
 
         .artwork-logo-badge:hover {
-            transform: translateY(-2px);
-            border-color: rgba(56, 189, 248, 0.35);
+            transform: translateY(calc(-50% - 3px));
+            border-color: rgba(56, 189, 248, 0.4);
+            box-shadow: 0 20px 45px rgba(0, 0, 0, 0.6), 0 0 30px rgba(56, 189, 248, 0.25);
         }
 
         .app-logo-squircle {
-            width: 44px;
-            height: 44px;
+            width: 72px;
+            height: 72px;
             background: #0b0f17;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
+            border: 1.5px solid rgba(255, 255, 255, 0.12);
+            border-radius: 16px;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-            padding: 5px;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
+            padding: 8px;
+            margin-bottom: 12px;
             flex-shrink: 0;
         }
 
@@ -457,30 +462,25 @@
             width: 100%;
             height: 100%;
             object-fit: contain;
-            border-radius: 4px;
-        }
-
-        .logo-text-group {
-            display: flex;
-            flex-direction: column;
+            border-radius: 8px;
         }
 
         .badge-title {
             font-family: 'Outfit', sans-serif;
-            font-size: 16px;
+            font-size: 22px;
             font-weight: 800;
             color: #ffffff;
-            letter-spacing: 0.06em;
+            letter-spacing: 0.1em;
             line-height: 1.1;
+            margin-bottom: 4px;
         }
 
         .badge-subtitle {
             font-size: 10px;
-            font-weight: 600;
+            font-weight: 700;
             color: #38bdf8;
-            letter-spacing: 0.04em;
+            letter-spacing: 0.08em;
             text-transform: uppercase;
-            margin-top: 2px;
         }
 
         .artwork-version-tag {
@@ -668,15 +668,13 @@
 
         <!-- Right Side: Dark 3D Ribbon Artwork with Logo Positioned to the Left of the Lines -->
         <div class="auth-artwork-side">
-            <!-- TRACE Logo Positioned to the Left of the Free-Flowing Blue Lines -->
+            <!-- TRACE Logo Stack Positioned in the Middle, to the Left of the Free-Flowing Blue Lines -->
             <div class="artwork-logo-badge">
                 <div class="app-logo-squircle">
                     <img src="/static/media_screenshots/trace_main_logo.jpeg" alt="TRACE Logo">
                 </div>
-                <div class="logo-text-group">
-                    <div class="badge-title">TRACE</div>
-                    <div class="badge-subtitle">Track. Analyze. Act.</div>
-                </div>
+                <div class="badge-title">TRACE</div>
+                <div class="badge-subtitle">Track. Analyze. Act.</div>
             </div>
 
             <!-- 3D Ribbon Vector Graphic in Vibrant Cyan & Blue Gradients -->
