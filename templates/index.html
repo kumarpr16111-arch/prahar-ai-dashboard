@@ -6423,7 +6423,7 @@ body.gis-mode-active .content-body {
                             </li>
                             {% endif %}
 
-                            <!-- DO Operations Dropdown (Accessible across all roles) -->
+                            <!-- DO Operations Dropdown (Direct 3 Subheadings) -->
                             <li class="nav-item has-sub expanded" id="doOpsNavItem">
                                 <a href="#" class="nav-link" id="doOpsNavLink" onclick="event.preventDefault(); toggleDoOpsDropdown(event);" style="color: #f97316; cursor: pointer;">
                                     <i class="fa-regular fa-folder-open nav-icon" style="color: #f97316;"></i>
@@ -6431,40 +6431,23 @@ body.gis-mode-active .content-body {
                                     <i class="fa-solid fa-chevron-down arrow-icon" id="doOpsArrow" style="color: #f97316;"></i>
                                 </a>
                                 <ul class="sub-nav-list" id="doOpsSubList" style="display: block;">
-                                    <li class="sub-nav-item" id="roadDispatchNavItem">
-                                        <a href="#road-dispatch" class="sub-nav-link" id="roadDispatchNavLink" onclick="event.preventDefault(); showRoadDispatchView();">
-                                            <i class="fa-solid fa-angle-right nav-icon" style="font-size: 11px; margin-right: 8px;"></i>
-                                            <span class="sub-nav-text">Road Dispatch</span>
-                                            <i class="fa-solid fa-chevron-right" style="font-size: 10px; margin-left: auto; color: #64748b;"></i>
+                                    <li class="sub-nav-item active" id="subNavItemViewInternalDo">
+                                        <a href="#view-internal-do" class="sub-nav-link active" onclick="event.preventDefault(); showViewInternalDO();" style="color: #38bdf8;">
+                                            <i class="fa-solid fa-angle-right nav-icon" style="font-size: 11px; margin-right: 8px; color: #38bdf8;"></i>
+                                            <span class="sub-nav-text">View Internal DO Data</span>
                                         </a>
                                     </li>
-                                    <li class="sub-nav-item has-sub-sub expanded" id="internalDoNavItem">
-                                        <a href="#" class="sub-nav-link" id="internalDoNavLink" onclick="event.preventDefault(); toggleInternalDoDropdown(event);" style="color: #38bdf8; cursor: pointer;">
-                                            <i class="fa-solid fa-angle-right nav-icon" style="font-size: 11px; margin-right: 8px; color: #38bdf8;"></i>
-                                            <span class="sub-nav-text" style="font-weight: 600;">Internal DO</span>
-                                            <i class="fa-solid fa-chevron-down arrow-icon" id="internalDoArrow" style="font-size: 10px; margin-left: auto; color: #38bdf8;"></i>
+                                    <li class="sub-nav-item" id="subNavItemAddInternalDo">
+                                        <a href="#add-internal-do" class="sub-nav-link" onclick="event.preventDefault(); showAddInternalDO();">
+                                            <i class="fa-solid fa-angle-right nav-icon" style="font-size: 11px; margin-right: 8px; color: #94a3b8;"></i>
+                                            <span class="sub-nav-text">Add Internal DO Data</span>
                                         </a>
-                                        <!-- Internal DO Subheadings matching Picture 1 -->
-                                        <ul class="sub-sub-nav-list" id="internalDoSubList" style="display: block;">
-                                            <li class="sub-sub-nav-item active" id="subNavItemViewInternalDo">
-                                                <a href="#view-internal-do" class="sub-sub-nav-link active" onclick="event.preventDefault(); showViewInternalDO();">
-                                                    <i class="fa-solid fa-angle-right" style="font-size: 10px; margin-right: 8px; color: #38bdf8;"></i>
-                                                    <span class="sub-sub-nav-text">View Internal DO Data</span>
-                                                </a>
-                                            </li>
-                                            <li class="sub-sub-nav-item" id="subNavItemAddInternalDo">
-                                                <a href="#add-internal-do" class="sub-sub-nav-link" onclick="event.preventDefault(); showAddInternalDO();">
-                                                    <i class="fa-solid fa-angle-right" style="font-size: 10px; margin-right: 8px; color: #94a3b8;"></i>
-                                                    <span class="sub-sub-nav-text">Add Internal DO Data</span>
-                                                </a>
-                                            </li>
-                                            <li class="sub-sub-nav-item" id="subNavItemEditInternalDo">
-                                                <a href="#edit-internal-do" class="sub-sub-nav-link" onclick="event.preventDefault(); showEditInternalDO();">
-                                                    <i class="fa-solid fa-angle-right" style="font-size: 10px; margin-right: 8px; color: #94a3b8;"></i>
-                                                    <span class="sub-sub-nav-text">Edit DO or Map to WB</span>
-                                                </a>
-                                            </li>
-                                        </ul>
+                                    </li>
+                                    <li class="sub-nav-item" id="subNavItemEditInternalDo">
+                                        <a href="#edit-internal-do" class="sub-nav-link" onclick="event.preventDefault(); showEditInternalDO();">
+                                            <i class="fa-solid fa-angle-right nav-icon" style="font-size: 11px; margin-right: 8px; color: #94a3b8;"></i>
+                                            <span class="sub-nav-text">Edit DO or Map to WB</span>
+                                        </a>
                                     </li>
                                 </ul>
                             </li>
@@ -12416,23 +12399,25 @@ window.showViewInternalDO = function() {
     if (alertSidebar) alertSidebar.style.display = 'none';
     if (topTabs) topTabs.style.display = 'none';
 
-    // Highlight DO Operations and sub-sub item
+    // Highlight DO Operations dropdown and sub-item
     const doOpsNavItem = document.getElementById('doOpsNavItem');
     const doOpsSubList = document.getElementById('doOpsSubList');
     const doOpsArrow = document.getElementById('doOpsArrow');
-    const internalDoNavItem = document.getElementById('internalDoNavItem');
-    const internalDoSubList = document.getElementById('internalDoSubList');
-    const internalDoArrow = document.getElementById('internalDoArrow');
 
     if (doOpsSubList) doOpsSubList.style.display = 'block';
     if (doOpsArrow) doOpsArrow.className = 'fa-solid fa-chevron-down arrow-icon';
-    if (internalDoSubList) internalDoSubList.style.display = 'block';
-    if (internalDoArrow) internalDoArrow.className = 'fa-solid fa-chevron-down arrow-icon';
 
-    document.querySelectorAll('.sub-sub-nav-item').forEach(el => el.classList.remove('active'));
-    document.querySelectorAll('.sub-sub-nav-link').forEach(el => el.classList.remove('active'));
-    document.getElementById('subNavItemViewInternalDo')?.classList.add('active');
-    document.getElementById('subNavItemViewInternalDo')?.querySelector('.sub-sub-nav-link')?.classList.add('active');
+    // Clear active states on sidebar items
+    document.querySelectorAll('.sub-nav-item').forEach(el => el.classList.remove('active'));
+    document.querySelectorAll('.sub-nav-link').forEach(el => el.classList.remove('active'));
+    document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+    if (doOpsNavItem) doOpsNavItem.classList.add('active');
+
+    const activeItem = document.getElementById('subNavItemViewInternalDo');
+    if (activeItem) {
+        activeItem.classList.add('active');
+        activeItem.querySelector('.sub-nav-link')?.classList.add('active');
+    }
 
     updateHeaderMainTitle('INTERNAL DELIVERY ORDER (DO) OPERATIONS');
 
@@ -12460,10 +12445,22 @@ window.showAddInternalDO = function() {
     if (alertSidebar) alertSidebar.style.display = 'none';
     if (topTabs) topTabs.style.display = 'none';
 
-    document.querySelectorAll('.sub-sub-nav-item').forEach(el => el.classList.remove('active'));
-    document.querySelectorAll('.sub-sub-nav-link').forEach(el => el.classList.remove('active'));
-    document.getElementById('subNavItemAddInternalDo')?.classList.add('active');
-    document.getElementById('subNavItemAddInternalDo')?.querySelector('.sub-sub-nav-link')?.classList.add('active');
+    const doOpsNavItem = document.getElementById('doOpsNavItem');
+    const doOpsSubList = document.getElementById('doOpsSubList');
+    const doOpsArrow = document.getElementById('doOpsArrow');
+    if (doOpsSubList) doOpsSubList.style.display = 'block';
+    if (doOpsArrow) doOpsArrow.className = 'fa-solid fa-chevron-down arrow-icon';
+
+    document.querySelectorAll('.sub-nav-item').forEach(el => el.classList.remove('active'));
+    document.querySelectorAll('.sub-nav-link').forEach(el => el.classList.remove('active'));
+    document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+    if (doOpsNavItem) doOpsNavItem.classList.add('active');
+
+    const activeItem = document.getElementById('subNavItemAddInternalDo');
+    if (activeItem) {
+        activeItem.classList.add('active');
+        activeItem.querySelector('.sub-nav-link')?.classList.add('active');
+    }
 
     updateHeaderMainTitle('ADD INTERNAL DO DATA');
 
@@ -12490,10 +12487,22 @@ window.showEditInternalDO = function() {
     if (alertSidebar) alertSidebar.style.display = 'none';
     if (topTabs) topTabs.style.display = 'none';
 
-    document.querySelectorAll('.sub-sub-nav-item').forEach(el => el.classList.remove('active'));
-    document.querySelectorAll('.sub-sub-nav-link').forEach(el => el.classList.remove('active'));
-    document.getElementById('subNavItemEditInternalDo')?.classList.add('active');
-    document.getElementById('subNavItemEditInternalDo')?.querySelector('.sub-sub-nav-link')?.classList.add('active');
+    const doOpsNavItem = document.getElementById('doOpsNavItem');
+    const doOpsSubList = document.getElementById('doOpsSubList');
+    const doOpsArrow = document.getElementById('doOpsArrow');
+    if (doOpsSubList) doOpsSubList.style.display = 'block';
+    if (doOpsArrow) doOpsArrow.className = 'fa-solid fa-chevron-down arrow-icon';
+
+    document.querySelectorAll('.sub-nav-item').forEach(el => el.classList.remove('active'));
+    document.querySelectorAll('.sub-nav-link').forEach(el => el.classList.remove('active'));
+    document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+    if (doOpsNavItem) doOpsNavItem.classList.add('active');
+
+    const activeItem = document.getElementById('subNavItemEditInternalDo');
+    if (activeItem) {
+        activeItem.classList.add('active');
+        activeItem.querySelector('.sub-nav-link')?.classList.add('active');
+    }
 
     updateHeaderMainTitle('EDIT DO OR MAP TO WEIGHBRIDGE');
 
