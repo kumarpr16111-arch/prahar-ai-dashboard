@@ -6212,8 +6212,130 @@ body.gis-mode-active .content-body {
     justify-content: flex-end;
     gap: 10px;
     margin-top: 24px;
-    padding-top: 16px;
-    border-top: 1px solid #232b3b;
+/* ========================================================
+   Idle Configuration Master Views & Widgets
+   ======================================================== */
+.config-idle-container {
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+.config-idle-header {
+    background: #0d121c;
+    border: 1px solid #232d40;
+    border-radius: 8px;
+    padding: 20px 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+}
+.config-idle-header-left {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+.config-idle-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    border: 1px solid transparent;
+}
+.config-idle-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: #f8fafc;
+    margin: 0 0 4px 0;
+}
+.config-idle-subtitle {
+    font-size: 12.5px;
+    color: #94a3b8;
+    margin: 0;
+}
+.config-idle-badge {
+    background: rgba(16, 185, 129, 0.12);
+    border: 1px solid rgba(16, 185, 129, 0.3);
+    color: #34d399;
+    font-size: 11.5px;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 4px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+.config-idle-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+    gap: 16px;
+}
+.config-idle-card {
+    background: #0d121c;
+    border: 1px solid #232d40;
+    border-radius: 8px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+.config-idle-card-title {
+    font-size: 13.5px;
+    font-weight: 700;
+    color: #f1f5f9;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border-bottom: 1px solid #1e293b;
+    padding-bottom: 10px;
+}
+.config-idle-stat-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+}
+.config-idle-stat-box {
+    background: #131b29;
+    border: 1px solid #1f2a3c;
+    border-radius: 6px;
+    padding: 12px 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+.config-idle-stat-val {
+    font-size: 18px;
+    font-weight: 800;
+    color: #f8fafc;
+}
+.config-idle-stat-lbl {
+    font-size: 10.5px;
+    color: #94a3b8;
+    margin-top: 2px;
+}
+.config-idle-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    font-size: 12px;
+}
+.config-idle-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 12px;
+    background: #131b29;
+    border: 1px solid #1f2a3c;
+    border-radius: 4px;
+    color: #94a3b8;
+}
+.config-idle-item strong {
+    color: #f1f5f9;
 }
 
 </style>
@@ -6508,9 +6630,46 @@ body.gis-mode-active .content-body {
                             </li>
                             {% endif %}
 
-
-
-
+                            <!-- Configuration Dropdown at Bottom (Area, Plant, Weighbridge, Checkpost, Maintenance Masters) -->
+                            <li class="nav-item has-sub" id="configNavItem">
+                                <a href="#" class="nav-link" id="configNavLink" onclick="event.preventDefault(); toggleConfigDropdown(event);" style="cursor: pointer;">
+                                    <i class="fa-solid fa-gear nav-icon" style="color: #94a3b8;"></i>
+                                    <span class="nav-text">Configuration</span>
+                                    <i class="fa-solid fa-chevron-right arrow-icon" id="configArrow"></i>
+                                </a>
+                                <ul class="sub-nav-list" id="configSubList" style="display: none;">
+                                    <li class="sub-nav-item" id="configAreaNavItem">
+                                        <a href="#config-area" class="sub-nav-link" onclick="event.preventDefault(); showConfigArea();">
+                                            <i class="fa-solid fa-mountain-city nav-icon" style="font-size: 11px; margin-right: 8px; color: #38bdf8;"></i>
+                                            <span class="sub-nav-text">Area Master</span>
+                                        </a>
+                                    </li>
+                                    <li class="sub-nav-item" id="configPlantNavItem">
+                                        <a href="#config-plant" class="sub-nav-link" onclick="event.preventDefault(); showConfigPlant();">
+                                            <i class="fa-solid fa-industry nav-icon" style="font-size: 11px; margin-right: 8px; color: #34d399;"></i>
+                                            <span class="sub-nav-text">Plant Master</span>
+                                        </a>
+                                    </li>
+                                    <li class="sub-nav-item" id="configWeighbridgeNavItem">
+                                        <a href="#config-weighbridge" class="sub-nav-link" onclick="event.preventDefault(); showConfigWeighbridge();">
+                                            <i class="fa-solid fa-scale-balanced nav-icon" style="font-size: 11px; margin-right: 8px; color: #a855f7;"></i>
+                                            <span class="sub-nav-text">WeighBridge Master</span>
+                                        </a>
+                                    </li>
+                                    <li class="sub-nav-item" id="configCheckpostNavItem">
+                                        <a href="#config-checkpost" class="sub-nav-link" onclick="event.preventDefault(); showConfigCheckpost();">
+                                            <i class="fa-solid fa-shield-halved nav-icon" style="font-size: 11px; margin-right: 8px; color: #f87171;"></i>
+                                            <span class="sub-nav-text">Checkpost Master</span>
+                                        </a>
+                                    </li>
+                                    <li class="sub-nav-item" id="configMaintenanceNavItem">
+                                        <a href="#config-maintenance" class="sub-nav-link" onclick="event.preventDefault(); showConfigMaintenance();">
+                                            <i class="fa-solid fa-screwdriver-wrench nav-icon" style="font-size: 11px; margin-right: 8px; color: #fbbf24;"></i>
+                                            <span class="sub-nav-text">Maintenance Master</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
                         </ul>
                     </div>
                 </div>
@@ -9934,6 +10093,244 @@ body.gis-mode-active .content-body {
                     </div>
                 </div>
             </div>
+
+            <!-- ========================================================
+                 Configuration Master Views (Idle Widgets)
+                 ======================================================== -->
+            <!-- 1. Area Master (Idle Configuration View) -->
+            <div class="tab-content-panel" id="config-area-view" style="display: none;">
+                <div class="config-idle-container">
+                    <div class="config-idle-header">
+                        <div class="config-idle-header-left">
+                            <div class="config-idle-icon" style="color: #38bdf8; background: rgba(56, 189, 248, 0.1); border-color: rgba(56, 189, 248, 0.25);">
+                                <i class="fa-solid fa-mountain-city"></i>
+                            </div>
+                            <div>
+                                <h2 class="config-idle-title">Area Master</h2>
+                                <p class="config-idle-subtitle">Administrative mining areas, headquarters, production allocations, and zonal boundary configuration.</p>
+                            </div>
+                        </div>
+                        <span class="config-idle-badge"><i class="fa-solid fa-shield-halved"></i> Master Active</span>
+                    </div>
+
+                    <div class="config-idle-grid">
+                        <div class="config-idle-card">
+                            <div class="config-idle-card-title"><i class="fa-solid fa-layer-group" style="color: #38bdf8;"></i> Mining Area Parameters</div>
+                            <div class="config-idle-stat-row">
+                                <div class="config-idle-stat-box">
+                                    <span class="config-idle-stat-val">14</span>
+                                    <span class="config-idle-stat-lbl">Administrative Areas</span>
+                                </div>
+                                <div class="config-idle-stat-box">
+                                    <span class="config-idle-stat-val">50</span>
+                                    <span class="config-idle-stat-lbl">Connected Coal Plants</span>
+                                </div>
+                                <div class="config-idle-stat-box">
+                                    <span class="config-idle-stat-val">318.9 MT</span>
+                                    <span class="config-idle-stat-lbl">Annual Production Target</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="config-idle-card">
+                            <div class="config-idle-card-title"><i class="fa-solid fa-map-location-dot" style="color: #34d399;"></i> Spatial Hierarchy Specifications</div>
+                            <div class="config-idle-list">
+                                <div class="config-idle-item"><span>Coordinate Projection:</span><strong>WGS-84 (EPSG:4326)</strong></div>
+                                <div class="config-idle-item"><span>Regional Headquarters:</span><strong>Central Coalfields Ltd (CCL)</strong></div>
+                                <div class="config-idle-item"><span>Zonal Boundary Resolution:</span><strong>Polygon Vector Geofence</strong></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2. Plant Master (Idle Configuration View) -->
+            <div class="tab-content-panel" id="config-plant-view" style="display: none;">
+                <div class="config-idle-container">
+                    <div class="config-idle-header">
+                        <div class="config-idle-header-left">
+                            <div class="config-idle-icon" style="color: #34d399; background: rgba(52, 211, 153, 0.1); border-color: rgba(52, 211, 153, 0.25);">
+                                <i class="fa-solid fa-industry"></i>
+                            </div>
+                            <div>
+                                <h2 class="config-idle-title">Plant Master</h2>
+                                <p class="config-idle-subtitle">Preparation plants, coal washeries, opencast/underground extraction units, and rated throughput ceilings.</p>
+                            </div>
+                        </div>
+                        <span class="config-idle-badge"><i class="fa-solid fa-shield-halved"></i> Master Active</span>
+                    </div>
+
+                    <div class="config-idle-grid">
+                        <div class="config-idle-card">
+                            <div class="config-idle-card-title"><i class="fa-solid fa-industry" style="color: #34d399;"></i> Plant Classification Summary</div>
+                            <div class="config-idle-stat-row">
+                                <div class="config-idle-stat-box">
+                                    <span class="config-idle-stat-val">50</span>
+                                    <span class="config-idle-stat-lbl">Active Plants</span>
+                                </div>
+                                <div class="config-idle-stat-box">
+                                    <span class="config-idle-stat-val">28</span>
+                                    <span class="config-idle-stat-lbl">Opencast Pits (OCP)</span>
+                                </div>
+                                <div class="config-idle-stat-box">
+                                    <span class="config-idle-stat-val">6</span>
+                                    <span class="config-idle-stat-lbl">Heavy Washeries</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="config-idle-card">
+                            <div class="config-idle-card-title"><i class="fa-solid fa-gears" style="color: #a855f7;"></i> Plant Processing Standards</div>
+                            <div class="config-idle-list">
+                                <div class="config-idle-item"><span>Standard ROM Feed Ceiling:</span><strong>30,000 TPD Max</strong></div>
+                                <div class="config-idle-item"><span>Washery Separation Method:</span><strong>Heavy Media Cyclone (HMC)</strong></div>
+                                <div class="config-idle-item"><span>Discharge Telemetry Sync:</span><strong>Automated SCADA Protocol</strong></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3. WeighBridge Master (Idle Configuration View) -->
+            <div class="tab-content-panel" id="config-weighbridge-view" style="display: none;">
+                <div class="config-idle-container">
+                    <div class="config-idle-header">
+                        <div class="config-idle-header-left">
+                            <div class="config-idle-icon" style="color: #a855f7; background: rgba(168, 85, 247, 0.1); border-color: rgba(168, 85, 247, 0.25);">
+                                <i class="fa-solid fa-scale-balanced"></i>
+                            </div>
+                            <div>
+                                <h2 class="config-idle-title">WeighBridge Master</h2>
+                                <p class="config-idle-subtitle">Weighting scale bridges, load cell telemetry standards, DGMS tolerance thresholds, and ANPR camera associations.</p>
+                            </div>
+                        </div>
+                        <span class="config-idle-badge"><i class="fa-solid fa-shield-halved"></i> Master Active</span>
+                    </div>
+
+                    <div class="config-idle-grid">
+                        <div class="config-idle-card">
+                            <div class="config-idle-card-title"><i class="fa-solid fa-scale-balanced" style="color: #a855f7;"></i> Scale Infrastructure Specifications</div>
+                            <div class="config-idle-stat-row">
+                                <div class="config-idle-stat-box">
+                                    <span class="config-idle-stat-val">161</span>
+                                    <span class="config-idle-stat-lbl">Weighbridge Scales</span>
+                                </div>
+                                <div class="config-idle-stat-box">
+                                    <span class="config-idle-stat-val">100 MT</span>
+                                    <span class="config-idle-stat-lbl">Gross Scale Rating</span>
+                                </div>
+                                <div class="config-idle-stat-box">
+                                    <span class="config-idle-stat-val">±20 kg</span>
+                                    <span class="config-idle-stat-lbl">DGMS Tolerance Margin</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="config-idle-card">
+                            <div class="config-idle-card-title"><i class="fa-solid fa-video" style="color: #38bdf8;"></i> ANPR & Optical Hardware Standards</div>
+                            <div class="config-idle-list">
+                                <div class="config-idle-item"><span>CCTV Binding Standard:</span><strong>Dual ANPR (Front Plate + Top Overhead)</strong></div>
+                                <div class="config-idle-item"><span>Load Cell Architecture:</span><strong>4x 30T Digital Compression Cells</strong></div>
+                                <div class="config-idle-item"><span>Anti-Theft Optical Beam:</span><strong>Active Infrared (IR) Interlock</strong></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 4. Checkpost Master (Idle Configuration View) -->
+            <div class="tab-content-panel" id="config-checkpost-view" style="display: none;">
+                <div class="config-idle-container">
+                    <div class="config-idle-header">
+                        <div class="config-idle-header-left">
+                            <div class="config-idle-icon" style="color: #f87171; background: rgba(248, 113, 113, 0.1); border-color: rgba(248, 113, 113, 0.25);">
+                                <i class="fa-solid fa-shield-halved"></i>
+                            </div>
+                            <div>
+                                <h2 class="config-idle-title">Checkpost Master</h2>
+                                <p class="config-idle-subtitle">Security checkposts, automated boom barrier protocols, long-range RFID tag scanners, and perimeter control gates.</p>
+                            </div>
+                        </div>
+                        <span class="config-idle-badge"><i class="fa-solid fa-shield-halved"></i> Master Active</span>
+                    </div>
+
+                    <div class="config-idle-grid">
+                        <div class="config-idle-card">
+                            <div class="config-idle-card-title"><i class="fa-solid fa-torii-gate" style="color: #f87171;"></i> Security Gate Parameters</div>
+                            <div class="config-idle-stat-row">
+                                <div class="config-idle-stat-box">
+                                    <span class="config-idle-stat-val">96</span>
+                                    <span class="config-idle-stat-lbl">Checkposts Mapped</span>
+                                </div>
+                                <div class="config-idle-stat-box">
+                                    <span class="config-idle-stat-val">100%</span>
+                                    <span class="config-idle-stat-lbl">Automated Boom Barriers</span>
+                                </div>
+                                <div class="config-idle-stat-box">
+                                    <span class="config-idle-stat-val">UHF Gen2</span>
+                                    <span class="config-idle-stat-lbl">RFID Scanner Standard</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="config-idle-card">
+                            <div class="config-idle-card-title"><i class="fa-solid fa-id-badge" style="color: #38bdf8;"></i> Gate Passage Governance</div>
+                            <div class="config-idle-list">
+                                <div class="config-idle-item"><span>Barrier Operating Mode:</span><strong>AUTO (RFID Tag Verified Only)</strong></div>
+                                <div class="config-idle-item"><span>Lane Topology:</span><strong>Dedicated Inbound / Outbound Lanes</strong></div>
+                                <div class="config-idle-item"><span>Audit Log Protocol:</span><strong>Real-time Central Push to TRACE</strong></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 5. Maintenance Master (Idle Configuration View) -->
+            <div class="tab-content-panel" id="config-maintenance-view" style="display: none;">
+                <div class="config-idle-container">
+                    <div class="config-idle-header">
+                        <div class="config-idle-header-left">
+                            <div class="config-idle-icon" style="color: #fbbf24; background: rgba(251, 191, 36, 0.1); border-color: rgba(251, 191, 36, 0.25);">
+                                <i class="fa-solid fa-screwdriver-wrench"></i>
+                            </div>
+                            <div>
+                                <h2 class="config-idle-title">Maintenance Master</h2>
+                                <p class="config-idle-subtitle">Asset health tracking, calibration cycle schedules, sensor diagnostic governance, and zero-fault tolerance regimes.</p>
+                            </div>
+                        </div>
+                        <span class="config-idle-badge"><i class="fa-solid fa-shield-halved"></i> Master Active</span>
+                    </div>
+
+                    <div class="config-idle-grid">
+                        <div class="config-idle-card">
+                            <div class="config-idle-card-title"><i class="fa-solid fa-clock-rotate-left" style="color: #fbbf24;"></i> Preventive Calibration Schedule</div>
+                            <div class="config-idle-stat-row">
+                                <div class="config-idle-stat-box">
+                                    <span class="config-idle-stat-val">90 Days</span>
+                                    <span class="config-idle-stat-lbl">Calibration Cycle</span>
+                                </div>
+                                <div class="config-idle-stat-box">
+                                    <span class="config-idle-stat-val">99.4%</span>
+                                    <span class="config-idle-stat-lbl">Fleet & Sensor Uptime</span>
+                                </div>
+                                <div class="config-idle-stat-box">
+                                    <span class="config-idle-stat-val">DGMS-2026</span>
+                                    <span class="config-idle-stat-lbl">Compliance Standard</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="config-idle-card">
+                            <div class="config-idle-card-title"><i class="fa-solid fa-heart-pulse" style="color: #34d399;"></i> Diagnostics & Health Interlocks</div>
+                            <div class="config-idle-list">
+                                <div class="config-idle-item"><span>Load Cell Zero-Drift Limit:</span><strong>±5 kg Max Drift Tolerance</strong></div>
+                                <div class="config-idle-item"><span>CCTV Video Loss Action:</span><strong>Automatic Checkpost Alert Trigger</strong></div>
+                                <div class="config-idle-item"><span>Barrier Motor Servicing:</span><strong>Semi-Annual Mechanical Inspection</strong></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
             </div> <!-- Close content-body -->
         </main>
     </div>
@@ -13060,6 +13457,84 @@ function toggleDemoConsole() {
 setInterval(fetchLiveAlerts, 5000);
 setTimeout(fetchLiveAlerts, 500);
 
+// ========================================================
+// Configuration Masters (Idle Views Controller)
+// ========================================================
+window.toggleConfigDropdown = function(e) {
+    if (e) e.preventDefault();
+    const list = document.getElementById('configSubList');
+    const arrow = document.getElementById('configArrow');
+    if (list) {
+        const isHidden = list.style.display === 'none' || getComputedStyle(list).display === 'none';
+        list.style.display = isHidden ? 'block' : 'none';
+        if (arrow) {
+            arrow.className = isHidden ? 'fa-solid fa-chevron-down arrow-icon' : 'fa-solid fa-chevron-right arrow-icon';
+        }
+    }
+};
+
+function showConfigMaster(viewId, navItemId, title) {
+    document.body.classList.remove('alert-mode-active');
+    document.body.classList.remove('gis-mode-active');
+    const mainSidebar = document.getElementById('mainSidebarMenu');
+    const alertSidebar = document.getElementById('alertSidebarMenu');
+    const topTabs = document.getElementById('topTabsCard') || document.querySelector('.tabs-card');
+    if (mainSidebar) mainSidebar.style.display = 'block';
+    if (alertSidebar) alertSidebar.style.display = 'none';
+    if (topTabs) topTabs.style.display = 'none';
+
+    // Ensure config dropdown is expanded
+    const configSubList = document.getElementById('configSubList');
+    const configArrow = document.getElementById('configArrow');
+    const configNavItem = document.getElementById('configNavItem');
+    if (configSubList) configSubList.style.display = 'block';
+    if (configArrow) configArrow.className = 'fa-solid fa-chevron-down arrow-icon';
+
+    document.querySelectorAll('.sub-nav-item').forEach(el => el.classList.remove('active'));
+    document.querySelectorAll('.sub-nav-link').forEach(el => el.classList.remove('active'));
+    document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+    if (configNavItem) configNavItem.classList.add('active');
+
+    const activeItem = document.getElementById(navItemId);
+    if (activeItem) {
+        activeItem.classList.add('active');
+        activeItem.querySelector('.sub-nav-link')?.classList.add('active');
+    }
+
+    updateHeaderMainTitle(title);
+
+    document.querySelectorAll('.tab-content-panel').forEach(panel => {
+        if (panel.id === viewId) {
+            panel.classList.add('active');
+            panel.style.display = 'block';
+        } else {
+            panel.classList.remove('active');
+            panel.style.display = 'none';
+        }
+    });
+}
+
+window.showConfigArea = function() {
+    showConfigMaster('config-area-view', 'configAreaNavItem', 'AREA MASTER CONFIGURATION');
+    window.location.hash = '#config-area';
+};
+window.showConfigPlant = function() {
+    showConfigMaster('config-plant-view', 'configPlantNavItem', 'PLANT MASTER CONFIGURATION');
+    window.location.hash = '#config-plant';
+};
+window.showConfigWeighbridge = function() {
+    showConfigMaster('config-weighbridge-view', 'configWeighbridgeNavItem', 'WEIGHBRIDGE MASTER CONFIGURATION');
+    window.location.hash = '#config-weighbridge';
+};
+window.showConfigCheckpost = function() {
+    showConfigMaster('config-checkpost-view', 'configCheckpostNavItem', 'CHECKPOST MASTER CONFIGURATION');
+    window.location.hash = '#config-checkpost';
+};
+window.showConfigMaintenance = function() {
+    showConfigMaster('config-maintenance-view', 'configMaintenanceNavItem', 'MAINTENANCE MASTER CONFIGURATION');
+    window.location.hash = '#config-maintenance';
+};
+
 // Initial auto-load & hash router for sub-views
 function handleHashRoute() {
     const hash = window.location.hash;
@@ -13073,6 +13548,16 @@ function handleHashRoute() {
         showEditInternalDO();
     } else if (hash === '#road-dispatch') {
         showRoadDispatchView();
+    } else if (hash === '#config-area') {
+        showConfigArea();
+    } else if (hash === '#config-plant') {
+        showConfigPlant();
+    } else if (hash === '#config-weighbridge') {
+        showConfigWeighbridge();
+    } else if (hash === '#config-checkpost') {
+        showConfigCheckpost();
+    } else if (hash === '#config-maintenance') {
+        showConfigMaintenance();
     }
 }
 window.addEventListener('hashchange', handleHashRoute);
