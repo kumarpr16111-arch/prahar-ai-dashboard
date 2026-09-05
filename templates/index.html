@@ -400,12 +400,26 @@ a {
     width: var(--sidebar-collapsed-width);
 }
 
+.sidebar.collapsed .brand,
+.sidebar.collapsed .brand-logo,
+.sidebar.collapsed .brand-logo-img,
 .sidebar.collapsed .brand-info,
 .sidebar.collapsed .nav-text,
 .sidebar.collapsed .badge,
 .sidebar.collapsed .arrow-icon,
-.sidebar.collapsed .nav-section-title {
-    display: none;
+.sidebar.collapsed .nav-section-title,
+.sidebar.collapsed .sub-nav-list {
+    display: none !important;
+}
+
+.sidebar.collapsed .sidebar-header {
+    justify-content: center !important;
+    padding: 0 !important;
+}
+
+.sidebar.collapsed .sidebar-toggle {
+    margin: 0 auto;
+    font-size: 18px;
 }
 
 .sidebar.collapsed .nav-link {
