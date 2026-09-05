@@ -6423,24 +6423,23 @@ body.gis-mode-active .content-body {
                             </li>
                             {% endif %}
 
-                            {% if user_role in ['gm', 'vigilance', 'dispatch'] %}
-                            <!-- DO Operations Dropdown -->
-                            <li class="nav-item has-sub" id="doOpsNavItem">
-                                <a href="#" class="nav-link" id="doOpsNavLink" style="color: #f97316;">
+                            <!-- DO Operations Dropdown (Accessible across all roles) -->
+                            <li class="nav-item has-sub expanded" id="doOpsNavItem">
+                                <a href="#" class="nav-link" id="doOpsNavLink" onclick="event.preventDefault(); toggleDoOpsDropdown(event);" style="color: #f97316; cursor: pointer;">
                                     <i class="fa-regular fa-folder-open nav-icon" style="color: #f97316;"></i>
                                     <span class="nav-text" style="color: #f97316; font-weight: 600;">DO Operations</span>
                                     <i class="fa-solid fa-chevron-down arrow-icon" id="doOpsArrow" style="color: #f97316;"></i>
                                 </a>
                                 <ul class="sub-nav-list" id="doOpsSubList" style="display: block;">
                                     <li class="sub-nav-item" id="roadDispatchNavItem">
-                                        <a href="#" class="sub-nav-link" id="roadDispatchNavLink" onclick="event.preventDefault(); showRoadDispatchView();">
+                                        <a href="#road-dispatch" class="sub-nav-link" id="roadDispatchNavLink" onclick="event.preventDefault(); showRoadDispatchView();">
                                             <i class="fa-solid fa-angle-right nav-icon" style="font-size: 11px; margin-right: 8px;"></i>
                                             <span class="sub-nav-text">Road Dispatch</span>
                                             <i class="fa-solid fa-chevron-right" style="font-size: 10px; margin-left: auto; color: #64748b;"></i>
                                         </a>
                                     </li>
                                     <li class="sub-nav-item has-sub-sub expanded" id="internalDoNavItem">
-                                        <a href="#" class="sub-nav-link" id="internalDoNavLink" style="color: #38bdf8;">
+                                        <a href="#" class="sub-nav-link" id="internalDoNavLink" onclick="event.preventDefault(); toggleInternalDoDropdown(event);" style="color: #38bdf8; cursor: pointer;">
                                             <i class="fa-solid fa-angle-right nav-icon" style="font-size: 11px; margin-right: 8px; color: #38bdf8;"></i>
                                             <span class="sub-nav-text" style="font-weight: 600;">Internal DO</span>
                                             <i class="fa-solid fa-chevron-down arrow-icon" id="internalDoArrow" style="font-size: 10px; margin-left: auto; color: #38bdf8;"></i>
@@ -6469,7 +6468,6 @@ body.gis-mode-active .content-body {
                                     </li>
                                 </ul>
                             </li>
-                            {% endif %}
 
                             {% if user_role in ['gm'] %}
                             <!-- Configuration Dropdown -->
@@ -10667,9 +10665,38 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    // DO Operations Dropdown Toggle (Keep expanded by default)
+    window.toggleDoOpsDropdown = function(e) {
+        if (e) e.preventDefault();
+        const list = document.getElementById('doOpsSubList');
+        const arrow = document.getElementById('doOpsArrow');
+        if (list) {
+            const isHidden = list.style.display === 'none' || getComputedStyle(list).display === 'none';
+            list.style.display = isHidden ? 'block' : 'none';
+            if (arrow) {
+                arrow.className = isHidden ? 'fa-solid fa-chevron-down arrow-icon' : 'fa-solid fa-chevron-right arrow-icon';
+            }
+        }
+    };
+
+    // Internal DO Dropdown Toggle (Keep expanded by default)
+    window.toggleInternalDoDropdown = function(e) {
+        if (e) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
+        const list = document.getElementById('internalDoSubList');
+        const arrow = document.getElementById('internalDoArrow');
+        if (list) {
+            const isHidden = list.style.display === 'none' || getComputedStyle(list).display === 'none';
+            list.style.display = isHidden ? 'block' : 'none';
+            if (arrow) {
+                arrow.className = isHidden ? 'fa-solid fa-chevron-down arrow-icon' : 'fa-solid fa-chevron-right arrow-icon';
+            }
+        }
+    };
+
     setupDropdownToggle('blacklistedNavLink', 'blacklistedSubList', 'blacklistedArrow');
-    setupDropdownToggle('doOpsNavLink', 'doOpsSubList', 'doOpsArrow');
-    setupDropdownToggle('internalDoNavLink', 'internalDoSubList', 'internalDoArrow');
     setupDropdownToggle('configNavLink', 'configSubList', 'configArrow');
     setupDropdownToggle('cameraViewNavLink', 'cameraViewSubList', 'cameraViewArrow');
 
@@ -13090,10 +13117,23 @@ function toggleDemoConsole() {
 setInterval(fetchLiveAlerts, 5000);
 setTimeout(fetchLiveAlerts, 500);
 
-// Initial auto-load if starting on audit hash
-if (window.location.hash === '#digital-audit-trails') {
-    setTimeout(showDigitalAuditTrails, 100);
+// Initial auto-load & hash router for sub-views
+function handleHashRoute() {
+    const hash = window.location.hash;
+    if (hash === '#digital-audit-trails') {
+        showDigitalAuditTrails();
+    } else if (hash === '#view-internal-do') {
+        showViewInternalDO();
+    } else if (hash === '#add-internal-do') {
+        showAddInternalDO();
+    } else if (hash === '#edit-internal-do') {
+        showEditInternalDO();
+    } else if (hash === '#road-dispatch') {
+        showRoadDispatchView();
+    }
 }
+window.addEventListener('hashchange', handleHashRoute);
+setTimeout(handleHashRoute, 150);
 </script>
 
 <!-- Floating SIH Demo & Database Control Console -->
