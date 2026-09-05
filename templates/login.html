@@ -13,12 +13,15 @@
     <style>
         :root {
             --primary: #0284c7;
-            --primary-light: #38bdf8;
-            --primary-dark: #0369a1;
-            --text-main: #f8fafc;
+            --primary-gradient: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+            --primary-hover: linear-gradient(135deg, #0369a1 0%, #075985 100%);
+            --accent-cyan: #38bdf8;
+            --slate-blue: #2563eb;
+            --bg-outer: #f1f5f9;
+            --text-heading: #0f172a;
+            --text-body: #475569;
             --text-muted: #94a3b8;
-            --sidebar-black: #111317;
-            --greyish-palette: #273142;
+            --bezel-color: #0f172a;
         }
 
         * {
@@ -28,148 +31,129 @@
             font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
         }
 
-        /* Seamless background gradient from pitch-black on left to greyish on right */
         body {
-            background: linear-gradient(120deg, #0a0c10 0%, #111317 38%, #1c2432 75%, #273142 100%);
-            color: var(--text-main);
+            background-color: var(--bg-outer);
+            background-image: 
+                radial-gradient(#cbd5e1 1px, transparent 1px),
+                linear-gradient(135deg, rgba(2, 132, 199, 0.03) 0%, rgba(30, 41, 59, 0.04) 100%);
+            background-size: 24px 24px, 100% 100%;
             min-height: 100vh;
             width: 100vw;
-            overflow-x: hidden;
             display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 32px 20px;
+            color: var(--text-heading);
+            position: relative;
+            overflow-x: hidden;
         }
 
-        /* Full Screen 2-Column Split Layout with NO dividing middle line */
-        .login-viewport-split {
-            width: 100vw;
-            min-height: 100vh;
+        /* Subtle angled decorative grid lines in the background */
+        body::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: repeating-linear-gradient(
+                -45deg,
+                transparent,
+                transparent 140px,
+                rgba(203, 213, 225, 0.25) 140px,
+                rgba(203, 213, 225, 0.25) 141px
+            );
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* Device-like Floating Frame Card Container (as in reference layout) */
+        .auth-device-card {
+            width: 100%;
+            max-width: 980px;
+            background: #ffffff;
+            border-radius: 28px;
+            border: 10px solid var(--bezel-color);
+            box-shadow: 
+                0 30px 70px -15px rgba(15, 23, 42, 0.28),
+                0 0 0 1px rgba(15, 23, 42, 0.08);
             display: grid;
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: 1fr 1.05fr;
+            overflow: hidden;
             position: relative;
-            background: transparent;
+            z-index: 1;
         }
 
         /* ==========================================================================
-           Left Side: Black Sidebar Color with Centered TRACE Logo
+           Left Side: Modern Clean White Login Form
            ========================================================================== */
-        .login-info-side {
-            background: transparent;
-            padding: 48px;
+        .auth-form-side {
+            background: #ffffff;
+            padding: 38px 40px;
             display: flex;
             flex-direction: column;
-            align-items: center;
             justify-content: center;
             position: relative;
-            border: none;
-        }
-
-        .hero-logo-showcase {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
             z-index: 2;
         }
 
-        .hero-logo-frame {
-            background: rgba(255, 255, 255, 0.04);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(12px);
-            padding: 24px 32px;
-            border-radius: 20px;
-            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5), 0 0 30px rgba(2, 132, 199, 0.15);
+        /* Centered Logo App Icon */
+        .app-icon-header {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .app-logo-squircle {
+            width: 48px;
+            height: 48px;
+            background: #0f172a;
+            border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-bottom: 20px;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            margin-bottom: 12px;
+            box-shadow: 0 4px 12px rgba(15, 23, 42, 0.2);
+            padding: 6px;
         }
 
-        .hero-logo-frame:hover {
-            transform: scale(1.03);
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6), 0 0 40px rgba(56, 189, 248, 0.25);
-        }
-
-        .hero-logo-img {
-            height: 140px;
-            width: auto;
-            max-width: 280px;
+        .app-logo-squircle img {
+            width: 100%;
+            height: 100%;
             object-fit: contain;
-            display: block;
-            filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.4));
+            border-radius: 6px;
         }
 
-        .brand-caption-title {
+        .auth-title {
             font-family: 'Outfit', sans-serif;
             font-size: 26px;
-            font-weight: 800;
-            color: #ffffff;
-            letter-spacing: 0.08em;
-            text-transform: uppercase;
+            font-weight: 700;
+            color: var(--text-heading);
             margin-bottom: 4px;
+            letter-spacing: -0.01em;
         }
 
-        .brand-caption-subtitle {
-            font-size: 13px;
-            color: #94a3b8;
-            font-weight: 500;
-            letter-spacing: 0.06em;
-            text-transform: uppercase;
-        }
-
-        /* ==========================================================================
-           Right Side: Greyish Palette Login Form (Seamless Transition)
-           ========================================================================== */
-        .login-form-side {
-            background: transparent;
-            padding: 48px 60px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            position: relative;
-            overflow-y: auto;
-            border: none;
-        }
-
-        .form-container-inner {
-            width: 100%;
-            max-width: 480px;
-            margin: 0 auto;
-            display: flex;
-            flex-direction: column;
-        }
-
-        /* Header Title */
-        .card-header {
-            margin-bottom: 24px;
-        }
-
-        .card-header h2 {
-            font-family: 'Outfit', sans-serif;
-            font-size: 30px;
-            font-weight: 800;
-            color: #ffffff;
-            margin-bottom: 6px;
-            letter-spacing: -0.02em;
-        }
-
-        .card-header p {
-            font-size: 13.5px;
+        .auth-subtitle {
+            font-size: 12px;
             color: var(--text-muted);
+            max-width: 320px;
+            line-height: 1.4;
         }
 
         /* Error Alert */
         .alert-error {
-            background: rgba(239, 68, 68, 0.15);
-            border: 1px solid rgba(239, 68, 68, 0.4);
-            color: #f87171;
-            padding: 10px 14px;
+            background: #fef2f2;
+            border: 1px solid #fecaca;
+            color: #b91c1c;
+            padding: 9px 12px;
             border-radius: 8px;
-            font-size: 12.5px;
-            margin-bottom: 18px;
+            font-size: 11.5px;
+            margin-bottom: 14px;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
             animation: shake 0.3s ease;
         }
 
@@ -179,47 +163,27 @@
             75% { transform: translateX(4px); }
         }
 
-        /* Step Labels */
-        .step-label {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            font-size: 11.5px;
+        /* Role Selector Pills */
+        .role-section {
+            margin-bottom: 16px;
+        }
+
+        .section-mini-label {
+            font-size: 11px;
             font-weight: 700;
-            color: #cbd5e1;
-            margin-bottom: 10px;
+            color: #64748b;
             text-transform: uppercase;
             letter-spacing: 0.04em;
-        }
-
-        .step-label .step-num {
-            background: #0284c7;
-            color: #ffffff;
-            width: 18px;
-            height: 18px;
-            border-radius: 50%;
-            display: inline-flex;
+            margin-bottom: 8px;
+            display: flex;
+            justify-content: space-between;
             align-items: center;
-            justify-content: center;
-            font-size: 10px;
-            margin-right: 6px;
         }
 
-        .step-required {
-            font-size: 11px;
-            color: #f87171;
-            text-transform: none;
-        }
-
-        /* Role Selection Chips Grid */
-        .role-selection-section {
-            margin-bottom: 20px;
-        }
-
-        .role-grid {
+        .role-chips-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 8px;
+            gap: 6px;
         }
 
         .role-chip {
@@ -231,525 +195,527 @@
         .role-chip input[type="radio"] {
             position: absolute;
             opacity: 0;
-            cursor: pointer;
         }
 
-        .chip-content {
+        .chip-box {
             display: flex;
             align-items: center;
-            gap: 8px;
-            padding: 9px 12px;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.12);
+            gap: 7px;
+            padding: 7px 10px;
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
             border-radius: 8px;
-            backdrop-filter: blur(8px);
             transition: all 0.15s ease;
         }
 
-        .chip-num {
-            background: rgba(255, 255, 255, 0.1);
-            color: #cbd5e1;
-            width: 18px;
-            height: 18px;
-            border-radius: 4px;
-            font-size: 10px;
-            font-weight: 700;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
+        .chip-box i {
+            font-size: 11px;
+            color: #64748b;
         }
 
-        .chip-icon {
-            font-size: 13px;
-            color: #94a3b8;
-            flex-shrink: 0;
-        }
-
-        .chip-text {
+        .chip-box span {
             font-size: 11.5px;
             font-weight: 600;
-            color: #cbd5e1;
+            color: #334155;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
-            flex: 1;
         }
 
-        .chip-check-icon {
-            font-size: 12px;
-            color: #38bdf8;
-            display: none;
+        .role-chip:hover .chip-box {
+            background: #f1f5f9;
+            border-color: #cbd5e1;
         }
 
-        .role-chip:hover .chip-content {
-            background: rgba(255, 255, 255, 0.09);
-            border-color: rgba(56, 189, 248, 0.4);
+        .role-chip input[type="radio"]:checked + .chip-box {
+            background: #f0f9ff;
+            border-color: #0284c7;
+            box-shadow: 0 0 0 1px #0284c7;
         }
 
-        .role-chip input[type="radio"]:checked + .chip-content {
-            background: rgba(2, 132, 199, 0.25);
-            border-color: #38bdf8;
-            box-shadow: 0 0 12px rgba(2, 132, 199, 0.3);
-        }
-
-        .role-chip input[type="radio"]:checked + .chip-content .chip-text {
-            color: #ffffff;
+        .role-chip input[type="radio"]:checked + .chip-box span {
+            color: #0369a1;
             font-weight: 700;
         }
 
-        .role-chip input[type="radio"]:checked + .chip-content .chip-icon {
-            color: #38bdf8;
+        .role-chip input[type="radio"]:checked + .chip-box i {
+            color: #0284c7;
         }
 
-        .role-chip input[type="radio"]:checked + .chip-content .chip-num {
-            background: #0284c7;
-            color: #ffffff;
+        /* Credentials Fields */
+        .credentials-box {
+            margin-bottom: 14px;
         }
 
-        .role-chip input[type="radio"]:checked + .chip-content .chip-check-icon {
-            display: block;
-        }
-
-        /* Credentials Section */
-        .credentials-section {
-            margin-bottom: 18px;
-        }
-
-        .credentials-helper-bar {
+        .cred-quick-row {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: rgba(255, 255, 255, 0.04);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 6px;
-            padding: 6px 12px;
-            margin-bottom: 14px;
-            font-size: 11.5px;
-        }
-
-        .cred-info {
-            color: #94a3b8;
-        }
-
-        .cred-info strong {
-            color: #38bdf8;
-        }
-
-        .btn-autofill {
-            background: rgba(56, 189, 248, 0.15);
-            border: 1px solid rgba(56, 189, 248, 0.3);
-            color: #38bdf8;
-            padding: 3px 10px;
-            border-radius: 4px;
+            margin-bottom: 10px;
             font-size: 11px;
+        }
+
+        .btn-quick-fill {
+            background: #eff6ff;
+            border: 1px solid #bfdbfe;
+            color: #0284c7;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 10.5px;
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.15s ease;
             display: flex;
             align-items: center;
             gap: 4px;
+            transition: all 0.15s;
         }
 
-        .btn-autofill:hover {
+        .btn-quick-fill:hover {
             background: #0284c7;
             color: #ffffff;
         }
 
-        /* Form Inputs */
-        .form-group {
-            margin-bottom: 14px;
+        .input-group {
+            margin-bottom: 10px;
         }
 
-        .form-label {
-            display: block;
-            font-size: 12px;
-            font-weight: 600;
-            color: #cbd5e1;
-            margin-bottom: 6px;
-        }
-
-        .input-wrapper {
+        .input-field-wrap {
             position: relative;
             display: flex;
             align-items: center;
         }
 
-        .input-icon {
+        .input-field-wrap i.field-icon {
             position: absolute;
             left: 12px;
-            color: #64748b;
-            font-size: 14px;
+            color: #94a3b8;
+            font-size: 13px;
             pointer-events: none;
-            transition: color 0.15s;
         }
 
-        .form-input {
+        .modern-input {
             width: 100%;
-            background: rgba(13, 19, 31, 0.75);
-            border: 1px solid #2d3b4e;
-            color: #ffffff;
-            padding: 11px 14px 11px 38px;
-            border-radius: 8px;
-            font-size: 13px;
+            background: #ffffff;
+            border: 1.5px solid #e2e8f0;
+            color: #0f172a;
+            padding: 9px 12px 9px 34px;
+            border-radius: 10px;
+            font-size: 12.5px;
             outline: none;
             transition: all 0.15s ease;
         }
 
-        .form-input::placeholder {
-            color: #64748b;
+        .modern-input::placeholder {
+            color: #94a3b8;
+            font-size: 12px;
         }
 
-        .form-input:focus {
-            border-color: #38bdf8;
-            background: rgba(17, 26, 42, 0.9);
-            box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.15);
-        }
-
-        .form-input:focus + .input-icon,
-        .input-wrapper:focus-within .input-icon {
-            color: #38bdf8;
+        .modern-input:focus {
+            border-color: #0284c7;
+            background: #ffffff;
+            box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.12);
         }
 
         .pwd-toggle-btn {
             position: absolute;
-            right: 12px;
+            right: 10px;
             background: none;
             border: none;
-            color: #64748b;
+            color: #94a3b8;
             cursor: pointer;
-            font-size: 14px;
+            font-size: 13px;
             padding: 4px;
         }
 
         .pwd-toggle-btn:hover {
-            color: #cbd5e1;
+            color: #475569;
         }
 
-        /* reCAPTCHA Box (Greyish Theme) */
-        .recaptcha-box {
-            background: rgba(13, 19, 31, 0.75);
-            border: 1px solid #2d3b4e;
-            border-radius: 6px;
-            padding: 8px 12px;
+        /* reCAPTCHA Mini Box */
+        .recaptcha-mini {
+            background: #fafafa;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 7px 10px;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            margin-bottom: 18px;
+            margin-bottom: 14px;
+            cursor: pointer;
             user-select: none;
-            cursor: pointer;
-            transition: background 0.15s;
         }
 
-        .recaptcha-box:hover {
-            background: rgba(17, 26, 42, 0.9);
-            border-color: #38485e;
+        .recaptcha-mini:hover {
+            background: #f4f4f5;
         }
 
-        .recaptcha-left {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .recaptcha-checkbox {
-            width: 22px;
-            height: 22px;
-            border: 2px solid #475569;
-            border-radius: 3px;
-            background: #1e293b;
+        .recaptcha-check-circle {
+            width: 18px;
+            height: 18px;
+            border: 2px solid #cbd5e1;
+            border-radius: 4px;
+            background: #ffffff;
             display: flex;
             align-items: center;
             justify-content: center;
             transition: all 0.15s;
         }
 
-        .recaptcha-checkbox.checked {
-            border-color: #10b981;
-            background: #10b981;
+        .recaptcha-check-circle.checked {
+            border-color: #059669;
+            background: #059669;
             color: #ffffff;
         }
 
-        .recaptcha-text {
-            font-size: 12.5px;
-            color: #cbd5e1;
+        .recaptcha-label-text {
+            font-size: 11.5px;
+            color: #334155;
             font-weight: 500;
+            margin-left: 8px;
         }
 
-        .recaptcha-brand {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-        }
-
-        .recaptcha-brand i {
-            font-size: 16px;
-            color: #38bdf8;
-            margin-bottom: 2px;
-        }
-
-        .recaptcha-brand span {
-            font-size: 8px;
-            color: #64748b;
-            line-height: 1.1;
-        }
-
-        /* Submit Button */
-        .btn-login {
+        /* Primary Greyish-Blue Accent Login Button (Replacing the orange in reference) */
+        .btn-continue-blue {
             width: 100%;
-            background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+            background: var(--primary-gradient);
             color: #ffffff;
-            border: 1px solid #38bdf8;
-            border-radius: 8px;
-            padding: 12px 18px;
-            font-size: 13.5px;
+            border: none;
+            border-radius: 10px;
+            padding: 11px 16px;
+            font-size: 13px;
             font-weight: 700;
-            letter-spacing: 0.04em;
-            text-transform: uppercase;
+            letter-spacing: 0.02em;
             cursor: pointer;
-            transition: all 0.15s;
-            box-shadow: 0 4px 16px rgba(2, 132, 199, 0.35);
+            transition: all 0.15s ease;
+            box-shadow: 0 4px 14px rgba(2, 132, 199, 0.35);
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 8px;
+            gap: 6px;
         }
 
-        .btn-login:hover {
-            background: linear-gradient(135deg, #0369a1 0%, #075985 100%);
-            border-color: #7dd3fc;
-            box-shadow: 0 6px 20px rgba(2, 132, 199, 0.5);
+        .btn-continue-blue:hover {
+            background: var(--primary-hover);
+            box-shadow: 0 6px 18px rgba(2, 132, 199, 0.45);
             transform: translateY(-1px);
         }
 
-        /* Card Bottom Credits */
-        .card-footer {
-            margin-top: 18px;
+        .auth-footer-terms {
             text-align: center;
-            font-size: 11.5px;
-            color: #64748b;
-            line-height: 1.5;
-            border-top: 1px solid rgba(255, 255, 255, 0.06);
-            padding-top: 14px;
+            font-size: 10.5px;
+            color: #94a3b8;
+            margin-top: 14px;
+            line-height: 1.4;
         }
 
-        .card-footer .brand-highlight {
-            color: #38bdf8;
+        .auth-footer-terms a {
+            color: #0284c7;
+            text-decoration: none;
+        }
+
+        /* ==========================================================================
+           Right Side: Greyish-Blue 3D Ribbon / Fluid Wave Artwork
+           ========================================================================== */
+        .auth-artwork-side {
+            background: #f8fafc;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            border-left: 1px solid #f1f5f9;
+        }
+
+        .artwork-svg-container {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .artwork-svg {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .artwork-version-tag {
+            position: absolute;
+            bottom: 16px;
+            right: 20px;
+            font-size: 11px;
+            font-weight: 600;
+            color: #94a3b8;
+            font-family: monospace;
+            z-index: 5;
+            letter-spacing: 0.04em;
+        }
+
+        .artwork-brand-overlay {
+            position: absolute;
+            top: 24px;
+            right: 24px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(8px);
+            border: 1px solid #e2e8f0;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 10.5px;
             font-weight: 700;
+            color: #0284c7;
+            z-index: 5;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
         }
 
         /* Responsive Breakpoints */
-        @media (max-width: 900px) {
-            .login-viewport-split {
+        @media (max-width: 820px) {
+            body {
+                padding: 16px;
+            }
+
+            .auth-device-card {
                 grid-template-columns: 1fr;
-                height: auto;
-                min-height: 100vh;
+                border-width: 6px;
+                border-radius: 20px;
+                max-width: 440px;
             }
 
-            .login-info-side {
-                padding: 40px 24px 20px 24px;
+            .auth-artwork-side {
+                display: none;
             }
 
-            .hero-logo-img {
-                height: 90px;
-            }
-
-            .login-form-side {
-                padding: 24px 24px 40px 24px;
+            .auth-form-side {
+                padding: 28px 22px;
             }
         }
     </style>
 </head>
 <body>
 
-    <!-- Full Screen 2-Column Split Layout with Seamless Gradient -->
-    <div class="login-viewport-split">
+    <!-- Device-like Floating Frame Card Container -->
+    <div class="auth-device-card">
         
-        <!-- Left Side: Pitch Black Sidebar Tone with Clean Centered Logo -->
-        <div class="login-info-side">
-            <div class="hero-logo-showcase">
-                <div class="hero-logo-frame">
-                    <img src="/static/media_screenshots/trace_main_logo.jpeg" alt="TRACE Logo" class="hero-logo-img">
+        <!-- Left Side: Clean Login Form -->
+        <div class="auth-form-side">
+            <!-- App Icon & Title -->
+            <div class="app-icon-header">
+                <div class="app-logo-squircle">
+                    <img src="/static/media_screenshots/trace_main_logo.jpeg" alt="TRACE Logo">
                 </div>
-                <h1 class="brand-caption-title">TRACE</h1>
-                <p class="brand-caption-subtitle">Track. Analyze. Act.</p>
+                <h1 class="auth-title">Welcome Back</h1>
+                <p class="auth-subtitle">Unified AI-Powered Mining Digital Platform</p>
             </div>
-        </div>
 
-        <!-- Right Side: Greyish Palette Login Form (Seamless Background Transition) -->
-        <div class="login-form-side">
-            <div class="form-container-inner">
-                <!-- Header Title -->
-                <div class="card-header">
-                    <h2>Welcome back</h2>
-                    <p>Log in to TRACE Mining Digital Infrastructure</p>
-                </div>
+            {% if error %}
+            <div class="alert-error">
+                <i class="fa-solid fa-triangle-exclamation"></i>
+                <span>{{ error }}</span>
+            </div>
+            {% endif %}
 
-                {% if error %}
-                <div class="alert-error">
-                    <i class="fa-solid fa-triangle-exclamation"></i>
-                    <span>{{ error }}</span>
-                </div>
-                {% endif %}
+            <!-- Login Form -->
+            <form action="/login" method="POST" id="loginForm">
+                <!-- STEP 1: SELECT ROLE -->
+                <div class="role-section">
+                    <div class="section-mini-label">
+                        <span>Select Role</span>
+                        <span style="color: #0284c7; font-weight: 600; text-transform: none;">* Required</span>
+                    </div>
 
-                <!-- Login Form -->
-                <form action="/login" method="POST" id="loginForm">
-                    <!-- STEP 1: 5 ROLES SELECTION CHIPS -->
-                    <div class="role-selection-section">
-                        <div class="step-label">
-                            <div class="step-text">
-                                <span class="step-num">1</span> Select Role / Designation
+                    <div class="role-chips-grid">
+                        <!-- Role 1: General Manager -->
+                        <label class="role-chip" onclick="handleRoleChange('gm', 'General Manager', 'gm@trace.gov.in', 'gm@trace2026')">
+                            <input type="radio" name="role" value="gm" id="role_gm" checked>
+                            <div class="chip-box">
+                                <i class="fa-solid fa-user-tie"></i>
+                                <span>General Manager</span>
                             </div>
-                            <span class="step-required">* Required</span>
-                        </div>
+                        </label>
 
-                        <div class="role-grid">
-                            <!-- Role 1: General Manager -->
-                            <label class="role-chip" onclick="handleRoleChange('gm', 'General Manager', 'gm@trace.gov.in', 'gm@trace2026')">
-                                <input type="radio" name="role" value="gm" id="role_gm" checked>
-                                <span class="chip-content">
-                                    <span class="chip-num">1</span>
-                                    <i class="fa-solid fa-user-tie chip-icon"></i>
-                                    <span class="chip-text">General Manager</span>
-                                    <i class="fa-solid fa-circle-check chip-check-icon"></i>
-                                </span>
-                            </label>
+                        <!-- Role 2: Vigilance Officer -->
+                        <label class="role-chip" onclick="handleRoleChange('vigilance', 'Vigilance Officer', 'vigilance@trace.gov.in', 'vigilance@trace2026')">
+                            <input type="radio" name="role" value="vigilance" id="role_vigilance">
+                            <div class="chip-box">
+                                <i class="fa-solid fa-shield-halved"></i>
+                                <span>Vigilance Officer</span>
+                            </div>
+                        </label>
 
-                            <!-- Role 2: Vigilance Officer -->
-                            <label class="role-chip" onclick="handleRoleChange('vigilance', 'Vigilance Officer', 'vigilance@trace.gov.in', 'vigilance@trace2026')">
-                                <input type="radio" name="role" value="vigilance" id="role_vigilance">
-                                <span class="chip-content">
-                                    <span class="chip-num">2</span>
-                                    <i class="fa-solid fa-shield-halved chip-icon"></i>
-                                    <span class="chip-text">Vigilance Officer</span>
-                                    <i class="fa-solid fa-circle-check chip-check-icon"></i>
-                                </span>
-                            </label>
+                        <!-- Role 3: Surveillance Officer -->
+                        <label class="role-chip" onclick="handleRoleChange('surveillance', 'Surveillance Officer', 'surveillance@trace.gov.in', 'surveillance@trace2026')">
+                            <input type="radio" name="role" value="surveillance" id="role_surveillance">
+                            <div class="chip-box">
+                                <i class="fa-solid fa-video"></i>
+                                <span>Surveillance Officer</span>
+                            </div>
+                        </label>
 
-                            <!-- Role 3: Surveillance Officer -->
-                            <label class="role-chip" onclick="handleRoleChange('surveillance', 'Surveillance Officer', 'surveillance@trace.gov.in', 'surveillance@trace2026')">
-                                <input type="radio" name="role" value="surveillance" id="role_surveillance">
-                                <span class="chip-content">
-                                    <span class="chip-num">3</span>
-                                    <i class="fa-solid fa-video chip-icon"></i>
-                                    <span class="chip-text">Surveillance Officer</span>
-                                    <i class="fa-solid fa-circle-check chip-check-icon"></i>
-                                </span>
-                            </label>
+                        <!-- Role 4: Dispatch Officer -->
+                        <label class="role-chip" onclick="handleRoleChange('dispatch', 'Dispatch Officer (DO)', 'dispatch@trace.gov.in', 'dispatch@trace2026')">
+                            <input type="radio" name="role" value="dispatch" id="role_dispatch">
+                            <div class="chip-box">
+                                <i class="fa-solid fa-truck-fast"></i>
+                                <span>Dispatch Officer</span>
+                            </div>
+                        </label>
 
-                            <!-- Role 4: Dispatch Officer -->
-                            <label class="role-chip" onclick="handleRoleChange('dispatch', 'Dispatch Officer (DO)', 'dispatch@trace.gov.in', 'dispatch@trace2026')">
-                                <input type="radio" name="role" value="dispatch" id="role_dispatch">
-                                <span class="chip-content">
-                                    <span class="chip-num">4</span>
-                                    <i class="fa-solid fa-truck-fast chip-icon"></i>
-                                    <span class="chip-text">Dispatch Officer</span>
-                                    <i class="fa-solid fa-circle-check chip-check-icon"></i>
-                                </span>
-                            </label>
+                        <!-- Role 5: Control Operator -->
+                        <label class="role-chip" onclick="handleRoleChange('operator', 'Control Operator', 'operator@trace.gov.in', 'operator@trace2026')">
+                            <input type="radio" name="role" value="operator" id="role_operator">
+                            <div class="chip-box">
+                                <i class="fa-solid fa-sliders"></i>
+                                <span>Control Operator</span>
+                            </div>
+                        </label>
+                    </div>
+                </div>
 
-                            <!-- Role 5: Control Operator -->
-                            <label class="role-chip" onclick="handleRoleChange('operator', 'Control Operator', 'operator@trace.gov.in', 'operator@trace2026')">
-                                <input type="radio" name="role" value="operator" id="role_operator">
-                                <span class="chip-content">
-                                    <span class="chip-num">5</span>
-                                    <i class="fa-solid fa-sliders chip-icon"></i>
-                                    <span class="chip-text">Control Operator</span>
-                                    <i class="fa-solid fa-circle-check chip-check-icon"></i>
-                                </span>
-                            </label>
+                <!-- STEP 2: CREDENTIALS INPUT -->
+                <div class="credentials-box">
+                    <div class="cred-quick-row">
+                        <span style="color: #64748b; font-weight: 600;">Selected: <strong id="selectedRoleLabel" style="color: #0284c7;">General Manager</strong></span>
+                        <button type="button" class="btn-quick-fill" onclick="autoFillCurrentCredentials()">
+                            <i class="fa-solid fa-wand-magic-sparkles"></i> Auto-fill Demo
+                        </button>
+                    </div>
+
+                    <!-- Email Input -->
+                    <div class="input-group">
+                        <div class="input-field-wrap">
+                            <i class="fa-regular fa-envelope field-icon"></i>
+                            <input 
+                                type="text" 
+                                id="username" 
+                                name="username" 
+                                class="modern-input" 
+                                placeholder="Enter your email or username" 
+                                required 
+                                autocomplete="username"
+                            >
                         </div>
                     </div>
 
-                    <!-- STEP 2: CREDENTIALS INPUT -->
-                    <div class="credentials-section">
-                        <div class="step-label">
-                            <div class="step-text">
-                                <span class="step-num">2</span> Enter Credentials
-                            </div>
-                        </div>
-
-                        <!-- Quick Auto-Fill Bar -->
-                        <div class="credentials-helper-bar">
-                            <div class="cred-info">
-                                Selected: <strong id="selectedRoleLabel">General Manager</strong>
-                            </div>
-                            <button type="button" class="btn-autofill" onclick="autoFillCurrentCredentials()">
-                                <i class="fa-solid fa-wand-magic-sparkles"></i> Auto-fill Demo
+                    <!-- Password Input -->
+                    <div class="input-group">
+                        <div class="input-field-wrap">
+                            <i class="fa-solid fa-lock field-icon"></i>
+                            <input 
+                                type="password" 
+                                id="password" 
+                                name="password" 
+                                class="modern-input" 
+                                placeholder="Enter your password" 
+                                required 
+                                autocomplete="current-password"
+                            >
+                            <button type="button" class="pwd-toggle-btn" onclick="togglePasswordVisibility()" title="Show/Hide Password">
+                                <i class="fa-regular fa-eye" id="pwdEyeIcon"></i>
                             </button>
                         </div>
-
-                        <!-- Username Field -->
-                        <div class="form-group">
-                            <label class="form-label" for="username">
-                                Official Email ID / Username
-                            </label>
-                            <div class="input-wrapper">
-                                <i class="fa-regular fa-envelope input-icon"></i>
-                                <input 
-                                    type="text" 
-                                    id="username" 
-                                    name="username" 
-                                    class="form-input" 
-                                    placeholder="Enter Email (e.g., gm@trace.gov.in or gm)" 
-                                    required 
-                                    autocomplete="username"
-                                >
-                            </div>
-                        </div>
-
-                        <!-- Password Field -->
-                        <div class="form-group">
-                            <label class="form-label" for="password">
-                                Security Password
-                            </label>
-                            <div class="input-wrapper">
-                                <i class="fa-solid fa-lock input-icon"></i>
-                                <input 
-                                    type="password" 
-                                    id="password" 
-                                    name="password" 
-                                    class="form-input" 
-                                    placeholder="Enter Security Password" 
-                                    required 
-                                    autocomplete="current-password"
-                                >
-                                <button type="button" class="pwd-toggle-btn" onclick="togglePasswordVisibility()" title="Show/Hide Password">
-                                    <i class="fa-regular fa-eye" id="pwdEyeIcon"></i>
-                                </button>
-                            </div>
-                        </div>
                     </div>
-
-                    <!-- reCAPTCHA Box -->
-                    <div class="recaptcha-box" onclick="toggleCaptcha()">
-                        <div class="recaptcha-left">
-                            <div class="recaptcha-checkbox" id="captchaBox">
-                                <i class="fa-solid fa-check" id="captchaCheck" style="display: none; font-size: 13px;"></i>
-                            </div>
-                            <span class="recaptcha-text">I'm not a robot</span>
-                        </div>
-                        <div class="recaptcha-brand">
-                            <i class="fa-solid fa-arrows-rotate"></i>
-                            <span>reCAPTCHA</span>
-                            <span>Privacy - Terms</span>
-                        </div>
-                    </div>
-
-                    <!-- Submit Button -->
-                    <button type="submit" class="btn-login" id="btnLogin">
-                        <i class="fa-solid fa-right-to-bracket"></i>
-                        <span id="btnLoginText">LOG IN AS GENERAL MANAGER</span>
-                    </button>
-                </form>
-
-                <!-- Card Bottom Credits -->
-                <div class="card-footer">
-                    <div>Powered and Developed by <span class="brand-highlight">TRACE</span> Digital Mines AI</div>
                 </div>
+
+                <!-- reCAPTCHA Checkbox -->
+                <div class="recaptcha-mini" onclick="toggleCaptcha()">
+                    <div style="display: flex; align-items: center;">
+                        <div class="recaptcha-check-circle" id="captchaBox">
+                            <i class="fa-solid fa-check" id="captchaCheck" style="display: none; font-size: 11px;"></i>
+                        </div>
+                        <span class="recaptcha-label-text">I'm not a robot</span>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 4px; color: #94a3b8; font-size: 11px;">
+                        <i class="fa-solid fa-shield" style="color: #0284c7;"></i>
+                        <span style="font-size: 9.5px; font-weight: 600;">reCAPTCHA</span>
+                    </div>
+                </div>
+
+                <!-- Greyish-Blue Accent Submit Button -->
+                <button type="submit" class="btn-continue-blue" id="btnLogin">
+                    <span id="btnLoginText">Continue to Dashboard</span>
+                    <i class="fa-solid fa-arrow-right" style="font-size: 12px;"></i>
+                </button>
+            </form>
+
+            <div class="auth-footer-terms">
+                By signing in you agree to TRACE Digital Mining security and compliance protocols.
             </div>
         </div>
+
+        <!-- Right Side: Greyish-Blue 3D Ribbon Artwork -->
+        <div class="auth-artwork-side">
+            <div class="artwork-brand-overlay">
+                <i class="fa-solid fa-shield-halved"></i> Ministry of Coal & Mines
+            </div>
+
+            <!-- 3D Ribbon Vector Graphic in Greyish-Blue / Cyan Tones -->
+            <div class="artwork-svg-container">
+                <svg class="artwork-svg" viewBox="0 0 500 600" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <!-- Greyish-Blue / Cyan 3D Ribbon Gradients -->
+                        <linearGradient id="blueRibbonGrad1" x1="10%" y1="0%" x2="90%" y2="100%">
+                            <stop offset="0%" stop-color="#38bdf8" />
+                            <stop offset="35%" stop-color="#0284c7" />
+                            <stop offset="70%" stop-color="#0369a1" />
+                            <stop offset="100%" stop-color="#1e3a8a" />
+                        </linearGradient>
+
+                        <linearGradient id="blueRibbonGrad2" x1="0%" y1="20%" x2="100%" y2="80%">
+                            <stop offset="0%" stop-color="#7dd3fc" />
+                            <stop offset="50%" stop-color="#0284c7" />
+                            <stop offset="100%" stop-color="#0f172a" />
+                        </linearGradient>
+
+                        <filter id="ribbonShadow" x="-20%" y="-20%" width="140%" height="140%">
+                            <feDropShadow dx="10" dy="20" stdDeviation="16" flood-color="#0f172a" flood-opacity="0.18" />
+                        </filter>
+
+                        <filter id="glowEffect" x="-30%" y="-30%" width="160%" height="160%">
+                            <feGaussianBlur stdDeviation="30" result="blur" />
+                        </filter>
+                    </defs>
+
+                    <!-- Background Soft Ambient Glow -->
+                    <circle cx="280" cy="260" r="140" fill="#38bdf8" fill-opacity="0.12" filter="url(#glowEffect)" />
+                    <circle cx="180" cy="420" r="120" fill="#0284c7" fill-opacity="0.08" filter="url(#glowEffect)" />
+
+                    <!-- Background Secondary Ribbon Tube -->
+                    <path d="M 120 -50 C 180 80, 480 160, 460 380 C 440 540, 200 620, 140 680" 
+                          stroke="url(#blueRibbonGrad2)" 
+                          stroke-width="56" 
+                          stroke-linecap="round" 
+                          fill="none" 
+                          opacity="0.65"
+                          filter="url(#ribbonShadow)" />
+
+                    <!-- Primary 3D Front Ribbon Loop (Matching reference geometry in blue) -->
+                    <path d="M 280 -60 C 350 80, 410 220, 370 340 C 320 480, 160 460, 140 650" 
+                          stroke="url(#blueRibbonGrad1)" 
+                          stroke-width="72" 
+                          stroke-linecap="round" 
+                          fill="none" 
+                          filter="url(#ribbonShadow)" />
+
+                    <!-- Inner Highlight Streak for 3D Tubular Sheen -->
+                    <path d="M 282 -40 C 348 90, 400 220, 364 335 C 318 465, 170 450, 148 630" 
+                          stroke="#ffffff" 
+                          stroke-width="10" 
+                          stroke-linecap="round" 
+                          fill="none" 
+                          opacity="0.35" />
+                </svg>
+            </div>
+
+            <!-- Version Tag -->
+            <div class="artwork-version-tag">TRACE AI v2.4.0</div>
+        </div>
+
     </div>
 
     <script>
@@ -771,25 +737,24 @@
 
             // Update UI elements
             document.getElementById('selectedRoleLabel').textContent = roleName;
-            document.getElementById('btnLoginText').textContent = 'LOG IN AS ' + roleName.toUpperCase();
+            document.getElementById('btnLoginText').textContent = 'Continue as ' + roleName;
             
             const usernameInput = document.getElementById('username');
-            usernameInput.placeholder = `Enter Email (e.g., ${defaultEmail} or ${roleKey})`;
+            usernameInput.placeholder = `e.g. ${defaultEmail} or ${roleKey}`;
         }
 
         function autoFillCurrentCredentials() {
             document.getElementById('username').value = currentRoleData.email;
             document.getElementById('password').value = currentRoleData.password;
             
-            // Highlight input briefly
             const uInput = document.getElementById('username');
             const pInput = document.getElementById('password');
-            uInput.style.borderColor = '#38bdf8';
-            pInput.style.borderColor = '#38bdf8';
+            uInput.style.borderColor = '#0284c7';
+            pInput.style.borderColor = '#0284c7';
             setTimeout(() => {
                 uInput.style.borderColor = '';
                 pInput.style.borderColor = '';
-            }, 500);
+            }, 400);
         }
 
         function togglePasswordVisibility() {
