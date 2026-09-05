@@ -6626,6 +6626,27 @@ body.gis-mode-active .content-body {
 
                         <!-- 1. Original Overview View (Default View) -->
                         <div class="alert-overview-container" id="alertOverviewContainer">
+                            <!-- Live Supabase Incident Stream Banner -->
+                            <div class="alert-section-card margin-bottom-lg" style="border: 1px solid rgba(56, 189, 248, 0.3); background: #0c1017; padding: 14px 16px; border-radius: 6px;">
+                                <div class="alert-section-header" style="border-bottom: 1px solid #1e293b; padding-bottom: 10px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center;">
+                                    <div class="section-title-group" style="display: flex; align-items: center; gap: 8px;">
+                                        <span class="vertical-bar bar-teal" style="background: #38bdf8; width: 4px; height: 16px; border-radius: 2px;"></span>
+                                        <i class="fa-solid fa-satellite-dish" style="color: #38bdf8; font-size: 14px;"></i>
+                                        <h3 class="alert-section-title" style="font-size: 13.5px; font-weight: 700; color: #f8fafc; letter-spacing: 0.04em;">LIVE SUPABASE INCIDENT STREAM</h3>
+                                        <span class="badge badge-live" style="margin-left: 6px;">LIVE DB</span>
+                                    </div>
+                                    <div style="display: flex; align-items: center; gap: 10px;">
+                                        <span style="font-size: 11px; color: #64748b;" id="supabaseLiveStatusText">• Auto-Syncing with Supabase</span>
+                                        <button type="button" onclick="triggerSimulateAlert()" class="btn-action" style="padding: 4px 10px; font-size: 11px; background: rgba(220, 38, 38, 0.15); color: #f87171; border: 1px solid rgba(220, 38, 38, 0.35);">
+                                            <i class="fa-solid fa-plus-circle"></i> Trigger Anomaly
+                                        </button>
+                                    </div>
+                                </div>
+                                <div id="liveAlertsFeedContainer" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(310px, 1fr)); gap: 10px;">
+                                    <!-- Rendered dynamically from Supabase API -->
+                                </div>
+                            </div>
+
                             <!-- Section A: VIDEO ANALYTICS ALERT -->
                             <div class="alert-section-card margin-bottom-lg">
                                 <div class="alert-section-header">
@@ -11502,11 +11523,188 @@ function showAuditToast(msg) {
     setTimeout(() => toast.remove(), 2200);
 }
 
+// =========================================================================
+// SUPABASE REAL-TIME TELEMETRY & LIVE DEMO ENGINE
+// =========================================================================
+
+async function fetchLiveAlerts() {
+    try {
+        const res = await fetch('/api/data/alerts');
+        if (res.ok) {
+            const data = await res.json();
+            if (data.status === 'success' && data.data) {
+                renderLiveAlerts(data.data);
+            }
+        }
+    } catch (e) {
+        console.warn('Live alerts fetch error:', e);
+    }
+}
+
+function renderLiveAlerts(alerts) {
+    const container = document.getElementById('liveAlertsFeedContainer');
+    if (!container) return;
+
+    if (!alerts || alerts.length === 0) {
+        container.innerHTML = '<div style="color: #64748b; font-size: 12px; padding: 12px;">No active alerts in Supabase database.</div>';
+        return;
+    }
+
+    let activeCount = alerts.filter(a => a.status === 'ACTIVE').length;
+    const badgeEl = document.getElementById('headerBadgeCount');
+    if (badgeEl) badgeEl.innerText = activeCount;
+
+    container.innerHTML = alerts.map(a => {
+        const isCritical = a.severity === 'CRITICAL';
+        const isHigh = a.severity === 'HIGH';
+        const isResolved = a.status === 'RESOLVED';
+        const isAcked = a.status === 'ACKNOWLEDGED';
+        
+        const badgeColor = isCritical ? '#ef4444' : (isHigh ? '#f59e0b' : '#38bdf8');
+        const cardBorder = isResolved ? '#1e293b' : (isAcked ? '#2563eb' : (isCritical ? 'rgba(239, 68, 68, 0.4)' : 'rgba(245, 158, 11, 0.3)'));
+        const cardBg = isResolved ? 'rgba(15, 23, 42, 0.4)' : '#101726';
+
+        return `
+            <div style="background: ${cardBg}; border: 1px solid ${cardBorder}; border-radius: 5px; padding: 10px 12px; display: flex; flex-direction: column; gap: 6px; position: relative;">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <div style="display: flex; align-items: center; gap: 6px;">
+                        <span style="font-size: 9px; font-weight: 800; padding: 1px 5px; border-radius: 3px; background: ${badgeColor}; color: #fff;">${a.severity}</span>
+                        <strong style="font-size: 12px; color: #f8fafc;">${a.alert_type}</strong>
+                    </div>
+                    <span style="font-size: 10px; font-weight: 600; color: ${isResolved ? '#64748b' : (isAcked ? '#38bdf8' : '#f87171')};">${a.status}</span>
+                </div>
+                <div style="font-size: 11px; color: #94a3b8; display: flex; justify-content: space-between;">
+                    <span>Vehicle: <strong style="color: #e2e8f0;">${a.vehicle_no}</strong></span>
+                    <span>Confidence: <strong style="color: #38bdf8;">${a.confidence_score}%</strong></span>
+                </div>
+                <div style="font-size: 11px; color: #64748b;">
+                    <i class="fa-solid fa-location-dot" style="margin-right: 4px;"></i>${a.location}
+                </div>
+                <p style="font-size: 10.5px; color: #cbd5e1; margin: 0; line-height: 1.35; background: rgba(0,0,0,0.25); padding: 5px 7px; border-radius: 3px;">
+                    ${a.description}
+                </p>
+                <div style="display: flex; gap: 6px; margin-top: 4px;">
+                    ${!isResolved && !isAcked ? `
+                        <button type="button" onclick="acknowledgeAlert(${a.id})" style="flex: 1; background: #1e293b; color: #38bdf8; border: 1px solid #334155; padding: 4px; border-radius: 3px; font-size: 10.5px; font-weight: 600; cursor: pointer;">
+                            <i class="fa-solid fa-check"></i> Acknowledge
+                        </button>
+                    ` : ''}
+                    ${!isResolved ? `
+                        <button type="button" onclick="resolveAlert(${a.id})" style="flex: 1; background: rgba(16, 185, 129, 0.15); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.3); padding: 4px; border-radius: 3px; font-size: 10.5px; font-weight: 600; cursor: pointer;">
+                            <i class="fa-solid fa-shield-check"></i> Resolve
+                        </button>
+                    ` : `
+                        <span style="font-size: 10px; color: #64748b; padding: 2px 0;"><i class="fa-solid fa-circle-check" style="color: #10b981;"></i> Incident Closed in Supabase</span>
+                    `}
+                </div>
+            </div>
+        `;
+    }).join('');
+}
+
+async function acknowledgeAlert(alertId) {
+    try {
+        const res = await fetch(`/api/alerts/${alertId}/acknowledge`, { method: 'POST' });
+        if (res.ok) {
+            showAuditToast('Alert #' + alertId + ' Acknowledged & Logged in Supabase');
+            fetchLiveAlerts();
+        }
+    } catch (e) {
+        console.error(e);
+    }
+}
+
+async function resolveAlert(alertId) {
+    try {
+        const res = await fetch(`/api/alerts/${alertId}/resolve`, { method: 'POST' });
+        if (res.ok) {
+            showAuditToast('Alert #' + alertId + ' Resolved in Supabase');
+            fetchLiveAlerts();
+        }
+    } catch (e) {
+        console.error(e);
+    }
+}
+
+async function triggerSimulateAlert() {
+    try {
+        const res = await fetch('/api/alerts/simulate', { method: 'POST' });
+        if (res.ok) {
+            const data = await res.json();
+            showAuditToast('🚨 Live Anomaly Injected into Supabase: ' + (data.created_alert?.alert_type || 'Alert'));
+            fetchLiveAlerts();
+        }
+    } catch (e) {
+        console.error(e);
+    }
+}
+
+async function triggerSimulateFleet() {
+    try {
+        const res = await fetch('/api/vts/simulate-step', { method: 'POST' });
+        if (res.ok) {
+            showAuditToast('🚚 Telemetry Step Simulated & Updated in Supabase');
+        }
+    } catch (e) {
+        console.error(e);
+    }
+}
+
+async function syncAllFromSupabase() {
+    showAuditToast('🔄 Syncing all tables from Supabase PostgreSQL...');
+    await fetchLiveAlerts();
+}
+
+function toggleDemoConsole() {
+    const body = document.getElementById('demoConsoleBody');
+    const chevron = document.getElementById('demoConsoleChevron');
+    if (body.style.display === 'none') {
+        body.style.display = 'flex';
+        chevron.className = 'fa-solid fa-chevron-up';
+    } else {
+        body.style.display = 'none';
+        chevron.className = 'fa-solid fa-chevron-down';
+    }
+}
+
+// Auto-poll Supabase every 5 seconds
+setInterval(fetchLiveAlerts, 5000);
+setTimeout(fetchLiveAlerts, 500);
+
 // Initial auto-load if starting on audit hash
 if (window.location.hash === '#digital-audit-trails') {
     setTimeout(showDigitalAuditTrails, 100);
 }
 </script>
+
+<!-- Floating SIH Demo & Database Control Console -->
+<div id="sihDemoConsole" style="position: fixed; bottom: 18px; right: 18px; z-index: 9999; background: #0f172a; border: 1px solid #334155; border-radius: 6px; box-shadow: 0 10px 30px rgba(0,0,0,0.7); font-family: system-ui, sans-serif; overflow: hidden; width: 270px; transition: all 0.3s ease;">
+    <div style="background: #1e293b; padding: 7px 11px; display: flex; justify-content: space-between; align-items: center; cursor: pointer;" onclick="toggleDemoConsole()">
+        <div style="display: flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 700; color: #38bdf8;">
+            <i class="fa-solid fa-bolt"></i>
+            <span>SIH Live Demo Console</span>
+        </div>
+        <div style="display: flex; align-items: center; gap: 6px;">
+            <span style="width: 7px; height: 7px; border-radius: 50%; background: #10b981; display: inline-block;"></span>
+            <i class="fa-solid fa-chevron-up" id="demoConsoleChevron" style="font-size: 9px; color: #94a3b8;"></i>
+        </div>
+    </div>
+    <div id="demoConsoleBody" style="padding: 10px; display: flex; flex-direction: column; gap: 6px; background: #0b0f19;">
+        <div style="font-size: 10px; color: #94a3b8; display: flex; justify-content: space-between;">
+            <span>Live DB:</span>
+            <strong style="color: #34d399;">Supabase (PostgreSQL)</strong>
+        </div>
+        <button type="button" onclick="triggerSimulateAlert()" style="background: #dc2626; color: #fff; border: none; padding: 6px 9px; border-radius: 4px; font-size: 10.5px; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 5px;">
+            <i class="fa-solid fa-triangle-exclamation"></i> Trigger Anomaly Alert
+        </button>
+        <button type="button" onclick="triggerSimulateFleet()" style="background: #0284c7; color: #fff; border: none; padding: 6px 9px; border-radius: 4px; font-size: 10.5px; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 5px;">
+            <i class="fa-solid fa-truck-fast"></i> Simulate Fleet Step
+        </button>
+        <button type="button" onclick="syncAllFromSupabase()" style="background: #1e293b; color: #cbd5e1; border: 1px solid #334155; padding: 5px 9px; border-radius: 4px; font-size: 10.5px; font-weight: 500; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 5px;">
+            <i class="fa-solid fa-rotate"></i> Sync Supabase
+        </button>
+    </div>
+</div>
 
 <!-- Multi-Feed Drone Surveillance & High-Res Still Inspection Modal -->
 <div class="drone-modal-backdrop" id="droneVideoModal" style="display: none;" onclick="closeDroneVideoModal(event)">

@@ -314,18 +314,27 @@ IRREGULAR_DOS_DATA = [
     {"do_no": "3161250002", "unit": "3161 - KBP", "irr_trips": 5, "num_vehicles": 5, "src_co": "CO10 - Hazaribagh", "src_wb": "RD1422", "dst_co": "CO10 - Hazaribagh", "dst_wb": "RD1421"}
 ]
 
+import supabase_db
+
 @app.get("/")
-def read_root(request: Request):
+async def read_root(request: Request):
     session_user = request.cookies.get("session_user")
     if not session_user or session_user not in USERS_DB:
         return RedirectResponse(url="/login", status_code=303)
 
     user_info = USERS_DB[session_user]
+    
+    # Fetch live data from Supabase (with automatic fallback)
+    live_weighbridge = await supabase_db.fetch_weighbridge_data()
+    live_checkpost = await supabase_db.fetch_checkpost_data()
+    live_fleet = await supabase_db.fetch_vts_fleet_data()
+    live_alerts = await supabase_db.fetch_security_alerts()
+
     return templates.TemplateResponse(
         request=request,
         name="index.html",
         context={
-            "weighment_data": WEIGHMENT_DATA,
+            "weighment_data": live_weighbridge if live_weighbridge else WEIGHMENT_DATA,
             "weighment_total": WEIGHMENT_TOTAL,
             "weighbridge_status_data": WEIGHBRIDGE_STATUS_DATA,
             "weighbridge_status_total": WEIGHBRIDGE_STATUS_TOTAL,
@@ -337,8 +346,10 @@ def read_root(request: Request):
             "checkpost_analytics_total": CHECKPOST_ANALYTICS_TOTAL,
             "vts_alert_data": VTS_ALERT_DATA,
             "vts_alert_total": VTS_ALERT_TOTAL,
-            "vts_fleet_data": VTS_FLEET_DATA,
+            "vts_fleet_data": live_fleet if live_fleet else VTS_FLEET_DATA,
             "vts_fleet_total": VTS_FLEET_TOTAL,
+            "live_checkpost_logs": live_checkpost,
+            "live_alerts_data": live_alerts,
             "rfid_op_wbs": RFID_OPERATION_WBS,
             "rfid_non_op_wbs": RFID_NON_OPERATION_WBS,
             "rfid_op_cps": RFID_OPERATION_CPS,
@@ -422,6 +433,77 @@ async def post_login(
         context={"error": "Invalid Role, User ID/Email, or Password. Please select a role and verify credentials."}
     )
 
+# =========================================================================
+# REST API ENDPOINTS FOR SUPABASE LIVE DATA & REAL-TIME DEMO
+# =========================================================================
+
+@app.get("/api/data/weighbridge")
+async def api_get_weighbridge():
+    data = await supabase_db.fetch_weighbridge_data()
+    return {"status": "success", "count": len(data), "data": data}
+
+@app.get("/api/data/checkpost")
+async def api_get_checkpost():
+    data = await supabase_db.fetch_checkpost_data()
+    return {"status": "success", "count": len(data), "data": data}
+
+@app.get("/api/data/vts")
+async def api_get_vts():
+    data = await supabase_db.fetch_vts_fleet_data()
+    return {"status": "success", "count": len(data), "data": data}
+
+@app.get("/api/data/alerts")
+async def api_get_alerts(status: Optional[str] = None):
+    data = await supabase_db.fetch_security_alerts(status_filter=status)
+    return {"status": "success", "count": len(data), "data": data}
+
+@app.post("/api/alerts/{alert_id}/acknowledge")
+async def api_acknowledge_alert(alert_id: int):
+    ok = await supabase_db.update_alert_status(alert_id, "ACKNOWLEDGED")
+    return {"status": "success" if ok else "error", "alert_id": alert_id, "new_status": "ACKNOWLEDGED"}
+
+@app.post("/api/alerts/{alert_id}/resolve")
+async def api_resolve_alert(alert_id: int):
+    ok = await supabase_db.update_alert_status(alert_id, "RESOLVED")
+    return {"status": "success" if ok else "error", "alert_id": alert_id, "new_status": "RESOLVED"}
+
+@app.post("/api/alerts/simulate")
+async def api_simulate_alert(request: Request):
+    import random
+    types = [
+        ("Unauthorized Stoppage", "CRITICAL", "Vehicle stationary in unapproved transit sector > 18 mins with coal payload."),
+        ("Geofence Route Breach", "HIGH", "Vehicle deviated 340 meters outside approved mining corridor."),
+        ("Weight Anomaly Detected", "WARNING", "Gross weight registered +3.1 Tons over authorized e-Way bill capacity."),
+        ("Unregistered RFID Ingate", "HIGH", "Vehicle RFID scan unrecognized at Siding Gate 4.")
+    ]
+    chosen = random.choice(types)
+    veh_no = f"JH0{random.randint(1,9)}-{chr(random.randint(65,90))}{chr(random.randint(65,90))}-{random.randint(1000,9999)}"
+    loc = random.choice(["Amrapali Sector 3 Road", "Piparwar Coal Washery Route", "Ashoka Siding Platform B", "Karkatta Section C"])
+    
+    alert_obj = {
+        "alert_type": chosen[0],
+        "vehicle_no": veh_no,
+        "location": loc,
+        "severity": chosen[1],
+        "status": "ACTIVE",
+        "confidence_score": random.randint(90, 99),
+        "description": chosen[2]
+    }
+    result = await supabase_db.create_security_alert(alert_obj)
+    return {"status": "success", "created_alert": result}
+
+@app.post("/api/vts/simulate-step")
+async def api_simulate_vts_step():
+    import random
+    fleet = await supabase_db.fetch_vts_fleet_data()
+    if fleet:
+        veh = random.choice(fleet)
+        delta_lat = random.uniform(-0.0008, 0.0008)
+        delta_lng = random.uniform(-0.0008, 0.0008)
+        new_speed = max(0, min(55, veh.get("speed", 30) + random.randint(-4, 4)))
+        await supabase_db.update_vts_telemetry(veh["vehicle_no"], delta_lat, delta_lng, new_speed)
+    return {"status": "success"}
+
 import json
 
 @app.get("/api/audit-reports")
@@ -444,4 +526,5 @@ def get_logout():
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run("app:app", host="0.0.0.0", port=8000, reload=True)
+
 
