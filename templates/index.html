@@ -12408,7 +12408,7 @@ window.initAuditTrailsData = async function() {
     renderAuditReports();
 
     try {
-        const res = await fetch('/api/audit-reports');
+        const res = await fetch('https://prahar-ai-dashboard.vercel.app/api/audit-reports');
         if (res.ok) {
             const data = await res.json();
             if (data && data.length > 0) {
@@ -12886,7 +12886,7 @@ window.initInternalDoData = async function() {
             allInternalDoRecords = INTERNAL_DO_DATA;
         } else {
             try {
-                const res = await fetch('/static/do_data.json');
+                const res = await fetch('https://prahar-ai-dashboard.vercel.app/static/do_data.json');
                 if (res.ok) {
                     allInternalDoRecords = await res.json();
                 }
@@ -13315,7 +13315,7 @@ window.handleCreateDoSubmit = function(e) {
 
 async function fetchLiveAlerts() {
     try {
-        const res = await fetch('/api/data/alerts');
+        const res = await fetch('https://prahar-ai-dashboard.vercel.app/api/data/alerts');
         if (res.ok) {
             const data = await res.json();
             if (data.status === 'success' && data.data) {
@@ -13390,7 +13390,7 @@ function renderLiveAlerts(alerts) {
 
 async function acknowledgeAlert(alertId) {
     try {
-        const res = await fetch(`/api/alerts/${alertId}/acknowledge`, { method: 'POST' });
+        const res = await fetch(`https://prahar-ai-dashboard.vercel.app/api/alerts/${alertId}/acknowledge`, { method: 'POST' });
         if (res.ok) {
             showAuditToast('Alert #' + alertId + ' Acknowledged & Logged in Supabase');
             fetchLiveAlerts();
@@ -13402,7 +13402,7 @@ async function acknowledgeAlert(alertId) {
 
 async function resolveAlert(alertId) {
     try {
-        const res = await fetch(`/api/alerts/${alertId}/resolve`, { method: 'POST' });
+        const res = await fetch(`https://prahar-ai-dashboard.vercel.app/api/alerts/${alertId}/resolve`, { method: 'POST' });
         if (res.ok) {
             showAuditToast('Alert #' + alertId + ' Resolved in Supabase');
             fetchLiveAlerts();
@@ -13414,7 +13414,7 @@ async function resolveAlert(alertId) {
 
 async function triggerSimulateAlert() {
     try {
-        const res = await fetch('/api/alerts/simulate', { method: 'POST' });
+        const res = await fetch('https://prahar-ai-dashboard.vercel.app/api/alerts/simulate', { method: 'POST' });
         if (res.ok) {
             const data = await res.json();
             showAuditToast('🚨 Live Anomaly Injected into Supabase: ' + (data.created_alert?.alert_type || 'Alert'));
@@ -13427,7 +13427,7 @@ async function triggerSimulateAlert() {
 
 async function triggerSimulateFleet() {
     try {
-        const res = await fetch('/api/vts/simulate-step', { method: 'POST' });
+        const res = await fetch('https://prahar-ai-dashboard.vercel.app/api/vts/simulate-step', { method: 'POST' });
         if (res.ok) {
             showAuditToast('🚚 Telemetry Step Simulated & Updated in Supabase');
         }
