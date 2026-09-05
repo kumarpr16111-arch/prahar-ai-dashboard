@@ -16,12 +16,12 @@
             --primary-gradient: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
             --primary-hover: linear-gradient(135deg, #0369a1 0%, #075985 100%);
             --accent-cyan: #38bdf8;
-            --slate-blue: #2563eb;
-            --bg-outer: #f1f5f9;
-            --text-heading: #0f172a;
-            --text-body: #475569;
+            --bg-outer: #0b0f17;
+            --card-dark: #131823;
+            --bezel-color: #1a2230;
+            --text-heading: #f8fafc;
+            --text-body: #cbd5e1;
             --text-muted: #94a3b8;
-            --bezel-color: #0f172a;
         }
 
         * {
@@ -31,11 +31,12 @@
             font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
         }
 
+        /* Dark canvas with subtle dot pattern and ambient lighting */
         body {
             background-color: var(--bg-outer);
             background-image: 
-                radial-gradient(#cbd5e1 1px, transparent 1px),
-                linear-gradient(135deg, rgba(2, 132, 199, 0.03) 0%, rgba(30, 41, 59, 0.04) 100%);
+                radial-gradient(rgba(255, 255, 255, 0.12) 1.2px, transparent 1.2px),
+                linear-gradient(135deg, rgba(2, 132, 199, 0.06) 0%, rgba(15, 23, 42, 0.15) 100%);
             background-size: 24px 24px, 100% 100%;
             min-height: 100vh;
             width: 100vw;
@@ -60,23 +61,24 @@
                 -45deg,
                 transparent,
                 transparent 140px,
-                rgba(203, 213, 225, 0.25) 140px,
-                rgba(203, 213, 225, 0.25) 141px
+                rgba(255, 255, 255, 0.02) 140px,
+                rgba(255, 255, 255, 0.02) 141px
             );
             pointer-events: none;
             z-index: 0;
         }
 
-        /* Device-like Floating Frame Card Container (as in reference layout) */
+        /* Dark Device-like Floating Frame Card Container */
         .auth-device-card {
             width: 100%;
-            max-width: 980px;
-            background: #ffffff;
+            max-width: 1020px;
+            background: var(--card-dark);
             border-radius: 28px;
             border: 10px solid var(--bezel-color);
             box-shadow: 
-                0 30px 70px -15px rgba(15, 23, 42, 0.28),
-                0 0 0 1px rgba(15, 23, 42, 0.08);
+                0 35px 80px -15px rgba(0, 0, 0, 0.8),
+                0 0 40px rgba(2, 132, 199, 0.12),
+                0 0 0 1px rgba(255, 255, 255, 0.06);
             display: grid;
             grid-template-columns: 1fr 1.05fr;
             overflow: hidden;
@@ -85,11 +87,11 @@
         }
 
         /* ==========================================================================
-           Left Side: Modern Clean White Login Form
+           Left Side: Dark Theme Login Form
            ========================================================================== */
         .auth-form-side {
-            background: #ffffff;
-            padding: 38px 40px;
+            background: var(--card-dark);
+            padding: 40px 42px;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -97,59 +99,34 @@
             z-index: 2;
         }
 
-        /* Centered Logo App Icon */
-        .app-icon-header {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-            margin-bottom: 20px;
-        }
-
-        .app-logo-squircle {
-            width: 48px;
-            height: 48px;
-            background: #0f172a;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 12px;
-            box-shadow: 0 4px 12px rgba(15, 23, 42, 0.2);
-            padding: 6px;
-        }
-
-        .app-logo-squircle img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-            border-radius: 6px;
+        /* Header Title */
+        .auth-header-group {
+            margin-bottom: 22px;
         }
 
         .auth-title {
             font-family: 'Outfit', sans-serif;
-            font-size: 26px;
-            font-weight: 700;
-            color: var(--text-heading);
+            font-size: 28px;
+            font-weight: 800;
+            color: #ffffff;
             margin-bottom: 4px;
             letter-spacing: -0.01em;
         }
 
         .auth-subtitle {
-            font-size: 12px;
+            font-size: 13px;
             color: var(--text-muted);
-            max-width: 320px;
             line-height: 1.4;
         }
 
         /* Error Alert */
         .alert-error {
-            background: #fef2f2;
-            border: 1px solid #fecaca;
-            color: #b91c1c;
+            background: rgba(239, 68, 68, 0.15);
+            border: 1px solid rgba(239, 68, 68, 0.4);
+            color: #f87171;
             padding: 9px 12px;
             border-radius: 8px;
-            font-size: 11.5px;
+            font-size: 12px;
             margin-bottom: 14px;
             display: flex;
             align-items: center;
@@ -171,7 +148,7 @@
         .section-mini-label {
             font-size: 11px;
             font-weight: 700;
-            color: #64748b;
+            color: #94a3b8;
             text-transform: uppercase;
             letter-spacing: 0.04em;
             margin-bottom: 8px;
@@ -201,45 +178,45 @@
             display: flex;
             align-items: center;
             gap: 7px;
-            padding: 7px 10px;
-            background: #f8fafc;
-            border: 1px solid #e2e8f0;
+            padding: 8px 11px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
             border-radius: 8px;
             transition: all 0.15s ease;
         }
 
         .chip-box i {
-            font-size: 11px;
-            color: #64748b;
+            font-size: 11.5px;
+            color: #94a3b8;
         }
 
         .chip-box span {
             font-size: 11.5px;
             font-weight: 600;
-            color: #334155;
+            color: #cbd5e1;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
         }
 
         .role-chip:hover .chip-box {
-            background: #f1f5f9;
-            border-color: #cbd5e1;
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(56, 189, 248, 0.4);
         }
 
         .role-chip input[type="radio"]:checked + .chip-box {
-            background: #f0f9ff;
-            border-color: #0284c7;
-            box-shadow: 0 0 0 1px #0284c7;
+            background: rgba(2, 132, 199, 0.22);
+            border-color: #38bdf8;
+            box-shadow: 0 0 12px rgba(2, 132, 199, 0.25);
         }
 
         .role-chip input[type="radio"]:checked + .chip-box span {
-            color: #0369a1;
+            color: #ffffff;
             font-weight: 700;
         }
 
         .role-chip input[type="radio"]:checked + .chip-box i {
-            color: #0284c7;
+            color: #38bdf8;
         }
 
         /* Credentials Fields */
@@ -256,9 +233,9 @@
         }
 
         .btn-quick-fill {
-            background: #eff6ff;
-            border: 1px solid #bfdbfe;
-            color: #0284c7;
+            background: rgba(56, 189, 248, 0.15);
+            border: 1px solid rgba(56, 189, 248, 0.3);
+            color: #38bdf8;
             padding: 3px 8px;
             border-radius: 4px;
             font-size: 10.5px;
@@ -288,17 +265,17 @@
         .input-field-wrap i.field-icon {
             position: absolute;
             left: 12px;
-            color: #94a3b8;
+            color: #64748b;
             font-size: 13px;
             pointer-events: none;
         }
 
         .modern-input {
             width: 100%;
-            background: #ffffff;
-            border: 1.5px solid #e2e8f0;
-            color: #0f172a;
-            padding: 9px 12px 9px 34px;
+            background: #0d121c;
+            border: 1.5px solid #243042;
+            color: #ffffff;
+            padding: 10px 14px 10px 36px;
             border-radius: 10px;
             font-size: 12.5px;
             outline: none;
@@ -306,14 +283,14 @@
         }
 
         .modern-input::placeholder {
-            color: #94a3b8;
+            color: #64748b;
             font-size: 12px;
         }
 
         .modern-input:focus {
-            border-color: #0284c7;
-            background: #ffffff;
-            box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.12);
+            border-color: #38bdf8;
+            background: #111826;
+            box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.15);
         }
 
         .pwd-toggle-btn {
@@ -321,40 +298,41 @@
             right: 10px;
             background: none;
             border: none;
-            color: #94a3b8;
+            color: #64748b;
             cursor: pointer;
             font-size: 13px;
             padding: 4px;
         }
 
         .pwd-toggle-btn:hover {
-            color: #475569;
+            color: #cbd5e1;
         }
 
         /* reCAPTCHA Mini Box */
         .recaptcha-mini {
-            background: #fafafa;
-            border: 1px solid #e2e8f0;
+            background: #0d121c;
+            border: 1px solid #243042;
             border-radius: 8px;
-            padding: 7px 10px;
+            padding: 8px 12px;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            margin-bottom: 14px;
+            margin-bottom: 16px;
             cursor: pointer;
             user-select: none;
         }
 
         .recaptcha-mini:hover {
-            background: #f4f4f5;
+            background: #111826;
+            border-color: #334155;
         }
 
         .recaptcha-check-circle {
             width: 18px;
             height: 18px;
-            border: 2px solid #cbd5e1;
+            border: 2px solid #475569;
             border-radius: 4px;
-            background: #ffffff;
+            background: #1e293b;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -362,32 +340,32 @@
         }
 
         .recaptcha-check-circle.checked {
-            border-color: #059669;
-            background: #059669;
+            border-color: #10b981;
+            background: #10b981;
             color: #ffffff;
         }
 
         .recaptcha-label-text {
             font-size: 11.5px;
-            color: #334155;
+            color: #cbd5e1;
             font-weight: 500;
             margin-left: 8px;
         }
 
-        /* Primary Greyish-Blue Accent Login Button (Replacing the orange in reference) */
+        /* Primary Greyish-Blue Accent Login Button */
         .btn-continue-blue {
             width: 100%;
             background: var(--primary-gradient);
             color: #ffffff;
             border: none;
             border-radius: 10px;
-            padding: 11px 16px;
+            padding: 12px 16px;
             font-size: 13px;
             font-weight: 700;
             letter-spacing: 0.02em;
             cursor: pointer;
             transition: all 0.15s ease;
-            box-shadow: 0 4px 14px rgba(2, 132, 199, 0.35);
+            box-shadow: 0 4px 16px rgba(2, 132, 199, 0.35);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -396,34 +374,29 @@
 
         .btn-continue-blue:hover {
             background: var(--primary-hover);
-            box-shadow: 0 6px 18px rgba(2, 132, 199, 0.45);
+            box-shadow: 0 6px 20px rgba(2, 132, 199, 0.5);
             transform: translateY(-1px);
         }
 
         .auth-footer-terms {
             text-align: center;
             font-size: 10.5px;
-            color: #94a3b8;
+            color: #64748b;
             margin-top: 14px;
             line-height: 1.4;
         }
 
-        .auth-footer-terms a {
-            color: #0284c7;
-            text-decoration: none;
-        }
-
         /* ==========================================================================
-           Right Side: Greyish-Blue 3D Ribbon / Fluid Wave Artwork
+           Right Side: Dark Canvas with Logo to the Left of Free-Flowing Blue Lines
            ========================================================================== */
         .auth-artwork-side {
-            background: #f8fafc;
+            background: linear-gradient(135deg, #101520 0%, #0d121b 100%);
             position: relative;
             display: flex;
             align-items: center;
             justify-content: center;
             overflow: hidden;
-            border-left: 1px solid #f1f5f9;
+            border-left: 1px solid rgba(255, 255, 255, 0.06);
         }
 
         .artwork-svg-container {
@@ -443,39 +416,87 @@
             object-fit: cover;
         }
 
+        /* Logo Positioned in the Left Portion of the Artwork Side (To the left of blue lines) */
+        .artwork-logo-badge {
+            position: absolute;
+            top: 40px;
+            left: 36px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            background: rgba(15, 23, 42, 0.75);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 12px 18px;
+            border-radius: 16px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4), 0 0 20px rgba(2, 132, 199, 0.15);
+            z-index: 5;
+            transition: transform 0.2s ease;
+        }
+
+        .artwork-logo-badge:hover {
+            transform: translateY(-2px);
+            border-color: rgba(56, 189, 248, 0.35);
+        }
+
+        .app-logo-squircle {
+            width: 44px;
+            height: 44px;
+            background: #0b0f17;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            padding: 5px;
+            flex-shrink: 0;
+        }
+
+        .app-logo-squircle img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            border-radius: 4px;
+        }
+
+        .logo-text-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .badge-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 16px;
+            font-weight: 800;
+            color: #ffffff;
+            letter-spacing: 0.06em;
+            line-height: 1.1;
+        }
+
+        .badge-subtitle {
+            font-size: 10px;
+            font-weight: 600;
+            color: #38bdf8;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            margin-top: 2px;
+        }
+
         .artwork-version-tag {
             position: absolute;
             bottom: 16px;
             right: 20px;
             font-size: 11px;
             font-weight: 600;
-            color: #94a3b8;
+            color: #64748b;
             font-family: monospace;
             z-index: 5;
             letter-spacing: 0.04em;
         }
 
-        .artwork-brand-overlay {
-            position: absolute;
-            top: 24px;
-            right: 24px;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            background: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(8px);
-            border: 1px solid #e2e8f0;
-            padding: 4px 10px;
-            border-radius: 20px;
-            font-size: 10.5px;
-            font-weight: 700;
-            color: #0284c7;
-            z-index: 5;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
-        }
-
         /* Responsive Breakpoints */
-        @media (max-width: 820px) {
+        @media (max-width: 860px) {
             body {
                 padding: 16px;
             }
@@ -484,7 +505,7 @@
                 grid-template-columns: 1fr;
                 border-width: 6px;
                 border-radius: 20px;
-                max-width: 440px;
+                max-width: 460px;
             }
 
             .auth-artwork-side {
@@ -492,23 +513,20 @@
             }
 
             .auth-form-side {
-                padding: 28px 22px;
+                padding: 32px 24px;
             }
         }
     </style>
 </head>
 <body>
 
-    <!-- Device-like Floating Frame Card Container -->
+    <!-- Dark Device-like Floating Frame Card Container -->
     <div class="auth-device-card">
         
         <!-- Left Side: Clean Login Form -->
         <div class="auth-form-side">
-            <!-- App Icon & Title -->
-            <div class="app-icon-header">
-                <div class="app-logo-squircle">
-                    <img src="/static/media_screenshots/trace_main_logo.jpeg" alt="TRACE Logo">
-                </div>
+            <!-- Header Title -->
+            <div class="auth-header-group">
                 <h1 class="auth-title">Welcome Back</h1>
                 <p class="auth-subtitle">Unified AI-Powered Mining Digital Platform</p>
             </div>
@@ -526,7 +544,7 @@
                 <div class="role-section">
                     <div class="section-mini-label">
                         <span>Select Role</span>
-                        <span style="color: #0284c7; font-weight: 600; text-transform: none;">* Required</span>
+                        <span style="color: #38bdf8; font-weight: 600; text-transform: none;">* Required</span>
                     </div>
 
                     <div class="role-chips-grid">
@@ -580,7 +598,7 @@
                 <!-- STEP 2: CREDENTIALS INPUT -->
                 <div class="credentials-box">
                     <div class="cred-quick-row">
-                        <span style="color: #64748b; font-weight: 600;">Selected: <strong id="selectedRoleLabel" style="color: #0284c7;">General Manager</strong></span>
+                        <span style="color: #94a3b8; font-weight: 600;">Selected: <strong id="selectedRoleLabel" style="color: #38bdf8;">General Manager</strong></span>
                         <button type="button" class="btn-quick-fill" onclick="autoFillCurrentCredentials()">
                             <i class="fa-solid fa-wand-magic-sparkles"></i> Auto-fill Demo
                         </button>
@@ -630,13 +648,13 @@
                         </div>
                         <span class="recaptcha-label-text">I'm not a robot</span>
                     </div>
-                    <div style="display: flex; align-items: center; gap: 4px; color: #94a3b8; font-size: 11px;">
-                        <i class="fa-solid fa-shield" style="color: #0284c7;"></i>
+                    <div style="display: flex; align-items: center; gap: 4px; color: #64748b; font-size: 11px;">
+                        <i class="fa-solid fa-shield" style="color: #38bdf8;"></i>
                         <span style="font-size: 9.5px; font-weight: 600;">reCAPTCHA</span>
                     </div>
                 </div>
 
-                <!-- Greyish-Blue Accent Submit Button -->
+                <!-- Primary Accent Login Button -->
                 <button type="submit" class="btn-continue-blue" id="btnLogin">
                     <span id="btnLoginText">Continue to Dashboard</span>
                     <i class="fa-solid fa-arrow-right" style="font-size: 12px;"></i>
@@ -648,67 +666,74 @@
             </div>
         </div>
 
-        <!-- Right Side: Greyish-Blue 3D Ribbon Artwork -->
+        <!-- Right Side: Dark 3D Ribbon Artwork with Logo Positioned to the Left of the Lines -->
         <div class="auth-artwork-side">
-            <div class="artwork-brand-overlay">
-                <i class="fa-solid fa-shield-halved"></i> Ministry of Coal & Mines
+            <!-- TRACE Logo Positioned to the Left of the Free-Flowing Blue Lines -->
+            <div class="artwork-logo-badge">
+                <div class="app-logo-squircle">
+                    <img src="/static/media_screenshots/trace_main_logo.jpeg" alt="TRACE Logo">
+                </div>
+                <div class="logo-text-group">
+                    <div class="badge-title">TRACE</div>
+                    <div class="badge-subtitle">Track. Analyze. Act.</div>
+                </div>
             </div>
 
-            <!-- 3D Ribbon Vector Graphic in Greyish-Blue / Cyan Tones -->
+            <!-- 3D Ribbon Vector Graphic in Vibrant Cyan & Blue Gradients -->
             <div class="artwork-svg-container">
                 <svg class="artwork-svg" viewBox="0 0 500 600" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <defs>
-                        <!-- Greyish-Blue / Cyan 3D Ribbon Gradients -->
-                        <linearGradient id="blueRibbonGrad1" x1="10%" y1="0%" x2="90%" y2="100%">
+                        <!-- Vibrant 3D Ribbon Gradients -->
+                        <linearGradient id="darkBlueRibbon1" x1="10%" y1="0%" x2="90%" y2="100%">
                             <stop offset="0%" stop-color="#38bdf8" />
                             <stop offset="35%" stop-color="#0284c7" />
                             <stop offset="70%" stop-color="#0369a1" />
-                            <stop offset="100%" stop-color="#1e3a8a" />
+                            <stop offset="100%" stop-color="#1e293b" />
                         </linearGradient>
 
-                        <linearGradient id="blueRibbonGrad2" x1="0%" y1="20%" x2="100%" y2="80%">
+                        <linearGradient id="darkBlueRibbon2" x1="0%" y1="20%" x2="100%" y2="80%">
                             <stop offset="0%" stop-color="#7dd3fc" />
                             <stop offset="50%" stop-color="#0284c7" />
-                            <stop offset="100%" stop-color="#0f172a" />
+                            <stop offset="100%" stop-color="#080c14" />
                         </linearGradient>
 
-                        <filter id="ribbonShadow" x="-20%" y="-20%" width="140%" height="140%">
-                            <feDropShadow dx="10" dy="20" stdDeviation="16" flood-color="#0f172a" flood-opacity="0.18" />
+                        <filter id="ribbonDarkShadow" x="-20%" y="-20%" width="140%" height="140%">
+                            <feDropShadow dx="12" dy="24" stdDeviation="20" flood-color="#000000" flood-opacity="0.6" />
                         </filter>
 
-                        <filter id="glowEffect" x="-30%" y="-30%" width="160%" height="160%">
-                            <feGaussianBlur stdDeviation="30" result="blur" />
+                        <filter id="darkGlow" x="-30%" y="-30%" width="160%" height="160%">
+                            <feGaussianBlur stdDeviation="35" result="blur" />
                         </filter>
                     </defs>
 
-                    <!-- Background Soft Ambient Glow -->
-                    <circle cx="280" cy="260" r="140" fill="#38bdf8" fill-opacity="0.12" filter="url(#glowEffect)" />
-                    <circle cx="180" cy="420" r="120" fill="#0284c7" fill-opacity="0.08" filter="url(#glowEffect)" />
+                    <!-- Background Ambient Glowing Light Orbs -->
+                    <circle cx="340" cy="240" r="140" fill="#0284c7" fill-opacity="0.18" filter="url(#darkGlow)" />
+                    <circle cx="220" cy="450" r="120" fill="#38bdf8" fill-opacity="0.12" filter="url(#darkGlow)" />
 
                     <!-- Background Secondary Ribbon Tube -->
-                    <path d="M 120 -50 C 180 80, 480 160, 460 380 C 440 540, 200 620, 140 680" 
-                          stroke="url(#blueRibbonGrad2)" 
-                          stroke-width="56" 
+                    <path d="M 160 -50 C 220 80, 500 160, 480 380 C 460 540, 240 620, 180 680" 
+                          stroke="url(#darkBlueRibbon2)" 
+                          stroke-width="54" 
                           stroke-linecap="round" 
                           fill="none" 
-                          opacity="0.65"
-                          filter="url(#ribbonShadow)" />
+                          opacity="0.6"
+                          filter="url(#ribbonDarkShadow)" />
 
-                    <!-- Primary 3D Front Ribbon Loop (Matching reference geometry in blue) -->
-                    <path d="M 280 -60 C 350 80, 410 220, 370 340 C 320 480, 160 460, 140 650" 
-                          stroke="url(#blueRibbonGrad1)" 
-                          stroke-width="72" 
+                    <!-- Primary 3D Front Ribbon Loop (Flowing gracefully to the right of the logo) -->
+                    <path d="M 320 -60 C 390 80, 430 220, 390 340 C 340 480, 180 460, 160 650" 
+                          stroke="url(#darkBlueRibbon1)" 
+                          stroke-width="70" 
                           stroke-linecap="round" 
                           fill="none" 
-                          filter="url(#ribbonShadow)" />
+                          filter="url(#ribbonDarkShadow)" />
 
-                    <!-- Inner Highlight Streak for 3D Tubular Sheen -->
-                    <path d="M 282 -40 C 348 90, 400 220, 364 335 C 318 465, 170 450, 148 630" 
+                    <!-- Inner Tubular Light Streak for 3D Sheen -->
+                    <path d="M 322 -40 C 388 90, 420 220, 384 335 C 338 465, 190 450, 168 630" 
                           stroke="#ffffff" 
-                          stroke-width="10" 
+                          stroke-width="8" 
                           stroke-linecap="round" 
                           fill="none" 
-                          opacity="0.35" />
+                          opacity="0.4" />
                 </svg>
             </div>
 
@@ -749,8 +774,8 @@
             
             const uInput = document.getElementById('username');
             const pInput = document.getElementById('password');
-            uInput.style.borderColor = '#0284c7';
-            pInput.style.borderColor = '#0284c7';
+            uInput.style.borderColor = '#38bdf8';
+            pInput.style.borderColor = '#38bdf8';
             setTimeout(() => {
                 uInput.style.borderColor = '';
                 pInput.style.borderColor = '';
