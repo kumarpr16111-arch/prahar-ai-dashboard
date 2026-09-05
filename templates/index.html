@@ -6455,13 +6455,13 @@ body.gis-mode-active .content-body {
                             </li>
 
                             <!-- Configuration Dropdown (Area, Plant, Location, WeighBridge, Checkpost Masters) -->
-                            <li class="nav-item has-sub" id="configNavItem">
+                            <li class="nav-item has-sub expanded" id="configNavItem">
                                 <a href="#" class="nav-link" id="configNavLink" onclick="event.preventDefault(); toggleConfigDropdown(event);" style="color: #06b6d4; cursor: pointer;">
                                     <i class="fa-solid fa-gear nav-icon" style="color: #06b6d4;"></i>
                                     <span class="nav-text" style="color: #06b6d4; font-weight: 600;">Configuration</span>
-                                    <i class="fa-solid fa-chevron-right arrow-icon" id="configArrow" style="color: #06b6d4;"></i>
+                                    <i class="fa-solid fa-chevron-down arrow-icon" id="configArrow" style="color: #06b6d4;"></i>
                                 </a>
-                                <ul class="sub-nav-list" id="configSubList" style="display: none;">
+                                <ul class="sub-nav-list" id="configSubList" style="display: block;">
                                     <li class="sub-nav-item" id="configAreaNavItem">
                                         <a href="#config-area" class="sub-nav-link" onclick="event.preventDefault(); showConfigArea();">
                                             <i class="fa-solid fa-mountain-city nav-icon" style="font-size: 11px; margin-right: 8px; color: #38bdf8;"></i>
@@ -11619,7 +11619,6 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     setupDropdownToggle('blacklistedNavLink', 'blacklistedSubList', 'blacklistedArrow');
-    setupDropdownToggle('configNavLink', 'configSubList', 'configArrow');
     setupDropdownToggle('cameraViewNavLink', 'cameraViewSubList', 'cameraViewArrow');
 
     // Camera Grid & GIS elements
