@@ -1066,19 +1066,27 @@ body.alert-mode-active .user-name {
 
 .metric-card.dark-card {
     background: #111827;
-    border: 1px solid #374151;
+    border: 1px solid #1e293b;
     border-radius: var(--radius-sm);
-    padding: 18px;
+    padding: 16px 18px;
     display: flex;
     align-items: center;
     justify-content: space-between;
     cursor: pointer;
-    transition: all 0.15s ease;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
 }
 
 .metric-card.dark-card:hover {
     border-color: #38bdf8;
     transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+}
+
+.metric-card.active-card {
+    border-color: #38bdf8 !important;
+    box-shadow: 0 0 14px rgba(56, 189, 248, 0.3) !important;
 }
 
 .card-metric-info {
@@ -1113,11 +1121,397 @@ body.alert-mode-active .user-name {
 
 .card-highlight-orange {
     border-left: 4px solid #f59e0b !important;
-    background: #21180d !important;
+    background: linear-gradient(135deg, rgba(245, 158, 11, 0.12) 0%, #111827 100%) !important;
+}
+
+.card-highlight-teal {
+    border-left: 4px solid #059669 !important;
+    background: linear-gradient(135deg, rgba(5, 150, 105, 0.12) 0%, #111827 100%) !important;
+}
+
+.card-highlight-red {
+    border-left: 4px solid #ef4444 !important;
+    background: linear-gradient(135deg, rgba(239, 68, 68, 0.14) 0%, #111827 100%) !important;
 }
 
 .highlight-orange-text { color: #f59e0b !important; }
 .highlight-orange-icon { background-color: rgba(245, 158, 11, 0.2) !important; color: #f59e0b !important; }
+.highlight-teal-text { color: #34d399 !important; }
+.highlight-teal-icon { background-color: rgba(5, 150, 105, 0.2) !important; color: #34d399 !important; }
+
+/* Alert Dashboard Mission Control Container */
+.alert-dashboard-container {
+    background-color: #0b0f19;
+    border: 1px solid #1e293b;
+    border-radius: var(--radius-md);
+    padding: 20px 24px;
+    color: #ffffff;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+    position: relative;
+}
+
+/* Mission Control Telemetry & Live Ticker Strip */
+.alert-mission-strip {
+    background: #0f172a;
+    border: 1px solid #1e293b;
+    border-radius: var(--radius-sm);
+    padding: 8px 14px;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+    font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+}
+
+.mission-threat-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.threat-badge-pill {
+    background: rgba(239, 68, 68, 0.15);
+    border: 1px solid rgba(239, 68, 68, 0.4);
+    color: #f87171;
+    font-size: 11px;
+    font-weight: 800;
+    padding: 3px 10px;
+    border-radius: 9999px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+
+.threat-pulse-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #ef4444;
+    box-shadow: 0 0 10px #ef4444;
+    animation: radarPulse 1.5s infinite;
+}
+
+@keyframes radarPulse {
+    0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7); }
+    70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(239, 68, 68, 0); }
+    100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
+}
+
+.mission-ticker-group {
+    flex: 1;
+    min-width: 250px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(0, 0, 0, 0.35);
+    padding: 4px 10px;
+    border-radius: 4px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    overflow: hidden;
+}
+
+.ticker-label {
+    font-size: 10.5px;
+    font-weight: 700;
+    color: #38bdf8;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    white-space: nowrap;
+}
+
+.ticker-content {
+    font-size: 11.5px;
+    color: #cbd5e1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.mission-telemetry-meta {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    font-size: 11px;
+    color: #94a3b8;
+}
+
+.meta-item {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.meta-value {
+    color: #34d399;
+    font-weight: 700;
+}
+
+/* Header & Control Strip */
+.alert-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+    gap: 14px;
+}
+
+.alert-header-left {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.alert-title {
+    font-size: 20px;
+    font-weight: 800;
+    color: #f8fafc;
+    letter-spacing: -0.01em;
+    margin: 0;
+}
+
+.alert-subtitle {
+    font-size: 11px;
+    font-weight: 700;
+    color: #64748b;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    background: #1e293b;
+    padding: 3px 8px;
+    border-radius: 4px;
+}
+
+.live-status-pill {
+    background: rgba(16, 185, 129, 0.15);
+    border: 1px solid rgba(16, 185, 129, 0.4);
+    color: #34d399;
+    font-size: 11.5px;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 9999px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    user-select: none;
+}
+
+.live-status-pill:hover {
+    background: rgba(16, 185, 129, 0.25);
+    border-color: #34d399;
+}
+
+.live-status-pill.paused {
+    background: rgba(245, 158, 11, 0.15);
+    border-color: rgba(245, 158, 11, 0.4);
+    color: #fbbf24;
+}
+
+.live-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background-color: #10b981;
+    box-shadow: 0 0 8px #10b981;
+}
+
+.live-status-pill.paused .live-dot {
+    background-color: #f59e0b;
+    box-shadow: 0 0 8px #f59e0b;
+}
+
+.alert-header-right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.btn-dark-icon {
+    background: #1e293b;
+    border: 1px solid #334155;
+    color: #94a3b8;
+    width: 34px;
+    height: 34px;
+    border-radius: var(--radius-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+.btn-dark-icon:hover, .btn-dark-icon.active-locked {
+    background: #0284c7;
+    border-color: #38bdf8;
+    color: #ffffff;
+    box-shadow: 0 0 12px rgba(56, 189, 248, 0.4);
+}
+
+.volume-control-group {
+    background: #1e293b;
+    border: 1px solid #334155;
+    border-radius: var(--radius-sm);
+    padding: 4px 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.volume-slider {
+    width: 65px;
+    accent-color: #0284c7;
+    cursor: pointer;
+}
+
+.mute-badge-btn {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    background: transparent;
+    border: none;
+    color: #94a3b8;
+    cursor: pointer;
+    font-size: 13px;
+}
+
+.mute-badge-btn:hover {
+    color: #ffffff;
+}
+
+.mute-badge-btn.is-muted {
+    color: #f87171;
+}
+
+.filter-dropdown {
+    display: flex;
+    align-items: center;
+    background: #1e293b;
+    border: 1px solid #334155;
+    border-radius: var(--radius-sm);
+    padding: 2px 8px;
+    gap: 6px;
+}
+
+.filter-label {
+    font-size: 10px;
+    font-weight: 800;
+    color: #64748b;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+}
+
+.dark-select {
+    background: transparent;
+    border: none;
+    color: #f8fafc;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 5px 4px;
+    outline: none;
+    cursor: pointer;
+}
+
+.dark-select option {
+    background: #0f172a;
+    color: #f8fafc;
+}
+
+/* Triage Quick Filter Chips Bar */
+.alert-triage-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+    background: rgba(15, 23, 42, 0.6);
+    padding: 8px 12px;
+    border-radius: var(--radius-sm);
+    border: 1px solid #1e293b;
+}
+
+.triage-chips-group {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
+}
+
+.chip-btn {
+    background: #1e293b;
+    border: 1px solid #334155;
+    color: #cbd5e1;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 9999px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    transition: all 0.15s ease;
+}
+
+.chip-btn:hover {
+    background: #283548;
+    border-color: #38bdf8;
+    color: #ffffff;
+}
+
+.chip-btn.active {
+    background: #0284c7;
+    border-color: #38bdf8;
+    color: #ffffff;
+    box-shadow: 0 0 10px rgba(2, 132, 199, 0.4);
+}
+
+.chip-btn.chip-critical.active {
+    background: #dc2626;
+    border-color: #ef4444;
+}
+
+.chip-btn.chip-high.active {
+    background: #d97706;
+    border-color: #f59e0b;
+}
+
+.chip-badge-num {
+    background: rgba(0, 0, 0, 0.4);
+    font-size: 10px;
+    font-weight: 800;
+    padding: 1px 5px;
+    border-radius: 9999px;
+}
+
+.alert-search-wrapper {
+    display: flex;
+    align-items: center;
+    background: #111827;
+    border: 1px solid #334155;
+    border-radius: var(--radius-sm);
+    padding: 4px 10px;
+    gap: 6px;
+}
+
+.alert-search-input {
+    background: transparent;
+    border: none;
+    color: #ffffff;
+    font-size: 11.5px;
+    outline: none;
+    width: 170px;
+}
+
+.alert-search-input::placeholder {
+    color: #64748b;
+}
 
 /* Alert Detail View Layout */
 .alert-main-grid-layout {
@@ -1128,7 +1522,7 @@ body.alert-mode-active .user-name {
     background: #1f2937;
     border: 1px solid #374151;
     border-radius: var(--radius-md);
-    padding: 22px;
+    padding: 20px;
     margin-bottom: 20px;
 }
 
@@ -1136,7 +1530,7 @@ body.alert-mode-active .user-name {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding-bottom: 14px;
+    padding-bottom: 12px;
     border-bottom: 1px solid #374151;
     margin-bottom: 14px;
 }
@@ -1148,15 +1542,17 @@ body.alert-mode-active .user-name {
 }
 
 .detail-icon-orange { color: #f59e0b; font-size: 20px; }
+.detail-icon-teal { color: #34d399; font-size: 20px; }
 
 .detail-title {
-    font-size: 18px;
+    font-size: 17px;
     font-weight: 700;
     color: #ffffff;
+    margin: 0;
 }
 
 .detail-tag {
-    font-size: 13px;
+    font-size: 12px;
     font-weight: 500;
     color: #9ca3af;
 }
@@ -1187,6 +1583,9 @@ body.alert-mode-active .user-name {
 
 .detail-subtitle-bar {
     margin-bottom: 14px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .subtitle-events-text {
@@ -1226,6 +1625,147 @@ body.alert-mode-active .user-name {
 .event-timestamp {
     font-size: 12.5px;
     color: #9ca3af;
+}
+
+/* Incident Drilldown Modal */
+.incident-modal-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(6px);
+    z-index: 99999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.incident-modal-box {
+    background: #0f172a;
+    border: 1px solid #334155;
+    border-radius: var(--radius-md);
+    width: 100%;
+    max-width: 820px;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8);
+    display: flex;
+    flex-direction: column;
+}
+
+.incident-modal-header {
+    background: #1e293b;
+    padding: 14px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #334155;
+}
+
+.incident-modal-title {
+    font-size: 15px;
+    font-weight: 800;
+    color: #f8fafc;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.incident-modal-body {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.incident-meta-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+}
+
+.incident-meta-item {
+    background: #111827;
+    border: 1px solid #1e293b;
+    padding: 10px 12px;
+    border-radius: var(--radius-sm);
+    display: flex;
+    flex-direction: column;
+}
+
+.incident-meta-item .label {
+    font-size: 10.5px;
+    font-weight: 700;
+    color: #64748b;
+    text-transform: uppercase;
+}
+
+.incident-meta-item .val {
+    font-size: 13px;
+    font-weight: 700;
+    color: #f8fafc;
+    margin-top: 2px;
+}
+
+.incident-action-strip {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+    border-top: 1px solid #1e293b;
+    padding-top: 14px;
+    flex-wrap: wrap;
+}
+
+.btn-incident-cmd {
+    padding: 8px 14px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.15s ease;
+}
+
+.btn-incident-cmd.btn-qrt {
+    background: #dc2626;
+    color: #ffffff;
+    border: 1px solid #ef4444;
+}
+
+.btn-incident-cmd.btn-qrt:hover {
+    background: #b91c1c;
+    box-shadow: 0 0 12px rgba(220, 38, 38, 0.5);
+}
+
+.btn-incident-cmd.btn-hold {
+    background: #d97706;
+    color: #ffffff;
+    border: 1px solid #f59e0b;
+}
+
+.btn-incident-cmd.btn-hold:hover {
+    background: #b45309;
+}
+
+.btn-incident-cmd.btn-resolve {
+    background: #059669;
+    color: #ffffff;
+    border: 1px solid #10b981;
+}
+
+.btn-incident-cmd.btn-resolve:hover {
+    background: #047857;
+}
+
+.btn-incident-cmd.btn-dismiss {
+    background: #1e293b;
+    color: #cbd5e1;
+    border: 1px solid #334155;
 }
 
 /* ==========================================================================
@@ -6212,6 +6752,7 @@ body.gis-mode-active .content-body {
     justify-content: flex-end;
     gap: 10px;
     margin-top: 24px;
+}
 /* ========================================================
    Idle Configuration Master Views & Widgets
    ======================================================== */
@@ -6407,7 +6948,7 @@ body.gis-mode-active .content-body {
 
                             {% if user_role in ['gm', 'vigilance', 'surveillance', 'operator'] %}
                             <li class="nav-item" data-view="alert-dashboard">
-                                <a href="#alert-dashboard" class="nav-link">
+                                <a href="#alert-dashboard" class="nav-link" onclick="if(window.showAlertDashboard){window.showAlertDashboard('All Types');}">
                                     <i class="fa-solid fa-bell nav-icon"></i>
                                     <span class="nav-text">Alert Dashboard</span>
                                     <span class="badge badge-live">Live</span>
@@ -6417,7 +6958,7 @@ body.gis-mode-active .content-body {
 
                             {% if user_role in ['gm', 'vigilance', 'surveillance'] %}
                             <li class="nav-item" data-view="drone-dashboard">
-                                <a href="#drone-dashboard" class="nav-link">
+                                <a href="#drone-dashboard" class="nav-link" onclick="if(window.showDroneDashboard){window.showDroneDashboard();}">
                                     <svg class="nav-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="min-width: 18px; margin-right: 12px; display: inline-block; vertical-align: middle;">
                                         <path d="M12 10a2 2 0 1 0 0 4 2 2 0 0 0 0-4z"/>
                                         <path d="m4.93 4.93 4.24 4.24"/>
@@ -6463,13 +7004,13 @@ body.gis-mode-active .content-body {
 
                             {% if user_role in ['gm', 'vigilance', 'dispatch'] %}
                             <li class="nav-item" data-view="vts-dashboard">
-                                <a href="#vts-dashboard" class="nav-link">
+                                <a href="#vts-dashboard" class="nav-link" onclick="if(window.showVTSDashboard){window.showVTSDashboard();}">
                                     <i class="fa-solid fa-map-location-dot nav-icon"></i>
                                     <span class="nav-text">VTS Dashboard</span>
                                 </a>
                             </li>
                             <li class="nav-item" data-view="rfid-dashboard">
-                                <a href="#rfid-dashboard" class="nav-link">
+                                <a href="#rfid-dashboard" class="nav-link" onclick="if(window.showRFIDDashboard){window.showRFIDDashboard();}">
                                     <i class="fa-solid fa-tower-cell nav-icon"></i>
                                     <span class="nav-text">RFID Dashboard</span>
                                 </a>
@@ -6478,13 +7019,13 @@ body.gis-mode-active .content-body {
 
                             {% if user_role in ['gm', 'vigilance', 'dispatch', 'operator'] %}
                             <li class="nav-item" data-view="irregular-weighments">
-                                <a href="#irregular-weighments" class="nav-link">
+                                <a href="#irregular-weighments" class="nav-link" onclick="if(window.showIrregularWeighments){window.showIrregularWeighments();}">
                                     <i class="fa-solid fa-triangle-exclamation nav-icon"></i>
                                     <span class="nav-text">Irregular Weighments</span>
                                 </a>
                             </li>
                             <li class="nav-item" data-view="irregular-trips">
-                                <a href="#irregular-trips" class="nav-link">
+                                <a href="#irregular-trips" class="nav-link" onclick="if(window.showIrregularTrips){window.showIrregularTrips();}">
                                     <i class="fa-solid fa-route nav-icon"></i>
                                     <span class="nav-text">Irregular Trips</span>
                                 </a>
@@ -6493,7 +7034,7 @@ body.gis-mode-active .content-body {
 
                             {% if user_role in ['gm'] %}
                             <li class="nav-item" data-view="workers-attendance">
-                                <a href="#workers-attendance" class="nav-link">
+                                <a href="#workers-attendance" class="nav-link" onclick="if(window.showWorkersAttendance){window.showWorkersAttendance();}">
                                     <i class="fa-solid fa-users-viewfinder nav-icon"></i>
                                     <span class="nav-text">Workers Attendance</span>
                                 </a>
@@ -6680,31 +7221,61 @@ body.gis-mode-active .content-body {
                         <div class="nav-section-title">DASHBOARD</div>
                         <ul class="nav-list">
                             <li class="nav-item nav-item-btn-green" id="btnBackHome">
-                                <a href="/" class="nav-link green-pill-btn">
+                                <a href="javascript:void(0)" onclick="if(window.showSummaryTab){window.showSummaryTab('weighbridge');} else {window.location.href='/';}" class="nav-link green-pill-btn" title="Back to TRACE Home Summary">
                                     <i class="fa-solid fa-house nav-icon"></i>
                                     <span class="nav-text">TRACE-Home</span>
                                 </a>
                             </li>
-                            <li class="nav-item has-sub expanded">
-                                <a href="#" class="nav-link green-pill-btn active">
+                            <li class="nav-item has-sub expanded" id="alertSidebarOverviewItem">
+                                <a href="javascript:void(0)" onclick="setAlertDetectionType('All Types');" class="nav-link green-pill-btn active" title="Show All Alert Overview">
                                     <i class="fa-solid fa-table-cells-large nav-icon"></i>
                                     <span class="nav-text">Live Dashboard</span>
                                     <i class="fa-solid fa-chevron-down arrow-icon"></i>
                                 </a>
                                 <ul class="sub-nav-list alert-sub-list">
-                                    <li class="sub-nav-item"><a href="#" class="sub-nav-link"><i class="fa-solid fa-triangle-exclamation nav-icon"></i><span class="sub-nav-text">Unauthorized stoppage</span></a></li>
-                                    <li class="sub-nav-item"><a href="#" class="sub-nav-link"><i class="fa-solid fa-car nav-icon"></i><span class="sub-nav-text">Vehicle Detection</span></a></li>
-                                    <li class="sub-nav-item"><a href="#" class="sub-nav-link"><i class="fa-solid fa-user nav-icon"></i><span class="sub-nav-text">Person Detection</span></a></li>
-                                    <li class="sub-nav-item"><a href="#" class="sub-nav-link"><i class="fa-solid fa-shield-halved nav-icon"></i><span class="sub-nav-text">Intrusion Detection</span></a></li>
-                                    <li class="sub-nav-item"><a href="#" class="sub-nav-link"><i class="fa-solid fa-traffic-light nav-icon"></i><span class="sub-nav-text">Traffic Congestion</span></a></li>
-                                    <li class="sub-nav-item"><a href="#" class="sub-nav-link"><i class="fa-solid fa-truck-ramp-box nav-icon"></i><span class="sub-nav-text">Loaded-Unloaded Alerts</span></a></li>
+                                    <li class="sub-nav-item" data-detection="Unauthorized stoppage">
+                                        <a href="javascript:void(0)" onclick="setAlertDetectionType('Unauthorized stoppage')" class="sub-nav-link">
+                                            <i class="fa-solid fa-triangle-exclamation nav-icon" style="color: #f59e0b;"></i>
+                                            <span class="sub-nav-text">Unauthorized stoppage</span>
+                                        </a>
+                                    </li>
+                                    <li class="sub-nav-item" data-detection="Vehicle Detection">
+                                        <a href="javascript:void(0)" onclick="setAlertDetectionType('Vehicle Detection')" class="sub-nav-link">
+                                            <i class="fa-solid fa-car nav-icon" style="color: #38bdf8;"></i>
+                                            <span class="sub-nav-text">Vehicle Detection</span>
+                                        </a>
+                                    </li>
+                                    <li class="sub-nav-item" data-detection="Person Detection">
+                                        <a href="javascript:void(0)" onclick="setAlertDetectionType('Person Detection')" class="sub-nav-link">
+                                            <i class="fa-solid fa-user nav-icon" style="color: #34d399;"></i>
+                                            <span class="sub-nav-text">Person Detection</span>
+                                        </a>
+                                    </li>
+                                    <li class="sub-nav-item" data-detection="Intrusion Detection">
+                                        <a href="javascript:void(0)" onclick="setAlertDetectionType('Intrusion Detection')" class="sub-nav-link">
+                                            <i class="fa-solid fa-shield-halved nav-icon" style="color: #ef4444;"></i>
+                                            <span class="sub-nav-text">Intrusion Detection</span>
+                                        </a>
+                                    </li>
+                                    <li class="sub-nav-item" data-detection="Traffic Congestion">
+                                        <a href="javascript:void(0)" onclick="setAlertDetectionType('Traffic Congestion')" class="sub-nav-link">
+                                            <i class="fa-solid fa-traffic-light nav-icon" style="color: #fbbf24;"></i>
+                                            <span class="sub-nav-text">Traffic Congestion</span>
+                                        </a>
+                                    </li>
+                                    <li class="sub-nav-item" data-detection="Loaded-Unloaded Alerts">
+                                        <a href="javascript:void(0)" onclick="setAlertDetectionType('Loaded-Unloaded Alerts')" class="sub-nav-link">
+                                            <i class="fa-solid fa-truck-ramp-box nav-icon" style="color: #a78bfa;"></i>
+                                            <span class="sub-nav-text">Loaded-Unloaded Alerts</span>
+                                        </a>
+                                    </li>
                                 </ul>
                             </li>
                         </ul>
 
                         <div class="sidebar-meta-badges">
-                            <span class="badge badge-teal-pill">6 Cards</span>
-                            <span class="page-meta-text">Page 1 of 3</span>
+                            <span class="badge badge-teal-pill" id="sidebarLiveCardCount">15 Categories Active</span>
+                            <span class="page-meta-text" id="sidebarLiveThreatText">• DEFCON 1 Active</span>
                         </div>
                     </div>
 
@@ -6712,7 +7283,7 @@ body.gis-mode-active .content-body {
                         <div class="nav-section-title">ANALYTICS</div>
                         <ul class="nav-list">
                             <li class="nav-item">
-                                <a href="#" class="nav-link nav-link-red">
+                                <a href="javascript:void(0)" onclick="if(window.showDigitalAuditTrails){window.showDigitalAuditTrails();}" class="nav-link nav-link-red" title="Open Forensic Audit Reports & Statutory Ledgers">
                                     <i class="fa-solid fa-chart-column nav-icon"></i>
                                     <span class="nav-text">Reports & Analytics</span>
                                 </a>
@@ -7205,79 +7776,153 @@ body.gis-mode-active .content-body {
                     </div>
                 </div>
 
-                <!-- Page View: Alert Dashboard (Dark Theme Layout) -->
+                <!-- Page View: Alert Dashboard (Dark Tactical Theme Layout) -->
                 <div class="tab-content-panel" id="alert-dashboard-view" style="display: none;">
                     <div class="alert-dashboard-container">
-                        <!-- Dark Mode Header Bar -->
+                        
+                        <!-- 1. Mission Control Telemetry & Live Ticker Strip -->
+                        <div class="alert-mission-strip">
+                            <div class="mission-threat-group">
+                                <div class="threat-badge-pill" id="threatLevelBadge">
+                                    <span class="threat-pulse-dot"></span>
+                                    <span id="threatLevelText">DEFCON 2 • ACTIVE SURVEILLANCE</span>
+                                </div>
+                            </div>
+                            
+                            <div class="mission-ticker-group">
+                                <span class="ticker-label"><i class="fa-solid fa-satellite-dish"></i> LIVE TICKER:</span>
+                                <span class="ticker-content" id="liveAlertTickerText">Monitoring 2,279 Vehicles & 146 Weighbridges across 14 Mining Sectors...</span>
+                            </div>
+
+                            <div class="mission-telemetry-meta">
+                                <div class="meta-item">
+                                    <span>Supabase DB:</span>
+                                    <span class="meta-value" id="supabaseLatencyText">18ms (Online)</span>
+                                </div>
+                                <div class="meta-item">
+                                    <span>GNSS RTK:</span>
+                                    <span class="meta-value">±0.18m Locked</span>
+                                </div>
+                                <div class="meta-item">
+                                    <span>Last Feed:</span>
+                                    <span class="meta-value" id="lastAlertSyncTime">Just now</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 2. Dark Mode Header Bar & Controls -->
                         <div class="alert-header">
                             <div class="alert-header-left">
                                 <h1 class="alert-title">Alert Dashboard</h1>
                                 <span class="alert-subtitle">REAL TIME MONITORING SYSTEM</span>
-                                <div class="live-status-pill">
+                                <div class="live-status-pill" id="btnToggleLiveFeed" title="Click to Pause / Resume Live Polling Feed">
                                     <span class="live-dot"></span>
-                                    <i class="fa-solid fa-pause"></i> LIVE
+                                    <span id="liveFeedPillText"><i class="fa-solid fa-pause"></i> LIVE STREAM</span>
                                 </div>
                             </div>
                             
                             <div class="alert-header-right">
-                                <button class="btn-dark-icon" title="Lock View"><i class="fa-solid fa-lock"></i></button>
+                                <button class="btn-dark-icon" id="btnToggleLockView" title="Lock View / Freeze Auto-Refresh"><i class="fa-solid fa-lock"></i></button>
                                 
-                                <div class="volume-control-group">
-                                    <i class="fa-solid fa-bell bell-icon"></i>
-                                    <input type="range" min="0" max="100" value="70" class="volume-slider">
-                                    <div class="mute-badge-btn">
-                                        <i class="fa-solid fa-bell-slash"></i>
-                                        <span class="badge-count" id="headerBadgeCount">6</span>
-                                    </div>
+                                <div class="volume-control-group" title="Alert Siren Volume & Alarm Control">
+                                    <i class="fa-solid fa-bell bell-icon" style="color: #38bdf8; font-size: 13px;"></i>
+                                    <input type="range" min="0" max="100" value="75" class="volume-slider" id="alertVolumeSlider" title="Alarm Chime Volume">
+                                    <button type="button" class="mute-badge-btn" id="btnMuteAlerts" title="Mute / Unmute Audio Alarms">
+                                        <i class="fa-solid fa-volume-high" id="volumeIcon"></i>
+                                        <span class="badge-count" id="headerBadgeCount">0</span>
+                                    </button>
                                 </div>
 
                                 <div class="filter-dropdown">
                                     <span class="filter-label">DETECTION</span>
                                     <select class="dark-select" id="detectionTypeSelect">
-                                        <option value="All Types" selected>All Types</option>
+                                        <option value="All Types" selected>All Categories (Overview)</option>
                                         <option value="Unauthorized stoppage">Unauthorized stoppage</option>
-                                        <option value="Vehicle Detection">Vehicle Detection</option>
-                                        <option value="Person Detection">Person Detection</option>
-                                        <option value="Intrusion Detection">Intrusion Detection</option>
-                                        <option value="Traffic Congestion">Traffic Congestion</option>
-                                        <option value="Loaded-Unloaded Alerts">Loaded-Unloaded Alerts</option>
+                                        <option value="Off Route Alerts">Off Route Alerts</option>
+                                        <option value="Off Area Alerts">Off Area Alerts</option>
+                                        <option value="Tamper Alerts">Device Tamper Alerts</option>
+                                        <option value="Over Speed">Over Speed Violations</option>
+                                        <option value="Open Boom Barriers">Open Boom Barriers</option>
+                                        <option value="Vehicle Detection">Vehicle Detection (VA)</option>
+                                        <option value="Crowd">Crowd Detection (VA)</option>
+                                        <option value="Person Detection">Person Detection (VA)</option>
+                                        <option value="Intrusion Detection">Intrusion Detection (VA)</option>
+                                        <option value="Traffic Congestion">Traffic Congestion (VA)</option>
+                                        <option value="Loaded-Unloaded Alerts">Loaded-Unloaded Variance (VA)</option>
+                                        <option value="Camera Tampering">Camera Tampering (VA)</option>
+                                        <option value="Safety Hazard">Safety Hazard (VA)</option>
+                                        <option value="Insufficient Illumination">Insufficient Illumination (VA)</option>
                                     </select>
                                 </div>
 
                                 <div class="filter-dropdown">
                                     <span class="filter-label">AREA</span>
-                                    <select class="dark-select">
-                                        <option>All Areas</option>
-                                        <option>Amrapali</option>
-                                        <option>Argada</option>
-                                        <option>Barka Sayal</option>
+                                    <select class="dark-select" id="alertAreaSelect">
+                                        <option value="all" selected>All Mining Areas</option>
+                                        <option value="Amrapali">Amrapali & Chandragupta (CO07)</option>
+                                        <option value="Argada">Argada Area (CO02)</option>
+                                        <option value="Barka Sayal">Barka Sayal (CO01)</option>
+                                        <option value="Bokaro">Bokaro & Kargali (CO04)</option>
+                                        <option value="Dhori">Dhori Area (CO12)</option>
+                                        <option value="Giridih">Giridih Area (CO15)</option>
+                                        <option value="Hazaribagh">Hazaribagh Area (CO10)</option>
+                                        <option value="Kathara">Kathara Washery (CO05)</option>
+                                        <option value="Kuju">Kuju Area (CO09)</option>
+                                        <option value="Magadh">Magadh Open Cast (CO06)</option>
+                                        <option value="NK">North Karanpura (CO03)</option>
+                                        <option value="Piparwar">Piparwar & Ashoka (CO13)</option>
+                                        <option value="Rajhara">Rajhara Area (CO08)</option>
+                                        <option value="Rajrappa">Rajrappa Area (CO11)</option>
                                     </select>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- 1. Original Overview View (Default View) -->
-                        <div class="alert-overview-container" id="alertOverviewContainer">
-                            <!-- Live Supabase Incident Stream Banner -->
-                            <div class="alert-section-card margin-bottom-lg" style="border: 1px solid rgba(56, 189, 248, 0.3); background: #0c1017; padding: 14px 16px; border-radius: 6px;">
-                                <div class="alert-section-header" style="border-bottom: 1px solid #1e293b; padding-bottom: 10px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center;">
-                                    <div class="section-title-group" style="display: flex; align-items: center; gap: 8px;">
-                                        <span class="vertical-bar bar-teal" style="background: #38bdf8; width: 4px; height: 16px; border-radius: 2px;"></span>
-                                        <i class="fa-solid fa-satellite-dish" style="color: #38bdf8; font-size: 14px;"></i>
-                                        <h3 class="alert-section-title" style="font-size: 13.5px; font-weight: 700; color: #f8fafc; letter-spacing: 0.04em;">LIVE SUPABASE INCIDENT STREAM</h3>
-                                        <span class="badge badge-live" style="margin-left: 6px;">LIVE DB</span>
-                                    </div>
-                                    <div style="display: flex; align-items: center; gap: 10px;">
-                                        <span style="font-size: 11px; color: #64748b;" id="supabaseLiveStatusText">• Auto-Syncing with Supabase</span>
-                                        <button type="button" onclick="triggerSimulateAlert()" class="btn-action" style="padding: 4px 10px; font-size: 11px; background: rgba(220, 38, 38, 0.15); color: #f87171; border: 1px solid rgba(220, 38, 38, 0.35);">
-                                            <i class="fa-solid fa-plus-circle"></i> Trigger Anomaly
-                                        </button>
-                                    </div>
-                                </div>
-                                <div id="liveAlertsFeedContainer" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(310px, 1fr)); gap: 10px;">
-                                    <!-- Rendered dynamically from Supabase API -->
-                                </div>
+                        <!-- 3. Triage Quick Filter Chips & Incident Search -->
+                        <div class="alert-triage-bar">
+                            <div class="triage-chips-group">
+                                <button type="button" class="chip-btn active" id="chipFilterAll" onclick="setSeverityFilter('ALL')">
+                                    <span>All Alerts</span>
+                                    <span class="chip-badge-num" id="chipBadgeAll">0</span>
+                                </button>
+                                <button type="button" class="chip-btn chip-critical" id="chipFilterCritical" onclick="setSeverityFilter('CRITICAL')">
+                                    <i class="fa-solid fa-circle-radiation" style="color: #ef4444;"></i>
+                                    <span>Critical</span>
+                                    <span class="chip-badge-num" id="chipBadgeCritical">0</span>
+                                </button>
+                                <button type="button" class="chip-btn chip-high" id="chipFilterHigh" onclick="setSeverityFilter('HIGH')">
+                                    <i class="fa-solid fa-triangle-exclamation" style="color: #f59e0b;"></i>
+                                    <span>High Priority</span>
+                                    <span class="chip-badge-num" id="chipBadgeHigh">0</span>
+                                </button>
+                                <button type="button" class="chip-btn" id="chipFilterWarning" onclick="setSeverityFilter('WARNING')">
+                                    <i class="fa-solid fa-circle-exclamation" style="color: #38bdf8;"></i>
+                                    <span>Warnings</span>
+                                    <span class="chip-badge-num" id="chipBadgeWarning">0</span>
+                                </button>
+                                <button type="button" class="chip-btn" id="chipFilterActiveOnly" onclick="setStatusFilter('ACTIVE')">
+                                    <span class="live-dot" style="background:#10b981; width:5px; height:5px;"></span>
+                                    <span>Active Only</span>
+                                </button>
+                                <button type="button" class="chip-btn" id="chipFilterAck" onclick="setStatusFilter('ACKNOWLEDGED')">
+                                    <i class="fa-solid fa-check" style="color: #38bdf8;"></i>
+                                    <span>Acknowledged</span>
+                                </button>
+                                <button type="button" class="chip-btn" id="chipFilterResolved" onclick="setStatusFilter('RESOLVED')">
+                                    <i class="fa-solid fa-shield-check" style="color: #34d399;"></i>
+                                    <span>Resolved</span>
+                                </button>
                             </div>
+
+                            <div class="alert-search-wrapper">
+                                <i class="fa-solid fa-magnifying-glass" style="color: #64748b; font-size: 11px;"></i>
+                                <input type="text" id="alertSearchInput" class="alert-search-input" placeholder="Search vehicle, location, ID..." oninput="handleAlertSearch(this.value)">
+                                <button type="button" style="background:none; border:none; color:#64748b; cursor:pointer;" onclick="document.getElementById('alertSearchInput').value=''; handleAlertSearch('');" title="Clear Search"><i class="fa-solid fa-xmark"></i></button>
+                            </div>
+                        </div>
+
+                        <!-- 4. Original Overview View (Default View) -->
+                        <div class="alert-overview-container" id="alertOverviewContainer">
 
                             <!-- Section A: VIDEO ANALYTICS ALERT -->
                             <div class="alert-section-card margin-bottom-lg">
@@ -7287,45 +7932,45 @@ body.gis-mode-active .content-body {
                                         <i class="fa-solid fa-video section-icon"></i>
                                         <h3 class="alert-section-title">VIDEO ANALYTICS ALERT</h3>
                                     </div>
-                                    <span class="events-status-text">• NO EVENTS</span>
+                                    <span class="events-status-text" id="vaSectionStatusText">• NO EVENTS</span>
                                 </div>
 
                                 <div class="cards-grid grid-6">
-                                    <div class="metric-card dark-card" data-card-type="Crowd">
-                                        <div class="card-metric-info"><span class="metric-number">0</span><span class="metric-label">CROWD DETEC...</span></div>
-                                        <div class="metric-icon-circle"><i class="fa-solid fa-users"></i></div>
+                                    <div class="metric-card card-highlight-teal" data-card-type="Crowd" onclick="setAlertDetectionType('Crowd')">
+                                        <div class="card-metric-info"><span class="metric-number highlight-teal-text">1</span><span class="metric-label">CROWD DETEC...</span></div>
+                                        <div class="metric-icon-circle highlight-teal-icon"><i class="fa-solid fa-users"></i></div>
                                     </div>
-                                    <div class="metric-card dark-card" data-card-type="Vehicle Detection">
-                                        <div class="card-metric-info"><span class="metric-number">0</span><span class="metric-label">VEHICLE DETE...</span></div>
-                                        <div class="metric-icon-circle"><i class="fa-solid fa-car"></i></div>
+                                    <div class="metric-card card-highlight-teal" data-card-type="Vehicle Detection" onclick="setAlertDetectionType('Vehicle Detection')">
+                                        <div class="card-metric-info"><span class="metric-number highlight-teal-text">1</span><span class="metric-label">VEHICLE DETE...</span></div>
+                                        <div class="metric-icon-circle highlight-teal-icon"><i class="fa-solid fa-car"></i></div>
                                     </div>
-                                    <div class="metric-card dark-card" data-card-type="Person Detection">
-                                        <div class="card-metric-info"><span class="metric-number">0</span><span class="metric-label">PERSON DETE...</span></div>
-                                        <div class="metric-icon-circle"><i class="fa-solid fa-user"></i></div>
+                                    <div class="metric-card card-highlight-orange" data-card-type="Person Detection" onclick="setAlertDetectionType('Person Detection')">
+                                        <div class="card-metric-info"><span class="metric-number highlight-orange-text">1</span><span class="metric-label">PERSON DETE...</span></div>
+                                        <div class="metric-icon-circle highlight-orange-icon"><i class="fa-solid fa-user"></i></div>
                                     </div>
-                                    <div class="metric-card dark-card" data-card-type="Intrusion Detection">
-                                        <div class="card-metric-info"><span class="metric-number">0</span><span class="metric-label">INTRUSION DE...</span></div>
-                                        <div class="metric-icon-circle"><img src="/static/media_screenshots/trace_main_logo.jpeg" alt="TRACE Logo" class="brand-logo-img"></div>
+                                    <div class="metric-card card-highlight-red" data-card-type="Intrusion Detection" onclick="setAlertDetectionType('Intrusion Detection')">
+                                        <div class="card-metric-info"><span class="metric-number highlight-orange-text">1</span><span class="metric-label">INTRUSION DE...</span></div>
+                                        <div class="metric-icon-circle highlight-orange-icon"><img src="/static/media_screenshots/trace_main_logo.jpeg" alt="TRACE Logo" class="brand-logo-img"></div>
                                     </div>
-                                    <div class="metric-card dark-card" data-card-type="Traffic Congestion">
-                                        <div class="card-metric-info"><span class="metric-number">0</span><span class="metric-label">TRAFFIC CONG...</span></div>
-                                        <div class="metric-icon-circle"><i class="fa-solid fa-traffic-light"></i></div>
+                                    <div class="metric-card card-highlight-orange" data-card-type="Traffic Congestion" onclick="setAlertDetectionType('Traffic Congestion')">
+                                        <div class="card-metric-info"><span class="metric-number highlight-orange-text">1</span><span class="metric-label">TRAFFIC CONG...</span></div>
+                                        <div class="metric-icon-circle highlight-orange-icon"><i class="fa-solid fa-traffic-light"></i></div>
                                     </div>
-                                    <div class="metric-card dark-card" data-card-type="Loaded-Unloaded Alerts">
-                                        <div class="card-metric-info"><span class="metric-number">0</span><span class="metric-label">LOADED-UNLO...</span></div>
-                                        <div class="metric-icon-circle"><i class="fa-solid fa-truck-ramp-box"></i></div>
+                                    <div class="metric-card card-highlight-teal" data-card-type="Loaded-Unloaded Alerts" onclick="setAlertDetectionType('Loaded-Unloaded Alerts')">
+                                        <div class="card-metric-info"><span class="metric-number highlight-teal-text">2</span><span class="metric-label">LOADED-UNLO...</span></div>
+                                        <div class="metric-icon-circle highlight-teal-icon"><i class="fa-solid fa-truck-ramp-box"></i></div>
                                     </div>
-                                    <div class="metric-card dark-card" data-card-type="Camera Tampering">
-                                        <div class="card-metric-info"><span class="metric-number">0</span><span class="metric-label">CAMERA TAMP...</span></div>
-                                        <div class="metric-icon-circle"><i class="fa-solid fa-video-slash"></i></div>
+                                    <div class="metric-card card-highlight-orange" data-card-type="Camera Tampering" onclick="setAlertDetectionType('Camera Tampering')">
+                                        <div class="card-metric-info"><span class="metric-number highlight-orange-text">2</span><span class="metric-label">CAMERA TAMP...</span></div>
+                                        <div class="metric-icon-circle highlight-orange-icon"><i class="fa-solid fa-video-slash"></i></div>
                                     </div>
-                                    <div class="metric-card dark-card" data-card-type="Safety Hazard">
-                                        <div class="card-metric-info"><span class="metric-number">0</span><span class="metric-label">SAFETY HAZARD</span></div>
-                                        <div class="metric-icon-circle"><i class="fa-solid fa-triangle-exclamation"></i></div>
+                                    <div class="metric-card card-highlight-orange" data-card-type="Safety Hazard" onclick="setAlertDetectionType('Safety Hazard')">
+                                        <div class="card-metric-info"><span class="metric-number highlight-orange-text">1</span><span class="metric-label">SAFETY HAZARD</span></div>
+                                        <div class="metric-icon-circle highlight-orange-icon"><i class="fa-solid fa-triangle-exclamation"></i></div>
                                     </div>
-                                    <div class="metric-card dark-card" data-card-type="Insufficient Illumination">
-                                        <div class="card-metric-info"><span class="metric-number">0</span><span class="metric-label">INSUFFICIENT I...</span></div>
-                                        <div class="metric-icon-circle"><i class="fa-solid fa-lightbulb"></i></div>
+                                    <div class="metric-card card-highlight-teal" data-card-type="Insufficient Illumination" onclick="setAlertDetectionType('Insufficient Illumination')">
+                                        <div class="card-metric-info"><span class="metric-number highlight-teal-text">1</span><span class="metric-label">INSUFFICIENT I...</span></div>
+                                        <div class="metric-icon-circle highlight-teal-icon"><i class="fa-solid fa-lightbulb"></i></div>
                                     </div>
                                 </div>
                             </div>
@@ -7338,31 +7983,31 @@ body.gis-mode-active .content-body {
                                         <i class="fa-solid fa-bus section-icon"></i>
                                         <h3 class="alert-section-title">GPS-RFID ALERTS</h3>
                                     </div>
-                                    <span class="events-status-text red-live-text">• 9 LIVE</span>
+                                    <span class="events-status-text red-live-text" id="gpsLiveCountText">• 12 LIVE</span>
                                 </div>
 
                                 <div class="cards-grid grid-5">
-                                    <div class="metric-card dark-card">
-                                        <div class="card-metric-info"><span class="metric-number">0</span><span class="metric-label">OFF ROUTE ALERTS</span></div>
-                                        <div class="metric-icon-circle"><i class="fa-solid fa-route"></i></div>
+                                    <div class="metric-card card-highlight-orange" data-card-type="Off Route Alerts" data-alert-cat="off_route" onclick="setAlertDetectionType('Off Route Alerts')">
+                                        <div class="card-metric-info"><span class="metric-number highlight-orange-text">3</span><span class="metric-label">OFF ROUTE ALERTS</span></div>
+                                        <div class="metric-icon-circle highlight-orange-icon"><i class="fa-solid fa-route"></i></div>
                                     </div>
-                                    <div class="metric-card dark-card">
-                                        <div class="card-metric-info"><span class="metric-number">0</span><span class="metric-label">OFF AREA ALERTS</span></div>
-                                        <div class="metric-icon-circle"><i class="fa-solid fa-ban"></i></div>
+                                    <div class="metric-card card-highlight-orange" data-card-type="Off Area Alerts" data-alert-cat="off_area" onclick="setAlertDetectionType('Off Area Alerts')">
+                                        <div class="card-metric-info"><span class="metric-number highlight-orange-text">1</span><span class="metric-label">OFF AREA ALERTS</span></div>
+                                        <div class="metric-icon-circle highlight-orange-icon"><i class="fa-solid fa-ban"></i></div>
                                     </div>
-                                    <div class="metric-card dark-card">
-                                        <div class="card-metric-info"><span class="metric-number">0</span><span class="metric-label">TAMPER ALERTS</span></div>
-                                        <div class="metric-icon-circle"><i class="fa-solid fa-triangle-exclamation"></i></div>
+                                    <div class="metric-card card-highlight-orange" data-card-type="Tamper Alerts" data-alert-cat="tamper" onclick="setAlertDetectionType('Tamper Alerts')">
+                                        <div class="card-metric-info"><span class="metric-number highlight-orange-text">2</span><span class="metric-label">TAMPER ALERTS</span></div>
+                                        <div class="metric-icon-circle highlight-orange-icon"><i class="fa-solid fa-shield-virus"></i></div>
                                     </div>
-                                    <div class="metric-card dark-card card-highlight-orange" data-card-type="Unauthorized stoppage">
-                                        <div class="card-metric-info"><span class="metric-number highlight-orange-text">5</span><span class="metric-label">UNAUTHORIZED STOP...</span></div>
-                                        <div class="metric-icon-circle highlight-orange-icon"><i class="fa-solid fa-triangle-exclamation"></i></div>
+                                    <div class="metric-card card-highlight-red" data-card-type="Unauthorized stoppage" data-alert-cat="stoppage" onclick="setAlertDetectionType('Unauthorized stoppage')">
+                                        <div class="card-metric-info"><span class="metric-number highlight-orange-text">2</span><span class="metric-label">UNAUTHORIZED STOP...</span></div>
+                                        <div class="metric-icon-circle highlight-orange-icon"><i class="fa-solid fa-hand"></i></div>
                                     </div>
-                                    <div class="metric-card dark-card card-highlight-orange">
+                                    <div class="metric-card card-highlight-orange" data-card-type="Over Speed" data-alert-cat="over_speed" onclick="setAlertDetectionType('Over Speed')">
                                         <div class="card-metric-info"><span class="metric-number highlight-orange-text">1</span><span class="metric-label">OVER SPEED</span></div>
                                         <div class="metric-icon-circle highlight-orange-icon"><i class="fa-solid fa-gauge-high"></i></div>
                                     </div>
-                                    <div class="metric-card dark-card card-highlight-orange">
+                                    <div class="metric-card card-highlight-orange" data-card-type="Open Boom Barriers" data-alert-cat="boom_barrier" onclick="setAlertDetectionType('Open Boom Barriers')">
                                         <div class="card-metric-info"><span class="metric-number highlight-orange-text">3</span><span class="metric-label">OPEN BOOM BARRIERS</span></div>
                                         <div class="metric-icon-circle highlight-orange-icon"><i class="fa-solid fa-traffic-light"></i></div>
                                     </div>
@@ -7370,7 +8015,7 @@ body.gis-mode-active .content-body {
                             </div>
                         </div>
 
-                        <!-- 2. Detail View (Shown when clicking Unauthorized stoppage or other detection items) -->
+                        <!-- 5. Detail View (Drilldown when category is selected) -->
                         <div class="alert-main-grid-layout" id="alertDetailContainer" style="display: none;">
                             <!-- Left / Primary Column -->
                             <div class="alert-primary-col">
@@ -7378,73 +8023,67 @@ body.gis-mode-active .content-body {
                                 <div class="alert-detail-card" id="alertDetailCard">
                                     <div class="alert-detail-header">
                                         <div class="detail-title-group">
+                                            <button type="button" class="btn-icon-action" onclick="setAlertDetectionType('All Types')" title="Back to All Categories" style="margin-right: 4px;">
+                                                <i class="fa-solid fa-arrow-left"></i>
+                                            </button>
                                             <i class="fa-solid fa-triangle-exclamation detail-icon-orange" id="detailIcon"></i>
                                             <h3 class="detail-title" id="detailTitle">Unauthorized stoppage <span class="detail-tag" id="detailTag">(Vehicle Alerts)</span></h3>
                                         </div>
                                         <div class="detail-actions">
-                                            <button class="btn-icon-action" title="Clear"><i class="fa-solid fa-trash-can"></i></button>
-                                            <button class="btn-icon-action" id="btnCloseDetail" title="Close"><i class="fa-solid fa-xmark"></i></button>
+                                            <button type="button" class="btn-action" onclick="acknowledgeAllInCategory()" title="Acknowledge All in Category" style="padding: 5px 10px; font-size: 11px; background:#1e293b; color:#38bdf8;">
+                                                <i class="fa-solid fa-check-double"></i> Ack All
+                                            </button>
+                                            <button type="button" class="btn-action" onclick="exportAlertsCsv()" title="Export Filtered Alerts to CSV" style="padding: 5px 10px; font-size: 11px; background:#1e293b; color:#34d399;">
+                                                <i class="fa-solid fa-file-csv"></i> Export
+                                            </button>
+                                            <button type="button" class="btn-icon-action" onclick="clearResolvedAlerts()" title="Dismiss / Clear Resolved"><i class="fa-solid fa-trash-can"></i></button>
+                                            <button type="button" class="btn-icon-action" id="btnCloseDetail" onclick="setAlertDetectionType('All Types')" title="Close Detail"><i class="fa-solid fa-xmark"></i></button>
                                         </div>
                                     </div>
 
                                     <div class="detail-subtitle-bar" id="detailSubtitleBar">
-                                        <span class="subtitle-events-text" id="detailSubtitleText">• SHOWING 12 OF 12 EVENTS</span>
+                                        <span class="subtitle-events-text" id="detailSubtitleText">• SHOWING 0 OF 0 EVENTS</span>
+                                        <span style="font-size: 11px; color: #94a3b8;"><i class="fa-solid fa-arrow-pointer" style="margin-right: 4px;"></i>Click any incident to open full surveillance forensics</span>
                                     </div>
 
                                     <!-- Events Container -->
                                     <div class="detail-events-body" id="detailEventsBody">
-                                        <div class="event-row-card">
-                                            <div class="event-row-info"><span class="event-row-title">MSRCR (SAKANDRA/BIHAR) (3 alerts, 3 vehicles)</span></div>
-                                            <div class="event-row-meta"><span class="event-timestamp">23:54:34</span><i class="fa-solid fa-chevron-down arrow-icon"></i></div>
-                                        </div>
-                                        <div class="event-row-card">
-                                            <div class="event-row-info"><span class="event-row-title">MSRCR (MONET/ALOK) (1 alerts, 1 vehicles)</span></div>
-                                            <div class="event-row-meta"><span class="event-timestamp">23:53:57</span><i class="fa-solid fa-chevron-down arrow-icon"></i></div>
-                                        </div>
-                                        <div class="event-row-card">
-                                            <div class="event-row-info"><span class="event-row-title">MSRCR (MUKESH/ROSHAN/HND) (2 alerts, 2 vehicles)</span></div>
-                                            <div class="event-row-meta"><span class="event-timestamp">23:53:00</span><i class="fa-solid fa-chevron-down arrow-icon"></i></div>
-                                        </div>
-                                        <div class="event-row-card">
-                                            <div class="event-row-info"><span class="event-row-title">LALITPUR POWER GENERATION COMPANY (2 alerts, 2 vehicles)</span></div>
-                                            <div class="event-row-meta"><span class="event-timestamp">23:52:41</span><i class="fa-solid fa-chevron-down arrow-icon"></i></div>
-                                        </div>
+                                        <!-- Rendered dynamically by JavaScript -->
                                     </div>
                                 </div>
 
-                                <!-- GPS-RFID ALERTS Section -->
+                                <!-- GPS-RFID ALERTS Bottom Quick Strip in Detail View -->
                                 <div class="alert-section-card margin-top-md">
                                     <div class="alert-section-header">
                                         <div class="section-title-group">
                                             <span class="vertical-bar bar-orange"></span>
                                             <i class="fa-solid fa-bus section-icon"></i>
-                                            <h3 class="alert-section-title">GPS-RFID ALERTS</h3>
+                                            <h3 class="alert-section-title">GPS-RFID ANOMALY CATEGORIES</h3>
                                         </div>
-                                        <span class="events-status-text red-live-text" id="gpsLiveCountText">• 40 LIVE</span>
                                     </div>
 
                                     <div class="cards-grid grid-5" id="gpsCardsGrid">
-                                        <div class="metric-card dark-card" data-card-type="OFF ROUTE ALERTS">
-                                            <div class="card-metric-info"><span class="metric-number">0</span><span class="metric-label">OFF-ROUTE ALERTS</span></div>
-                                            <div class="metric-icon-circle"><i class="fa-solid fa-route"></i></div>
+                                        <div class="metric-card card-highlight-orange" data-card-type="Off Route Alerts" data-alert-cat="off_route" onclick="setAlertDetectionType('Off Route Alerts')">
+                                            <div class="card-metric-info"><span class="metric-number highlight-orange-text">3</span><span class="metric-label">OFF-ROUTE ALERTS</span></div>
+                                            <div class="metric-icon-circle highlight-orange-icon"><i class="fa-solid fa-route"></i></div>
                                         </div>
-                                        <div class="metric-card dark-card" data-card-type="OFF AREA ALERTS">
-                                            <div class="card-metric-info"><span class="metric-number">0</span><span class="metric-label">OFF-AREA ALERTS</span></div>
-                                            <div class="metric-icon-circle"><i class="fa-solid fa-ban"></i></div>
+                                        <div class="metric-card card-highlight-orange" data-card-type="Off Area Alerts" data-alert-cat="off_area" onclick="setAlertDetectionType('Off Area Alerts')">
+                                            <div class="card-metric-info"><span class="metric-number highlight-orange-text">1</span><span class="metric-label">OFF-AREA ALERTS</span></div>
+                                            <div class="metric-icon-circle highlight-orange-icon"><i class="fa-solid fa-ban"></i></div>
                                         </div>
-                                        <div class="metric-card dark-card card-highlight-orange" data-card-type="TAMPER ALERTS">
-                                            <div class="card-metric-info"><span class="metric-number highlight-orange-text">1</span><span class="metric-label">TAMPER ALERTS</span></div>
-                                            <div class="metric-icon-circle highlight-orange-icon"><i class="fa-solid fa-triangle-exclamation"></i></div>
+                                        <div class="metric-card card-highlight-orange" data-card-type="Tamper Alerts" data-alert-cat="tamper" onclick="setAlertDetectionType('Tamper Alerts')">
+                                            <div class="card-metric-info"><span class="metric-number highlight-orange-text">2</span><span class="metric-label">TAMPER ALERTS</span></div>
+                                            <div class="metric-icon-circle highlight-orange-icon"><i class="fa-solid fa-shield-virus"></i></div>
                                         </div>
-                                        <div class="metric-card dark-card card-highlight-teal active-card" data-card-type="Unauthorized stoppage" id="cardStoppage">
-                                            <div class="card-metric-info"><span class="metric-number highlight-teal-text">12</span><span class="metric-label">UNAUTHORIZED STO...</span></div>
-                                            <div class="metric-icon-circle highlight-teal-icon"><i class="fa-solid fa-triangle-exclamation"></i></div>
+                                        <div class="metric-card card-highlight-red" data-card-type="Unauthorized stoppage" data-alert-cat="stoppage" onclick="setAlertDetectionType('Unauthorized stoppage')">
+                                            <div class="card-metric-info"><span class="metric-number highlight-orange-text">2</span><span class="metric-label">UNAUTHORIZED STOP...</span></div>
+                                            <div class="metric-icon-circle highlight-orange-icon"><i class="fa-solid fa-hand"></i></div>
                                         </div>
-                                        <div class="metric-card dark-card card-highlight-orange" data-card-type="OVER SPEED">
-                                            <div class="card-metric-info"><span class="metric-number highlight-orange-text">24</span><span class="metric-label">OVER-SPEED</span></div>
+                                        <div class="metric-card card-highlight-orange" data-card-type="Over Speed" data-alert-cat="over_speed" onclick="setAlertDetectionType('Over Speed')">
+                                            <div class="card-metric-info"><span class="metric-number highlight-orange-text">1</span><span class="metric-label">OVER SPEED</span></div>
                                             <div class="metric-icon-circle highlight-orange-icon"><i class="fa-solid fa-gauge-high"></i></div>
                                         </div>
-                                        <div class="metric-card dark-card card-highlight-orange" data-card-type="OPEN BOOM BARRIERS">
+                                        <div class="metric-card card-highlight-orange" data-card-type="Open Boom Barriers" data-alert-cat="boom_barrier" onclick="setAlertDetectionType('Open Boom Barriers')">
                                             <div class="card-metric-info"><span class="metric-number highlight-orange-text">3</span><span class="metric-label">OPEN BOOM BARRIERS</span></div>
                                             <div class="metric-icon-circle highlight-orange-icon"><i class="fa-solid fa-traffic-light"></i></div>
                                         </div>
@@ -7456,20 +8095,94 @@ body.gis-mode-active .content-body {
                             <div class="alert-secondary-col" id="vaAlertsSidebarCol">
                                 <div class="va-sidebar-header">
                                     <div class="va-header-title"><i class="fa-solid fa-video teal-text"></i><span>VA ALERTS</span></div>
-                                    <span class="events-status-text">NO EVENTS</span>
+                                    <span class="events-status-text" id="vaSidebarStatusText">• 11 EVENTS</span>
                                 </div>
 
                                 <div class="va-sidebar-cards-list">
-                                    <div class="metric-card dark-card mini-card" data-va-type="Crowd"><div class="card-metric-info"><span class="metric-number">0</span><span class="metric-label">CROWD DETECTION</span></div><div class="metric-icon-circle"><i class="fa-solid fa-users"></i></div></div>
-                                    <div class="metric-card dark-card mini-card" data-va-type="Vehicle Detection" id="vaCardVehicle"><div class="card-metric-info"><span class="metric-number">0</span><span class="metric-label">VEHICLE DETECTION</span></div><div class="metric-icon-circle"><i class="fa-solid fa-car"></i></div></div>
-                                    <div class="metric-card dark-card mini-card" data-va-type="Person Detection"><div class="card-metric-info"><span class="metric-number">0</span><span class="metric-label">PERSON DETECTION</span></div><div class="metric-icon-circle"><i class="fa-solid fa-user"></i></div></div>
-                                    <div class="metric-card dark-card mini-card" data-va-type="Intrusion Detection"><div class="card-metric-info"><span class="metric-number">0</span><span class="metric-label">INTRUSION DETECTION</span></div><div class="metric-icon-circle"><img src="/static/media_screenshots/trace_main_logo.jpeg" alt="TRACE Logo" class="brand-logo-img"></div></div>
-                                    <div class="metric-card dark-card mini-card" data-va-type="Traffic Congestion"><div class="card-metric-info"><span class="metric-number">0</span><span class="metric-label">TRAFFIC CONGESTION</span></div><div class="metric-icon-circle"><i class="fa-solid fa-traffic-light"></i></div></div>
-                                    <div class="metric-card dark-card mini-card" data-va-type="Loaded-Unloaded Alerts"><div class="card-metric-info"><span class="metric-number">0</span><span class="metric-label">LOADED-UNLOADED AL...</span></div><div class="metric-icon-circle"><i class="fa-solid fa-truck-ramp-box"></i></div></div>
-                                    <div class="metric-card dark-card mini-card" data-va-type="Camera Tampering"><div class="card-metric-info"><span class="metric-number">0</span><span class="metric-label">CAMERA TAMPERING</span></div><div class="metric-icon-circle"><i class="fa-solid fa-video-slash"></i></div></div>
-                                    <div class="metric-card dark-card mini-card" data-va-type="Safety Hazard"><div class="card-metric-info"><span class="metric-number">0</span><span class="metric-label">SAFETY HAZARD</span></div><div class="metric-icon-circle"><i class="fa-solid fa-triangle-exclamation"></i></div></div>
-                                    <div class="metric-card dark-card mini-card" data-va-type="Insufficient Illumination"><div class="card-metric-info"><span class="metric-number">0</span><span class="metric-label">INSUFFICIENT ILLUMIN...</span></div><div class="metric-icon-circle"><i class="fa-solid fa-lightbulb"></i></div></div>
+                                    <div class="metric-card card-highlight-teal mini-card" data-va-type="Crowd" onclick="setAlertDetectionType('Crowd')"><div class="card-metric-info"><span class="metric-number highlight-teal-text">1</span><span class="metric-label">CROWD DETECTION</span></div><div class="metric-icon-circle highlight-teal-icon"><i class="fa-solid fa-users"></i></div></div>
+                                    <div class="metric-card card-highlight-teal mini-card" data-va-type="Vehicle Detection" id="vaCardVehicle" onclick="setAlertDetectionType('Vehicle Detection')"><div class="card-metric-info"><span class="metric-number highlight-teal-text">1</span><span class="metric-label">VEHICLE DETECTION</span></div><div class="metric-icon-circle highlight-teal-icon"><i class="fa-solid fa-car"></i></div></div>
+                                    <div class="metric-card card-highlight-orange mini-card" data-va-type="Person Detection" onclick="setAlertDetectionType('Person Detection')"><div class="card-metric-info"><span class="metric-number highlight-orange-text">1</span><span class="metric-label">PERSON DETECTION</span></div><div class="metric-icon-circle highlight-orange-icon"><i class="fa-solid fa-user"></i></div></div>
+                                    <div class="metric-card card-highlight-red mini-card" data-va-type="Intrusion Detection" onclick="setAlertDetectionType('Intrusion Detection')"><div class="card-metric-info"><span class="metric-number highlight-orange-text">1</span><span class="metric-label">INTRUSION DETECTION</span></div><div class="metric-icon-circle highlight-orange-icon"><img src="/static/media_screenshots/trace_main_logo.jpeg" alt="TRACE Logo" class="brand-logo-img"></div></div>
+                                    <div class="metric-card card-highlight-orange mini-card" data-va-type="Traffic Congestion" onclick="setAlertDetectionType('Traffic Congestion')"><div class="card-metric-info"><span class="metric-number highlight-orange-text">1</span><span class="metric-label">TRAFFIC CONGESTION</span></div><div class="metric-icon-circle highlight-orange-icon"><i class="fa-solid fa-traffic-light"></i></div></div>
+                                    <div class="metric-card card-highlight-teal mini-card" data-va-type="Loaded-Unloaded Alerts" onclick="setAlertDetectionType('Loaded-Unloaded Alerts')"><div class="card-metric-info"><span class="metric-number highlight-teal-text">2</span><span class="metric-label">LOADED-UNLOADED AL...</span></div><div class="metric-icon-circle highlight-teal-icon"><i class="fa-solid fa-truck-ramp-box"></i></div></div>
+                                    <div class="metric-card card-highlight-orange mini-card" data-va-type="Camera Tampering" onclick="setAlertDetectionType('Camera Tampering')"><div class="card-metric-info"><span class="metric-number highlight-orange-text">2</span><span class="metric-label">CAMERA TAMPERING</span></div><div class="metric-icon-circle highlight-orange-icon"><i class="fa-solid fa-video-slash"></i></div></div>
+                                    <div class="metric-card card-highlight-orange mini-card" data-va-type="Safety Hazard" onclick="setAlertDetectionType('Safety Hazard')"><div class="card-metric-info"><span class="metric-number highlight-orange-text">1</span><span class="metric-label">SAFETY HAZARD</span></div><div class="metric-icon-circle highlight-orange-icon"><i class="fa-solid fa-triangle-exclamation"></i></div></div>
+                                    <div class="metric-card card-highlight-teal mini-card" data-va-type="Insufficient Illumination" onclick="setAlertDetectionType('Insufficient Illumination')"><div class="card-metric-info"><span class="metric-number highlight-teal-text">1</span><span class="metric-label">INSUFFICIENT ILLUMIN...</span></div><div class="metric-icon-circle highlight-teal-icon"><i class="fa-solid fa-lightbulb"></i></div></div>
                                 </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- 6. Surveillance Forensic Incident Drilldown Modal -->
+                <div class="incident-modal-backdrop" id="incidentInspectModal" style="display: none;" onclick="closeIncidentModal(event)">
+                    <div class="incident-modal-box" onclick="event.stopPropagation()">
+                        <div class="incident-modal-header">
+                            <div class="incident-modal-title">
+                                <i class="fa-solid fa-crosshairs" style="color: #ef4444;"></i>
+                                <span id="modalIncidentTitle">INCIDENT FORENSICS & TELEMETRY</span>
+                                <span class="threat-badge-pill" id="modalIncidentSeverityBadge" style="margin-left: 8px;">CRITICAL</span>
+                            </div>
+                            <button type="button" class="btn-icon-action" onclick="closeIncidentModalDirect()"><i class="fa-solid fa-xmark"></i></button>
+                        </div>
+                        
+                        <div class="incident-modal-body">
+                            <!-- Visual Snapshot & Map Preview -->
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px;">
+                                <div style="background: #111827; border: 1px solid #1e293b; border-radius: 8px; overflow: hidden; position: relative;">
+                                    <img src="/static/media_screenshots/SS-1.png" id="modalIncidentStillImg" alt="CCTV Incident Evidence" style="width: 100%; height: 180px; object-fit: cover; display: block;">
+                                    <div style="position: absolute; bottom: 8px; left: 8px; background: rgba(0,0,0,0.7); padding: 3px 8px; border-radius: 4px; font-size: 10.5px; color: #38bdf8;">
+                                        <i class="fa-solid fa-camera"></i> <span id="modalIncidentCamBadge">CAM-WB-02 (4K Capture)</span>
+                                    </div>
+                                </div>
+                                <div style="background: #111827; border: 1px solid #1e293b; border-radius: 8px; padding: 12px; display: flex; flex-direction: column; justify-content: space-between;">
+                                    <div>
+                                        <div style="font-size: 11px; font-weight: 700; color: #64748b; text-transform: uppercase;">AI Edge Anomaly Detection</div>
+                                        <div style="font-size: 14px; font-weight: 800; color: #f8fafc; margin-top: 4px;" id="modalIncidentSummaryType">Unauthorized Stoppage</div>
+                                        <p style="font-size: 12px; color: #94a3b8; margin: 6px 0 0 0; line-height: 1.45;" id="modalIncidentDescText">Vehicle stationary in unapproved transit sector > 18 mins with coal payload.</p>
+                                    </div>
+                                    <div style="background: rgba(0,0,0,0.3); padding: 8px; border-radius: 6px; font-size: 11px; display: flex; justify-content: space-between;">
+                                        <span>AI Model: <strong style="color: #38bdf8;">YOLOv11 Mining-Vision</strong></span>
+                                        <span>Confidence: <strong style="color: #34d399;" id="modalIncidentConfText">96.8%</strong></span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Telemetry Grid -->
+                            <div class="incident-meta-grid">
+                                <div class="incident-meta-item">
+                                    <span class="label"><i class="fa-solid fa-truck" style="margin-right: 4px; color: #38bdf8;"></i> Vehicle Registration</span>
+                                    <span class="val" id="modalIncidentVehicle">JH01-AX-9912</span>
+                                </div>
+                                <div class="incident-meta-item">
+                                    <span class="label"><i class="fa-solid fa-location-dot" style="margin-right: 4px; color: #f59e0b;"></i> Incident Location</span>
+                                    <span class="val" id="modalIncidentLocation">Amrapali Haul Corridor #4</span>
+                                </div>
+                                <div class="incident-meta-item">
+                                    <span class="label"><i class="fa-solid fa-satellite" style="margin-right: 4px; color: #34d399;"></i> GPS Coordinates</span>
+                                    <span class="val" id="modalIncidentGps">23.8542° N, 85.0512° E</span>
+                                </div>
+                                <div class="incident-meta-item">
+                                    <span class="label"><i class="fa-solid fa-id-card" style="margin-right: 4px; color: #64748b;"></i> Assigned Driver</span>
+                                    <span class="val" id="modalIncidentDriver">Rajesh Kumar Soren</span>
+                                </div>
+                                <div class="incident-meta-item">
+                                    <span class="label"><i class="fa-solid fa-file-invoice" style="margin-right: 4px; color: #64748b;"></i> e-Way / DO Pass #</span>
+                                    <span class="val" id="modalIncidentDo">DO-8891-CCL</span>
+                                </div>
+                                <div class="incident-meta-item">
+                                    <span class="label"><i class="fa-solid fa-clock" style="margin-right: 4px; color: #64748b;"></i> Detection Timestamp</span>
+                                    <span class="val" id="modalIncidentTime">2026-08-24 21:18:40</span>
+                                </div>
+                            </div>
+
+                            <!-- Tactical Action Buttons -->
+                            <div class="incident-action-strip">
+                                <button type="button" class="btn-incident-cmd btn-dismiss" onclick="printIncidentReport()"><i class="fa-solid fa-print"></i> Print FIR Report</button>
+                                <button type="button" class="btn-incident-cmd btn-hold" id="modalBtnHoldGate" onclick="executeGateHoldModal()"><i class="fa-solid fa-hand"></i> Lock Checkpost Gate</button>
+                                <button type="button" class="btn-incident-cmd btn-qrt" id="modalBtnDispatchQrt" onclick="executeQrtDispatchModal()"><i class="fa-solid fa-car-on"></i> Dispatch QRT Patrol</button>
+                                <button type="button" class="btn-incident-cmd btn-resolve" id="modalBtnResolve" onclick="executeResolveModal()"><i class="fa-solid fa-shield-check"></i> Resolve Incident</button>
                             </div>
                         </div>
                     </div>
@@ -10483,7 +11196,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Function to show Alert Dashboard View Mode
-    function showAlertDashboard(detectionType = 'All Types') {
+    window.showAlertDashboard = function(detectionType = 'All Types') {
         document.body.classList.add('alert-mode-active');
         document.body.classList.remove('gis-mode-active');
         if (mainSidebarMenu) mainSidebarMenu.style.display = 'none';
@@ -10502,11 +11215,13 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
 
-        setAlertDetectionType(detectionType);
-    }
+        if (window.setAlertDetectionType) {
+            window.setAlertDetectionType(detectionType);
+        }
+    };
 
     // Function to show VTS Dashboard View Mode
-    function showVTSDashboard() {
+    window.showVTSDashboard = function() {
         document.body.classList.remove('alert-mode-active');
         document.body.classList.remove('gis-mode-active');
         if (mainSidebarMenu) mainSidebarMenu.style.display = 'block';
@@ -10526,10 +11241,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 panel.style.display = 'none';
             }
         });
-    }
+    };
 
     // Function to show RFID Dashboard View Mode
-    function showRFIDDashboard() {
+    window.showRFIDDashboard = function() {
         document.body.classList.remove('alert-mode-active');
         document.body.classList.remove('gis-mode-active');
         if (mainSidebarMenu) mainSidebarMenu.style.display = 'block';
@@ -10549,10 +11264,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 panel.style.display = 'none';
             }
         });
-    }
+    };
 
     // Function to show Irregular Weighments View Mode
-    function showIrregularWeighments() {
+    window.showIrregularWeighments = function() {
         document.body.classList.remove('alert-mode-active');
         document.body.classList.remove('gis-mode-active');
         if (mainSidebarMenu) mainSidebarMenu.style.display = 'block';
@@ -10572,10 +11287,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 panel.style.display = 'none';
             }
         });
-    }
+    };
 
     // Function to show Irregular Trips View Mode
-    function showIrregularTrips() {
+    window.showIrregularTrips = function() {
         document.body.classList.remove('alert-mode-active');
         document.body.classList.remove('gis-mode-active');
         if (mainSidebarMenu) mainSidebarMenu.style.display = 'block';
@@ -10595,10 +11310,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 panel.style.display = 'none';
             }
         });
-    }
+    };
 
     // Function to show AI Driven Drone Monitoring Dashboard Mode
-    function showDroneDashboard() {
+    window.showDroneDashboard = function() {
         document.body.classList.remove('alert-mode-active');
         document.body.classList.remove('gis-mode-active');
         if (mainSidebarMenu) mainSidebarMenu.style.display = 'block';
@@ -10618,10 +11333,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 panel.style.display = 'none';
             }
         });
-    }
+    };
 
     // Function to show Workers Attendance View Mode
-    function showWorkersAttendance() {
+    window.showWorkersAttendance = function() {
         document.body.classList.remove('alert-mode-active');
         document.body.classList.remove('gis-mode-active');
         if (mainSidebarMenu) mainSidebarMenu.style.display = 'block';
@@ -10641,7 +11356,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 panel.style.display = 'none';
             }
         });
-    }
+    };
 
     // Function to show Digital Audit Trails View Mode (50 Split Yearly Reports)
     window.showDigitalAuditTrails = function() {
@@ -10691,143 +11406,112 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Function to set detection view (All Types Overview vs Specific Detail view)
-    function setAlertDetectionType(type) {
-        if (detectionSelect) detectionSelect.value = type;
+    // Global alerts storage initialized with server-side live dataset
+    window.ALL_LIVE_ALERTS = {% if live_alerts_data %}{{ live_alerts_data | tojson }}{% else %}[]{% endif %};
+    window.CURRENT_ALERT_CATEGORY = 'All Types';
+    window.CURRENT_ALERT_SEVERITY_FILTER = 'ALL';
+    window.CURRENT_ALERT_STATUS_FILTER = 'ALL';
+    window.CURRENT_ALERT_AREA_FILTER = 'all';
+    window.CURRENT_ALERT_SEARCH_QUERY = '';
 
-        alertSubNavItems.forEach(item => {
+    // Comprehensive category mapping helper for all 15 operational alert categories
+    function getAlertCategoryKey(alert) {
+        const type = (alert.alert_type || '').toLowerCase();
+        const desc = (alert.description || '').toLowerCase();
+        if (type.includes('stoppage') || type.includes('halt') || desc.includes('stationary')) return 'stoppage';
+        if (type.includes('off route') || type.includes('route') || type.includes('geofence') || desc.includes('deviated')) return 'off_route';
+        if (type.includes('off area') || type.includes('area') || type.includes('blasting') || desc.includes('restricted')) return 'off_area';
+        if (type.includes('tamper alerts') || type.includes('device tamper') || type.includes('seal') || type.includes('tamper')) return 'tamper';
+        if (type.includes('speed') || type.includes('velocity') || desc.includes('km/h')) return 'over_speed';
+        if (type.includes('barrier') || type.includes('boom') || type.includes('gate')) return 'boom_barrier';
+        if (type.includes('crowd') || desc.includes('congregation')) return 'crowd';
+        if (type.includes('person') || desc.includes('pedestrian')) return 'person';
+        if (type.includes('intrusion') || type.includes('tripwire') || desc.includes('perimeter')) return 'intrusion';
+        if (type.includes('traffic') || type.includes('congestion') || desc.includes('queue')) return 'traffic';
+        if (type.includes('load') || type.includes('unload') || type.includes('weight') || type.includes('variance') || type.includes('tare')) return 'load_unload';
+        if (type.includes('camera') || desc.includes('occlusion')) return 'camera_tamper';
+        if (type.includes('hazard') || type.includes('safety') || desc.includes('helmet') || desc.includes('vest')) return 'safety_hazard';
+        if (type.includes('illumination') || type.includes('light') || desc.includes('lux')) return 'illumination';
+        if (type.includes('vehicle') || desc.includes('light motor vehicle') || desc.includes('unregistered')) return 'vehicle';
+        return 'stoppage';
+    }
+
+    function matchCategory(typeStr, alert) {
+        const cat = getAlertCategoryKey(alert);
+        const norm = (typeStr || '').toLowerCase().trim();
+        if (norm === 'all types' || !norm) return true;
+        if (norm.includes('unauthorized stoppage') || norm.includes('stoppage')) return cat === 'stoppage';
+        if (norm.includes('off route') || norm.includes('off-route') || norm.includes('geofence')) return cat === 'off_route';
+        if (norm.includes('off area') || norm.includes('off-area')) return cat === 'off_area';
+        if (norm.includes('tamper alerts') || norm.includes('tamper')) return cat === 'tamper' || cat === 'camera_tamper';
+        if (norm.includes('over speed') || norm.includes('over-speed')) return cat === 'over_speed';
+        if (norm.includes('boom') || norm.includes('barrier')) return cat === 'boom_barrier';
+        if (norm.includes('vehicle')) return cat === 'vehicle';
+        if (norm.includes('crowd')) return cat === 'crowd';
+        if (norm.includes('person')) return cat === 'person';
+        if (norm.includes('intrusion')) return cat === 'intrusion';
+        if (norm.includes('traffic')) return cat === 'traffic';
+        if (norm.includes('loaded') || norm.includes('weight')) return cat === 'load_unload';
+        if (norm.includes('camera')) return cat === 'camera_tamper';
+        if (norm.includes('safety') || norm.includes('hazard')) return cat === 'safety_hazard';
+        if (norm.includes('illumination')) return cat === 'illumination';
+        return cat === norm;
+    }
+
+    // Function to set detection view (All Types Overview vs Specific Detail view)
+    window.setAlertDetectionType = function(type) {
+        window.CURRENT_ALERT_CATEGORY = type || 'All Types';
+        const detSelect = document.getElementById('detectionTypeSelect');
+        if (detSelect) detSelect.value = window.CURRENT_ALERT_CATEGORY;
+
+        // Reset triage chips to All when explicitly selecting a category from sidebar or card
+        window.CURRENT_ALERT_SEVERITY_FILTER = 'ALL';
+        window.CURRENT_ALERT_STATUS_FILTER = 'ALL';
+        document.querySelectorAll('.alert-triage-bar .chip-btn').forEach(btn => btn.classList.remove('active'));
+        document.getElementById('chipFilterAll')?.classList.add('active');
+
+        const alertSubItems = document.querySelectorAll('.sub-nav-item[data-detection]');
+        alertSubItems.forEach(item => {
             const itemType = item.getAttribute('data-detection');
-            if (itemType === type) {
+            if (itemType === window.CURRENT_ALERT_CATEGORY) {
                 item.classList.add('active');
             } else {
                 item.classList.remove('active');
             }
         });
 
-        if (type === 'All Types' || !type) {
-            if (alertOverviewContainer) alertOverviewContainer.style.display = 'block';
-            if (alertDetailContainer) alertDetailContainer.style.display = 'none';
-            if (headerBadgeCount) headerBadgeCount.textContent = '6';
-            return;
-        }
+        const overviewCon = document.getElementById('alertOverviewContainer');
+        const detailCon = document.getElementById('alertDetailContainer');
 
-        if (alertOverviewContainer) alertOverviewContainer.style.display = 'none';
-        if (alertDetailContainer) alertDetailContainer.style.display = 'grid';
-
-        vaCards.forEach(c => c.classList.remove('card-highlight-teal', 'active-card'));
-
-        if (type === 'Unauthorized stoppage') {
-            if (headerBadgeCount) headerBadgeCount.textContent = '37';
-
-            if (detailIcon) detailIcon.className = 'fa-solid fa-triangle-exclamation detail-icon-orange';
-            if (detailTitle) detailTitle.innerHTML = `Unauthorized stoppage <span class="detail-tag" style="color: #f59e0b;">(Vehicle Alerts)</span>`;
-
-            if (detailSubtitleText) {
-                detailSubtitleText.textContent = '• SHOWING 12 OF 12 EVENTS';
-                detailSubtitleText.className = 'subtitle-events-text';
-            }
-
-            if (detailEventsBody) {
-                detailEventsBody.innerHTML = `
-                    <div class="event-row-card">
-                        <div class="event-row-info"><span class="event-row-title">MSRCR (SAKANDRA/BIHAR) (3 alerts, 3 vehicles)</span></div>
-                        <div class="event-row-meta"><span class="event-timestamp">23:54:34</span><i class="fa-solid fa-chevron-down arrow-icon"></i></div>
-                    </div>
-                    <div class="event-row-card">
-                        <div class="event-row-info"><span class="event-row-title">MSRCR (MONET/ALOK) (1 alerts, 1 vehicles)</span></div>
-                        <div class="event-row-meta"><span class="event-timestamp">23:53:57</span><i class="fa-solid fa-chevron-down arrow-icon"></i></div>
-                    </div>
-                    <div class="event-row-card">
-                        <div class="event-row-info"><span class="event-row-title">MSRCR (MUKESH/ROSHAN/HND) (2 alerts, 2 vehicles)</span></div>
-                        <div class="event-row-meta"><span class="event-timestamp">23:53:00</span><i class="fa-solid fa-chevron-down arrow-icon"></i></div>
-                    </div>
-                    <div class="event-row-card">
-                        <div class="event-row-info"><span class="event-row-title">LALITPUR POWER GENERATION COMPANY (2 alerts, 2 vehicles)</span></div>
-                        <div class="event-row-meta"><span class="event-timestamp">23:52:41</span><i class="fa-solid fa-chevron-down arrow-icon"></i></div>
-                    </div>
-                `;
-            }
-
-            if (cardStoppage) {
-                cardStoppage.className = 'metric-card dark-card card-highlight-teal active-card';
-                cardStoppage.querySelector('.metric-number').textContent = '12';
-                cardStoppage.querySelector('.metric-number').className = 'metric-number highlight-teal-text';
-                cardStoppage.querySelector('.metric-icon-circle').className = 'metric-icon-circle highlight-teal-icon';
-            }
-
-        } else if (type === 'Vehicle Detection') {
-            if (headerBadgeCount) headerBadgeCount.textContent = '40';
-
-            if (detailIcon) detailIcon.className = 'fa-solid fa-car detail-icon-teal';
-            if (detailTitle) detailTitle.innerHTML = `Vehicle Detection`;
-
-            if (detailSubtitleText) {
-                detailSubtitleText.textContent = '• SHOWING 0 OF 0 EVENTS';
-                detailSubtitleText.className = 'subtitle-events-text subtitle-events-teal';
-            }
-
-            if (detailEventsBody) {
-                detailEventsBody.innerHTML = `<div class="no-events-empty-msg">No events to display</div>`;
-            }
-
-            if (vaCardVehicle) {
-                vaCardVehicle.classList.add('card-highlight-teal', 'active-card');
-            }
-
-            if (cardStoppage) {
-                cardStoppage.className = 'metric-card dark-card card-highlight-orange';
-                cardStoppage.querySelector('.metric-number').textContent = '14';
-                cardStoppage.querySelector('.metric-number').className = 'metric-number highlight-orange-text';
-                cardStoppage.querySelector('.metric-icon-circle').className = 'metric-icon-circle highlight-orange-icon';
-            }
-
+        if (window.CURRENT_ALERT_CATEGORY === 'All Types' || !window.CURRENT_ALERT_CATEGORY) {
+            if (overviewCon) overviewCon.style.display = 'block';
+            if (detailCon) detailCon.style.display = 'none';
         } else {
-            if (headerBadgeCount) headerBadgeCount.textContent = '35';
-            if (detailIcon) detailIcon.className = 'fa-solid fa-triangle-exclamation detail-icon-teal';
-            if (detailTitle) detailTitle.innerHTML = type;
-            if (detailSubtitleText) {
-                detailSubtitleText.textContent = '• SHOWING 0 OF 0 EVENTS';
-                detailSubtitleText.className = 'subtitle-events-text subtitle-events-teal';
-            }
-            if (detailEventsBody) {
-                detailEventsBody.innerHTML = `<div class="no-events-empty-msg">No events to display</div>`;
-            }
+            if (overviewCon) overviewCon.style.display = 'none';
+            if (detailCon) detailCon.style.display = 'grid';
         }
-    }
 
-    // Close detail view button listener
-    if (btnCloseDetail) {
-        btnCloseDetail.addEventListener('click', (e) => {
-            e.preventDefault();
-            setAlertDetectionType('All Types');
-        });
-    }
-
-    // Dropdown change listener
-    if (detectionSelect) {
-        detectionSelect.addEventListener('change', (e) => {
-            setAlertDetectionType(e.target.value);
-        });
-    }
+        renderDetailEventsForCategory(window.CURRENT_ALERT_CATEGORY);
+        if (typeof updateAlertsDashboardUI === 'function') {
+            updateAlertsDashboardUI();
+        }
+    };
 
     // Sub-nav detection items click listeners
-    alertSubNavItems.forEach(item => {
+    document.querySelectorAll('.sub-nav-item[data-detection]').forEach(item => {
         item.addEventListener('click', (e) => {
             e.preventDefault();
             const type = item.getAttribute('data-detection');
-            if (type) setAlertDetectionType(type);
+            if (type) window.setAlertDetectionType(type);
         });
     });
 
-    // Overview metric cards click listeners
-    overviewCards.forEach(card => {
-        card.addEventListener('click', () => {
-            const cardType = card.getAttribute('data-card-type');
-            if (cardType) {
-                setAlertDetectionType(cardType);
-            }
+    const detSelectEl = document.getElementById('detectionTypeSelect');
+    if (detSelectEl) {
+        detSelectEl.addEventListener('change', (e) => {
+            window.setAlertDetectionType(e.target.value);
         });
-    });
+    }
 
     // View Binding Click Helper
     function bindViewClick(item, showFn) {
@@ -13313,100 +13997,631 @@ window.handleCreateDoSubmit = function(e) {
 // SUPABASE REAL-TIME TELEMETRY & LIVE DEMO ENGINE
 // =========================================================================
 
-async function fetchLiveAlerts() {
+// =========================================================================
+// SUPABASE REAL-TIME ALERTS & INTERACTIVE ICCC DASHBOARD ENGINE
+// =========================================================================
+
+// Web Audio API Synthesizer for Tactical Surveillance Chimes
+let audioCtx = null;
+window.ALERT_AUDIO_MUTED = false;
+window.ALERT_AUDIO_VOLUME = 0.75;
+window.IS_LIVE_STREAM_ACTIVE = true;
+window.IS_ALERT_VIEW_LOCKED = false;
+window.CURRENT_ALERT_SEVERITY_FILTER = 'ALL';
+window.CURRENT_ALERT_STATUS_FILTER = 'ALL';
+window.CURRENT_ALERT_AREA_FILTER = 'all';
+window.CURRENT_ALERT_SEARCH_QUERY = '';
+window.CURRENT_ALERT_CATEGORY = 'All Types';
+window.ACTIVE_MODAL_INCIDENT = null;
+window.LAST_KNOWN_ALERT_COUNT = 0;
+
+function playAlertChime(type = 'normal') {
+    if (window.ALERT_AUDIO_MUTED || window.ALERT_AUDIO_VOLUME <= 0) return;
     try {
-        const res = await fetch('https://prahar-ai-dashboard.vercel.app/api/data/alerts');
+        if (!audioCtx) {
+            audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        }
+        if (audioCtx.state === 'suspended') {
+            audioCtx.resume();
+        }
+
+        const now = audioCtx.currentTime;
+        const osc = audioCtx.createOscillator();
+        const gainNode = audioCtx.createGain();
+
+        osc.connect(gainNode);
+        gainNode.connect(audioCtx.destination);
+
+        const vol = window.ALERT_AUDIO_VOLUME * 0.15; // Pleasant listening level
+
+        if (type === 'critical') {
+            osc.type = 'sawtooth';
+            osc.frequency.setValueAtTime(880, now);
+            osc.frequency.exponentialRampToValueAtTime(440, now + 0.18);
+            gainNode.gain.setValueAtTime(vol * 1.2, now);
+            gainNode.gain.exponentialRampToValueAtTime(0.001, now + 0.25);
+            osc.start(now);
+            osc.stop(now + 0.25);
+        } else if (type === 'test') {
+            osc.type = 'sine';
+            osc.frequency.setValueAtTime(587.33, now); // D5
+            osc.frequency.exponentialRampToValueAtTime(880, now + 0.12); // A5
+            gainNode.gain.setValueAtTime(vol, now);
+            gainNode.gain.exponentialRampToValueAtTime(0.001, now + 0.18);
+            osc.start(now);
+            osc.stop(now + 0.18);
+        } else {
+            osc.type = 'sine';
+            osc.frequency.setValueAtTime(659.25, now); // E5
+            gainNode.gain.setValueAtTime(vol * 0.8, now);
+            gainNode.gain.exponentialRampToValueAtTime(0.001, now + 0.15);
+            osc.start(now);
+            osc.stop(now + 0.15);
+        }
+    } catch (e) {
+        // AudioContext restricted before user gesture
+    }
+}
+
+async function fetchLiveAlerts() {
+    if (!window.IS_LIVE_STREAM_ACTIVE) return;
+    const startTime = performance.now();
+    try {
+        let res = await fetch('/api/alerts');
+        if (!res.ok) {
+            res = await fetch('https://prahar-ai-dashboard.vercel.app/api/alerts');
+        }
         if (res.ok) {
             const data = await res.json();
-            if (data.status === 'success' && data.data) {
-                renderLiveAlerts(data.data);
+            const alertsList = Array.isArray(data) ? data : (data.data || []);
+            
+            // Check for new critical anomaly
+            if (alertsList.length > window.LAST_KNOWN_ALERT_COUNT && window.LAST_KNOWN_ALERT_COUNT > 0) {
+                const latest = alertsList[0];
+                if (latest && latest.severity === 'CRITICAL') {
+                    playAlertChime('critical');
+                } else {
+                    playAlertChime('normal');
+                }
             }
+            window.LAST_KNOWN_ALERT_COUNT = alertsList.length;
+            window.ALL_LIVE_ALERTS = alertsList;
+
+            // Measure latency
+            const latency = Math.round(performance.now() - startTime);
+            const latencyEl = document.getElementById('supabaseLatencyText');
+            if (latencyEl) latencyEl.innerText = `${latency}ms (Online)`;
+
+            const syncEl = document.getElementById('lastAlertSyncTime');
+            if (syncEl) syncEl.innerText = new Date().toLocaleTimeString('en-GB');
+
+            updateAlertsDashboardUI();
         }
     } catch (e) {
         console.warn('Live alerts fetch error:', e);
     }
 }
 
-function renderLiveAlerts(alerts) {
-    const container = document.getElementById('liveAlertsFeedContainer');
-    if (!container) return;
+function getFilteredAlertsList() {
+    const rawAlerts = window.ALL_LIVE_ALERTS || [];
+    return rawAlerts.filter(a => {
+        // Area Filter
+        if (window.CURRENT_ALERT_AREA_FILTER && window.CURRENT_ALERT_AREA_FILTER !== 'all') {
+            const areaKey = window.CURRENT_ALERT_AREA_FILTER.toLowerCase();
+            const loc = (a.location || '').toLowerCase();
+            const desc = (a.description || '').toLowerCase();
+            if (!loc.includes(areaKey) && !desc.includes(areaKey)) {
+                return false;
+            }
+        }
 
-    if (!alerts || alerts.length === 0) {
-        container.innerHTML = '<div style="color: #64748b; font-size: 12px; padding: 12px;">No active alerts in Supabase database.</div>';
+        // Severity Filter
+        if (window.CURRENT_ALERT_SEVERITY_FILTER && window.CURRENT_ALERT_SEVERITY_FILTER !== 'ALL') {
+            const sev = (a.severity || '').toUpperCase().trim();
+            if (window.CURRENT_ALERT_SEVERITY_FILTER === 'CRITICAL' && !sev.includes('CRIT')) return false;
+            if (window.CURRENT_ALERT_SEVERITY_FILTER === 'HIGH' && (!sev.includes('HIGH') || sev.includes('CRIT'))) return false;
+            if (window.CURRENT_ALERT_SEVERITY_FILTER === 'WARNING' && !sev.includes('WARN')) return false;
+        }
+
+        // Status Filter
+        if (window.CURRENT_ALERT_STATUS_FILTER && window.CURRENT_ALERT_STATUS_FILTER !== 'ALL') {
+            const stat = (a.status || '').toUpperCase().trim();
+            if (window.CURRENT_ALERT_STATUS_FILTER === 'ACTIVE' && !stat.includes('ACT')) return false;
+            if (window.CURRENT_ALERT_STATUS_FILTER === 'ACKNOWLEDGED' && !stat.includes('ACK')) return false;
+            if (window.CURRENT_ALERT_STATUS_FILTER === 'RESOLVED' && !stat.includes('RESOLV')) return false;
+        }
+
+        // Search Query Filter
+        if (window.CURRENT_ALERT_SEARCH_QUERY) {
+            const q = window.CURRENT_ALERT_SEARCH_QUERY.toLowerCase();
+            const vNo = (a.vehicle_no || '').toLowerCase();
+            const loc = (a.location || '').toLowerCase();
+            const desc = (a.description || '').toLowerCase();
+            const aType = (a.alert_type || '').toLowerCase();
+            const idStr = String(a.id || '');
+            if (!vNo.includes(q) && !loc.includes(q) && !desc.includes(q) && !aType.includes(q) && !idStr.includes(q)) {
+                return false;
+            }
+        }
+
+        return true;
+    });
+}
+
+function updateAlertsDashboardUI() {
+    const allAlerts = window.ALL_LIVE_ALERTS || [];
+    const filteredAlerts = getFilteredAlertsList();
+    const activeAlerts = allAlerts.filter(a => a.status === 'ACTIVE');
+    const totalActive = activeAlerts.length;
+    const criticalActive = activeAlerts.filter(a => a.severity === 'CRITICAL').length;
+    const highActive = activeAlerts.filter(a => a.severity === 'HIGH').length;
+    const warningActive = activeAlerts.filter(a => a.severity === 'WARNING').length;
+
+    // Update global header badge
+    const badgeEl = document.getElementById('headerBadgeCount');
+    if (badgeEl) badgeEl.innerText = totalActive;
+
+    // Update Threat Level Banner
+    const threatBadge = document.getElementById('threatLevelBadge');
+    const threatText = document.getElementById('threatLevelText');
+    if (threatBadge && threatText) {
+        if (criticalActive > 0) {
+            threatBadge.style.background = 'rgba(239, 68, 68, 0.2)';
+            threatBadge.style.borderColor = 'rgba(239, 68, 68, 0.6)';
+            threatBadge.style.color = '#f87171';
+            threatText.innerHTML = `DEFCON 1 • ${criticalActive} CRITICAL ANOMALIES ACTIVE`;
+        } else if (totalActive > 0) {
+            threatBadge.style.background = 'rgba(245, 158, 11, 0.2)';
+            threatBadge.style.borderColor = 'rgba(245, 158, 11, 0.6)';
+            threatBadge.style.color = '#fbbf24';
+            threatText.innerHTML = `DEFCON 2 • ${totalActive} SURVEILLANCE ANOMALIES ACTIVE`;
+        } else {
+            threatBadge.style.background = 'rgba(16, 185, 129, 0.2)';
+            threatBadge.style.borderColor = 'rgba(16, 185, 129, 0.6)';
+            threatBadge.style.color = '#34d399';
+            threatText.innerHTML = `DEFCON 3 • ALL 14 CORRIDORS SECURE`;
+        }
+    }
+
+    // Update Live Ticker
+    const tickerEl = document.getElementById('liveAlertTickerText');
+    if (tickerEl && allAlerts.length > 0) {
+        const latest = allAlerts[0];
+        tickerEl.innerHTML = `<strong>#ALT-${latest.id} [${latest.severity}]</strong>: ${latest.alert_type} (${latest.vehicle_no || 'Unassigned'}) @ ${latest.location} — ${latest.description}`;
+    }
+
+    // Update Filter Chip Counts
+    const bAll = document.getElementById('chipBadgeAll');
+    const bCrit = document.getElementById('chipBadgeCritical');
+    const bHigh = document.getElementById('chipBadgeHigh');
+    const bWarn = document.getElementById('chipBadgeWarning');
+    if (bAll) bAll.innerText = allAlerts.length;
+    if (bCrit) bCrit.innerText = criticalActive;
+    if (bHigh) bHigh.innerText = highActive;
+    if (bWarn) bWarn.innerText = warningActive;
+
+    // Update all overview metric cards
+    const allCards = document.querySelectorAll('#alertOverviewContainer .metric-card, #alertDetailContainer .metric-card, .va-sidebar-cards-list .mini-card');
+    allCards.forEach(card => {
+        const typeStr = card.getAttribute('data-card-type') || card.getAttribute('data-va-type') || card.getAttribute('data-alert-cat') || card.querySelector('.metric-label')?.textContent?.trim() || '';
+        
+        // Match active count considering current area filter
+        const matchedActive = allAlerts.filter(a => {
+            if (a.status !== 'ACTIVE') return false;
+            if (window.CURRENT_ALERT_AREA_FILTER !== 'all') {
+                const areaKey = window.CURRENT_ALERT_AREA_FILTER.toLowerCase();
+                const loc = (a.location || '').toLowerCase();
+                const desc = (a.description || '').toLowerCase();
+                if (!loc.includes(areaKey) && !desc.includes(areaKey)) return false;
+            }
+            return matchCategory(typeStr, a);
+        }).length;
+
+        const numEl = card.querySelector('.metric-number');
+        const iconEl = card.querySelector('.metric-icon-circle');
+
+        if (numEl) numEl.textContent = matchedActive;
+
+        if (matchedActive > 0) {
+            const isTeal = typeStr.toLowerCase().includes('vehicle') || typeStr.toLowerCase().includes('crowd');
+            const hasCritical = allAlerts.some(a => a.status === 'ACTIVE' && a.severity === 'CRITICAL' && matchCategory(typeStr, a));
+            const highlightClass = hasCritical ? 'card-highlight-red' : (isTeal ? 'card-highlight-teal' : 'card-highlight-orange');
+            const textHighlight = hasCritical ? 'highlight-orange-text' : (isTeal ? 'highlight-teal-text' : 'highlight-orange-text');
+            const iconHighlight = hasCritical ? 'highlight-orange-icon' : (isTeal ? 'highlight-teal-icon' : 'highlight-orange-icon');
+
+            card.classList.remove('card-highlight-orange', 'card-highlight-teal', 'card-highlight-red', 'dark-card');
+            card.classList.add(highlightClass);
+            if (numEl) numEl.className = `metric-number ${textHighlight}`;
+            if (iconEl) iconEl.className = `metric-icon-circle ${iconHighlight}`;
+        } else {
+            card.classList.remove('card-highlight-orange', 'card-highlight-teal', 'card-highlight-red', 'active-card');
+            card.classList.add('dark-card');
+            if (numEl) numEl.className = 'metric-number';
+            if (iconEl) iconEl.className = 'metric-icon-circle';
+        }
+    });
+
+    // Update GPS live text banner
+    const gpsLiveEl = document.getElementById('gpsLiveCountText');
+    if (gpsLiveEl) {
+        const gpsActiveCount = activeAlerts.filter(a => ['stoppage', 'off_route', 'off_area', 'tamper', 'over_speed', 'boom_barrier'].includes(getAlertCategoryKey(a))).length;
+        gpsLiveEl.textContent = gpsActiveCount > 0 ? `• ${gpsActiveCount} LIVE` : '• 0 LIVE';
+        gpsLiveEl.className = gpsActiveCount > 0 ? 'events-status-text red-live-text' : 'events-status-text';
+    }
+
+    const vaStatusEl = document.getElementById('vaSectionStatusText') || document.getElementById('vaSidebarStatusText');
+    if (vaStatusEl) {
+        const vaActiveCount = activeAlerts.filter(a => !['stoppage', 'off_route', 'off_area', 'tamper', 'over_speed', 'boom_barrier'].includes(getAlertCategoryKey(a))).length;
+        vaStatusEl.textContent = vaActiveCount > 0 ? `• ${vaActiveCount} EVENTS` : '• NO EVENTS';
+    }
+
+    // Update sidebar badges
+    const sideCardCount = document.getElementById('sidebarLiveCardCount');
+    const sideThreatText = document.getElementById('sidebarLiveThreatText');
+    if (sideCardCount) sideCardCount.innerText = `${totalActive} Anomalies Active`;
+    if (sideThreatText) sideThreatText.innerText = criticalActive > 0 ? `• DEFCON 1 (${criticalActive} Critical)` : `• ${totalActive} Active`;
+
+    // Re-render detail view if open
+    const detailContainer = document.getElementById('alertDetailContainer');
+    if (detailContainer && detailContainer.style.display !== 'none') {
+        renderDetailEventsForCategory(window.CURRENT_ALERT_CATEGORY || 'All Types');
+    }
+}
+
+function renderDetailEventsForCategory(type) {
+    const isAll = (type === 'All Types' || !type);
+    const pool = getFilteredAlertsList();
+    const matched = isAll ? pool : pool.filter(a => matchCategory(type, a));
+    const activeCount = matched.filter(a => a.status === 'ACTIVE').length;
+
+    // Set Icon & Header Title
+    const detailIcon = document.getElementById('detailIcon');
+    const detailTitle = document.getElementById('detailTitle');
+    const detailSubtitleText = document.getElementById('detailSubtitleText');
+    const detailEventsBody = document.getElementById('detailEventsBody');
+
+    let iconClass = 'fa-solid fa-triangle-exclamation detail-icon-orange';
+    let subTag = '(Vehicle & Corridor Alerts)';
+    let titleText = type || 'All Types';
+
+    if (window.CURRENT_ALERT_SEVERITY_FILTER === 'CRITICAL') {
+        iconClass = 'fa-solid fa-circle-radiation detail-icon-orange';
+        titleText = (type && type !== 'All Types') ? `${type} (Critical)` : 'Critical Incidents';
+        subTag = '(Priority Intervention Required)';
+    } else if (window.CURRENT_ALERT_SEVERITY_FILTER === 'HIGH') {
+        iconClass = 'fa-solid fa-triangle-exclamation detail-icon-orange';
+        titleText = (type && type !== 'All Types') ? `${type} (High Priority)` : 'High Priority Alerts';
+        subTag = '(Vigilance Inspection)';
+    } else if (window.CURRENT_ALERT_SEVERITY_FILTER === 'WARNING') {
+        iconClass = 'fa-solid fa-circle-exclamation detail-icon-teal';
+        titleText = (type && type !== 'All Types') ? `${type} (Warnings)` : 'Warnings & Sensory Variances';
+        subTag = '(Edge AI Anomaly Filter)';
+    } else if (window.CURRENT_ALERT_STATUS_FILTER === 'ACTIVE') {
+        iconClass = 'fa-solid fa-bolt detail-icon-teal';
+        titleText = (type && type !== 'All Types') ? `${type} (Active)` : 'Active Unresolved Incidents';
+        subTag = '(Real-time Live Stream)';
+    } else if (window.CURRENT_ALERT_STATUS_FILTER === 'ACKNOWLEDGED') {
+        iconClass = 'fa-solid fa-check-double detail-icon-teal';
+        titleText = (type && type !== 'All Types') ? `${type} (Acknowledged)` : 'Acknowledged Incidents';
+        subTag = '(Under Investigation)';
+    } else if (window.CURRENT_ALERT_STATUS_FILTER === 'RESOLVED') {
+        iconClass = 'fa-solid fa-shield-check detail-icon-teal';
+        titleText = (type && type !== 'All Types') ? `${type} (Resolved)` : 'Resolved Incidents';
+        subTag = '(Historical Archive)';
+    } else {
+        const lower = (type || '').toLowerCase();
+        if (lower.includes('vehicle')) { iconClass = 'fa-solid fa-car detail-icon-teal'; subTag = '(Camera Feeds)'; }
+        else if (lower.includes('route')) { iconClass = 'fa-solid fa-route detail-icon-orange'; subTag = '(GPS Corridor)'; }
+        else if (lower.includes('speed')) { iconClass = 'fa-solid fa-gauge-high detail-icon-orange'; subTag = '(Speed Radar)'; }
+        else if (lower.includes('tamper')) { iconClass = 'fa-solid fa-shield-virus detail-icon-orange'; subTag = '(Hardware Sensor)'; }
+        else if (lower.includes('boom')) { iconClass = 'fa-solid fa-traffic-light detail-icon-orange'; subTag = '(Gate Barrier)'; }
+        else if (lower.includes('crowd')) { iconClass = 'fa-solid fa-users detail-icon-teal'; subTag = '(AI Crowd Analysis)'; }
+        else if (lower.includes('person')) { iconClass = 'fa-solid fa-user detail-icon-teal'; subTag = '(Perimeter Human Detection)'; }
+        else if (lower.includes('intrusion')) { iconClass = 'fa-solid fa-shield-halved detail-icon-teal'; subTag = '(Security Boundary)'; }
+        else if (lower.includes('traffic')) { iconClass = 'fa-solid fa-traffic-light detail-icon-teal'; subTag = '(Congestion Monitor)'; }
+        else if (lower.includes('load') || lower.includes('unload')) { iconClass = 'fa-solid fa-truck-ramp-box detail-icon-teal'; subTag = '(Tare & Gross Variance)'; }
+        else if (lower.includes('hazard')) { iconClass = 'fa-solid fa-triangle-exclamation detail-icon-orange'; subTag = '(Safety Compliance)'; }
+        else if (lower.includes('illumination')) { iconClass = 'fa-solid fa-lightbulb detail-icon-teal'; subTag = '(Photometric Lux)'; }
+    }
+
+    if (detailIcon) detailIcon.className = iconClass;
+    if (detailTitle) detailTitle.innerHTML = `${titleText} <span class="detail-tag" style="color: #f59e0b;">${subTag}</span>`;
+
+    if (detailSubtitleText) {
+        detailSubtitleText.textContent = `• SHOWING ${matched.length} EVENTS (${activeCount} ACTIVE)`;
+    }
+
+    if (detailEventsBody) {
+        if (matched.length === 0) {
+            detailEventsBody.innerHTML = `
+                <div style="background: rgba(15, 23, 42, 0.6); border: 1px dashed #334155; border-radius: 8px; padding: 36px; text-align: center;">
+                    <i class="fa-solid fa-shield-check" style="font-size: 32px; color: #10b981; margin-bottom: 10px; display: inline-block;"></i>
+                    <h4 style="font-size: 14px; color: #f8fafc; margin: 0 0 6px 0; font-weight: 700;">No Alerts Match Active Filters</h4>
+                    <p style="font-size: 12px; color: #94a3b8; margin: 0;">All vehicles and corridors in this category are operating within nominal parameters.</p>
+                </div>
+            `;
+        } else {
+            detailEventsBody.innerHTML = matched.map(a => {
+                const isResolved = a.status === 'RESOLVED';
+                const isAcked = a.status === 'ACKNOWLEDGED';
+                const isCritical = a.severity === 'CRITICAL';
+                const badgeBg = isCritical ? '#dc2626' : (a.severity === 'HIGH' ? '#d97706' : '#0284c7');
+                const cardBorder = isResolved ? '#1e293b' : (isAcked ? '#0284c7' : (isCritical ? 'rgba(239, 68, 68, 0.6)' : 'rgba(245, 158, 11, 0.5)'));
+                const statusColor = isResolved ? '#10b981' : (isAcked ? '#38bdf8' : '#ef4444');
+
+                return `
+                    <div class="event-row-card" style="background: #0f172a; border: 1px solid ${cardBorder}; border-radius: 8px; padding: 14px 16px; margin-bottom: 10px; display: flex; flex-direction: column; gap: 10px; box-shadow: 0 4px 16px rgba(0,0,0,0.3); transition: all 0.15s ease;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.06); padding-bottom: 8px;">
+                            <div style="display: flex; align-items: center; gap: 8px;">
+                                <span style="font-size: 10px; font-weight: 800; padding: 2px 7px; border-radius: 3px; background: ${badgeBg}; color: #fff; letter-spacing: 0.04em;">${a.severity}</span>
+                                <strong style="font-size: 13.5px; color: #f8fafc; font-weight: 700;">${a.alert_type}</strong>
+                                <span style="font-size: 11px; color: #64748b; font-family: monospace;">#ALT-${a.id}</span>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 12px;">
+                                <span style="font-size: 11px; font-weight: 800; color: ${statusColor}; letter-spacing: 0.03em;">
+                                    ${isResolved ? '<i class="fa-solid fa-shield-check"></i> RESOLVED' : (isAcked ? '<i class="fa-solid fa-check"></i> ACKNOWLEDGED' : '<span class="live-dot" style="display:inline-block; margin-right:4px;"></span> ACTIVE')}
+                                </span>
+                                <span style="font-size: 11.5px; color: #94a3b8;"><i class="fa-regular fa-clock" style="margin-right: 4px;"></i>${a.created_at ? new Date(a.created_at).toLocaleTimeString() : 'Live Telemetry'}</span>
+                            </div>
+                        </div>
+                        
+                        <div style="display: flex; justify-content: space-between; align-items: center; font-size: 12px; color: #cbd5e1; background: rgba(0,0,0,0.35); padding: 8px 12px; border-radius: 6px; flex-wrap: wrap; gap: 8px;">
+                            <span><i class="fa-solid fa-truck" style="color: #38bdf8; margin-right: 6px;"></i>Vehicle: <strong style="color: #f8fafc; font-family: monospace;">${a.vehicle_no || 'JH01-AX-9912'}</strong></span>
+                            <span><i class="fa-solid fa-location-dot" style="color: #f59e0b; margin-right: 6px;"></i>${a.location || 'Mining Haul Corridor'}</span>
+                            <span>AI Confidence: <strong style="color: #34d399;">${a.confidence_score || 96.5}%</strong></span>
+                        </div>
+
+                        <p style="font-size: 12px; color: #94a3b8; margin: 0; line-height: 1.5;">
+                            ${a.description || 'Surveillance anomaly identified by Edge Vision model. Immediate vigilance inspection recommended.'}
+                        </p>
+
+                        <div style="display: flex; gap: 8px; justify-content: space-between; align-items: center; margin-top: 4px; flex-wrap: wrap;">
+                            <button type="button" onclick="openIncidentInspectModal(${a.id})" class="btn-action" style="padding: 5px 12px; font-size: 11.5px; background: #1e293b; color: #38bdf8; border: 1px solid #334155; border-radius: 5px; cursor: pointer; display: flex; align-items: center; gap: 5px; font-weight: 600;">
+                                <i class="fa-solid fa-crosshairs"></i> Inspect Forensics & Feed
+                            </button>
+
+                            <div style="display: flex; gap: 8px;">
+                                <button type="button" onclick="dispatchQrtPatrol(${a.id}, '${a.vehicle_no || 'Vehicle'}', '${a.location || 'Location'}')" class="btn-action" style="padding: 5px 10px; font-size: 11px; background: rgba(220, 38, 38, 0.15); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.35); border-radius: 5px; cursor: pointer; display: flex; align-items: center; gap: 5px; font-weight: 600;">
+                                    <i class="fa-solid fa-car-on"></i> Dispatch QRT
+                                </button>
+                                <button type="button" onclick="triggerGateHold(${a.id}, '${a.vehicle_no || 'Vehicle'}', '${a.location || 'Location'}')" class="btn-action" style="padding: 5px 10px; font-size: 11px; background: rgba(217, 119, 6, 0.15); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.35); border-radius: 5px; cursor: pointer; display: flex; align-items: center; gap: 5px; font-weight: 600;">
+                                    <i class="fa-solid fa-hand"></i> Gate Hold
+                                </button>
+                                ${!isResolved && !isAcked ? `
+                                    <button type="button" onclick="acknowledgeLiveAlert(${a.id})" class="btn-action" style="padding: 5px 12px; font-size: 11px; background: #1e293b; color: #38bdf8; border: 1px solid #334155; border-radius: 5px; cursor: pointer; display: flex; align-items: center; gap: 5px; font-weight: 600;">
+                                        <i class="fa-solid fa-check"></i> Acknowledge
+                                    </button>
+                                ` : ''}
+                                ${!isResolved ? `
+                                    <button type="button" onclick="resolveLiveAlert(${a.id})" class="btn-action" style="padding: 5px 12px; font-size: 11px; background: rgba(16, 185, 129, 0.15); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.35); border-radius: 5px; cursor: pointer; display: flex; align-items: center; gap: 5px; font-weight: 600;">
+                                        <i class="fa-solid fa-shield-check"></i> Resolve Incident
+                                    </button>
+                                ` : `
+                                    <span style="font-size: 11px; color: #10b981; font-weight: 700; padding: 4px 8px; background: rgba(16, 185, 129, 0.1); border-radius: 4px;"><i class="fa-solid fa-circle-check"></i> Incident Recorded</span>
+                                `}
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+    }
+}
+
+// Interactive Triage & Filter Handlers
+window.setSeverityFilter = function(sev) {
+    window.CURRENT_ALERT_SEVERITY_FILTER = sev;
+    window.CURRENT_ALERT_STATUS_FILTER = 'ALL';
+    window.CURRENT_ALERT_CATEGORY = 'All Types';
+    document.querySelectorAll('.alert-triage-bar .chip-btn').forEach(btn => btn.classList.remove('active'));
+    if (sev === 'ALL') {
+        document.getElementById('chipFilterAll')?.classList.add('active');
+        const overviewCon = document.getElementById('alertOverviewContainer');
+        const detailCon = document.getElementById('alertDetailContainer');
+        if (overviewCon) overviewCon.style.display = 'block';
+        if (detailCon) detailCon.style.display = 'none';
+        const detSelect = document.getElementById('detectionTypeSelect');
+        if (detSelect) detSelect.value = 'All Types';
+    } else {
+        if (sev === 'CRITICAL') document.getElementById('chipFilterCritical')?.classList.add('active');
+        else if (sev === 'HIGH') document.getElementById('chipFilterHigh')?.classList.add('active');
+        else if (sev === 'WARNING') document.getElementById('chipFilterWarning')?.classList.add('active');
+        
+        // Switch to Detail Events view to immediately display the filtered list of incidents
+        const overviewCon = document.getElementById('alertOverviewContainer');
+        const detailCon = document.getElementById('alertDetailContainer');
+        if (overviewCon) overviewCon.style.display = 'none';
+        if (detailCon) detailCon.style.display = 'grid';
+    }
+    updateAlertsDashboardUI();
+};
+
+window.setStatusFilter = function(st) {
+    window.CURRENT_ALERT_STATUS_FILTER = st;
+    window.CURRENT_ALERT_SEVERITY_FILTER = 'ALL';
+    window.CURRENT_ALERT_CATEGORY = 'All Types';
+    document.querySelectorAll('.alert-triage-bar .chip-btn').forEach(btn => btn.classList.remove('active'));
+    if (st === 'ACTIVE') document.getElementById('chipFilterActiveOnly')?.classList.add('active');
+    else if (st === 'ACKNOWLEDGED') document.getElementById('chipFilterAck')?.classList.add('active');
+    else if (st === 'RESOLVED') document.getElementById('chipFilterResolved')?.classList.add('active');
+    
+    // Switch to Detail Events view to immediately display the filtered list of incidents
+    const overviewCon = document.getElementById('alertOverviewContainer');
+    const detailCon = document.getElementById('alertDetailContainer');
+    if (overviewCon) overviewCon.style.display = 'none';
+    if (detailCon) detailCon.style.display = 'grid';
+    
+    updateAlertsDashboardUI();
+};
+
+window.handleAlertSearch = function(query) {
+    window.CURRENT_ALERT_SEARCH_QUERY = (query || '').trim();
+    if (window.CURRENT_ALERT_SEARCH_QUERY) {
+        const overviewCon = document.getElementById('alertOverviewContainer');
+        const detailCon = document.getElementById('alertDetailContainer');
+        if (overviewCon) overviewCon.style.display = 'none';
+        if (detailCon) detailCon.style.display = 'grid';
+    }
+    updateAlertsDashboardUI();
+};
+
+// Operator Quick Actions
+window.dispatchQrtPatrol = function(alertId, vehicleNo, location) {
+    playAlertChime('test');
+    showAuditToast(`🚔 QRT Patrol Unit Dispatched to intercept ${vehicleNo} at ${location}`);
+};
+
+window.triggerGateHold = function(alertId, vehicleNo, location) {
+    playAlertChime('test');
+    showAuditToast(`🛑 Siding Checkpost Boom Barrier LOCKED for vehicle ${vehicleNo}`);
+};
+
+// Incident Forensics Modal Logic
+window.openIncidentInspectModal = function(alertId) {
+    const alert = (window.ALL_LIVE_ALERTS || []).find(a => a.id === alertId) || {
+        id: alertId,
+        alert_type: 'Unauthorized Stoppage',
+        vehicle_no: 'JH01-AX-9912',
+        location: 'Amrapali Siding WB-02',
+        severity: 'CRITICAL',
+        status: 'ACTIVE',
+        confidence_score: 97.4,
+        description: 'Vehicle stationary in unapproved transit sector > 18 mins with active coal payload.'
+    };
+
+    window.ACTIVE_MODAL_INCIDENT = alert;
+
+    // Populate modal fields
+    const modal = document.getElementById('incidentInspectModal');
+    if (!modal) return;
+
+    document.getElementById('modalIncidentTitle').innerText = `INCIDENT FORENSICS #ALT-${alert.id}`;
+    const sevBadge = document.getElementById('modalIncidentSeverityBadge');
+    if (sevBadge) {
+        sevBadge.innerText = alert.severity;
+        sevBadge.style.background = alert.severity === 'CRITICAL' ? '#dc2626' : (alert.severity === 'HIGH' ? '#d97706' : '#0284c7');
+    }
+
+    document.getElementById('modalIncidentSummaryType').innerText = alert.alert_type;
+    document.getElementById('modalIncidentDescText').innerText = alert.description || '';
+    document.getElementById('modalIncidentConfText').innerText = `${alert.confidence_score || 96.8}%`;
+    document.getElementById('modalIncidentVehicle').innerText = alert.vehicle_no || 'JH01-AX-9912';
+    document.getElementById('modalIncidentLocation').innerText = alert.location || 'Mining Route';
+    document.getElementById('modalIncidentTime').innerText = alert.created_at ? new Date(alert.created_at).toLocaleString('en-GB') : '2026-08-24 21:18:40';
+
+    // Cycle through real screenshots based on ID
+    const stills = ['/static/media_screenshots/SS-1.png', '/static/media_screenshots/SS-2.png', '/static/media_screenshots/SS-3.png', '/static/media_screenshots/SS-4.png', '/static/media_screenshots/SS-5.png', '/static/media_screenshots/SS-6.png'];
+    const chosenStill = stills[alert.id % stills.length];
+    document.getElementById('modalIncidentStillImg').src = chosenStill;
+
+    modal.style.display = 'flex';
+};
+
+window.closeIncidentModalDirect = function() {
+    const modal = document.getElementById('incidentInspectModal');
+    if (modal) modal.style.display = 'none';
+};
+
+window.closeIncidentModal = function(e) {
+    if (e.target.id === 'incidentInspectModal') {
+        closeIncidentModalDirect();
+    }
+};
+
+window.executeGateHoldModal = function() {
+    if (window.ACTIVE_MODAL_INCIDENT) {
+        triggerGateHold(window.ACTIVE_MODAL_INCIDENT.id, window.ACTIVE_MODAL_INCIDENT.vehicle_no, window.ACTIVE_MODAL_INCIDENT.location);
+    }
+};
+
+window.executeQrtDispatchModal = function() {
+    if (window.ACTIVE_MODAL_INCIDENT) {
+        dispatchQrtPatrol(window.ACTIVE_MODAL_INCIDENT.id, window.ACTIVE_MODAL_INCIDENT.vehicle_no, window.ACTIVE_MODAL_INCIDENT.location);
+    }
+};
+
+window.executeResolveModal = function() {
+    if (window.ACTIVE_MODAL_INCIDENT) {
+        resolveLiveAlert(window.ACTIVE_MODAL_INCIDENT.id);
+        closeIncidentModalDirect();
+    }
+};
+
+window.printIncidentReport = function() {
+    window.print();
+};
+
+window.acknowledgeAllInCategory = async function() {
+    const pool = getFilteredAlertsList();
+    const activeInCategory = pool.filter(a => a.status === 'ACTIVE');
+    if (activeInCategory.length === 0) {
+        showAuditToast('No active alerts to acknowledge in this category.');
         return;
     }
 
-    let activeCount = alerts.filter(a => a.status === 'ACTIVE').length;
-    const badgeEl = document.getElementById('headerBadgeCount');
-    if (badgeEl) badgeEl.innerText = activeCount;
+    showAuditToast(`✓ Batch Acknowledged ${activeInCategory.length} Surveillance Alerts`);
+    for (const a of activeInCategory) {
+        a.status = 'ACKNOWLEDGED';
+        fetch(`/api/alerts/${a.id}/acknowledge`, { method: 'POST' }).catch(() => {});
+    }
+    updateAlertsDashboardUI();
+};
 
-    container.innerHTML = alerts.map(a => {
-        const isCritical = a.severity === 'CRITICAL';
-        const isHigh = a.severity === 'HIGH';
-        const isResolved = a.status === 'RESOLVED';
-        const isAcked = a.status === 'ACKNOWLEDGED';
-        
-        const badgeColor = isCritical ? '#ef4444' : (isHigh ? '#f59e0b' : '#38bdf8');
-        const cardBorder = isResolved ? '#1e293b' : (isAcked ? '#2563eb' : (isCritical ? 'rgba(239, 68, 68, 0.4)' : 'rgba(245, 158, 11, 0.3)'));
-        const cardBg = isResolved ? 'rgba(15, 23, 42, 0.4)' : '#101726';
+window.clearResolvedAlerts = function() {
+    const resolved = (window.ALL_LIVE_ALERTS || []).filter(a => a.status === 'RESOLVED');
+    if (resolved.length === 0) {
+        showAuditToast('No resolved alerts in archive to dismiss.');
+        return;
+    }
+    window.ALL_LIVE_ALERTS = (window.ALL_LIVE_ALERTS || []).filter(a => a.status !== 'RESOLVED');
+    showAuditToast(`🗑️ Dismissed ${resolved.length} resolved alerts from view`);
+    updateAlertsDashboardUI();
+};
 
-        return `
-            <div style="background: ${cardBg}; border: 1px solid ${cardBorder}; border-radius: 5px; padding: 10px 12px; display: flex; flex-direction: column; gap: 6px; position: relative;">
-                <div style="display: flex; justify-content: space-between; align-items: center;">
-                    <div style="display: flex; align-items: center; gap: 6px;">
-                        <span style="font-size: 9px; font-weight: 800; padding: 1px 5px; border-radius: 3px; background: ${badgeColor}; color: #fff;">${a.severity}</span>
-                        <strong style="font-size: 12px; color: #f8fafc;">${a.alert_type}</strong>
-                    </div>
-                    <span style="font-size: 10px; font-weight: 600; color: ${isResolved ? '#64748b' : (isAcked ? '#38bdf8' : '#f87171')};">${a.status}</span>
-                </div>
-                <div style="font-size: 11px; color: #94a3b8; display: flex; justify-content: space-between;">
-                    <span>Vehicle: <strong style="color: #e2e8f0;">${a.vehicle_no}</strong></span>
-                    <span>Confidence: <strong style="color: #38bdf8;">${a.confidence_score}%</strong></span>
-                </div>
-                <div style="font-size: 11px; color: #64748b;">
-                    <i class="fa-solid fa-location-dot" style="margin-right: 4px;"></i>${a.location}
-                </div>
-                <p style="font-size: 10.5px; color: #cbd5e1; margin: 0; line-height: 1.35; background: rgba(0,0,0,0.25); padding: 5px 7px; border-radius: 3px;">
-                    ${a.description}
-                </p>
-                <div style="display: flex; gap: 6px; margin-top: 4px;">
-                    ${!isResolved && !isAcked ? `
-                        <button type="button" onclick="acknowledgeAlert(${a.id})" style="flex: 1; background: #1e293b; color: #38bdf8; border: 1px solid #334155; padding: 4px; border-radius: 3px; font-size: 10.5px; font-weight: 600; cursor: pointer;">
-                            <i class="fa-solid fa-check"></i> Acknowledge
-                        </button>
-                    ` : ''}
-                    ${!isResolved ? `
-                        <button type="button" onclick="resolveAlert(${a.id})" style="flex: 1; background: rgba(16, 185, 129, 0.15); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.3); padding: 4px; border-radius: 3px; font-size: 10.5px; font-weight: 600; cursor: pointer;">
-                            <i class="fa-solid fa-shield-check"></i> Resolve
-                        </button>
-                    ` : `
-                        <span style="font-size: 10px; color: #64748b; padding: 2px 0;"><i class="fa-solid fa-circle-check" style="color: #10b981;"></i> Incident Closed in Supabase</span>
-                    `}
-                </div>
-            </div>
-        `;
-    }).join('');
-}
+window.exportAlertsCsv = function() {
+    const list = getFilteredAlertsList();
+    if (!list || list.length === 0) {
+        showAuditToast('No alerts matching current filters to export.');
+        return;
+    }
 
-async function acknowledgeAlert(alertId) {
+    const headers = ["Alert ID", "Severity", "Alert Type", "Status", "Vehicle No", "Location", "AI Confidence", "Description", "Timestamp"];
+    const escapeCsv = (s) => `"${String(s || '').replace(/"/g, '""')}"`;
+
+    let csv = "data:text/csv;charset=utf-8," + headers.map(escapeCsv).join(",") + "\n";
+    list.forEach(a => {
+        csv += [a.id, a.severity, a.alert_type, a.status, a.vehicle_no, a.location, (a.confidence_score || 95) + '%', a.description, a.created_at || 'Live'].map(escapeCsv).join(",") + "\n";
+    });
+
+    const uri = encodeURI(csv);
+    const link = document.createElement("a");
+    link.setAttribute("href", uri);
+    link.setAttribute("download", `TRACE_Surveillance_Alerts_Log_${list.length}_events.csv`);
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+    showAuditToast(`Exported ${list.length} surveillance alerts to CSV.`);
+};
+
+async function acknowledgeLiveAlert(alertId) {
     try {
-        const res = await fetch(`https://prahar-ai-dashboard.vercel.app/api/alerts/${alertId}/acknowledge`, { method: 'POST' });
-        if (res.ok) {
-            showAuditToast('Alert #' + alertId + ' Acknowledged & Logged in Supabase');
-            fetchLiveAlerts();
-        }
+        let res = await fetch(`/api/alerts/${alertId}/acknowledge`, { method: 'POST' });
+        const alert = (window.ALL_LIVE_ALERTS || []).find(a => a.id === alertId);
+        if (alert) alert.status = 'ACKNOWLEDGED';
+        showAuditToast(`✓ Alert #ALT-${alertId} Acknowledged & Synced with Supabase`);
+        updateAlertsDashboardUI();
     } catch (e) {
         console.error(e);
     }
 }
 
-async function resolveAlert(alertId) {
+async function resolveLiveAlert(alertId) {
     try {
-        const res = await fetch(`https://prahar-ai-dashboard.vercel.app/api/alerts/${alertId}/resolve`, { method: 'POST' });
-        if (res.ok) {
-            showAuditToast('Alert #' + alertId + ' Resolved in Supabase');
-            fetchLiveAlerts();
-        }
+        let res = await fetch(`/api/alerts/${alertId}/resolve`, { method: 'POST' });
+        const alert = (window.ALL_LIVE_ALERTS || []).find(a => a.id === alertId);
+        if (alert) alert.status = 'RESOLVED';
+        showAuditToast(`🛡️ Alert #ALT-${alertId} Resolved in Supabase Cloud`);
+        updateAlertsDashboardUI();
     } catch (e) {
         console.error(e);
     }
@@ -13414,11 +14629,16 @@ async function resolveAlert(alertId) {
 
 async function triggerSimulateAlert() {
     try {
-        const res = await fetch('https://prahar-ai-dashboard.vercel.app/api/alerts/simulate', { method: 'POST' });
+        let res = await fetch('/api/alerts/simulate', { method: 'POST' });
+        if (!res.ok) {
+            res = await fetch('https://prahar-ai-dashboard.vercel.app/api/alerts/simulate', { method: 'POST' });
+        }
         if (res.ok) {
             const data = await res.json();
-            showAuditToast('🚨 Live Anomaly Injected into Supabase: ' + (data.created_alert?.alert_type || 'Alert'));
-            fetchLiveAlerts();
+            const alertName = data.created_alert?.alert_type || 'Surveillance Anomaly';
+            showAuditToast(`🚨 New Live Anomaly Injected into Supabase: ${alertName}`);
+            playAlertChime('critical');
+            await fetchLiveAlerts();
         }
     } catch (e) {
         console.error(e);
@@ -13427,7 +14647,7 @@ async function triggerSimulateAlert() {
 
 async function triggerSimulateFleet() {
     try {
-        const res = await fetch('https://prahar-ai-dashboard.vercel.app/api/vts/simulate-step', { method: 'POST' });
+        let res = await fetch('/api/vts/simulate-step', { method: 'POST' });
         if (res.ok) {
             showAuditToast('🚚 Telemetry Step Simulated & Updated in Supabase');
         }
@@ -13437,7 +14657,7 @@ async function triggerSimulateFleet() {
 }
 
 async function syncAllFromSupabase() {
-    showAuditToast('🔄 Syncing all tables from Supabase PostgreSQL...');
+    showAuditToast('🔄 Syncing all surveillance alerts from Supabase PostgreSQL...');
     await fetchLiveAlerts();
 }
 
@@ -13453,9 +14673,83 @@ function toggleDemoConsole() {
     }
 }
 
-// Auto-poll Supabase every 5 seconds
-setInterval(fetchLiveAlerts, 5000);
-setTimeout(fetchLiveAlerts, 500);
+// Setup Event Listeners for Header Controls
+document.addEventListener('DOMContentLoaded', () => {
+    // Live Feed Toggle Button
+    const btnToggleLive = document.getElementById('btnToggleLiveFeed');
+    const pillText = document.getElementById('liveFeedPillText');
+    if (btnToggleLive) {
+        btnToggleLive.addEventListener('click', () => {
+            window.IS_LIVE_STREAM_ACTIVE = !window.IS_LIVE_STREAM_ACTIVE;
+            if (window.IS_LIVE_STREAM_ACTIVE) {
+                btnToggleLive.classList.remove('paused');
+                if (pillText) pillText.innerHTML = '<i class="fa-solid fa-pause"></i> LIVE STREAM';
+                showAuditToast('🟢 Live Surveillance Telemetry Stream Active (3.5s Sync)');
+                fetchLiveAlerts();
+            } else {
+                btnToggleLive.classList.add('paused');
+                if (pillText) pillText.innerHTML = '<i class="fa-solid fa-play"></i> PAUSED';
+                showAuditToast('⏸ Surveillance Stream Paused for Forensic Audit');
+            }
+        });
+    }
+
+    // Lock View Button
+    const btnLock = document.getElementById('btnToggleLockView');
+    if (btnLock) {
+        btnLock.addEventListener('click', () => {
+            window.IS_ALERT_VIEW_LOCKED = !window.IS_ALERT_VIEW_LOCKED;
+            btnLock.classList.toggle('active-locked', window.IS_ALERT_VIEW_LOCKED);
+            showAuditToast(window.IS_ALERT_VIEW_LOCKED ? '🔒 Alert View Locked (Freeze Mode)' : '🔓 Alert View Unlocked');
+        });
+    }
+
+    // Volume Slider
+    const volSlider = document.getElementById('alertVolumeSlider');
+    if (volSlider) {
+        volSlider.addEventListener('input', (e) => {
+            window.ALERT_AUDIO_VOLUME = parseFloat(e.target.value) / 100;
+            window.ALERT_AUDIO_MUTED = (window.ALERT_AUDIO_VOLUME === 0);
+            const icon = document.getElementById('volumeIcon');
+            if (icon) {
+                icon.className = window.ALERT_AUDIO_MUTED ? 'fa-solid fa-volume-xmark' : (window.ALERT_AUDIO_VOLUME > 0.5 ? 'fa-solid fa-volume-high' : 'fa-solid fa-volume-low');
+            }
+            playAlertChime('test');
+        });
+    }
+
+    // Mute Button
+    const btnMute = document.getElementById('btnMuteAlerts');
+    if (btnMute) {
+        btnMute.addEventListener('click', () => {
+            window.ALERT_AUDIO_MUTED = !window.ALERT_AUDIO_MUTED;
+            btnMute.classList.toggle('is-muted', window.ALERT_AUDIO_MUTED);
+            const icon = document.getElementById('volumeIcon');
+            if (icon) {
+                icon.className = window.ALERT_AUDIO_MUTED ? 'fa-solid fa-volume-xmark' : 'fa-solid fa-volume-high';
+            }
+            showAuditToast(window.ALERT_AUDIO_MUTED ? '🔇 Alert Audio Siren Muted' : '🔊 Alert Audio Siren Enabled');
+            if (!window.ALERT_AUDIO_MUTED) playAlertChime('test');
+        });
+    }
+
+    // Area Selector
+    const areaSelect = document.getElementById('alertAreaSelect');
+    if (areaSelect) {
+        areaSelect.addEventListener('change', (e) => {
+            window.CURRENT_ALERT_AREA_FILTER = e.target.value;
+            const areaName = e.target.options[e.target.selectedIndex].text;
+            showAuditToast(`Filter applied: ${areaName}`);
+            updateAlertsDashboardUI();
+        });
+    }
+});
+
+// Auto-poll Supabase every 3.5 seconds
+setInterval(fetchLiveAlerts, 3500);
+setTimeout(fetchLiveAlerts, 100);
+setTimeout(() => { if (typeof updateAlertsDashboardUI === 'function') updateAlertsDashboardUI(); }, 50);
+setTimeout(() => { if (typeof updateAlertsDashboardUI === 'function') updateAlertsDashboardUI(); }, 300);
 
 // ========================================================
 // Configuration Masters (Idle Views Controller)

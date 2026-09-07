@@ -98,3 +98,121 @@ INSERT INTO security_alerts (alert_type, vehicle_no, location, severity, status,
 ('Geofence Route Breach', 'JH05-BK-3390', 'Amrapali Sector 4 Western Perimeter', 'HIGH', 'ACTIVE', 92, 'Commercial coal tipper deviated 280 meters outside designated geo-fenced coal transport route.'),
 ('Weight Variance Detected', 'JH02-CC-4019', 'Piparwar Ingate Weighbridge WB-02', 'WARNING', 'ACTIVE', 88, 'Gross weight registered 2.4 Tons higher than e-Way Bill pre-clearance declaration.'),
 ('Unregistered RFID Tag', 'JH09-ZZ-1100', 'North Karanpura Checkpost Gate 3', 'HIGH', 'ACTIVE', 99, 'RFID tag mismatch: Vehicle attempted gate passage without matching dispatch record in TRACE ERP.');
+-- 5. APP USERS
+CREATE TABLE app_users (
+    id SERIAL PRIMARY KEY,
+    username TEXT NOT NULL UNIQUE,
+    password TEXT NOT NULL,
+    name TEXT NOT NULL,
+    designation TEXT NOT NULL,
+    role TEXT NOT NULL,
+    email TEXT NOT NULL
+);
+
+-- 6. WEIGHBRIDGE STATUS
+CREATE TABLE weighbridge_status (
+    id SERIAL PRIMARY KEY,
+    s_no INT NOT NULL,
+    name TEXT NOT NULL,
+    operational_total TEXT NOT NULL,
+    operational_pct TEXT NOT NULL
+);
+
+-- 7. ADVANCED ANALYTICS
+CREATE TABLE advanced_analytics (
+    id SERIAL PRIMARY KEY,
+    s_no INT NOT NULL,
+    name TEXT NOT NULL,
+    tx_road INT NOT NULL,
+    tx_internal INT NOT NULL,
+    tx_total INT NOT NULL,
+    bypassing INT NOT NULL,
+    barrier INT NOT NULL,
+    lv_100t INT NOT NULL,
+    lv_road TEXT NOT NULL,
+    lv_internal TEXT NOT NULL,
+    lv_total TEXT NOT NULL,
+    anpr_road TEXT NOT NULL,
+    anpr_internal TEXT NOT NULL,
+    anpr_total TEXT NOT NULL
+);
+
+-- 8. CHECKPOST STATUS
+CREATE TABLE checkpost_status (
+    id SERIAL PRIMARY KEY,
+    s_no INT NOT NULL,
+    name TEXT NOT NULL,
+    operational_total TEXT NOT NULL,
+    operational_pct TEXT NOT NULL
+);
+
+-- 9. CHECKPOST ANALYTICS
+CREATE TABLE checkpost_analytics (
+    id SERIAL PRIMARY KEY,
+    s_no INT NOT NULL,
+    name TEXT NOT NULL,
+    entry_total INT NOT NULL,
+    entry_anpr TEXT NOT NULL,
+    exit_total INT NOT NULL,
+    exit_anpr TEXT NOT NULL,
+    boom_total INT NOT NULL,
+    boom_others INT NOT NULL,
+    boom_dept INT NOT NULL,
+    boom_pct TEXT NOT NULL
+);
+
+-- 10. VTS ALERT SUMMARY
+CREATE TABLE vts_alert_summary (
+    id SERIAL PRIMARY KEY,
+    s_no INT NOT NULL,
+    name TEXT NOT NULL,
+    offroute_closed TEXT NOT NULL,
+    offroute_pct_closed TEXT NOT NULL,
+    offroute_pct_total TEXT NOT NULL,
+    offarea_closed TEXT NOT NULL,
+    offarea_pct_closed TEXT NOT NULL,
+    offarea_pct_total TEXT NOT NULL,
+    overlap INT NOT NULL,
+    tamper_closed TEXT NOT NULL,
+    tamper_pct_closed TEXT NOT NULL,
+    tamper_pct_total TEXT NOT NULL,
+    stoppage_closed TEXT NOT NULL,
+    stoppage_pct_closed TEXT NOT NULL,
+    stoppage_pct_total TEXT NOT NULL
+);
+
+-- 11. RFID CONFIGURATION
+CREATE TABLE rfid_config (
+    id SERIAL PRIMARY KEY,
+    type TEXT NOT NULL,
+    is_operational BOOLEAN NOT NULL,
+    s_no INT NOT NULL,
+    area TEXT NOT NULL,
+    name TEXT NOT NULL
+);
+
+-- 12. IRREGULAR VEHICLES
+CREATE TABLE irregular_vehicles (
+    id SERIAL PRIMARY KEY,
+    veh_no TEXT NOT NULL,
+    unit TEXT NOT NULL,
+    do_no TEXT NOT NULL,
+    irr_trips INT NOT NULL,
+    src_co TEXT NOT NULL,
+    src_wb TEXT NOT NULL,
+    dst_co TEXT NOT NULL,
+    dst_wb TEXT NOT NULL
+);
+
+-- 13. IRREGULAR DOS
+CREATE TABLE irregular_dos (
+    id SERIAL PRIMARY KEY,
+    do_no TEXT NOT NULL,
+    unit TEXT NOT NULL,
+    irr_trips INT NOT NULL,
+    num_vehicles INT NOT NULL,
+    src_co TEXT NOT NULL,
+    src_wb TEXT NOT NULL,
+    dst_co TEXT NOT NULL,
+    dst_wb TEXT NOT NULL
+);

@@ -54,10 +54,21 @@ FALLBACK_FLEET = [
 ]
 
 FALLBACK_ALERTS = [
-    {"id": 1, "alert_type": "Unauthorized Stoppage", "vehicle_no": "JH01-DY-7721", "location": "Karkatta Mining Road (KM 4.2)", "severity": "CRITICAL", "status": "ACTIVE", "confidence_score": 96, "description": "Vehicle halted stationary in unauthorized corridor zone for > 15 minutes with active coal payload."},
-    {"id": 2, "alert_type": "Geofence Route Breach", "vehicle_no": "JH05-BK-3390", "location": "Amrapali Sector 4 Western Perimeter", "severity": "HIGH", "status": "ACTIVE", "confidence_score": 92, "description": "Commercial coal tipper deviated 280 meters outside designated geo-fenced coal transport route."},
-    {"id": 3, "alert_type": "Weight Variance Detected", "vehicle_no": "JH02-CC-4019", "location": "Piparwar Ingate Weighbridge WB-02", "severity": "WARNING", "status": "ACTIVE", "confidence_score": 88, "description": "Gross weight registered 2.4 Tons higher than e-Way Bill pre-clearance declaration."},
-    {"id": 4, "alert_type": "Unregistered RFID Tag", "vehicle_no": "JH09-ZZ-1100", "location": "North Karanpura Checkpost Gate 3", "severity": "HIGH", "status": "ACTIVE", "confidence_score": 99, "description": "RFID tag mismatch: Vehicle attempted gate passage without matching dispatch record in TRACE ERP."}
+    {"id": 1, "alert_type": "Unauthorized Stoppage", "vehicle_no": "JH01-DY-7721", "location": "Karkatta Mining Road (KM 4.2)", "severity": "CRITICAL", "status": "ACTIVE", "confidence_score": 98.4, "description": "Vehicle halted stationary in unauthorized corridor zone for > 15 minutes with active coal payload."},
+    {"id": 2, "alert_type": "Off Route Alerts", "vehicle_no": "JH05-BK-3390", "location": "Amrapali Sector 4 Western Perimeter", "severity": "HIGH", "status": "ACTIVE", "confidence_score": 94.2, "description": "Commercial coal tipper deviated 280 meters outside designated geo-fenced coal transport corridor."},
+    {"id": 3, "alert_type": "Off Area Alerts", "vehicle_no": "JH02-CC-4019", "location": "Piparwar North Extraction Boundary", "severity": "HIGH", "status": "ACTIVE", "confidence_score": 91.0, "description": "Vehicle entered restricted blasting buffer perimeter without surveyor clearance."},
+    {"id": 4, "alert_type": "Tamper Alerts", "vehicle_no": "JH09-ZZ-1100", "location": "North Karanpura Checkpost Gate 3", "severity": "CRITICAL", "status": "ACTIVE", "confidence_score": 99.1, "description": "VTS onboard hardware chassis seal breach signal received. Unit offline on secondary battery."},
+    {"id": 5, "alert_type": "Over Speed", "vehicle_no": "JH01-AX-9912", "location": "Ashoka Siding Haul Road", "severity": "WARNING", "status": "ACTIVE", "confidence_score": 96.5, "description": "Vehicle velocity clocked at 54 km/h (speed limit 30 km/h) on unpaved quarry haul sector."},
+    {"id": 6, "alert_type": "Open Boom Barriers", "vehicle_no": "JH02-ER-6102", "location": "Dhori Siding Checkpost #02", "severity": "HIGH", "status": "ACTIVE", "confidence_score": 95.0, "description": "Automated boom barrier force-bypassed without weighment slip synchronization."},
+    {"id": 7, "alert_type": "Vehicle Detection", "vehicle_no": "JH10-AB-5521", "location": "Argada Plant Weighbridge Gate A", "severity": "WARNING", "status": "ACTIVE", "confidence_score": 97.2, "description": "Unregistered light motor vehicle entered heavy commercial coal convoy lane."},
+    {"id": 8, "alert_type": "Crowd Detection", "vehicle_no": "CAM-AMR-04", "location": "Amrapali Siding Platform Berth B", "severity": "CRITICAL", "status": "ACTIVE", "confidence_score": 96.8, "description": "Dense congregation of 12+ unidentified individuals spotted adjacent to rail dispatch hopper."},
+    {"id": 9, "alert_type": "Person Detection", "vehicle_no": "CAM-PIP-09", "location": "Piparwar Conveyor Belt Section 3", "severity": "HIGH", "status": "ACTIVE", "confidence_score": 93.4, "description": "Pedestrian movement detected in active automated conveyor discharge sector."},
+    {"id": 10, "alert_type": "Intrusion Detection", "vehicle_no": "CAM-BOK-01", "location": "Bokaro Coal Stockyard Fence North", "severity": "CRITICAL", "status": "ACTIVE", "confidence_score": 98.9, "description": "Perimeter optical tripwire breach triggered at Stockyard Sector 4."},
+    {"id": 11, "alert_type": "Traffic Congestion", "vehicle_no": "CAM-HAZ-03", "location": "Hazaribagh Siding Ingate Junction", "severity": "WARNING", "status": "ACTIVE", "confidence_score": 90.5, "description": "Queue of 9 loaded tippers blocking main weighbridge ingress corridor > 25 mins."},
+    {"id": 12, "alert_type": "Loaded-Unloaded Alerts", "vehicle_no": "JH01-BB-8833", "location": "Kathara Washery Ingate WB-01", "severity": "HIGH", "status": "ACTIVE", "confidence_score": 95.7, "description": "Weight discrepancy: Tipper tare weight mismatch +3.8 Tons versus master RFID profile."},
+    {"id": 13, "alert_type": "Camera Tampering", "vehicle_no": "CAM-KUJ-02", "location": "Kuju Outgate Siding CCTV-02", "severity": "CRITICAL", "status": "ACTIVE", "confidence_score": 99.4, "description": "Camera feed occlusion / angle misalignment detected by edge integrity monitor."},
+    {"id": 14, "alert_type": "Safety Hazard", "vehicle_no": "CAM-RAJ-06", "location": "Rajhara Open Cast Berth 1", "severity": "HIGH", "status": "ACTIVE", "confidence_score": 94.8, "description": "Operator spotted without mandatory high-visibility ballistic vest & hard hat near excavator swing radius."},
+    {"id": 15, "alert_type": "Insufficient Illumination", "vehicle_no": "CAM-GIR-01", "location": "Giridih Night Transit Route B", "severity": "WARNING", "status": "ACTIVE", "confidence_score": 89.2, "description": "Ambient lux levels dropped below 15 Lux along Night Haul Corridor KM 2."}
 ]
 
 
@@ -110,7 +121,15 @@ async def fetch_security_alerts(status_filter: Optional[str] = None) -> List[Dic
             if resp.status_code == 200:
                 data = resp.json()
                 if data:
-                    return data
+                    # Combine live Supabase records with baseline coverage for all 15 categories
+                    existing_types = { (a.get("alert_type") or "").lower().strip() for a in data }
+                    merged = list(data)
+                    for fallback in FALLBACK_ALERTS:
+                        fb_type = (fallback.get("alert_type") or "").lower().strip()
+                        if fb_type not in existing_types:
+                            if not status_filter or (fallback.get("status") == status_filter):
+                                merged.append(fallback)
+                    return merged
     except Exception as e:
         print(f"[Supabase] fetch_security_alerts error: {e}")
     return FALLBACK_ALERTS
@@ -163,3 +182,125 @@ async def update_vts_telemetry(vehicle_no: str, delta_lat: float, delta_lng: flo
     except Exception as e:
         print(f"[Supabase] update_vts_telemetry error: {e}")
     return False
+
+FALLBACK_APP_USERS = [
+    {"username": "gm", "password": "gm@trace2026", "name": "Rajeshwar Prasad Singh", "designation": "General Manager (Operations)", "role": "gm", "email": "gm@trace.gov.in"},
+    {"username": "vigilance", "password": "vigilance@trace2026", "name": "Amitabh Roy", "designation": "Chief Vigilance Officer", "role": "vigilance", "email": "vigilance@trace.gov.in"},
+    {"username": "surveillance", "password": "surveillance@trace2026", "name": "Sunil Verma", "designation": "Mining Surveillance Incharge", "role": "surveillance", "email": "surveillance@trace.gov.in"},
+    {"username": "dispatch", "password": "dispatch@trace2026", "name": "Rakesh Kumar", "designation": "Central Dispatch Officer", "role": "dispatch", "email": "dispatch@trace.gov.in"},
+    {"username": "operator", "password": "operator@trace2026", "name": "Vikas Mahto", "designation": "Command Control Operator", "role": "operator", "email": "operator@trace.gov.in"},
+    {"username": "admin", "password": "password123", "name": "System Administrator", "designation": "Command Center Chief", "role": "admin", "email": "admin@prahar.ai"}
+]
+
+async def fetch_app_users() -> List[Dict[str, Any]]:
+    try:
+        async with httpx.AsyncClient(timeout=4.0) as client:
+            resp = await client.get(f"{SUPABASE_URL}/rest/v1/app_users?select=*&order=id.asc", headers=get_headers())
+            if resp.status_code == 200:
+                data = resp.json()
+                if data and len(data) > 0:
+                    # Merge fallback users if missing
+                    existing_unames = {u["username"] for u in data}
+                    for fb in FALLBACK_APP_USERS:
+                        if fb["username"] not in existing_unames:
+                            data.append(fb)
+                    return data
+    except Exception as e:
+        print(f"[Supabase] fetch_app_users error: {e}")
+    return FALLBACK_APP_USERS
+
+async def fetch_weighbridge_status() -> List[Dict[str, Any]]:
+    try:
+        async with httpx.AsyncClient(timeout=4.0) as client:
+            resp = await client.get(f"{SUPABASE_URL}/rest/v1/weighbridge_status?select=*&order=id.asc", headers=get_headers())
+            if resp.status_code == 200:
+                data = resp.json()
+                if data:
+                    return data
+    except Exception as e:
+        print(f"[Supabase] fetch_weighbridge_status error: {e}")
+    return []
+
+async def fetch_advanced_analytics() -> List[Dict[str, Any]]:
+    try:
+        async with httpx.AsyncClient(timeout=4.0) as client:
+            resp = await client.get(f"{SUPABASE_URL}/rest/v1/advanced_analytics?select=*&order=id.asc", headers=get_headers())
+            if resp.status_code == 200:
+                data = resp.json()
+                if data:
+                    return data
+    except Exception as e:
+        print(f"[Supabase] fetch_advanced_analytics error: {e}")
+    return []
+
+async def fetch_checkpost_status() -> List[Dict[str, Any]]:
+    try:
+        async with httpx.AsyncClient(timeout=4.0) as client:
+            resp = await client.get(f"{SUPABASE_URL}/rest/v1/checkpost_status?select=*&order=id.asc", headers=get_headers())
+            if resp.status_code == 200:
+                data = resp.json()
+                if data:
+                    return data
+    except Exception as e:
+        print(f"[Supabase] fetch_checkpost_status error: {e}")
+    return []
+
+async def fetch_checkpost_analytics() -> List[Dict[str, Any]]:
+    try:
+        async with httpx.AsyncClient(timeout=4.0) as client:
+            resp = await client.get(f"{SUPABASE_URL}/rest/v1/checkpost_analytics?select=*&order=id.asc", headers=get_headers())
+            if resp.status_code == 200:
+                data = resp.json()
+                if data:
+                    return data
+    except Exception as e:
+        print(f"[Supabase] fetch_checkpost_analytics error: {e}")
+    return []
+
+async def fetch_vts_alert_summary() -> List[Dict[str, Any]]:
+    try:
+        async with httpx.AsyncClient(timeout=4.0) as client:
+            resp = await client.get(f"{SUPABASE_URL}/rest/v1/vts_alert_summary?select=*&order=id.asc", headers=get_headers())
+            if resp.status_code == 200:
+                data = resp.json()
+                if data:
+                    return data
+    except Exception as e:
+        print(f"[Supabase] fetch_vts_alert_summary error: {e}")
+    return []
+
+async def fetch_rfid_config() -> List[Dict[str, Any]]:
+    try:
+        async with httpx.AsyncClient(timeout=4.0) as client:
+            resp = await client.get(f"{SUPABASE_URL}/rest/v1/rfid_config?select=*&order=id.asc", headers=get_headers())
+            if resp.status_code == 200:
+                data = resp.json()
+                if data:
+                    return data
+    except Exception as e:
+        print(f"[Supabase] fetch_rfid_config error: {e}")
+    return []
+
+async def fetch_irregular_vehicles() -> List[Dict[str, Any]]:
+    try:
+        async with httpx.AsyncClient(timeout=4.0) as client:
+            resp = await client.get(f"{SUPABASE_URL}/rest/v1/irregular_vehicles?select=*&order=id.asc", headers=get_headers())
+            if resp.status_code == 200:
+                data = resp.json()
+                if data:
+                    return data
+    except Exception as e:
+        print(f"[Supabase] fetch_irregular_vehicles error: {e}")
+    return []
+
+async def fetch_irregular_dos() -> List[Dict[str, Any]]:
+    try:
+        async with httpx.AsyncClient(timeout=4.0) as client:
+            resp = await client.get(f"{SUPABASE_URL}/rest/v1/irregular_dos?select=*&order=id.asc", headers=get_headers())
+            if resp.status_code == 200:
+                data = resp.json()
+                if data:
+                    return data
+    except Exception as e:
+        print(f"[Supabase] fetch_irregular_dos error: {e}")
+    return []
