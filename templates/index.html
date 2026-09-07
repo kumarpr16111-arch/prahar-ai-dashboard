@@ -52,10 +52,26 @@
     /* Home Table Colors (Alternating Dark Slate Rows) */
     --table-header-bg: #151a24;
     --table-border: #232b3b;
-    --table-row-hover: #2a3449;
-    --badge-pink: #f87171;
-    --badge-teal: #059669;
-    --green-accent: #059669;
+    /* Full Widescreen Mode for Alert Dashboard (Sidebar completely removed) */
+    body.alert-mode-active #sidebar,
+    body.alert-mode-active .sidebar,
+    body.alert-mode-active #alertSidebarMenu {
+        display: none !important;
+    }
+    body.alert-mode-active .main-wrapper,
+    body.alert-mode-active .dashboard-wrapper,
+    body.alert-mode-active .app-container {
+        margin-left: 0 !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        padding-left: 0 !important;
+    }
+    body.alert-mode-active .main-content {
+        margin-left: 0 !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        padding: 12px 18px !important;
+    }
 
     /* Layout & Borders */
     --sidebar-width: 270px;
@@ -7813,8 +7829,13 @@ body.gis-mode-active .content-body {
                         <!-- 2. Dark Mode Header Bar & Controls -->
                         <div class="alert-header">
                             <div class="alert-header-left">
-                                <h1 class="alert-title">Alert Dashboard</h1>
-                                <span class="alert-subtitle">REAL TIME MONITORING SYSTEM</span>
+                                <button type="button" class="btn-action" onclick="if(window.showSummaryTab){window.showSummaryTab('weighbridge');} else {window.location.href='/';}" style="background: rgba(30, 41, 59, 0.9); color: #38bdf8; border: 1px solid #334155; padding: 6px 13px; border-radius: 6px; font-weight: 700; font-size: 11.5px; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; margin-right: 12px; transition: all 0.2s ease;">
+                                    <i class="fa-solid fa-house"></i> <span>Home</span>
+                                </button>
+                                <div>
+                                    <h1 class="alert-title">Alert Dashboard</h1>
+                                    <span class="alert-subtitle">REAL TIME MONITORING SYSTEM</span>
+                                </div>
                                 <div class="live-status-pill" id="btnToggleLiveFeed" title="Click to Pause / Resume Live Polling Feed">
                                     <span class="live-dot"></span>
                                     <span id="liveFeedPillText"><i class="fa-solid fa-pause"></i> LIVE STREAM</span>
@@ -11156,6 +11177,8 @@ document.addEventListener('DOMContentLoaded', () => {
     function activateSummaryTab(tabKey) {
         document.body.classList.remove('alert-mode-active');
         document.body.classList.remove('gis-mode-active');
+        const sidebar = document.getElementById('sidebar');
+        if (sidebar) sidebar.style.display = '';
         if (mainSidebarMenu) mainSidebarMenu.style.display = 'block';
         if (alertSidebarMenu) alertSidebarMenu.style.display = 'none';
         if (tabsCard) tabsCard.style.display = 'block';
@@ -11194,13 +11217,16 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
+    window.showSummaryTab = activateSummaryTab;
 
-    // Function to show Alert Dashboard View Mode
+    // Function to show Alert Dashboard View Mode (Full Widescreen - No Sidebar)
     window.showAlertDashboard = function(detectionType = 'All Types') {
         document.body.classList.add('alert-mode-active');
         document.body.classList.remove('gis-mode-active');
+        const sidebar = document.getElementById('sidebar');
+        if (sidebar) sidebar.style.display = 'none';
         if (mainSidebarMenu) mainSidebarMenu.style.display = 'none';
-        if (alertSidebarMenu) alertSidebarMenu.style.display = 'block';
+        if (alertSidebarMenu) alertSidebarMenu.style.display = 'none';
         if (tabsCard) tabsCard.style.display = 'none';
         setActiveSidebarNav(alertDashboardItem);
         updateHeaderMainTitle('ALERT DASHBOARD');
@@ -11224,6 +11250,8 @@ document.addEventListener('DOMContentLoaded', () => {
     window.showVTSDashboard = function() {
         document.body.classList.remove('alert-mode-active');
         document.body.classList.remove('gis-mode-active');
+        const sidebar = document.getElementById('sidebar');
+        if (sidebar) sidebar.style.display = '';
         if (mainSidebarMenu) mainSidebarMenu.style.display = 'block';
         if (alertSidebarMenu) alertSidebarMenu.style.display = 'none';
         if (tabsCard) tabsCard.style.display = 'none';
@@ -11247,6 +11275,8 @@ document.addEventListener('DOMContentLoaded', () => {
     window.showRFIDDashboard = function() {
         document.body.classList.remove('alert-mode-active');
         document.body.classList.remove('gis-mode-active');
+        const sidebar = document.getElementById('sidebar');
+        if (sidebar) sidebar.style.display = '';
         if (mainSidebarMenu) mainSidebarMenu.style.display = 'block';
         if (alertSidebarMenu) alertSidebarMenu.style.display = 'none';
         if (tabsCard) tabsCard.style.display = 'none';
@@ -11270,6 +11300,8 @@ document.addEventListener('DOMContentLoaded', () => {
     window.showIrregularWeighments = function() {
         document.body.classList.remove('alert-mode-active');
         document.body.classList.remove('gis-mode-active');
+        const sidebar = document.getElementById('sidebar');
+        if (sidebar) sidebar.style.display = '';
         if (mainSidebarMenu) mainSidebarMenu.style.display = 'block';
         if (alertSidebarMenu) alertSidebarMenu.style.display = 'none';
         if (tabsCard) tabsCard.style.display = 'none';
@@ -11293,6 +11325,8 @@ document.addEventListener('DOMContentLoaded', () => {
     window.showIrregularTrips = function() {
         document.body.classList.remove('alert-mode-active');
         document.body.classList.remove('gis-mode-active');
+        const sidebar = document.getElementById('sidebar');
+        if (sidebar) sidebar.style.display = '';
         if (mainSidebarMenu) mainSidebarMenu.style.display = 'block';
         if (alertSidebarMenu) alertSidebarMenu.style.display = 'none';
         if (tabsCard) tabsCard.style.display = 'none';
@@ -11316,6 +11350,8 @@ document.addEventListener('DOMContentLoaded', () => {
     window.showDroneDashboard = function() {
         document.body.classList.remove('alert-mode-active');
         document.body.classList.remove('gis-mode-active');
+        const sidebar = document.getElementById('sidebar');
+        if (sidebar) sidebar.style.display = '';
         if (mainSidebarMenu) mainSidebarMenu.style.display = 'block';
         if (alertSidebarMenu) alertSidebarMenu.style.display = 'none';
         if (tabsCard) tabsCard.style.display = 'none';
@@ -11339,6 +11375,8 @@ document.addEventListener('DOMContentLoaded', () => {
     window.showWorkersAttendance = function() {
         document.body.classList.remove('alert-mode-active');
         document.body.classList.remove('gis-mode-active');
+        const sidebar = document.getElementById('sidebar');
+        if (sidebar) sidebar.style.display = '';
         if (mainSidebarMenu) mainSidebarMenu.style.display = 'block';
         if (alertSidebarMenu) alertSidebarMenu.style.display = 'none';
         if (tabsCard) tabsCard.style.display = 'none';
