@@ -87,7 +87,8 @@ async def read_root(request: Request):
             "user_designation": user_info.get("designation", ""),
             "user_role": user_info.get("role", ""),
             "user_id": session_user
-        }
+        },
+        headers={"Cache-Control": "no-store, no-cache, must-revalidate, max-age=0"}
     )
 
 @app.get("/login")

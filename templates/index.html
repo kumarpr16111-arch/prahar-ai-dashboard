@@ -14422,6 +14422,7 @@ window.setSeverityFilter = function(sev) {
     document.querySelectorAll('.alert-triage-bar .chip-btn').forEach(btn => btn.classList.remove('active'));
     if (sev === 'ALL') {
         document.getElementById('chipFilterAll')?.classList.add('active');
+        window.CURRENT_ALERT_CATEGORY = 'All Types';
     } else if (sev === 'CRITICAL') {
         document.getElementById('chipFilterCritical')?.classList.add('active');
     } else if (sev === 'HIGH') {
@@ -14429,6 +14430,7 @@ window.setSeverityFilter = function(sev) {
     } else if (sev === 'WARNING') {
         document.getElementById('chipFilterWarning')?.classList.add('active');
     }
+    renderDetailEventsForCategory(window.CURRENT_ALERT_CATEGORY || 'All Types');
     updateAlertsDashboardUI();
 };
 
@@ -14443,6 +14445,7 @@ window.setStatusFilter = function(st) {
     } else if (st === 'RESOLVED') {
         document.getElementById('chipFilterResolved')?.classList.add('active');
     }
+    renderDetailEventsForCategory(window.CURRENT_ALERT_CATEGORY || 'All Types');
     updateAlertsDashboardUI();
 };
 
@@ -14454,6 +14457,7 @@ window.handleAlertSearch = function(query) {
         if (overviewCon) overviewCon.style.display = 'none';
         if (detailCon) detailCon.style.display = 'grid';
     }
+    renderDetailEventsForCategory(window.CURRENT_ALERT_CATEGORY || 'All Types');
     updateAlertsDashboardUI();
 };
 
