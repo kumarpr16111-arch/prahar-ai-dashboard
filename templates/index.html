@@ -14202,20 +14202,14 @@ function updateAlertsDashboardUI() {
     if (bHigh) bHigh.innerText = highActive;
     if (bWarn) bWarn.innerText = warningActive;
 
-    // Update all overview metric cards
+    // Update all overview metric cards based on active triage filter
     const allCards = document.querySelectorAll('#alertOverviewContainer .metric-card, #alertDetailContainer .metric-card, .va-sidebar-cards-list .mini-card');
     allCards.forEach(card => {
         const typeStr = card.getAttribute('data-card-type') || card.getAttribute('data-va-type') || card.getAttribute('data-alert-cat') || card.querySelector('.metric-label')?.textContent?.trim() || '';
         
-        // Match active count considering current area filter
-        const matchedActive = allAlerts.filter(a => {
-            if (a.status !== 'ACTIVE') return false;
-            if (window.CURRENT_ALERT_AREA_FILTER !== 'all') {
-                const areaKey = window.CURRENT_ALERT_AREA_FILTER.toLowerCase();
-                const loc = (a.location || '').toLowerCase();
-                const desc = (a.description || '').toLowerCase();
-                if (!loc.includes(areaKey) && !desc.includes(areaKey)) return false;
-            }
+        // Match active count considering current triage filter & area filter
+        const matchedActive = filteredAlerts.filter(a => {
+            if (window.CURRENT_ALERT_STATUS_FILTER === 'ALL' && a.status !== 'ACTIVE') return false;
             return matchCategory(typeStr, a);
         }).length;
 
@@ -14225,19 +14219,30 @@ function updateAlertsDashboardUI() {
         if (numEl) numEl.textContent = matchedActive;
 
         if (matchedActive > 0) {
-            const isTeal = typeStr.toLowerCase().includes('vehicle') || typeStr.toLowerCase().includes('crowd');
-            const hasCritical = allAlerts.some(a => a.status === 'ACTIVE' && a.severity === 'CRITICAL' && matchCategory(typeStr, a));
-            const highlightClass = hasCritical ? 'card-highlight-red' : (isTeal ? 'card-highlight-teal' : 'card-highlight-orange');
-            const textHighlight = hasCritical ? 'highlight-orange-text' : (isTeal ? 'highlight-teal-text' : 'highlight-orange-text');
-            const iconHighlight = hasCritical ? 'highlight-orange-icon' : (isTeal ? 'highlight-teal-icon' : 'highlight-orange-icon');
+            const hasCritical = filteredAlerts.some(a => a.severity === 'CRITICAL' && matchCategory(typeStr, a));
+            const hasHigh = filteredAlerts.some(a => a.severity === 'HIGH' && matchCategory(typeStr, a));
+            const isTeal = typeStr.toLowerCase().includes('vehicle') || typeStr.toLowerCase().includes('crowd') || typeStr.toLowerCase().includes('traffic') || typeStr.toLowerCase().includes('illumination');
+            
+            const highlightClass = hasCritical ? 'card-highlight-red' : (hasHigh ? 'card-highlight-orange' : 'card-highlight-teal');
+            const textHighlight = hasCritical ? 'highlight-orange-text' : (hasHigh ? 'highlight-orange-text' : 'highlight-teal-text');
+            const iconHighlight = hasCritical ? 'highlight-orange-icon' : (hasHigh ? 'highlight-orange-icon' : 'highlight-teal-icon');
 
             card.classList.remove('card-highlight-orange', 'card-highlight-teal', 'card-highlight-red', 'dark-card');
             card.classList.add(highlightClass);
+            card.style.opacity = '1';
+            card.style.transform = 'scale(1)';
             if (numEl) numEl.className = `metric-number ${textHighlight}`;
             if (iconEl) iconEl.className = `metric-icon-circle ${iconHighlight}`;
         } else {
             card.classList.remove('card-highlight-orange', 'card-highlight-teal', 'card-highlight-red', 'active-card');
             card.classList.add('dark-card');
+            if (window.CURRENT_ALERT_SEVERITY_FILTER !== 'ALL' || window.CURRENT_ALERT_STATUS_FILTER !== 'ALL') {
+                card.style.opacity = '0.35';
+                card.style.transform = 'scale(0.98)';
+            } else {
+                card.style.opacity = '1';
+                card.style.transform = 'scale(1)';
+            }
             if (numEl) numEl.className = 'metric-number';
             if (iconEl) iconEl.className = 'metric-icon-circle';
         }
@@ -14246,8 +14251,8 @@ function updateAlertsDashboardUI() {
     // Update GPS live text banner
     const gpsLiveEl = document.getElementById('gpsLiveCountText');
     if (gpsLiveEl) {
-        const gpsActiveCount = activeAlerts.filter(a => ['stoppage', 'off_route', 'off_area', 'tamper', 'over_speed', 'boom_barrier'].includes(getAlertCategoryKey(a))).length;
-        gpsLiveEl.textContent = gpsActiveCount > 0 ? `• ${gpsActiveCount} LIVE` : '• 0 LIVE';
+        const gpsActiveCount = filteredAlerts.filter(a => ['stoppage', 'off_route', 'off_area', 'tamper', 'over_speed', 'boom_barrier'].includes(getAlertCategoryKey(a))).length;
+        gpsLiveEl.textContent = gpsActiveCount > 0 ? `• ${gpsActiveCount} ACTIVE` : '• 0 ACTIVE';
         gpsLiveEl.className = gpsActiveCount > 0 ? 'events-status-text red-live-text' : 'events-status-text';
     }
 
@@ -14414,26 +14419,15 @@ function renderDetailEventsForCategory(type) {
 window.setSeverityFilter = function(sev) {
     window.CURRENT_ALERT_SEVERITY_FILTER = sev;
     window.CURRENT_ALERT_STATUS_FILTER = 'ALL';
-    window.CURRENT_ALERT_CATEGORY = 'All Types';
     document.querySelectorAll('.alert-triage-bar .chip-btn').forEach(btn => btn.classList.remove('active'));
     if (sev === 'ALL') {
         document.getElementById('chipFilterAll')?.classList.add('active');
-        const overviewCon = document.getElementById('alertOverviewContainer');
-        const detailCon = document.getElementById('alertDetailContainer');
-        if (overviewCon) overviewCon.style.display = 'block';
-        if (detailCon) detailCon.style.display = 'none';
-        const detSelect = document.getElementById('detectionTypeSelect');
-        if (detSelect) detSelect.value = 'All Types';
-    } else {
-        if (sev === 'CRITICAL') document.getElementById('chipFilterCritical')?.classList.add('active');
-        else if (sev === 'HIGH') document.getElementById('chipFilterHigh')?.classList.add('active');
-        else if (sev === 'WARNING') document.getElementById('chipFilterWarning')?.classList.add('active');
-        
-        // Switch to Detail Events view to immediately display the filtered list of incidents
-        const overviewCon = document.getElementById('alertOverviewContainer');
-        const detailCon = document.getElementById('alertDetailContainer');
-        if (overviewCon) overviewCon.style.display = 'none';
-        if (detailCon) detailCon.style.display = 'grid';
+    } else if (sev === 'CRITICAL') {
+        document.getElementById('chipFilterCritical')?.classList.add('active');
+    } else if (sev === 'HIGH') {
+        document.getElementById('chipFilterHigh')?.classList.add('active');
+    } else if (sev === 'WARNING') {
+        document.getElementById('chipFilterWarning')?.classList.add('active');
     }
     updateAlertsDashboardUI();
 };
@@ -14441,18 +14435,14 @@ window.setSeverityFilter = function(sev) {
 window.setStatusFilter = function(st) {
     window.CURRENT_ALERT_STATUS_FILTER = st;
     window.CURRENT_ALERT_SEVERITY_FILTER = 'ALL';
-    window.CURRENT_ALERT_CATEGORY = 'All Types';
     document.querySelectorAll('.alert-triage-bar .chip-btn').forEach(btn => btn.classList.remove('active'));
-    if (st === 'ACTIVE') document.getElementById('chipFilterActiveOnly')?.classList.add('active');
-    else if (st === 'ACKNOWLEDGED') document.getElementById('chipFilterAck')?.classList.add('active');
-    else if (st === 'RESOLVED') document.getElementById('chipFilterResolved')?.classList.add('active');
-    
-    // Switch to Detail Events view to immediately display the filtered list of incidents
-    const overviewCon = document.getElementById('alertOverviewContainer');
-    const detailCon = document.getElementById('alertDetailContainer');
-    if (overviewCon) overviewCon.style.display = 'none';
-    if (detailCon) detailCon.style.display = 'grid';
-    
+    if (st === 'ACTIVE') {
+        document.getElementById('chipFilterActiveOnly')?.classList.add('active');
+    } else if (st === 'ACKNOWLEDGED') {
+        document.getElementById('chipFilterAck')?.classList.add('active');
+    } else if (st === 'RESOLVED') {
+        document.getElementById('chipFilterResolved')?.classList.add('active');
+    }
     updateAlertsDashboardUI();
 };
 
