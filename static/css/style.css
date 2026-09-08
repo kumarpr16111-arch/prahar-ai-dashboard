@@ -6792,3 +6792,46 @@ body.gis-mode-active .content-body {
     justify-content: flex-end;
     gap: 10px;
 }
+
+/* Official Print & PDF Export Document Layout */
+@media print {
+    #sidebar, .top-navbar, #sihDemoConsole, .btn-action, .btn-icon-action, .drone-modal-backdrop, .incident-modal-backdrop, .time-filter-dropdown {
+        display: none !important;
+    }
+    body, .main-wrapper, .content-body {
+        background: #ffffff !important;
+        color: #0f172a !important;
+        margin: 0 !important;
+        padding: 15px !important;
+    }
+    .tabs-card, .alert-section-card, .table-card {
+        background: #ffffff !important;
+        border: 1px solid #cbd5e1 !important;
+        box-shadow: none !important;
+    }
+    table {
+        color: #0f172a !important;
+        border-collapse: collapse !important;
+        width: 100% !important;
+    }
+    th {
+        background: #f1f5f9 !important;
+        color: #0f172a !important;
+        border: 1px solid #cbd5e1 !important;
+        padding: 8px !important;
+    }
+    td {
+        border: 1px solid #e2e8f0 !important;
+        color: #1e293b !important;
+        padding: 8px !important;
+    }
+}
+
+.time-dropdown-item:hover {
+    background: rgba(56, 189, 248, 0.15) !important;
+    color: #38bdf8 !important;
+}
+
+.user-profile:hover {
+    background: rgba(255, 255, 255, 0.05);
+}

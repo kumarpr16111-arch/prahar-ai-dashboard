@@ -7319,30 +7319,56 @@ body.gis-mode-active .content-body {
                 </div>
 
                 <div class="header-actions">
-                    <button class="btn-action btn-fullscreen" id="btnFullscreen">
-                        <i class="fa-solid fa-expand"></i> Full Screen
+                    <button type="button" class="btn-action btn-fullscreen" id="btnFullscreen" onclick="toggleFullScreenMode()" title="Toggle Fullscreen Command View">
+                        <i class="fa-solid fa-expand" id="fullscreenIcon"></i> <span id="fullscreenBtnText">Full Screen</span>
                     </button>
                     
                     <div class="action-divider"></div>
 
-                    <div class="icon-group">
-                        <button class="icon-btn" title="Time Filter">
+                    <div class="icon-group" style="position: relative;">
+                        <!-- Time Filter Button & Dropdown Menu -->
+                        <button type="button" class="icon-btn" id="btnTimeFilter" onclick="toggleTimeFilterDropdown(event)" title="Telemetry Time Window Filter">
                             <i class="fa-regular fa-clock"></i>
                             <i class="fa-solid fa-caret-down mini-caret"></i>
                         </button>
-                        <button class="icon-btn active" title="Analytics View">
+                        <div class="time-filter-dropdown" id="timeFilterDropdown" style="display: none; position: absolute; top: 38px; left: 0; z-index: 10000; background: #0f172a; border: 1px solid #334155; border-radius: 6px; box-shadow: 0 10px 25px rgba(0,0,0,0.6); min-width: 180px; padding: 6px 0;">
+                            <div style="font-size: 10px; font-weight: 700; color: #64748b; padding: 5px 12px; text-transform: uppercase; letter-spacing: 0.05em;">Time Filter</div>
+                            <a href="javascript:void(0)" onclick="setTimeFilterPreset('live')" class="time-dropdown-item active" id="timePresetLive" style="display: flex; align-items: center; justify-content: space-between; padding: 7px 12px; font-size: 12px; color: #f8fafc; text-decoration: none;">
+                                <span><i class="fa-solid fa-bolt" style="color: #38bdf8; margin-right: 6px;"></i> Live (Real-time)</span>
+                                <i class="fa-solid fa-check check-icn" style="color: #38bdf8; font-size: 11px;"></i>
+                            </a>
+                            <a href="javascript:void(0)" onclick="setTimeFilterPreset('1h')" class="time-dropdown-item" id="timePreset1h" style="display: flex; align-items: center; justify-content: space-between; padding: 7px 12px; font-size: 12px; color: #94a3b8; text-decoration: none;">
+                                <span><i class="fa-regular fa-clock" style="margin-right: 6px;"></i> Past 1 Hour</span>
+                                <i class="fa-solid fa-check check-icn" style="color: #38bdf8; font-size: 11px; display: none;"></i>
+                            </a>
+                            <a href="javascript:void(0)" onclick="setTimeFilterPreset('today')" class="time-dropdown-item" id="timePresetToday" style="display: flex; align-items: center; justify-content: space-between; padding: 7px 12px; font-size: 12px; color: #94a3b8; text-decoration: none;">
+                                <span><i class="fa-regular fa-calendar-day" style="margin-right: 6px;"></i> Today (24h)</span>
+                                <i class="fa-solid fa-check check-icn" style="color: #38bdf8; font-size: 11px; display: none;"></i>
+                            </a>
+                            <a href="javascript:void(0)" onclick="setTimeFilterPreset('7d')" class="time-dropdown-item" id="timePreset7d" style="display: flex; align-items: center; justify-content: space-between; padding: 7px 12px; font-size: 12px; color: #94a3b8; text-decoration: none;">
+                                <span><i class="fa-regular fa-calendar-week" style="margin-right: 6px;"></i> Past 7 Days</span>
+                                <i class="fa-solid fa-check check-icn" style="color: #38bdf8; font-size: 11px; display: none;"></i>
+                            </a>
+                        </div>
+
+                        <!-- Analytics View Button -->
+                        <button type="button" class="icon-btn active" id="btnAnalyticsView" onclick="toggleAnalyticsView()" title="Toggle Visual Analytics & Chart View">
                             <i class="fa-solid fa-chart-simple"></i>
                         </button>
-                        <button class="icon-btn" title="Export PDF">
+
+                        <!-- Export PDF Button -->
+                        <button type="button" class="icon-btn" id="btnExportPdf" onclick="handleHeaderExportPdf()" title="Export Active Screen as Official PDF Audit Report">
                             <i class="fa-regular fa-file-pdf"></i>
                         </button>
-                        <button class="icon-btn" title="Export Excel">
+
+                        <!-- Export Excel / Spreadsheet Button -->
+                        <button type="button" class="icon-btn" id="btnExportExcel" onclick="handleHeaderExportExcel()" title="Export Active Dataset to Excel (CSV / XLS)">
                             <i class="fa-regular fa-file-excel"></i>
                         </button>
                     </div>
 
                     <div class="user-profile-group" style="display: flex; align-items: center; gap: 12px;">
-                        <div class="user-profile" style="display: flex; align-items: center; gap: 10px;">
+                        <div class="user-profile" onclick="openUserProfileModal()" title="View Officer Identity & Command Permissions" style="display: flex; align-items: center; gap: 10px; cursor: pointer; padding: 3px 6px; border-radius: 6px; transition: background 0.15s ease;">
                             <div class="avatar" style="background: #141b29; color: #38bdf8; width: 34px; height: 34px; border-radius: 6px; border: 1px solid #243042; display: flex; align-items: center; justify-content: center; font-size: 13px;">
                                 <i class="fa-solid fa-user-shield"></i>
                             </div>
@@ -7840,6 +7866,10 @@ body.gis-mode-active .content-body {
                                     <span class="live-dot"></span>
                                     <span id="liveFeedPillText"><i class="fa-solid fa-pause"></i> LIVE STREAM</span>
                                 </div>
+                                <div class="live-status-pill auto-sim-pill" id="btnToggleAutoSim" onclick="toggleAutoSimulateAlerts()" title="Toggle Automatic Anomaly Generation (Every 10-15s with Sound Ping)" style="cursor: pointer; background: rgba(56, 189, 248, 0.15); border: 1px solid rgba(56, 189, 248, 0.4); color: #38bdf8; display: inline-flex; align-items: center; gap: 6px; padding: 5px 11px; border-radius: 20px; font-size: 11px; font-weight: 700; margin-left: 8px;">
+                                    <span class="live-dot" style="background: #38bdf8;"></span>
+                                    <span id="autoSimPillText"><i class="fa-solid fa-bolt"></i> AUTO-ALERTS: ON (12s)</span>
+                                </div>
                             </div>
                             
                             <div class="alert-header-right">
@@ -8036,99 +8066,38 @@ body.gis-mode-active .content-body {
                             </div>
                         </div>
 
-                        <!-- 5. Detail View (Drilldown when category is selected) -->
-                        <div class="alert-main-grid-layout" id="alertDetailContainer" style="display: none;">
-                            <!-- Left / Primary Column -->
-                            <div class="alert-primary-col">
-                                <!-- Dynamic Event Detail Card -->
-                                <div class="alert-detail-card" id="alertDetailCard">
-                                    <div class="alert-detail-header">
-                                        <div class="detail-title-group">
-                                            <button type="button" class="btn-icon-action" onclick="setAlertDetectionType('All Types')" title="Back to All Categories" style="margin-right: 4px;">
-                                                <i class="fa-solid fa-arrow-left"></i>
-                                            </button>
-                                            <i class="fa-solid fa-triangle-exclamation detail-icon-orange" id="detailIcon"></i>
-                                            <h3 class="detail-title" id="detailTitle">Unauthorized stoppage <span class="detail-tag" id="detailTag">(Vehicle Alerts)</span></h3>
-                                        </div>
-                                        <div class="detail-actions">
-                                            <button type="button" class="btn-action" onclick="acknowledgeAllInCategory()" title="Acknowledge All in Category" style="padding: 5px 10px; font-size: 11px; background:#1e293b; color:#38bdf8;">
-                                                <i class="fa-solid fa-check-double"></i> Ack All
-                                            </button>
-                                            <button type="button" class="btn-action" onclick="exportAlertsCsv()" title="Export Filtered Alerts to CSV" style="padding: 5px 10px; font-size: 11px; background:#1e293b; color:#34d399;">
-                                                <i class="fa-solid fa-file-csv"></i> Export
-                                            </button>
-                                            <button type="button" class="btn-icon-action" onclick="clearResolvedAlerts()" title="Dismiss / Clear Resolved"><i class="fa-solid fa-trash-can"></i></button>
-                                            <button type="button" class="btn-icon-action" id="btnCloseDetail" onclick="setAlertDetectionType('All Types')" title="Close Detail"><i class="fa-solid fa-xmark"></i></button>
-                                        </div>
+                        <!-- 5. Detail View (Drilldown when category or filter is selected) -->
+                        <div class="alert-main-grid-layout" id="alertDetailContainer" style="display: none; width: 100%;">
+                            <!-- Full-Width Incident Forensics Card -->
+                            <div class="alert-detail-card" id="alertDetailCard" style="width: 100%;">
+                                <div class="alert-detail-header">
+                                    <div class="detail-title-group">
+                                        <button type="button" class="btn-icon-action" onclick="setAlertDetectionType('All Types')" title="Back to All Categories" style="margin-right: 6px; padding: 6px 12px; background: #1e293b; color: #38bdf8; border: 1px solid #334155; border-radius: 6px; font-size: 12px; font-weight: 600; display: inline-flex; align-items: center; gap: 6px; cursor: pointer;">
+                                            <i class="fa-solid fa-arrow-left"></i> <span>Back to Overview</span>
+                                        </button>
+                                        <i class="fa-solid fa-triangle-exclamation detail-icon-orange" id="detailIcon"></i>
+                                        <h3 class="detail-title" id="detailTitle">Unauthorized stoppage <span class="detail-tag" id="detailTag">(Vehicle Alerts)</span></h3>
                                     </div>
-
-                                    <div class="detail-subtitle-bar" id="detailSubtitleBar">
-                                        <span class="subtitle-events-text" id="detailSubtitleText">• SHOWING 0 OF 0 EVENTS</span>
-                                        <span style="font-size: 11px; color: #94a3b8;"><i class="fa-solid fa-arrow-pointer" style="margin-right: 4px;"></i>Click any incident to open full surveillance forensics</span>
-                                    </div>
-
-                                    <!-- Events Container -->
-                                    <div class="detail-events-body" id="detailEventsBody">
-                                        <!-- Rendered dynamically by JavaScript -->
+                                    <div class="detail-actions">
+                                        <button type="button" class="btn-action" onclick="acknowledgeAllInCategory()" title="Acknowledge All in Category" style="padding: 6px 12px; font-size: 11.5px; background:#1e293b; color:#38bdf8; border: 1px solid #334155; border-radius: 6px;">
+                                            <i class="fa-solid fa-check-double"></i> Ack All
+                                        </button>
+                                        <button type="button" class="btn-action" onclick="exportAlertsCsv()" title="Export Filtered Alerts to CSV" style="padding: 6px 12px; font-size: 11.5px; background:#1e293b; color:#34d399; border: 1px solid #334155; border-radius: 6px;">
+                                            <i class="fa-solid fa-file-csv"></i> Export CSV
+                                        </button>
+                                        <button type="button" class="btn-icon-action" onclick="clearResolvedAlerts()" title="Dismiss / Clear Resolved" style="padding: 6px 10px; background:#1e293b; color:#94a3b8; border: 1px solid #334155; border-radius: 6px;"><i class="fa-solid fa-trash-can"></i></button>
+                                        <button type="button" class="btn-icon-action" id="btnCloseDetail" onclick="setAlertDetectionType('All Types')" title="Close Detail" style="padding: 6px 10px; background:#1e293b; color:#94a3b8; border: 1px solid #334155; border-radius: 6px;"><i class="fa-solid fa-xmark"></i></button>
                                     </div>
                                 </div>
 
-                                <!-- GPS-RFID ALERTS Bottom Quick Strip in Detail View -->
-                                <div class="alert-section-card margin-top-md">
-                                    <div class="alert-section-header">
-                                        <div class="section-title-group">
-                                            <span class="vertical-bar bar-orange"></span>
-                                            <i class="fa-solid fa-bus section-icon"></i>
-                                            <h3 class="alert-section-title">GPS-RFID ANOMALY CATEGORIES</h3>
-                                        </div>
-                                    </div>
-
-                                    <div class="cards-grid grid-5" id="gpsCardsGrid">
-                                        <div class="metric-card card-highlight-orange" data-card-type="Off Route Alerts" data-alert-cat="off_route" onclick="setAlertDetectionType('Off Route Alerts')">
-                                            <div class="card-metric-info"><span class="metric-number highlight-orange-text">3</span><span class="metric-label">OFF-ROUTE ALERTS</span></div>
-                                            <div class="metric-icon-circle highlight-orange-icon"><i class="fa-solid fa-route"></i></div>
-                                        </div>
-                                        <div class="metric-card card-highlight-orange" data-card-type="Off Area Alerts" data-alert-cat="off_area" onclick="setAlertDetectionType('Off Area Alerts')">
-                                            <div class="card-metric-info"><span class="metric-number highlight-orange-text">1</span><span class="metric-label">OFF-AREA ALERTS</span></div>
-                                            <div class="metric-icon-circle highlight-orange-icon"><i class="fa-solid fa-ban"></i></div>
-                                        </div>
-                                        <div class="metric-card card-highlight-orange" data-card-type="Tamper Alerts" data-alert-cat="tamper" onclick="setAlertDetectionType('Tamper Alerts')">
-                                            <div class="card-metric-info"><span class="metric-number highlight-orange-text">2</span><span class="metric-label">TAMPER ALERTS</span></div>
-                                            <div class="metric-icon-circle highlight-orange-icon"><i class="fa-solid fa-shield-virus"></i></div>
-                                        </div>
-                                        <div class="metric-card card-highlight-red" data-card-type="Unauthorized stoppage" data-alert-cat="stoppage" onclick="setAlertDetectionType('Unauthorized stoppage')">
-                                            <div class="card-metric-info"><span class="metric-number highlight-orange-text">2</span><span class="metric-label">UNAUTHORIZED STOP...</span></div>
-                                            <div class="metric-icon-circle highlight-orange-icon"><i class="fa-solid fa-hand"></i></div>
-                                        </div>
-                                        <div class="metric-card card-highlight-orange" data-card-type="Over Speed" data-alert-cat="over_speed" onclick="setAlertDetectionType('Over Speed')">
-                                            <div class="card-metric-info"><span class="metric-number highlight-orange-text">1</span><span class="metric-label">OVER SPEED</span></div>
-                                            <div class="metric-icon-circle highlight-orange-icon"><i class="fa-solid fa-gauge-high"></i></div>
-                                        </div>
-                                        <div class="metric-card card-highlight-orange" data-card-type="Open Boom Barriers" data-alert-cat="boom_barrier" onclick="setAlertDetectionType('Open Boom Barriers')">
-                                            <div class="card-metric-info"><span class="metric-number highlight-orange-text">3</span><span class="metric-label">OPEN BOOM BARRIERS</span></div>
-                                            <div class="metric-icon-circle highlight-orange-icon"><i class="fa-solid fa-traffic-light"></i></div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Right Vertical Column: VA ALERTS -->
-                            <div class="alert-secondary-col" id="vaAlertsSidebarCol">
-                                <div class="va-sidebar-header">
-                                    <div class="va-header-title"><i class="fa-solid fa-video teal-text"></i><span>VA ALERTS</span></div>
-                                    <span class="events-status-text" id="vaSidebarStatusText">• 11 EVENTS</span>
+                                <div class="detail-subtitle-bar" id="detailSubtitleBar">
+                                    <span class="subtitle-events-text" id="detailSubtitleText">• SHOWING 0 OF 0 EVENTS</span>
+                                    <span style="font-size: 11px; color: #94a3b8;"><i class="fa-solid fa-arrow-pointer" style="margin-right: 4px;"></i>Click "Inspect Forensics & Feed" on any incident to open full surveillance diagnostics</span>
                                 </div>
 
-                                <div class="va-sidebar-cards-list">
-                                    <div class="metric-card card-highlight-teal mini-card" data-va-type="Crowd" onclick="setAlertDetectionType('Crowd')"><div class="card-metric-info"><span class="metric-number highlight-teal-text">1</span><span class="metric-label">CROWD DETECTION</span></div><div class="metric-icon-circle highlight-teal-icon"><i class="fa-solid fa-users"></i></div></div>
-                                    <div class="metric-card card-highlight-teal mini-card" data-va-type="Vehicle Detection" id="vaCardVehicle" onclick="setAlertDetectionType('Vehicle Detection')"><div class="card-metric-info"><span class="metric-number highlight-teal-text">1</span><span class="metric-label">VEHICLE DETECTION</span></div><div class="metric-icon-circle highlight-teal-icon"><i class="fa-solid fa-car"></i></div></div>
-                                    <div class="metric-card card-highlight-orange mini-card" data-va-type="Person Detection" onclick="setAlertDetectionType('Person Detection')"><div class="card-metric-info"><span class="metric-number highlight-orange-text">1</span><span class="metric-label">PERSON DETECTION</span></div><div class="metric-icon-circle highlight-orange-icon"><i class="fa-solid fa-user"></i></div></div>
-                                    <div class="metric-card card-highlight-red mini-card" data-va-type="Intrusion Detection" onclick="setAlertDetectionType('Intrusion Detection')"><div class="card-metric-info"><span class="metric-number highlight-orange-text">1</span><span class="metric-label">INTRUSION DETECTION</span></div><div class="metric-icon-circle highlight-orange-icon"><img src="/static/media_screenshots/trace_main_logo.jpeg" alt="TRACE Logo" class="brand-logo-img"></div></div>
-                                    <div class="metric-card card-highlight-orange mini-card" data-va-type="Traffic Congestion" onclick="setAlertDetectionType('Traffic Congestion')"><div class="card-metric-info"><span class="metric-number highlight-orange-text">1</span><span class="metric-label">TRAFFIC CONGESTION</span></div><div class="metric-icon-circle highlight-orange-icon"><i class="fa-solid fa-traffic-light"></i></div></div>
-                                    <div class="metric-card card-highlight-teal mini-card" data-va-type="Loaded-Unloaded Alerts" onclick="setAlertDetectionType('Loaded-Unloaded Alerts')"><div class="card-metric-info"><span class="metric-number highlight-teal-text">2</span><span class="metric-label">LOADED-UNLOADED AL...</span></div><div class="metric-icon-circle highlight-teal-icon"><i class="fa-solid fa-truck-ramp-box"></i></div></div>
-                                    <div class="metric-card card-highlight-orange mini-card" data-va-type="Camera Tampering" onclick="setAlertDetectionType('Camera Tampering')"><div class="card-metric-info"><span class="metric-number highlight-orange-text">2</span><span class="metric-label">CAMERA TAMPERING</span></div><div class="metric-icon-circle highlight-orange-icon"><i class="fa-solid fa-video-slash"></i></div></div>
-                                    <div class="metric-card card-highlight-orange mini-card" data-va-type="Safety Hazard" onclick="setAlertDetectionType('Safety Hazard')"><div class="card-metric-info"><span class="metric-number highlight-orange-text">1</span><span class="metric-label">SAFETY HAZARD</span></div><div class="metric-icon-circle highlight-orange-icon"><i class="fa-solid fa-triangle-exclamation"></i></div></div>
-                                    <div class="metric-card card-highlight-teal mini-card" data-va-type="Insufficient Illumination" onclick="setAlertDetectionType('Insufficient Illumination')"><div class="card-metric-info"><span class="metric-number highlight-teal-text">1</span><span class="metric-label">INSUFFICIENT ILLUMIN...</span></div><div class="metric-icon-circle highlight-teal-icon"><i class="fa-solid fa-lightbulb"></i></div></div>
+                                <!-- Events Container -->
+                                <div class="detail-events-body" id="detailEventsBody">
+                                    <!-- Rendered dynamically by JavaScript -->
                                 </div>
                             </div>
                         </div>
@@ -14055,6 +14024,20 @@ window.CURRENT_ALERT_CATEGORY = 'All Types';
 window.ACTIVE_MODAL_INCIDENT = null;
 window.LAST_KNOWN_ALERT_COUNT = 0;
 
+// Unlock AudioContext on first user interaction so browsers never block sound
+['click', 'keydown', 'touchstart'].forEach(evt => {
+    document.addEventListener(evt, () => {
+        try {
+            if (!audioCtx) {
+                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            }
+            if (audioCtx && audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+        } catch (e) {}
+    }, { once: true });
+});
+
 function playAlertChime(type = 'normal') {
     if (window.ALERT_AUDIO_MUTED || window.ALERT_AUDIO_VOLUME <= 0) return;
     try {
@@ -14066,37 +14049,51 @@ function playAlertChime(type = 'normal') {
         }
 
         const now = audioCtx.currentTime;
-        const osc = audioCtx.createOscillator();
-        const gainNode = audioCtx.createGain();
-
-        osc.connect(gainNode);
-        gainNode.connect(audioCtx.destination);
-
-        const vol = window.ALERT_AUDIO_VOLUME * 0.15; // Pleasant listening level
+        const vol = Math.max(0.08, window.ALERT_AUDIO_VOLUME * 0.28);
 
         if (type === 'critical') {
-            osc.type = 'sawtooth';
-            osc.frequency.setValueAtTime(880, now);
-            osc.frequency.exponentialRampToValueAtTime(440, now + 0.18);
-            gainNode.gain.setValueAtTime(vol * 1.2, now);
-            gainNode.gain.exponentialRampToValueAtTime(0.001, now + 0.25);
-            osc.start(now);
-            osc.stop(now + 0.25);
-        } else if (type === 'test') {
-            osc.type = 'sine';
-            osc.frequency.setValueAtTime(587.33, now); // D5
-            osc.frequency.exponentialRampToValueAtTime(880, now + 0.12); // A5
-            gainNode.gain.setValueAtTime(vol, now);
-            gainNode.gain.exponentialRampToValueAtTime(0.001, now + 0.18);
-            osc.start(now);
-            osc.stop(now + 0.18);
+            // Urgent 2-tone pulse alarm: High E6 (1318Hz) -> A5 (880Hz)
+            [0, 0.12].forEach(offset => {
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.type = 'triangle';
+                osc.frequency.setValueAtTime(1318.51, now + offset);
+                osc.frequency.exponentialRampToValueAtTime(880.00, now + offset + 0.09);
+                gain.gain.setValueAtTime(vol * 1.3, now + offset);
+                gain.gain.exponentialRampToValueAtTime(0.001, now + offset + 0.11);
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                osc.start(now + offset);
+                osc.stop(now + offset + 0.12);
+            });
+        } else if (type === 'high' || type === 'warning') {
+            // Pleasant 3-note ascending chime: C5 (523Hz) -> G5 (784Hz) -> C6 (1046Hz)
+            const notes = [523.25, 783.99, 1046.50];
+            notes.forEach((freq, idx) => {
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(freq, now + idx * 0.065);
+                gain.gain.setValueAtTime(vol * (0.8 + idx * 0.25), now + idx * 0.065);
+                gain.gain.exponentialRampToValueAtTime(0.001, now + idx * 0.065 + 0.16);
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                osc.start(now + idx * 0.065);
+                osc.stop(now + idx * 0.065 + 0.17);
+            });
         } else {
+            // Crisp radar sonar blip: 880Hz -> 1320Hz
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
             osc.type = 'sine';
-            osc.frequency.setValueAtTime(659.25, now); // E5
-            gainNode.gain.setValueAtTime(vol * 0.8, now);
-            gainNode.gain.exponentialRampToValueAtTime(0.001, now + 0.15);
+            osc.frequency.setValueAtTime(880, now);
+            osc.frequency.exponentialRampToValueAtTime(1320, now + 0.09);
+            gain.gain.setValueAtTime(vol, now);
+            gain.gain.exponentialRampToValueAtTime(0.001, now + 0.16);
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
             osc.start(now);
-            osc.stop(now + 0.15);
+            osc.stop(now + 0.17);
         }
     } catch (e) {
         // AudioContext restricted before user gesture
@@ -14453,20 +14450,52 @@ function renderDetailEventsForCategory(type) {
     }
 }
 
-// Interactive Triage & Filter Handlers
+// Interactive Category, Triage & Filter Handlers
+window.setAlertDetectionType = function(type) {
+    window.CURRENT_ALERT_CATEGORY = type;
+    const overviewCon = document.getElementById('alertOverviewContainer');
+    const detailCon = document.getElementById('alertDetailContainer');
+    const detectionSelect = document.getElementById('detectionTypeSelect');
+    if (detectionSelect && type) detectionSelect.value = type;
+
+    if (type === 'All Types' || !type) {
+        window.CURRENT_ALERT_CATEGORY = 'All Types';
+        window.CURRENT_ALERT_SEVERITY_FILTER = 'ALL';
+        window.CURRENT_ALERT_STATUS_FILTER = 'ALL';
+        document.querySelectorAll('.alert-triage-bar .chip-btn').forEach(btn => btn.classList.remove('active'));
+        document.getElementById('chipFilterAll')?.classList.add('active');
+        if (overviewCon) overviewCon.style.display = 'block';
+        if (detailCon) detailCon.style.display = 'none';
+        updateAlertsDashboardUI();
+        return;
+    }
+
+    if (overviewCon) overviewCon.style.display = 'none';
+    if (detailCon) detailCon.style.display = 'block';
+    renderDetailEventsForCategory(type);
+    updateAlertsDashboardUI();
+};
+
 window.setSeverityFilter = function(sev) {
     window.CURRENT_ALERT_SEVERITY_FILTER = sev;
     window.CURRENT_ALERT_STATUS_FILTER = 'ALL';
     document.querySelectorAll('.alert-triage-bar .chip-btn').forEach(btn => btn.classList.remove('active'));
+    
+    const overviewCon = document.getElementById('alertOverviewContainer');
+    const detailCon = document.getElementById('alertDetailContainer');
+
     if (sev === 'ALL') {
         document.getElementById('chipFilterAll')?.classList.add('active');
         window.CURRENT_ALERT_CATEGORY = 'All Types';
-    } else if (sev === 'CRITICAL') {
-        document.getElementById('chipFilterCritical')?.classList.add('active');
-    } else if (sev === 'HIGH') {
-        document.getElementById('chipFilterHigh')?.classList.add('active');
-    } else if (sev === 'WARNING') {
-        document.getElementById('chipFilterWarning')?.classList.add('active');
+        if (overviewCon) overviewCon.style.display = 'block';
+        if (detailCon) detailCon.style.display = 'none';
+    } else {
+        if (sev === 'CRITICAL') document.getElementById('chipFilterCritical')?.classList.add('active');
+        else if (sev === 'HIGH') document.getElementById('chipFilterHigh')?.classList.add('active');
+        else if (sev === 'WARNING') document.getElementById('chipFilterWarning')?.classList.add('active');
+        
+        if (overviewCon) overviewCon.style.display = 'none';
+        if (detailCon) detailCon.style.display = 'block';
     }
     renderDetailEventsForCategory(window.CURRENT_ALERT_CATEGORY || 'All Types');
     updateAlertsDashboardUI();
@@ -14476,24 +14505,28 @@ window.setStatusFilter = function(st) {
     window.CURRENT_ALERT_STATUS_FILTER = st;
     window.CURRENT_ALERT_SEVERITY_FILTER = 'ALL';
     document.querySelectorAll('.alert-triage-bar .chip-btn').forEach(btn => btn.classList.remove('active'));
-    if (st === 'ACTIVE') {
-        document.getElementById('chipFilterActiveOnly')?.classList.add('active');
-    } else if (st === 'ACKNOWLEDGED') {
-        document.getElementById('chipFilterAck')?.classList.add('active');
-    } else if (st === 'RESOLVED') {
-        document.getElementById('chipFilterResolved')?.classList.add('active');
-    }
+    
+    const overviewCon = document.getElementById('alertOverviewContainer');
+    const detailCon = document.getElementById('alertDetailContainer');
+
+    if (st === 'ACTIVE') document.getElementById('chipFilterActiveOnly')?.classList.add('active');
+    else if (st === 'ACKNOWLEDGED') document.getElementById('chipFilterAck')?.classList.add('active');
+    else if (st === 'RESOLVED') document.getElementById('chipFilterResolved')?.classList.add('active');
+
+    if (overviewCon) overviewCon.style.display = 'none';
+    if (detailCon) detailCon.style.display = 'block';
+
     renderDetailEventsForCategory(window.CURRENT_ALERT_CATEGORY || 'All Types');
     updateAlertsDashboardUI();
 };
 
 window.handleAlertSearch = function(query) {
     window.CURRENT_ALERT_SEARCH_QUERY = (query || '').trim();
+    const overviewCon = document.getElementById('alertOverviewContainer');
+    const detailCon = document.getElementById('alertDetailContainer');
     if (window.CURRENT_ALERT_SEARCH_QUERY) {
-        const overviewCon = document.getElementById('alertOverviewContainer');
-        const detailCon = document.getElementById('alertDetailContainer');
         if (overviewCon) overviewCon.style.display = 'none';
-        if (detailCon) detailCon.style.display = 'grid';
+        if (detailCon) detailCon.style.display = 'block';
     }
     renderDetailEventsForCategory(window.CURRENT_ALERT_CATEGORY || 'All Types');
     updateAlertsDashboardUI();
@@ -14669,13 +14702,84 @@ async function triggerSimulateAlert() {
         }
         if (res.ok) {
             const data = await res.json();
-            const alertName = data.created_alert?.alert_type || 'Surveillance Anomaly';
-            showAuditToast(`🚨 New Live Anomaly Injected into Supabase: ${alertName}`);
-            playAlertChime('critical');
+            const alert = data.created_alert || {};
+            const alertName = alert.alert_type || 'Surveillance Anomaly';
+            const sev = (alert.severity || 'HIGH').toLowerCase();
+            showAuditToast(`🚨 New Live Anomaly Injected: ${alertName} (${alert.vehicle_no || 'Vehicle'} @ ${alert.location || 'Corridor'})`);
+            playAlertChime(sev === 'critical' ? 'critical' : (sev === 'high' ? 'high' : 'normal'));
             await fetchLiveAlerts();
         }
     } catch (e) {
-        console.error(e);
+        console.error('Simulate anomaly error:', e);
+    }
+}
+
+// -------------------------------------------------------------
+// Auto Anomaly Generation Engine (Continuous 10-15s Simulation Loop)
+// -------------------------------------------------------------
+window.IS_AUTO_ANOMALY_ACTIVE = true;
+window.AUTO_ANOMALY_TIMER = null;
+window.AUTO_ANOMALY_COUNTDOWN = 12;
+
+function startAutoAnomalyLoop() {
+    if (window.AUTO_ANOMALY_TIMER) clearInterval(window.AUTO_ANOMALY_TIMER);
+    window.AUTO_ANOMALY_COUNTDOWN = Math.floor(Math.random() * 6) + 10; // 10 to 15 seconds
+    updateAutoSimUI();
+
+    window.AUTO_ANOMALY_TIMER = setInterval(async () => {
+        if (!window.IS_AUTO_ANOMALY_ACTIVE) return;
+        
+        window.AUTO_ANOMALY_COUNTDOWN--;
+        updateAutoSimUI();
+        
+        if (window.AUTO_ANOMALY_COUNTDOWN <= 0) {
+            window.AUTO_ANOMALY_COUNTDOWN = Math.floor(Math.random() * 6) + 10; // Reset to 10-15s
+            await triggerSimulateAlert();
+            updateAutoSimUI();
+        }
+    }, 1000);
+}
+
+function toggleAutoSimulateAlerts() {
+    window.IS_AUTO_ANOMALY_ACTIVE = !window.IS_AUTO_ANOMALY_ACTIVE;
+    if (window.IS_AUTO_ANOMALY_ACTIVE) {
+        startAutoAnomalyLoop();
+        showAuditToast('⚡ Auto Anomaly Stream ENABLED (Generating every 10-15s with Sound Ping)');
+        playAlertChime('high');
+    } else {
+        showAuditToast('⏸ Auto Anomaly Stream PAUSED');
+    }
+    updateAutoSimUI();
+}
+
+function updateAutoSimUI() {
+    const pill = document.getElementById('btnToggleAutoSim');
+    const pillText = document.getElementById('autoSimPillText');
+    const consoleBtn = document.getElementById('btnConsoleToggleAuto');
+    const countdownBadge = document.getElementById('autoSimCountdownBadge');
+
+    if (window.IS_AUTO_ANOMALY_ACTIVE) {
+        if (pill) {
+            pill.style.background = 'rgba(56, 189, 248, 0.15)';
+            pill.style.borderColor = 'rgba(56, 189, 248, 0.5)';
+            pill.style.color = '#38bdf8';
+        }
+        if (pillText) pillText.innerHTML = `<i class="fa-solid fa-bolt" style="color:#38bdf8;"></i> AUTO-ALERTS: ON (${window.AUTO_ANOMALY_COUNTDOWN}s)`;
+        if (consoleBtn) {
+            consoleBtn.style.background = '#0284c7';
+        }
+        if (countdownBadge) countdownBadge.innerText = `ON (${window.AUTO_ANOMALY_COUNTDOWN}s)`;
+    } else {
+        if (pill) {
+            pill.style.background = 'rgba(100, 116, 139, 0.15)';
+            pill.style.borderColor = 'rgba(100, 116, 139, 0.3)';
+            pill.style.color = '#94a3b8';
+        }
+        if (pillText) pillText.innerHTML = `<i class="fa-solid fa-pause"></i> AUTO-ALERTS: PAUSED`;
+        if (consoleBtn) {
+            consoleBtn.style.background = '#334155';
+        }
+        if (countdownBadge) countdownBadge.innerText = 'OFF';
     }
 }
 
@@ -14709,6 +14813,9 @@ function toggleDemoConsole() {
 
 // Setup Event Listeners for Header Controls
 document.addEventListener('DOMContentLoaded', () => {
+    // Start auto anomaly stream on page load
+    setTimeout(startAutoAnomalyLoop, 500);
+
     // Live Feed Toggle Button
     const btnToggleLive = document.getElementById('btnToggleLiveFeed');
     const pillText = document.getElementById('liveFeedPillText');
@@ -14890,6 +14997,186 @@ function handleHashRoute() {
 }
 window.addEventListener('hashchange', handleHashRoute);
 setTimeout(handleHashRoute, 150);
+
+// ========================================================
+// Top Header Action Interactive Controls
+// ========================================================
+
+// 1. Full Screen Toggle
+window.toggleFullScreenMode = function() {
+    const icon = document.getElementById('fullscreenIcon');
+    const text = document.getElementById('fullscreenBtnText');
+    if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen().then(() => {
+            if (icon) icon.className = 'fa-solid fa-compress';
+            if (text) text.textContent = 'Exit Fullscreen';
+            showAuditToast('🖥️ Fullscreen Command Center View Activated');
+        }).catch(err => {
+            console.warn(`Fullscreen error: ${err.message}`);
+        });
+    } else {
+        if (document.exitFullscreen) {
+            document.exitFullscreen().then(() => {
+                if (icon) icon.className = 'fa-solid fa-expand';
+                if (text) text.textContent = 'Full Screen';
+                showAuditToast('Exited Fullscreen View');
+            });
+        }
+    }
+};
+
+document.addEventListener('fullscreenchange', () => {
+    const icon = document.getElementById('fullscreenIcon');
+    const text = document.getElementById('fullscreenBtnText');
+    if (!document.fullscreenElement) {
+        if (icon) icon.className = 'fa-solid fa-expand';
+        if (text) text.textContent = 'Full Screen';
+    } else {
+        if (icon) icon.className = 'fa-solid fa-compress';
+        if (text) text.textContent = 'Exit Fullscreen';
+    }
+});
+
+// 2. Time Filter Preset Dropdown
+window.toggleTimeFilterDropdown = function(e) {
+    if (e) e.stopPropagation();
+    const dropdown = document.getElementById('timeFilterDropdown');
+    if (dropdown) {
+        const isHidden = dropdown.style.display === 'none' || !dropdown.style.display;
+        dropdown.style.display = isHidden ? 'block' : 'none';
+    }
+};
+
+window.setTimeFilterPreset = function(preset) {
+    const dropdown = document.getElementById('timeFilterDropdown');
+    if (dropdown) dropdown.style.display = 'none';
+
+    document.querySelectorAll('.time-dropdown-item').forEach(item => {
+        item.classList.remove('active');
+        const check = item.querySelector('.check-icn');
+        if (check) check.style.display = 'none';
+    });
+
+    const activeItem = document.getElementById(`timePreset${preset.charAt(0).toUpperCase() + preset.slice(1)}`);
+    if (activeItem) {
+        activeItem.classList.add('active');
+        const check = activeItem.querySelector('.check-icn');
+        if (check) check.style.display = 'inline-block';
+    }
+
+    const labels = {
+        'live': 'Live (Real-time Telemetry)',
+        '1h': 'Past 1 Hour',
+        'today': 'Today (Past 24 Hours)',
+        '7d': 'Past 7 Days'
+    };
+    showAuditToast(`⏱ Telemetry filter set to: ${labels[preset] || preset}`);
+    playAlertChime('test');
+    if (typeof fetchLiveAlerts === 'function') fetchLiveAlerts();
+};
+
+document.addEventListener('click', (e) => {
+    const dropdown = document.getElementById('timeFilterDropdown');
+    const btn = document.getElementById('btnTimeFilter');
+    if (dropdown && btn && !btn.contains(e.target) && !dropdown.contains(e.target)) {
+        dropdown.style.display = 'none';
+    }
+});
+
+// 3. Analytics View Button
+window.toggleAnalyticsView = function() {
+    const btn = document.getElementById('btnAnalyticsView');
+    if (btn) btn.classList.toggle('active');
+    
+    // If in Alert Dashboard, highlight category cards & Defcon summary
+    const threatBadge = document.getElementById('threatLevelBadge');
+    if (threatBadge) {
+        threatBadge.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        threatBadge.style.transition = 'transform 0.3s ease';
+        threatBadge.style.transform = 'scale(1.03)';
+        setTimeout(() => { threatBadge.style.transform = 'scale(1)'; }, 600);
+    }
+    showAuditToast('📊 Visual Analytics & Corridor Performance Metrics Displayed');
+    playAlertChime('high');
+};
+
+// 4. Export PDF Action (Official Report Generator)
+window.handleHeaderExportPdf = function() {
+    showAuditToast('📄 Preparing Official TRACE PDF Audit Report...');
+    playAlertChime('test');
+
+    setTimeout(() => {
+        window.print();
+    }, 400);
+};
+
+// 5. Export Excel Action (Universal CSV / Spreadsheet Generator)
+window.handleHeaderExportExcel = function() {
+    showAuditToast('📗 Compiling active dataset into Excel spreadsheet...');
+    playAlertChime('test');
+
+    // Find visible table on screen
+    const visibleTable = document.querySelector('.content-view:not([style*="display: none"]) table, .table-wrapper table, table');
+    let csvData = [];
+    let filename = `TRACE_Export_${new Date().toISOString().slice(0,10)}.csv`;
+
+    if (visibleTable) {
+        const rows = visibleTable.querySelectorAll('tr');
+        rows.forEach(row => {
+            const cols = row.querySelectorAll('th, td');
+            let rowData = [];
+            cols.forEach(col => {
+                let text = col.innerText.replace(/(\r\n|\n|\r)/gm, ' ').replace(/"/g, '""').trim();
+                rowData.push(`"${text}"`);
+            });
+            if (rowData.length > 0) csvData.push(rowData.join(','));
+        });
+    }
+
+    // Fallback to active alerts dataset if no table visible
+    if (csvData.length === 0 && window.ALL_LIVE_ALERTS && window.ALL_LIVE_ALERTS.length > 0) {
+        csvData.push('"ID","SEVERITY","ALERT TYPE","STATUS","VEHICLE NO","LOCATION","CONFIDENCE","DESCRIPTION","TIMESTAMP"');
+        window.ALL_LIVE_ALERTS.forEach(a => {
+            csvData.push(`"${a.id}","${a.severity}","${a.alert_type}","${a.status}","${a.vehicle_no || ''}","${a.location || ''}","${a.confidence_score || 95}%","${(a.description || '').replace(/"/g, '""')}","${a.created_at || 'Live'}"`);
+        });
+        filename = `TRACE_Surveillance_Alerts_${new Date().toISOString().slice(0,10)}.csv`;
+    }
+
+    if (csvData.length > 0) {
+        const csvContent = "\uFEFF" + csvData.join("\n"); // UTF-8 BOM for Microsoft Excel
+        const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement("a");
+        link.setAttribute("href", url);
+        link.setAttribute("download", filename);
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        showAuditToast(`✅ Exported ${csvData.length - 1} records to ${filename}`);
+    } else {
+        showAuditToast('⚠️ No active tabular dataset found to export.');
+    }
+};
+
+// 6. User Profile Modal Controls
+window.openUserProfileModal = function() {
+    const modal = document.getElementById('userProfileModal');
+    if (modal) {
+        modal.style.display = 'flex';
+        playAlertChime('test');
+    }
+};
+
+window.closeUserProfileModalDirect = function() {
+    const modal = document.getElementById('userProfileModal');
+    if (modal) modal.style.display = 'none';
+};
+
+window.closeUserProfileModal = function(e) {
+    if (e && e.target.id === 'userProfileModal') {
+        closeUserProfileModalDirect();
+    }
+};
 </script>
 
 <!-- Floating SIH Demo & Database Control Console -->
@@ -14909,10 +15196,14 @@ setTimeout(handleHashRoute, 150);
             <span>Live DB:</span>
             <strong style="color: #34d399;">Supabase (PostgreSQL)</strong>
         </div>
-        <button type="button" onclick="triggerSimulateAlert()" style="background: #dc2626; color: #fff; border: none; padding: 6px 9px; border-radius: 4px; font-size: 10.5px; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 5px;">
-            <i class="fa-solid fa-triangle-exclamation"></i> Trigger Anomaly Alert
+        <button type="button" id="btnConsoleToggleAuto" onclick="toggleAutoSimulateAlerts()" style="background: #0284c7; color: #fff; border: none; padding: 6px 9px; border-radius: 4px; font-size: 10.5px; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: 5px;">
+            <span><i class="fa-solid fa-bolt"></i> Auto Anomaly Sim (10-15s)</span>
+            <span id="autoSimCountdownBadge" style="background: rgba(0,0,0,0.35); padding: 2px 6px; border-radius: 3px; font-size: 9.5px; font-family: monospace;">ON (12s)</span>
         </button>
-        <button type="button" onclick="triggerSimulateFleet()" style="background: #0284c7; color: #fff; border: none; padding: 6px 9px; border-radius: 4px; font-size: 10.5px; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 5px;">
+        <button type="button" onclick="triggerSimulateAlert()" style="background: #dc2626; color: #fff; border: none; padding: 6px 9px; border-radius: 4px; font-size: 10.5px; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 5px;">
+            <i class="fa-solid fa-triangle-exclamation"></i> Trigger Anomaly Now
+        </button>
+        <button type="button" onclick="triggerSimulateFleet()" style="background: #1e293b; color: #38bdf8; border: 1px solid #334155; padding: 5px 9px; border-radius: 4px; font-size: 10.5px; font-weight: 500; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 5px;">
             <i class="fa-solid fa-truck-fast"></i> Simulate Fleet Step
         </button>
         <button type="button" onclick="syncAllFromSupabase()" style="background: #1e293b; color: #cbd5e1; border: 1px solid #334155; padding: 5px 9px; border-radius: 4px; font-size: 10.5px; font-weight: 500; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 5px;">
@@ -15013,6 +15304,61 @@ setTimeout(handleHashRoute, 150);
                     <div class="meta-data-row"><span>ATR Action:</span><span>Auto-Logged in TRACE</span></div>
                 </div>
             </div>
+        </div>
+    </div>
+</div>
+
+<!-- Officer Identity & Security Profile Modal -->
+<div class="incident-modal-backdrop" id="userProfileModal" style="display: none;" onclick="closeUserProfileModal(event)">
+    <div class="incident-modal-box" style="max-width: 480px; padding: 22px; border-radius: 10px; background: #0b1120; border: 1px solid #334155; box-shadow: 0 20px 50px rgba(0,0,0,0.8);" onclick="event.stopPropagation()">
+        <div class="incident-modal-header" style="border-bottom: 1px solid #1e293b; padding-bottom: 12px; margin-bottom: 16px; display: flex; justify-content: space-between; align-items: center;">
+            <div class="incident-modal-title" style="display: flex; align-items: center; gap: 8px;">
+                <i class="fa-solid fa-user-shield" style="color: #38bdf8; font-size: 16px;"></i>
+                <span style="font-size: 14px; font-weight: 700; color: #f8fafc; letter-spacing: 0.03em;">OFFICER CREDENTIALS & ACCESS</span>
+            </div>
+            <button type="button" class="drone-modal-close-btn" onclick="closeUserProfileModalDirect()"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+
+        <div style="display: flex; align-items: center; gap: 14px; background: rgba(15, 23, 42, 0.9); border: 1px solid #1e293b; padding: 14px; border-radius: 8px; margin-bottom: 16px;">
+            <div style="background: #141b29; color: #38bdf8; width: 50px; height: 50px; border-radius: 10px; border: 1px solid #243042; display: flex; align-items: center; justify-content: center; font-size: 22px;">
+                <i class="fa-solid fa-user-tie"></i>
+            </div>
+            <div>
+                <h3 style="margin: 0; font-size: 15px; color: #f8fafc; font-weight: 700;">{{ user_name }}</h3>
+                <span style="font-size: 11.5px; color: #38bdf8; font-weight: 600;">{{ user_designation }}</span>
+                <div style="margin-top: 5px; display: flex; gap: 6px;">
+                    <span style="font-size: 9.5px; background: rgba(16, 185, 129, 0.2); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.4); padding: 2px 6px; border-radius: 3px; font-weight: 700;">ACTIVE SESSION</span>
+                    <span style="font-size: 9.5px; background: rgba(56, 189, 248, 0.2); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.4); padding: 2px 6px; border-radius: 3px; font-weight: 700;">TIER-1 CLEARANCE</span>
+                </div>
+            </div>
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 10px; font-size: 12px; margin-bottom: 20px;">
+            <div style="display: flex; justify-content: space-between; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 6px;">
+                <span style="color: #94a3b8;"><i class="fa-solid fa-building" style="margin-right: 6px; color: #64748b;"></i> Command Station:</span>
+                <strong style="color: #f1f5f9;">Central CCL Transit Directorate</strong>
+            </div>
+            <div style="display: flex; justify-content: space-between; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 6px;">
+                <span style="color: #94a3b8;"><i class="fa-solid fa-key" style="margin-right: 6px; color: #64748b;"></i> Access Role:</span>
+                <strong style="color: #38bdf8; text-transform: uppercase;">{{ user_role }}</strong>
+            </div>
+            <div style="display: flex; justify-content: space-between; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 6px;">
+                <span style="color: #94a3b8;"><i class="fa-solid fa-shield-halved" style="margin-right: 6px; color: #64748b;"></i> Encryption & Telemetry:</span>
+                <strong style="color: #34d399;">TLS 1.3 • AES-256 GCM</strong>
+            </div>
+            <div style="display: flex; justify-content: space-between;">
+                <span style="color: #94a3b8;"><i class="fa-solid fa-database" style="margin-right: 6px; color: #64748b;"></i> Live Database:</span>
+                <strong style="color: #34d399;">Supabase PostgreSQL (Cloud)</strong>
+            </div>
+        </div>
+
+        <div style="display: flex; justify-content: space-between; gap: 10px;">
+            <a href="/logout" class="btn-action" style="flex: 1; text-align: center; justify-content: center; background: rgba(220, 38, 38, 0.2); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.4); padding: 8px 12px; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 11.5px; display: inline-flex; align-items: center; gap: 6px;">
+                <i class="fa-solid fa-power-off"></i> Sign Out
+            </a>
+            <button type="button" class="btn-action" onclick="closeUserProfileModalDirect()" style="padding: 8px 18px; background: #1e293b; color: #cbd5e1; border: 1px solid #334155; border-radius: 6px; font-weight: 600; font-size: 11.5px; cursor: pointer;">
+                Close
+            </button>
         </div>
     </div>
 </div>

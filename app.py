@@ -203,14 +203,33 @@ async def api_resolve_alert(alert_id: int):
 async def api_simulate_alert(request: Request):
     import random
     types = [
-        ("Unauthorized Stoppage", "CRITICAL", "Vehicle stationary in unapproved transit sector > 18 mins with coal payload."),
-        ("Geofence Route Breach", "HIGH", "Vehicle deviated 340 meters outside approved mining corridor."),
-        ("Weight Anomaly Detected", "WARNING", "Gross weight registered +3.1 Tons over authorized e-Way bill capacity."),
-        ("Unregistered RFID Ingate", "HIGH", "Vehicle RFID scan unrecognized at Siding Gate 4.")
+        ("Unauthorized stoppage", "CRITICAL", "Vehicle stationary in unapproved transit sector > 18 mins with active coal payload."),
+        ("Off Route Alerts", "HIGH", "Vehicle deviated 340 meters outside approved Geo-fenced mining transport corridor."),
+        ("Off Area Alerts", "HIGH", "Vehicle entered unauthorized extraction benchmark without valid trip permit."),
+        ("Tamper Alerts", "CRITICAL", "Hardware GPS sensor enclosure opened or signal jammer signature detected."),
+        ("Over Speed", "WARNING", "Vehicle radar clocked at 48 km/h exceeding 25 km/h internal pit safety limit."),
+        ("Open Boom Barriers", "HIGH", "Checkpost security barrier opened without automatic RFID authorization scan."),
+        ("Crowd Detection", "HIGH", "Surveillance camera flagged unapproved cluster of 8+ personnel near siding loading chute."),
+        ("Vehicle Detection", "WARNING", "Unscheduled commercial dump truck identified in North Overburden Sector."),
+        ("Person Detection", "WARNING", "Unauthorized individual detected within active haulage path."),
+        ("Intrusion Detection", "CRITICAL", "Perimeter fence tripwire breach detected on East Boundary Grid 4."),
+        ("Traffic Congestion", "WARNING", "Haul truck bottleneck exceeding 6 vehicles at Central Weighbridge approach."),
+        ("Loaded-Unloaded Alerts", "HIGH", "Gross axle tare discrepancy registered +3.4 Tons variance from dispatch manifest."),
+        ("Camera Tampering", "CRITICAL", "Optical occlusion or camera lens disorientation detected on Siding Pole #12."),
+        ("Safety Hazard", "HIGH", "Spillage of bulk coal lump on primary haul road creating vehicular hazard."),
+        ("Insufficient Illumination", "WARNING", "Night photometric lux dropped below 15 Lux threshold in Stockpile B.")
     ]
     chosen = random.choice(types)
     veh_no = f"JH0{random.randint(1,9)}-{chr(random.randint(65,90))}{chr(random.randint(65,90))}-{random.randint(1000,9999)}"
-    loc = random.choice(["Amrapali Sector 3 Road", "Piparwar Coal Washery Route", "Ashoka Siding Platform B", "Karkatta Section C"])
+    loc = random.choice([
+        "Amrapali Pit Haul Road WB-02",
+        "Piparwar Washery Transit Corridor",
+        "Ashoka Siding Platform B Gate 3",
+        "Karkatta Section C Overburden",
+        "Magadh Siding Checkpost 04",
+        "North Karanpura Main Haulage Track",
+        "Giridih Siding Weighbridge 01"
+    ])
     
     alert_obj = {
         "alert_type": chosen[0],
@@ -218,7 +237,7 @@ async def api_simulate_alert(request: Request):
         "location": loc,
         "severity": chosen[1],
         "status": "ACTIVE",
-        "confidence_score": random.randint(90, 99),
+        "confidence_score": round(random.uniform(92.5, 99.4), 1),
         "description": chosen[2]
     }
     result = await supabase_db.create_security_alert(alert_obj)

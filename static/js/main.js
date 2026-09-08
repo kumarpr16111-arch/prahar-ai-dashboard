@@ -282,116 +282,11 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Function to set detection view (All Types Overview vs Specific Detail view)
+    // Function to set detection view (delegates to live alert engine)
     function setAlertDetectionType(type) {
-        if (detectionSelect) detectionSelect.value = type;
-
-        alertSubNavItems.forEach(item => {
-            const itemType = item.getAttribute('data-detection');
-            if (itemType === type) {
-                item.classList.add('active');
-            } else {
-                item.classList.remove('active');
-            }
-        });
-
-        if (type === 'All Types' || !type) {
-            if (alertOverviewContainer) alertOverviewContainer.style.display = 'block';
-            if (alertDetailContainer) alertDetailContainer.style.display = 'none';
-            if (headerBadgeCount) headerBadgeCount.textContent = '6';
-            return;
+        if (typeof window.setAlertDetectionType === 'function') {
+            window.setAlertDetectionType(type);
         }
-
-        if (alertOverviewContainer) alertOverviewContainer.style.display = 'none';
-        if (alertDetailContainer) alertDetailContainer.style.display = 'grid';
-
-        vaCards.forEach(c => c.classList.remove('card-highlight-teal', 'active-card'));
-
-        if (type === 'Unauthorized stoppage') {
-            if (headerBadgeCount) headerBadgeCount.textContent = '37';
-
-            if (detailIcon) detailIcon.className = 'fa-solid fa-triangle-exclamation detail-icon-orange';
-            if (detailTitle) detailTitle.innerHTML = `Unauthorized stoppage <span class="detail-tag" style="color: #f59e0b;">(Vehicle Alerts)</span>`;
-
-            if (detailSubtitleText) {
-                detailSubtitleText.textContent = '• SHOWING 12 OF 12 EVENTS';
-                detailSubtitleText.className = 'subtitle-events-text';
-            }
-
-            if (detailEventsBody) {
-                detailEventsBody.innerHTML = `
-                    <div class="event-row-card">
-                        <div class="event-row-info"><span class="event-row-title">MSRCR (SAKANDRA/BIHAR) (3 alerts, 3 vehicles)</span></div>
-                        <div class="event-row-meta"><span class="event-timestamp">23:54:34</span><i class="fa-solid fa-chevron-down arrow-icon"></i></div>
-                    </div>
-                    <div class="event-row-card">
-                        <div class="event-row-info"><span class="event-row-title">MSRCR (MONET/ALOK) (1 alerts, 1 vehicles)</span></div>
-                        <div class="event-row-meta"><span class="event-timestamp">23:53:57</span><i class="fa-solid fa-chevron-down arrow-icon"></i></div>
-                    </div>
-                    <div class="event-row-card">
-                        <div class="event-row-info"><span class="event-row-title">MSRCR (MUKESH/ROSHAN/HND) (2 alerts, 2 vehicles)</span></div>
-                        <div class="event-row-meta"><span class="event-timestamp">23:53:00</span><i class="fa-solid fa-chevron-down arrow-icon"></i></div>
-                    </div>
-                    <div class="event-row-card">
-                        <div class="event-row-info"><span class="event-row-title">LALITPUR POWER GENERATION COMPANY (2 alerts, 2 vehicles)</span></div>
-                        <div class="event-row-meta"><span class="event-timestamp">23:52:41</span><i class="fa-solid fa-chevron-down arrow-icon"></i></div>
-                    </div>
-                `;
-            }
-
-            if (cardStoppage) {
-                cardStoppage.className = 'metric-card dark-card card-highlight-teal active-card';
-                cardStoppage.querySelector('.metric-number').textContent = '12';
-                cardStoppage.querySelector('.metric-number').className = 'metric-number highlight-teal-text';
-                cardStoppage.querySelector('.metric-icon-circle').className = 'metric-icon-circle highlight-teal-icon';
-            }
-
-        } else if (type === 'Vehicle Detection') {
-            if (headerBadgeCount) headerBadgeCount.textContent = '40';
-
-            if (detailIcon) detailIcon.className = 'fa-solid fa-car detail-icon-teal';
-            if (detailTitle) detailTitle.innerHTML = `Vehicle Detection`;
-
-            if (detailSubtitleText) {
-                detailSubtitleText.textContent = '• SHOWING 0 OF 0 EVENTS';
-                detailSubtitleText.className = 'subtitle-events-text subtitle-events-teal';
-            }
-
-            if (detailEventsBody) {
-                detailEventsBody.innerHTML = `<div class="no-events-empty-msg">No events to display</div>`;
-            }
-
-            if (vaCardVehicle) {
-                vaCardVehicle.classList.add('card-highlight-teal', 'active-card');
-            }
-
-            if (cardStoppage) {
-                cardStoppage.className = 'metric-card dark-card card-highlight-orange';
-                cardStoppage.querySelector('.metric-number').textContent = '14';
-                cardStoppage.querySelector('.metric-number').className = 'metric-number highlight-orange-text';
-                cardStoppage.querySelector('.metric-icon-circle').className = 'metric-icon-circle highlight-orange-icon';
-            }
-
-        } else {
-            if (headerBadgeCount) headerBadgeCount.textContent = '35';
-            if (detailIcon) detailIcon.className = 'fa-solid fa-triangle-exclamation detail-icon-teal';
-            if (detailTitle) detailTitle.innerHTML = type;
-            if (detailSubtitleText) {
-                detailSubtitleText.textContent = '• SHOWING 0 OF 0 EVENTS';
-                detailSubtitleText.className = 'subtitle-events-text subtitle-events-teal';
-            }
-            if (detailEventsBody) {
-                detailEventsBody.innerHTML = `<div class="no-events-empty-msg">No events to display</div>`;
-            }
-        }
-    }
-
-    // Close detail view button listener
-    if (btnCloseDetail) {
-        btnCloseDetail.addEventListener('click', (e) => {
-            e.preventDefault();
-            setAlertDetectionType('All Types');
-        });
     }
 
     // Dropdown change listener
