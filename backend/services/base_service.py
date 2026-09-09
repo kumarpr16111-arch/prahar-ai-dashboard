@@ -15,7 +15,7 @@ class BaseService:
 
     def __init__(self):
         self.config = config
-        self._timeout = httpx.Timeout(3.0, connect=1.5)
+        self._timeout = httpx.Timeout(1.8, connect=1.0)
 
     def _get_client(self) -> httpx.AsyncClient:
         """Instantiates an async HTTP client with standard timeout config."""

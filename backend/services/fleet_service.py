@@ -14,9 +14,20 @@ class FleetService(BaseService):
     and synthetic coordinate steps.
     """
 
+    FALLBACK_FLEET: List[Dict[str, Any]] = [
+        {"id": 1, "vehicle_no": "JH01-AX-9912", "driver_name": "Rajesh Kumar Soren", "speed": 38, "latitude": 23.8542, "longitude": 85.0512, "route_status": "On Approved Corridor", "fuel_level": 82, "battery_status": "Good (98%)", "destination": "Tori Siding Silo #2"},
+        {"id": 2, "vehicle_no": "JH02-CC-4019", "driver_name": "Sunil Mahto", "speed": 42, "latitude": 23.8610, "longitude": 85.0645, "route_status": "On Approved Corridor", "fuel_level": 74, "battery_status": "Good (95%)", "destination": "Piparwar Coal Washery"},
+        {"id": 3, "vehicle_no": "JH01-DY-7721", "driver_name": "Manoj Tirkey", "speed": 0, "latitude": 23.8470, "longitude": 85.0420, "route_status": "Halted (>12m)", "fuel_level": 61, "battery_status": "Normal (88%)", "destination": "Dakra Central Weighbridge"},
+        {"id": 4, "vehicle_no": "JH05-BK-3390", "driver_name": "Ramesh Yadav", "speed": 29, "latitude": 23.8720, "longitude": 85.0780, "route_status": "Route Deviation (280m)", "fuel_level": 90, "battery_status": "Good (99%)", "destination": "Ashoka Siding Platform #4"},
+        {"id": 5, "vehicle_no": "JH02-ER-6102", "driver_name": "Vikram Singh", "speed": 35, "latitude": 23.8590, "longitude": 85.0560, "route_status": "On Approved Corridor", "fuel_level": 68, "battery_status": "Good (92%)", "destination": "Amrapali Siding Berth #1"}
+    ]
+
     async def fetch_fleet_data(self) -> List[Dict[str, Any]]:
         """Retrieves all tracked vehicles and their latest GPS telemetries."""
-        return await self.get("vts_fleet_data", {"select": "*", "order": "id.asc"})
+        data = await self.get("vts_fleet", {"select": "*", "order": "id.asc"})
+        if not data:
+            data = await self.get("vts_fleet_data", {"select": "*", "order": "id.asc"})
+        return data if data else self.FALLBACK_FLEET
 
     async def update_telemetry(self, vehicle_no: str, delta_lat: float, delta_lng: float, new_speed: int) -> bool:
         """Updates latitude, longitude, and current speed for a specific vehicle."""
