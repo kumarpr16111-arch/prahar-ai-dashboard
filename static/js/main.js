@@ -262,6 +262,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 panel.style.display = 'none';
             }
         });
+
+        if (window.initOrResizeDroneCharts) {
+            setTimeout(window.initOrResizeDroneCharts, 60);
+        }
     };
 
     // Function to show Workers Attendance View Mode
@@ -334,6 +338,10 @@ document.addEventListener('DOMContentLoaded', () => {
                     view.style.display = 'none';
                 }
             });
+
+            if (targetTab === 'dashboard' && window.initOrResizeDroneCharts) {
+                setTimeout(window.initOrResizeDroneCharts, 60);
+            }
         });
     });
 

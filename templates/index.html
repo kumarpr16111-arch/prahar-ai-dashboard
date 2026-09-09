@@ -13,8 +13,14 @@
     <!-- Leaflet GIS Map Library -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <!-- Chart.js for High-Fidelity Analytics Visualizations -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
     <!-- Internal Delivery Order (DO) Dataset -->
     <script src="/static/js/do_data.js"></script>
+    <!-- Internal VTS Fleet Dataset -->
+    <script src="/static/js/vts_fleet_data.js"></script>
+    <!-- Internal VTS Live Alerts Dataset -->
+    <script src="/static/js/vts_alerts_data.js"></script>
     <!-- Master Stylesheet -->
     <link rel="stylesheet" href="/static/css/style.css">
     <!-- Custom Stylesheet loaded via /static/css/style.css -->
@@ -309,11 +315,11 @@
                             </li>
                             {% endif %}
 
-                            <!-- Contract Manager Dropdown at Bottom (Area, Plant, Weighbridge, Checkpost, Maintenance Masters) -->
+                            <!-- Contract Management Dropdown at Bottom (Area, Plant, Weighbridge, Checkpost, Maintenance Masters) -->
                             <li class="nav-item has-sub" id="configNavItem">
                                 <a href="#" class="nav-link" id="configNavLink" onclick="event.preventDefault(); toggleConfigDropdown(event);" style="cursor: pointer;">
                                     <i class="fa-solid fa-file-contract nav-icon" style="color: #94a3b8;"></i>
-                                    <span class="nav-text">Contract Manager</span>
+                                    <span class="nav-text">Contract Management</span>
                                     <i class="fa-solid fa-chevron-right arrow-icon" id="configArrow"></i>
                                 </a>
                                 <ul class="sub-nav-list" id="configSubList" style="display: none;">
@@ -535,7 +541,6 @@
     <!-- ======================================================== -->
     <!-- MODAL DIALOGUES (Jinja2 Components)                     -->
     <!-- ======================================================== -->
-    {% include 'partials/drone_video_modal.html' %}
     {% include 'partials/user_profile_modal.html' %}
 
     <!-- Custom JS -->
@@ -560,6 +565,7 @@
     <script src="/static/js/modules/do_operations.js"></script>
     <script src="/static/js/modules/alert_dashboard.js"></script>
     <script src="/static/js/modules/config_masters.js"></script>
+    <script src="/static/js/modules/vts_fleet.js"></script>
     <script src="/static/js/main.js"></script>
 </body>
 </html>

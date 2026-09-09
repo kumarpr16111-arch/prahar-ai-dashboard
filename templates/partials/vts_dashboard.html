@@ -14,9 +14,9 @@
                             </div>
                             <div class="vts-grid grid-4">
                                 <!-- Stat 1: Total Fleet -->
-                                <div class="vts-card">
+                                <div class="vts-card vts-card-clickable" onclick="openFleetModal('all')" title="Click to view all 2,242 Fleet Records">
                                     <div class="vts-card-info">
-                                        <span class="vts-stat-number">2279</span>
+                                        <span class="vts-stat-number">2242</span>
                                         <span class="vts-stat-label">TOTAL FLEET</span>
                                     </div>
                                     <div class="vts-icon-circle icon-circle-cyan">
@@ -24,9 +24,9 @@
                                     </div>
                                 </div>
                                 <!-- Stat 2: Online -->
-                                <div class="vts-card">
+                                <div class="vts-card vts-card-clickable" onclick="openFleetModal('Online')" title="Click to view 1,582 Online Fleet Records">
                                     <div class="vts-card-info">
-                                        <span class="vts-stat-number">1618</span>
+                                        <span class="vts-stat-number">1582</span>
                                         <span class="vts-stat-label">ONLINE</span>
                                     </div>
                                     <div class="vts-icon-circle icon-circle-green">
@@ -34,9 +34,9 @@
                                     </div>
                                 </div>
                                 <!-- Stat 3: Offline -->
-                                <div class="vts-card">
+                                <div class="vts-card vts-card-clickable" onclick="openFleetModal('Offline')" title="Click to view 510 Offline Fleet Records">
                                     <div class="vts-card-info">
-                                        <span class="vts-stat-number">499</span>
+                                        <span class="vts-stat-number">510</span>
                                         <span class="vts-stat-label">OFFLINE</span>
                                     </div>
                                     <div class="vts-icon-circle icon-circle-red">
@@ -44,9 +44,9 @@
                                     </div>
                                 </div>
                                 <!-- Stat 4: Workshop -->
-                                <div class="vts-card">
+                                <div class="vts-card vts-card-clickable" onclick="openFleetModal('Workshop')" title="Click to view 150 Workshop Fleet Records">
                                     <div class="vts-card-info">
-                                        <span class="vts-stat-number">162</span>
+                                        <span class="vts-stat-number">150</span>
                                         <span class="vts-stat-label">WORKSHOP</span>
                                     </div>
                                     <div class="vts-icon-circle icon-circle-yellow">
@@ -59,13 +59,14 @@
                         <!-- SECTION 2: LIVE ALERTS & TRACKING -->
                         <div class="vts-split-row margin-top-lg">
                             <!-- Left: LIVE ALERTS -->
-                            <div class="vts-split-col col-60">
+                            <div class="vts-split-col col-70">
                                 <div class="vts-section-header">
                                     <span class="green-indicator-dot"></span>
                                     <h3 class="vts-section-title">LIVE ALERTS</h3>
                                 </div>
                                 <div class="vts-grid grid-3">
-                                    <div class="vts-card">
+                                    <!-- Alert 1: Off-Route -->
+                                    <div class="vts-card vts-card-clickable" onclick="openAlertsModal('Off-Route')" title="Click to view 33 Off-Route vehicle alerts">
                                         <div class="vts-card-info">
                                             <span class="vts-stat-number">33</span>
                                             <span class="vts-stat-label">OFF-ROUTE</span>
@@ -74,7 +75,8 @@
                                             <i class="fa-solid fa-route"></i>
                                         </div>
                                     </div>
-                                    <div class="vts-card">
+                                    <!-- Alert 2: Off-Area -->
+                                    <div class="vts-card vts-card-clickable" onclick="openAlertsModal('Off-Area')" title="Click to view 60 Off-Area geofence breach alerts">
                                         <div class="vts-card-info">
                                             <span class="vts-stat-number">60</span>
                                             <span class="vts-stat-label">OFF-AREA</span>
@@ -83,7 +85,8 @@
                                             <i class="fa-solid fa-location-dot"></i>
                                         </div>
                                     </div>
-                                    <div class="vts-card">
+                                    <!-- Alert 3: Device Tamper -->
+                                    <div class="vts-card vts-card-clickable" onclick="openAlertsModal('Device Tamper')" title="Click to view 4 Device Tamper alerts">
                                         <div class="vts-card-info">
                                             <span class="vts-stat-number">4</span>
                                             <span class="vts-stat-label">DEVICE TAMPER</span>
@@ -95,31 +98,21 @@
                                 </div>
                             </div>
 
-                            <!-- Right: TRACKING -->
-                            <div class="vts-split-col col-40">
+                            <!-- Right: TRACKING (Playback removed) -->
+                            <div class="vts-split-col col-30">
                                 <div class="vts-section-header">
                                     <span class="green-indicator-dot"></span>
                                     <h3 class="vts-section-title">TRACKING</h3>
                                 </div>
-                                <div class="vts-grid grid-2">
+                                <div class="vts-grid grid-1">
                                     <!-- Live View Banner -->
-                                    <div class="vts-action-card card-teal-bg">
+                                    <div class="vts-action-card card-teal-bg" onclick="window.location.hash='vts'; if(window.switchView) window.switchView('vts');" style="cursor: pointer;" title="Open Live GPS Tracking Map">
                                         <div class="action-card-text">
                                             <span class="action-title">LIVE VIEW</span>
-                                            <span class="action-subtitle">REAL-TIME TRACKING</span>
+                                            <span class="action-subtitle">REAL-TIME GPS TRACKING</span>
                                         </div>
                                         <div class="vts-icon-circle icon-circle-dark-green">
                                             <i class="fa-solid fa-map-location-dot"></i>
-                                        </div>
-                                    </div>
-                                    <!-- Playback Banner -->
-                                    <div class="vts-action-card card-amber-bg">
-                                        <div class="action-card-text">
-                                            <span class="action-title">PLAYBACK</span>
-                                            <span class="action-subtitle">REPLAY HISTORY</span>
-                                        </div>
-                                        <div class="vts-icon-circle icon-circle-dark-amber">
-                                            <i class="fa-solid fa-clock-rotate-left"></i>
                                         </div>
                                     </div>
                                 </div>
@@ -133,16 +126,16 @@
                                 <h3 class="vts-section-title">REPORTS</h3>
                             </div>
                             <div class="vts-grid grid-6">
-                                <div class="vts-card">
-                                    <div class="vts-card-info"><span class="vts-action-name">OFF-ROUTE</span><span class="vts-action-desc">ALL RECORDS</span></div>
+                                <div class="vts-card vts-card-clickable" onclick="openAlertsModal('Off-Route')" title="View All Off-Route Records" style="cursor: pointer;">
+                                    <div class="vts-card-info"><span class="vts-action-name">OFF-ROUTE</span><span class="vts-action-desc">ALL RECORDS (33)</span></div>
                                     <div class="vts-icon-circle icon-circle-amber"><i class="fa-solid fa-route"></i></div>
                                 </div>
-                                <div class="vts-card">
-                                    <div class="vts-card-info"><span class="vts-action-name">OFF-AREA</span><span class="vts-action-desc">GEOFENCE ALERTS</span></div>
+                                <div class="vts-card vts-card-clickable" onclick="openAlertsModal('Off-Area')" title="View All Off-Area Geofence Records" style="cursor: pointer;">
+                                    <div class="vts-card-info"><span class="vts-action-name">OFF-AREA</span><span class="vts-action-desc">GEOFENCE ALERTS (60)</span></div>
                                     <div class="vts-icon-circle icon-circle-amber"><i class="fa-solid fa-location-dot"></i></div>
                                 </div>
-                                <div class="vts-card">
-                                    <div class="vts-card-info"><span class="vts-action-name">DEVICE TAMPER</span><span class="vts-action-desc">TAMPER HISTORY</span></div>
+                                <div class="vts-card vts-card-clickable" onclick="openAlertsModal('Device Tamper')" title="View All Device Tamper Records" style="cursor: pointer;">
+                                    <div class="vts-card-info"><span class="vts-action-name">DEVICE TAMPER</span><span class="vts-action-desc">TAMPER HISTORY (4)</span></div>
                                     <div class="vts-icon-circle icon-circle-yellow"><i class="fa-solid fa-triangle-exclamation"></i></div>
                                 </div>
                                 <div class="vts-card">
@@ -178,8 +171,8 @@
                                     <div class="vts-card-info"><span class="vts-action-name">VIEW GEOFENCES</span><span class="vts-action-desc">CREATED GEOFENCES</span></div>
                                     <div class="vts-icon-circle icon-circle-green"><i class="fa-solid fa-eye"></i></div>
                                 </div>
-                                <div class="vts-card">
-                                    <div class="vts-card-info"><span class="vts-action-name">FLEET DETAILS</span><span class="vts-action-desc">ALL VEHICLE INFO</span></div>
+                                <div class="vts-card vts-card-clickable" onclick="openFleetModal('all')" title="Click to view all 2,242 Fleet Records" style="cursor: pointer;">
+                                    <div class="vts-card-info"><span class="vts-action-name">FLEET DETAILS</span><span class="vts-action-desc">ALL VEHICLE INFO (2,242)</span></div>
                                     <div class="vts-icon-circle icon-circle-cyan"><i class="fa-solid fa-truck-ramp-box"></i></div>
                                 </div>
                             </div>
@@ -207,6 +200,226 @@
                                 <div class="vts-card">
                                     <div class="vts-card-info"><span class="vts-action-name">REMOVE / REINSTALL</span><span class="vts-action-desc">DEVICE ACTIONS</span></div>
                                     <div class="vts-icon-circle icon-circle-blue"><i class="fa-solid fa-sim-card"></i></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- ======================================================== -->
+                        <!-- VTS FLEET MASTER REPORT MODAL DIALOG                     -->
+                        <!-- ======================================================== -->
+                        <div class="drone-modal-backdrop" id="vtsFleetMasterModal" style="display: none;" onclick="if(event.target===this) closeFleetModal();">
+                            <div class="feature-modal-container vts-fleet-modal-container" role="dialog" aria-modal="true">
+                                <!-- Modal Header -->
+                                <div class="feature-modal-header" style="background: #0f172a; border-bottom: 1px solid #1e293b; color: #ffffff;">
+                                    <div class="feature-modal-title-wrap">
+                                        <div class="feature-modal-icon-badge" style="background: #0284c7; color: #ffffff;">
+                                            <i class="fa-solid fa-truck-fast"></i>
+                                        </div>
+                                        <div>
+                                            <h2 class="feature-modal-title" style="color: #f8fafc; font-size: 17px; font-weight: 700;">CCL VTS Fleet Master Report</h2>
+                                            <p class="feature-modal-subtitle" style="color: #94a3b8; font-size: 12px;">Real-time Vehicle Tracking System & Telemetry Monitoring (2,242 Records)</p>
+                                        </div>
+                                    </div>
+                                    <div style="display: flex; align-items: center; gap: 10px;">
+                                        <!-- Export Actions -->
+                                        <button type="button" class="btn-export-csv" onclick="exportFleetCSV()" title="Download raw CSV spreadsheet">
+                                            <i class="fa-solid fa-file-csv"></i> Export CSV
+                                        </button>
+                                        <button type="button" class="btn-export-pdf" onclick="exportFleetPDF()" title="Print or save as PDF document">
+                                            <i class="fa-solid fa-file-pdf"></i> Export PDF
+                                        </button>
+                                        <button class="feature-modal-close-btn" onclick="closeFleetModal()" style="color: #94a3b8; background: #1e293b; margin-left: 6px;">
+                                            <i class="fa-solid fa-xmark"></i>
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <!-- Filter & Controls Toolbar -->
+                                <div class="vts-modal-toolbar">
+                                    <!-- Status Pill Filters -->
+                                    <div class="vts-status-pills-row">
+                                        <button type="button" class="vts-fleet-tab-btn active" data-status="all" onclick="setFleetStatusFilter('all', this)">
+                                            <i class="fa-solid fa-truck"></i> Total Fleet <span class="pill-badge">2,242</span>
+                                        </button>
+                                        <button type="button" class="vts-fleet-tab-btn status-online-tab" data-status="Online" onclick="setFleetStatusFilter('Online', this)">
+                                            <i class="fa-solid fa-circle-check"></i> Online <span class="pill-badge pill-badge-green">1,582</span>
+                                        </button>
+                                        <button type="button" class="vts-fleet-tab-btn status-offline-tab" data-status="Offline" onclick="setFleetStatusFilter('Offline', this)">
+                                            <i class="fa-solid fa-circle-xmark"></i> Offline <span class="pill-badge pill-badge-red">510</span>
+                                        </button>
+                                        <button type="button" class="vts-fleet-tab-btn status-workshop-tab" data-status="Workshop" onclick="setFleetStatusFilter('Workshop', this)">
+                                            <i class="fa-solid fa-wrench"></i> Workshop <span class="pill-badge pill-badge-yellow">150</span>
+                                        </button>
+                                    </div>
+
+                                    <!-- Search & Area Select Grid -->
+                                    <div class="vts-filter-inputs-grid">
+                                        <div class="vts-search-input-wrap">
+                                            <i class="fa-solid fa-magnifying-glass search-icn"></i>
+                                            <input type="text" id="vtsFleetSearchInput" placeholder="Search vehicle no, transporter, device, area, project..." class="vts-modal-search" oninput="handleFleetSearch(this.value)">
+                                        </div>
+                                        <div class="vts-select-input-wrap">
+                                            <i class="fa-solid fa-location-dot select-icn"></i>
+                                            <select id="vtsFleetAreaFilter" class="vts-modal-select" onchange="handleFleetAreaFilter(this.value)">
+                                                <option value="all">All Mining Areas (14 Areas)</option>
+                                            </select>
+                                        </div>
+                                        <div class="vts-rows-select-wrap">
+                                            <label style="font-size: 11.5px; color: #64748b; font-weight: 600;">Rows:</label>
+                                            <select class="vts-modal-select" style="min-width: 80px;" onchange="handleFleetRowsPerPage(this.value)">
+                                                <option value="50" selected>50</option>
+                                                <option value="100">100</option>
+                                                <option value="200">200</option>
+                                                <option value="all">All</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Table Content Wrapper -->
+                                <div class="vts-fleet-table-wrap">
+                                    <table class="vts-fleet-data-table">
+                                        <thead>
+                                            <tr>
+                                                <th style="width: 45px; text-align: center;">#</th>
+                                                <th style="white-space: nowrap;">Vehicle Number</th>
+                                                <th style="white-space: nowrap; text-align: center;">Status</th>
+                                                <th style="white-space: nowrap;">Mining Area</th>
+                                                <th style="white-space: nowrap;">Project</th>
+                                                <th style="white-space: nowrap;">Device ID</th>
+                                                <th>Transporter</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="vtsFleetTableBody">
+                                            <!-- Dynamically rendered via vts_fleet.js -->
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                                <!-- Modal Footer with Pagination -->
+                                <div class="vts-modal-footer">
+                                    <div class="vts-footer-info" id="vtsFleetPaginationText">
+                                        Showing <strong>1–50</strong> of <strong>2,242</strong> records
+                                    </div>
+                                    <div class="vts-pagination-actions">
+                                        <button type="button" class="btn-pagination-pill" id="vtsFleetPrevBtn" onclick="fleetPagePrev()">
+                                            <i class="fa-solid fa-chevron-left"></i> Previous
+                                        </button>
+                                        <span class="vts-filtered-count-badge" id="vtsFleetFilteredCount">2,242 Vehicles</span>
+                                        <button type="button" class="btn-pagination-pill" id="vtsFleetNextBtn" onclick="fleetPageNext()">
+                                            Next <i class="fa-solid fa-chevron-right"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- ======================================================== -->
+                        <!-- VTS LIVE ALERTS MASTER REPORT MODAL DIALOG               -->
+                        <!-- ======================================================== -->
+                        <div class="drone-modal-backdrop" id="vtsAlertsMasterModal" style="display: none;" onclick="if(event.target===this) closeAlertsModal();">
+                            <div class="feature-modal-container vts-fleet-modal-container" role="dialog" aria-modal="true">
+                                <!-- Modal Header -->
+                                <div class="feature-modal-header" style="background: #111827; border-bottom: 1px solid #1f2937; color: #ffffff;">
+                                    <div class="feature-modal-title-wrap">
+                                        <div class="feature-modal-icon-badge" style="background: #ea580c; color: #ffffff;">
+                                            <i class="fa-solid fa-triangle-exclamation"></i>
+                                        </div>
+                                        <div>
+                                            <h2 class="feature-modal-title" style="color: #f8fafc; font-size: 17px; font-weight: 700;">CCL VTS Live Violation Alerts</h2>
+                                            <p class="feature-modal-subtitle" style="color: #9ca3af; font-size: 12px;">Real-time Geofence Breaches, Corridor Deviations & Hardware Tamper Alarms (97 Active)</p>
+                                        </div>
+                                    </div>
+                                    <div style="display: flex; align-items: center; gap: 10px;">
+                                        <!-- Export Actions -->
+                                        <button type="button" class="btn-export-csv" onclick="exportAlertsCSV()" title="Download raw CSV spreadsheet of alerts">
+                                            <i class="fa-solid fa-file-csv"></i> Export CSV
+                                        </button>
+                                        <button type="button" class="btn-export-pdf" onclick="exportAlertsPDF()" title="Print or save as PDF alert report">
+                                            <i class="fa-solid fa-file-pdf"></i> Export PDF
+                                        </button>
+                                        <button class="feature-modal-close-btn" onclick="closeAlertsModal()" style="color: #9ca3af; background: #1f2937; margin-left: 6px;">
+                                            <i class="fa-solid fa-xmark"></i>
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <!-- Filter & Controls Toolbar -->
+                                <div class="vts-modal-toolbar">
+                                    <!-- Alert Status Pill Filters -->
+                                    <div class="vts-status-pills-row">
+                                        <button type="button" class="vts-fleet-tab-btn vts-alert-tab-btn active" data-alert-type="all" onclick="setAlertsFilter('all', this)">
+                                            <i class="fa-solid fa-bell"></i> All Live Alerts <span class="pill-badge">97</span>
+                                        </button>
+                                        <button type="button" class="vts-fleet-tab-btn vts-alert-tab-btn alert-off-route-tab" data-alert-type="Off-Route" onclick="setAlertsFilter('Off-Route', this)">
+                                            <i class="fa-solid fa-route"></i> Off-Route <span class="pill-badge pill-badge-yellow">33</span>
+                                        </button>
+                                        <button type="button" class="vts-fleet-tab-btn vts-alert-tab-btn alert-off-area-tab" data-alert-type="Off-Area" onclick="setAlertsFilter('Off-Area', this)">
+                                            <i class="fa-solid fa-location-dot"></i> Off-Area <span class="pill-badge pill-badge-red">60</span>
+                                        </button>
+                                        <button type="button" class="vts-fleet-tab-btn vts-alert-tab-btn alert-tamper-tab" data-alert-type="Device Tamper" onclick="setAlertsFilter('Device Tamper', this)">
+                                            <i class="fa-solid fa-triangle-exclamation"></i> Device Tamper <span class="pill-badge pill-badge-red">4</span>
+                                        </button>
+                                    </div>
+
+                                    <!-- Search & Area Select Grid -->
+                                    <div class="vts-filter-inputs-grid">
+                                        <div class="vts-search-input-wrap">
+                                            <i class="fa-solid fa-magnifying-glass search-icn"></i>
+                                            <input type="text" id="vtsAlertSearchInput" placeholder="Search vehicle no, violation details, area, transporter..." class="vts-modal-search" oninput="handleAlertsSearch(this.value)">
+                                        </div>
+                                        <div class="vts-select-input-wrap">
+                                            <i class="fa-solid fa-location-dot select-icn"></i>
+                                            <select id="vtsAlertAreaFilter" class="vts-modal-select" onchange="handleAlertsAreaFilter(this.value)">
+                                                <option value="all">All Mining Areas</option>
+                                            </select>
+                                        </div>
+                                        <div class="vts-rows-select-wrap">
+                                            <label style="font-size: 11.5px; color: #64748b; font-weight: 600;">Rows:</label>
+                                            <select class="vts-modal-select" style="min-width: 80px;" onchange="handleAlertsRowsPerPage(this.value)">
+                                                <option value="50" selected>50</option>
+                                                <option value="100">100</option>
+                                                <option value="all">All</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Table Content Wrapper -->
+                                <div class="vts-fleet-table-wrap">
+                                    <table class="vts-fleet-data-table">
+                                        <thead>
+                                            <tr>
+                                                <th style="width: 45px; text-align: center;">#</th>
+                                                <th style="white-space: nowrap;">Vehicle Number</th>
+                                                <th style="white-space: nowrap; text-align: center;">Alert Type</th>
+                                                <th style="white-space: nowrap;">Breach Details / Deviation</th>
+                                                <th style="white-space: nowrap;">Mining Area & Project</th>
+                                                <th style="white-space: nowrap;">Device ID</th>
+                                                <th>Transporter</th>
+                                                <th style="white-space: nowrap;">Severity / Time</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="vtsAlertsTableBody">
+                                            <!-- Dynamically rendered via vts_fleet.js -->
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                                <!-- Modal Footer with Pagination -->
+                                <div class="vts-modal-footer">
+                                    <div class="vts-footer-info" id="vtsAlertsPaginationText">
+                                        Showing <strong>1–50</strong> of <strong>97</strong> alerts
+                                    </div>
+                                    <div class="vts-pagination-actions">
+                                        <button type="button" class="btn-pagination-pill" id="vtsAlertsPrevBtn" onclick="alertsPagePrev()">
+                                            <i class="fa-solid fa-chevron-left"></i> Previous
+                                        </button>
+                                        <span class="vts-filtered-count-badge" id="vtsAlertsFilteredCount" style="background: #ffedd5; color: #9a3412;">97 Alerts</span>
+                                        <button type="button" class="btn-pagination-pill" id="vtsAlertsNextBtn" onclick="alertsPageNext()">
+                                            Next <i class="fa-solid fa-chevron-right"></i>
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         </div>

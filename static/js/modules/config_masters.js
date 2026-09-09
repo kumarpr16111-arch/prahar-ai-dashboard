@@ -55,23 +55,23 @@ function showConfigMaster(viewId, navItemId, title) {
 }
 
 window.showConfigArea = function() {
-    showConfigMaster('config-area-view', 'configAreaNavItem', 'CONTRACT MANAGER • AREA MASTER');
+    showConfigMaster('config-area-view', 'configAreaNavItem', 'CONTRACT MANAGEMENT • AREA MASTER');
     window.location.hash = '#config-area';
 };
 window.showConfigPlant = function() {
-    showConfigMaster('config-plant-view', 'configPlantNavItem', 'CONTRACT MANAGER • PLANT MASTER');
+    showConfigMaster('config-plant-view', 'configPlantNavItem', 'CONTRACT MANAGEMENT • PLANT MASTER');
     window.location.hash = '#config-plant';
 };
 window.showConfigWeighbridge = function() {
-    showConfigMaster('config-weighbridge-view', 'configWeighbridgeNavItem', 'CONTRACT MANAGER • WEIGHBRIDGE MASTER');
+    showConfigMaster('config-weighbridge-view', 'configWeighbridgeNavItem', 'CONTRACT MANAGEMENT • WEIGHBRIDGE MASTER');
     window.location.hash = '#config-weighbridge';
 };
 window.showConfigCheckpost = function() {
-    showConfigMaster('config-checkpost-view', 'configCheckpostNavItem', 'CONTRACT MANAGER • CHECKPOST MASTER');
+    showConfigMaster('config-checkpost-view', 'configCheckpostNavItem', 'CONTRACT MANAGEMENT • CHECKPOST MASTER');
     window.location.hash = '#config-checkpost';
 };
 window.showConfigMaintenance = function() {
-    showConfigMaster('config-maintenance-view', 'configMaintenanceNavItem', 'CONTRACT MANAGER • MAINTENANCE MASTER');
+    showConfigMaster('config-maintenance-view', 'configMaintenanceNavItem', 'CONTRACT MANAGEMENT • MAINTENANCE MASTER');
     window.location.hash = '#config-maintenance';
 };
 
