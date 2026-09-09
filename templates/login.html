@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TRACE - Digital Mining Platform Login</title>
+    <title>TRACE - Coal India Limited (CIL) Enterprise Portal</title>
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -16,9 +16,12 @@
             --primary-gradient: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
             --primary-hover: linear-gradient(135deg, #0369a1 0%, #075985 100%);
             --accent-cyan: #38bdf8;
+            --accent-emerald: #10b981;
+            --accent-amber: #f59e0b;
             --bg-outer: #0b0f17;
-            --card-dark: #131823;
-            --bezel-color: #1a2230;
+            --card-dark: #111622;
+            --card-sub-dark: #090d16;
+            --border-color: #1e293b;
             --text-heading: #f8fafc;
             --text-body: #cbd5e1;
             --text-muted: #94a3b8;
@@ -31,25 +34,23 @@
             font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
         }
 
-        /* Dark canvas with subtle dot pattern and ambient lighting */
         body {
             background-color: var(--bg-outer);
             background-image: 
-                radial-gradient(rgba(255, 255, 255, 0.12) 1.2px, transparent 1.2px),
-                linear-gradient(135deg, rgba(2, 132, 199, 0.06) 0%, rgba(15, 23, 42, 0.15) 100%);
+                radial-gradient(rgba(255, 255, 255, 0.1) 1.2px, transparent 1.2px),
+                linear-gradient(135deg, rgba(2, 132, 199, 0.08) 0%, rgba(15, 23, 42, 0.25) 100%);
             background-size: 24px 24px, 100% 100%;
             min-height: 100vh;
             width: 100vw;
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 32px 20px;
+            padding: 24px 16px;
             color: var(--text-heading);
             position: relative;
             overflow-x: hidden;
         }
 
-        /* Subtle angled decorative grid lines in the background */
         body::before {
             content: '';
             position: absolute;
@@ -61,36 +62,35 @@
                 -45deg,
                 transparent,
                 transparent 140px,
-                rgba(255, 255, 255, 0.02) 140px,
-                rgba(255, 255, 255, 0.02) 141px
+                rgba(255, 255, 255, 0.015) 140px,
+                rgba(255, 255, 255, 0.015) 141px
             );
             pointer-events: none;
             z-index: 0;
         }
 
-        /* Clean Enterprise Security Terminal Container */
+        /* Master Device Frame */
         .auth-device-card {
             width: 100%;
-            max-width: 1020px;
+            max-width: 1120px;
             background: var(--card-dark);
-            border-radius: 12px;
-            border: 1px solid #1e293b;
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
             box-shadow: 
-                0 25px 50px -12px rgba(0, 0, 0, 0.75),
-                0 0 0 1px rgba(255, 255, 255, 0.05);
+                0 30px 60px -15px rgba(0, 0, 0, 0.85),
+                0 0 0 1px rgba(255, 255, 255, 0.06);
             display: grid;
-            grid-template-columns: 1fr 1.05fr;
+            grid-template-columns: 1.22fr 0.98fr;
             overflow: hidden;
             position: relative;
             z-index: 1;
+            min-height: 620px;
         }
 
-        /* ==========================================================================
-           Left Side: Dark Theme Login Form
-           ========================================================================== */
+        /* Left Side Interactive Viewport */
         .auth-form-side {
             background: var(--card-dark);
-            padding: 40px 42px;
+            padding: 38px 40px;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -98,70 +98,247 @@
             z-index: 2;
         }
 
-        /* Header Title - Centered & Professional */
-        .auth-header-group {
-            text-align: center;
-            margin-bottom: 24px;
+        /* Screen Transitions */
+        .screen-view {
+            display: none;
+            animation: fadeInScreen 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
 
-        .auth-title {
-            font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
-            font-size: 24px;
+        .screen-view.active {
+            display: flex;
+            flex-direction: column;
+        }
+
+        @keyframes fadeInScreen {
+            from {
+                opacity: 0;
+                transform: translateY(6px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Top CIL Badge */
+        .cil-enterprise-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            padding: 4px 12px;
+            background: rgba(2, 132, 199, 0.12);
+            border: 1px solid rgba(56, 189, 248, 0.3);
+            border-radius: 20px;
+            font-size: 11px;
             font-weight: 700;
+            color: #38bdf8;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+            width: fit-content;
+        }
+
+        .view-title {
+            font-size: 23px;
+            font-weight: 800;
             color: #ffffff;
-            margin-bottom: 4px;
+            margin-bottom: 6px;
             letter-spacing: -0.02em;
         }
 
-        .auth-subtitle {
+        .view-subtitle {
             font-size: 12.5px;
             color: var(--text-muted);
-            font-weight: 400;
-            line-height: 1.4;
+            line-height: 1.45;
+            margin-bottom: 22px;
         }
 
-        /* Error Alert */
-        .alert-error {
-            background: rgba(239, 68, 68, 0.1);
-            border: 1px solid rgba(239, 68, 68, 0.25);
-            color: #f87171;
-            padding: 9px 12px;
-            border-radius: 5px;
-            font-size: 12px;
-            margin-bottom: 14px;
-            display: flex;
+        /* Back navigation button */
+        .btn-back-nav {
+            display: inline-flex;
             align-items: center;
-            gap: 8px;
-            animation: shake 0.3s ease;
+            gap: 6px;
+            background: none;
+            border: none;
+            color: #94a3b8;
+            font-size: 11.5px;
+            font-weight: 600;
+            cursor: pointer;
+            padding: 0;
+            margin-bottom: 14px;
+            transition: color 0.15s;
+            width: fit-content;
         }
 
-        @keyframes shake {
-            0%, 100% { transform: translateX(0); }
-            25% { transform: translateX(-4px); }
-            75% { transform: translateX(4px); }
+        .btn-back-nav:hover {
+            color: #38bdf8;
         }
 
-        /* Role Selector - Crisp Engineering Chips */
-        .role-section {
-            margin-bottom: 16px;
-        }
-
-        .section-mini-label {
+        /* Category separator */
+        .sub-group-header {
             font-size: 10px;
             font-weight: 700;
             color: #64748b;
             text-transform: uppercase;
             letter-spacing: 0.07em;
-            margin-bottom: 8px;
+            margin: 10px 0 8px 0;
             display: flex;
-            justify-content: space-between;
             align-items: center;
+            gap: 6px;
         }
 
+        .sub-group-header::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: #1e293b;
+        }
+
+        /* 8 Subsidiary Portal Cards Grid */
+        .portal-subsidiary-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 8px;
+            margin-bottom: 10px;
+        }
+
+        .portal-card {
+            background: var(--card-sub-dark);
+            border: 1px solid #1e293b;
+            border-radius: 8px;
+            padding: 10px 12px;
+            cursor: pointer;
+            transition: all 0.18s ease;
+            text-align: left;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .portal-card:hover {
+            background: #141b29;
+            border-color: #38bdf8;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 14px rgba(2, 132, 199, 0.2);
+        }
+
+        .portal-card-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 4px;
+        }
+
+        .portal-card-code {
+            font-family: 'Outfit', sans-serif;
+            font-size: 14px;
+            font-weight: 800;
+            color: #ffffff;
+            letter-spacing: 0.03em;
+        }
+
+        .portal-card-name {
+            font-size: 11px;
+            font-weight: 500;
+            color: #94a3b8;
+            margin-bottom: 6px;
+            line-height: 1.3;
+        }
+
+        .portal-card-badge {
+            font-size: 9px;
+            font-weight: 700;
+            padding: 2px 6px;
+            border-radius: 4px;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            width: fit-content;
+        }
+
+        /* Specific Highlight for CCL (Active Prototype) */
+        .portal-card.ccl-active {
+            border: 1px solid rgba(16, 185, 129, 0.5);
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.08) 0%, rgba(2, 132, 199, 0.06) 100%);
+            box-shadow: 0 0 16px rgba(16, 185, 129, 0.15);
+        }
+
+        .portal-card.ccl-active:hover {
+            border-color: #10b981;
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.14) 0%, rgba(2, 132, 199, 0.12) 100%);
+            box-shadow: 0 6px 20px rgba(16, 185, 129, 0.3);
+        }
+
+        .portal-card.ccl-active .portal-card-code {
+            color: #34d399;
+        }
+
+        .portal-card.ccl-active .portal-card-badge {
+            background: rgba(16, 185, 129, 0.16);
+            color: #10b981;
+            border: 1px solid rgba(16, 185, 129, 0.4);
+        }
+
+        .badge-enterprise-node {
+            background: rgba(100, 116, 139, 0.1);
+            color: #94a3b8;
+            border: 1px solid rgba(100, 116, 139, 0.25);
+        }
+
+        .pulse-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: #10b981;
+            box-shadow: 0 0 6px rgba(16, 185, 129, 0.8);
+            animation: pulse-glow 1.5s infinite;
+        }
+
+        @keyframes pulse-glow {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.3); opacity: 0.7; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        /* ==========================================================
+           SCREEN 2: ROLE SELECTION & LOGIN FORM
+           ========================================================== */
+        .node-active-banner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 8px 12px;
+            background: rgba(16, 185, 129, 0.08);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            border-radius: 6px;
+            margin-bottom: 16px;
+        }
+
+        .node-banner-info {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .node-banner-title {
+            font-size: 11.5px;
+            font-weight: 700;
+            color: #34d399;
+        }
+
+        .node-banner-tag {
+            font-size: 9.5px;
+            font-weight: 600;
+            color: #94a3b8;
+        }
+
+        /* Role chips grid */
         .role-chips-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             gap: 6px;
+            margin-bottom: 14px;
         }
 
         .role-chip {
@@ -185,7 +362,7 @@
             justify-content: center;
             gap: 6px;
             padding: 8px 10px;
-            background: #0f141f;
+            background: var(--card-sub-dark);
             border: 1px solid #1e293b;
             border-radius: 5px;
             transition: all 0.15s ease;
@@ -194,17 +371,12 @@
         .chip-box i {
             font-size: 11px;
             color: #64748b;
-            transition: color 0.15s;
         }
 
         .chip-box span {
             font-size: 11.5px;
             font-weight: 500;
             color: #94a3b8;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            transition: color 0.15s;
         }
 
         .role-chip:hover .chip-box {
@@ -212,30 +384,18 @@
             border-color: #334155;
         }
 
-        .role-chip:hover .chip-box span {
-            color: #e2e8f0;
-        }
-
         .role-chip input[type="radio"]:checked + .chip-box {
             background: rgba(2, 132, 199, 0.1);
             border-color: #0284c7;
-            box-shadow: none;
         }
 
-        .role-chip input[type="radio"]:checked + .chip-box span {
+        .role-chip input[type="radio"]:checked + .chip-box span,
+        .role-chip input[type="radio"]:checked + .chip-box i {
             color: #38bdf8;
             font-weight: 600;
         }
 
-        .role-chip input[type="radio"]:checked + .chip-box i {
-            color: #38bdf8;
-        }
-
-        /* Credentials Fields */
-        .credentials-box {
-            margin-bottom: 14px;
-        }
-
+        /* Credentials Box */
         .cred-quick-row {
             display: flex;
             justify-content: space-between;
@@ -285,19 +445,14 @@
 
         .modern-input {
             width: 100%;
-            background: #090d16;
+            background: var(--card-sub-dark);
             border: 1px solid #243042;
             color: #ffffff;
-            padding: 9px 12px 9px 34px;
+            padding: 8px 12px 8px 34px;
             border-radius: 5px;
             font-size: 12px;
             outline: none;
             transition: all 0.15s ease;
-        }
-
-        .modern-input::placeholder {
-            color: #64748b;
-            font-size: 11.5px;
         }
 
         .modern-input:focus {
@@ -317,27 +472,17 @@
             padding: 4px;
         }
 
-        .pwd-toggle-btn:hover {
-            color: #cbd5e1;
-        }
-
-        /* reCAPTCHA Mini Box */
         .recaptcha-mini {
-            background: #090d16;
+            background: var(--card-sub-dark);
             border: 1px solid #243042;
             border-radius: 5px;
-            padding: 7px 11px;
+            padding: 6px 11px;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            margin-bottom: 16px;
+            margin-bottom: 14px;
             cursor: pointer;
             user-select: none;
-            transition: border-color 0.15s;
-        }
-
-        .recaptcha-mini:hover {
-            border-color: #334155;
         }
 
         .recaptcha-check-circle {
@@ -358,14 +503,6 @@
             color: #ffffff;
         }
 
-        .recaptcha-label-text {
-            font-size: 11.5px;
-            color: #cbd5e1;
-            font-weight: 500;
-            margin-left: 8px;
-        }
-
-        /* Primary Enterprise Login Button */
         .btn-continue-blue {
             width: 100%;
             background: #0284c7;
@@ -375,34 +512,126 @@
             padding: 10px 16px;
             font-size: 12.5px;
             font-weight: 600;
-            letter-spacing: 0.02em;
             cursor: pointer;
             transition: all 0.15s ease;
             box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 6px;
+            gap: 8px;
         }
 
         .btn-continue-blue:hover {
             background: #0369a1;
             border-color: #075985;
-            box-shadow: 0 3px 10px rgba(2, 132, 199, 0.3);
-            transform: none;
+            box-shadow: 0 3px 10px rgba(2, 132, 199, 0.35);
         }
 
-        .auth-footer-terms {
+        /* ==========================================================
+           SCREEN 3: COMING SOON POPPING VIEW
+           ========================================================== */
+        .coming-soon-card {
+            background: var(--card-sub-dark);
+            border: 1px solid #334155;
+            border-radius: 12px;
+            padding: 24px;
             text-align: center;
-            font-size: 10.5px;
-            color: #64748b;
-            margin-top: 14px;
-            line-height: 1.4;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            animation: popIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
 
-        /* ==========================================================================
-           Right Side: Dark Canvas with Logo to the Left of Free-Flowing Blue Lines
-           ========================================================================== */
+        @keyframes popIn {
+            0% { transform: scale(0.95); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .coming-soon-badge-row {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(245, 158, 11, 0.12);
+            border: 1px solid rgba(245, 158, 11, 0.4);
+            color: #fbbf24;
+            font-size: 11px;
+            font-weight: 800;
+            padding: 4px 12px;
+            border-radius: 20px;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            margin-bottom: 16px;
+        }
+
+        .coming-soon-target-name {
+            font-size: 20px;
+            font-weight: 800;
+            color: #ffffff;
+            margin-bottom: 4px;
+        }
+
+        .coming-soon-target-code {
+            font-size: 13px;
+            font-weight: 700;
+            color: #38bdf8;
+            margin-bottom: 14px;
+        }
+
+        .coming-soon-description {
+            font-size: 12px;
+            color: #94a3b8;
+            line-height: 1.5;
+            margin-bottom: 20px;
+            background: #0f141f;
+            border: 1px solid #1e293b;
+            padding: 12px;
+            border-radius: 8px;
+            text-align: left;
+        }
+
+        .btn-try-ccl {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: #ffffff;
+            border: 1px solid #059669;
+            border-radius: 6px;
+            padding: 10px 18px;
+            font-size: 12.5px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            width: 100%;
+            justify-content: center;
+            margin-bottom: 10px;
+        }
+
+        .btn-try-ccl:hover {
+            background: linear-gradient(135deg, #059669 0%, #047857 100%);
+            box-shadow: 0 6px 18px rgba(16, 185, 129, 0.45);
+        }
+
+        .btn-back-subsidiaries {
+            background: transparent;
+            border: 1px solid #334155;
+            color: #cbd5e1;
+            border-radius: 6px;
+            padding: 8px 14px;
+            font-size: 11.5px;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            transition: all 0.15s;
+        }
+
+        .btn-back-subsidiaries:hover {
+            background: #1e293b;
+            color: #ffffff;
+        }
+
+        /* Right Side: Dark Canvas with Logo and 3D Ribbon Artwork */
         .auth-artwork-side {
             background: linear-gradient(135deg, #101520 0%, #0d121b 100%);
             position: relative;
@@ -430,17 +659,18 @@
             object-fit: cover;
         }
 
-        /* Hero Logo on Artwork Side (Integrated with TRACE and slogan) */
         .artwork-logo-wrap {
             position: absolute;
             top: 50%;
-            left: 44%;
+            left: 45%;
             transform: translate(-50%, -50%);
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
             z-index: 5;
             transition: transform 0.25s ease, filter 0.25s ease;
+            gap: 14px;
         }
 
         .artwork-logo-wrap:hover {
@@ -457,200 +687,345 @@
             display: block;
         }
 
-        .artwork-version-tag {
-            position: absolute;
-            bottom: 16px;
-            right: 20px;
+        .artwork-cil-badge {
+            background: rgba(15, 23, 42, 0.85);
+            border: 1px solid rgba(56, 189, 248, 0.3);
+            border-radius: 8px;
+            padding: 8px 14px;
+            color: #cbd5e1;
             font-size: 11px;
-            font-weight: 600;
-            color: #64748b;
-            font-family: monospace;
-            z-index: 5;
-            letter-spacing: 0.04em;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(8px);
         }
 
-        /* Responsive Breakpoints */
-        @media (max-width: 860px) {
-            body {
-                padding: 16px;
-            }
+        .artwork-cil-badge strong {
+            color: #38bdf8;
+            display: block;
+            font-size: 11.5px;
+            margin-bottom: 2px;
+        }
 
+        /* Error Alert */
+        .alert-error {
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.25);
+            color: #f87171;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        @media (max-width: 960px) {
             .auth-device-card {
                 grid-template-columns: 1fr;
-                border-width: 6px;
-                border-radius: 20px;
-                max-width: 460px;
+                max-width: 520px;
             }
-
             .auth-artwork-side {
                 display: none;
             }
-
             .auth-form-side {
-                padding: 32px 24px;
+                padding: 24px 20px;
             }
         }
     </style>
 </head>
 <body>
 
-    <!-- Dark Device-like Floating Frame Card Container -->
     <div class="auth-device-card">
         
-        <!-- Left Side: Clean Login Form -->
+        <!-- Left Side: Dynamic Workflow Viewport -->
         <div class="auth-form-side">
-            <!-- Header Title -->
-            <div class="auth-header-group">
-                <h1 class="auth-title">Welcome Back</h1>
-                <p class="auth-subtitle">Unified AI-Powered Mining Digital Platform</p>
-            </div>
 
-            {% if error %}
-            <div class="alert-error">
-                <i class="fa-solid fa-triangle-exclamation"></i>
-                <span>{{ error }}</span>
-            </div>
-            {% endif %}
-
-            <!-- Login Form -->
-            <form action="/login" method="POST" id="loginForm">
-                <!-- STEP 1: SELECT ROLE -->
-                <div class="role-section">
-                    <div class="section-mini-label">
-                        <span>Select Role</span>
-                    </div>
-
-                    <div class="role-chips-grid">
-                        <!-- Role 1: General Manager -->
-                        <label class="role-chip" onclick="handleRoleChange('gm', 'General Manager', 'gm@trace.gov.in', 'gm@trace2026')">
-                            <input type="radio" name="role" value="gm" id="role_gm" checked>
-                            <div class="chip-box">
-                                <i class="fa-solid fa-user-tie"></i>
-                                <span>General Manager</span>
-                            </div>
-                        </label>
-
-                        <!-- Role 2: Vigilance Officer -->
-                        <label class="role-chip" onclick="handleRoleChange('vigilance', 'Vigilance Officer', 'vigilance@trace.gov.in', 'vigilance@trace2026')">
-                            <input type="radio" name="role" value="vigilance" id="role_vigilance">
-                            <div class="chip-box">
-                                <i class="fa-solid fa-shield-halved"></i>
-                                <span>Vigilance Officer</span>
-                            </div>
-                        </label>
-
-                        <!-- Role 3: Surveillance Officer -->
-                        <label class="role-chip" onclick="handleRoleChange('surveillance', 'Surveillance Officer', 'surveillance@trace.gov.in', 'surveillance@trace2026')">
-                            <input type="radio" name="role" value="surveillance" id="role_surveillance">
-                            <div class="chip-box">
-                                <i class="fa-solid fa-video"></i>
-                                <span>Surveillance Officer</span>
-                            </div>
-                        </label>
-
-                        <!-- Role 4: Dispatch Officer -->
-                        <label class="role-chip" onclick="handleRoleChange('dispatch', 'Dispatch Officer (DO)', 'dispatch@trace.gov.in', 'dispatch@trace2026')">
-                            <input type="radio" name="role" value="dispatch" id="role_dispatch">
-                            <div class="chip-box">
-                                <i class="fa-solid fa-truck-fast"></i>
-                                <span>Dispatch Officer</span>
-                            </div>
-                        </label>
-
-                        <!-- Role 5: Control Operator -->
-                        <label class="role-chip" onclick="handleRoleChange('operator', 'Control Operator', 'operator@trace.gov.in', 'operator@trace2026')">
-                            <input type="radio" name="role" value="operator" id="role_operator">
-                            <div class="chip-box">
-                                <i class="fa-solid fa-sliders"></i>
-                                <span>Control Operator</span>
-                            </div>
-                        </label>
-                    </div>
+            <!-- ========================================================== -->
+            <!-- SCREEN 1: PORTAL LANDING (SELECT CIL SUBSIDIARY)           -->
+            <!-- ========================================================== -->
+            <div id="screenPortal" class="screen-view active">
+                <div class="cil-enterprise-pill">
+                    <i class="fa-solid fa-layer-group"></i>
+                    <span>Coal India Limited (CIL) Enterprise</span>
                 </div>
+                <h1 class="view-title">Command Center Portal</h1>
+                <p class="view-subtitle">Select your CIL subsidiary operating node to access interconnected mine dispatch, weight telemetry, and AI drone surveillance.</p>
 
-                <!-- STEP 2: CREDENTIALS INPUT -->
-                <div class="credentials-box">
-                    <div class="cred-quick-row">
-                        <span style="color: #94a3b8; font-weight: 600;">Selected: <strong id="selectedRoleLabel" style="color: #38bdf8;">General Manager</strong></span>
-                        <button type="button" class="btn-quick-fill" onclick="autoFillCurrentCredentials()">
-                            <i class="fa-solid fa-bolt"></i> Auto-fill Demo
-                        </button>
-                    </div>
-
-                    <!-- Email Input -->
-                    <div class="input-group">
-                        <div class="input-field-wrap">
-                            <i class="fa-regular fa-envelope field-icon"></i>
-                            <input 
-                                type="text" 
-                                id="username" 
-                                name="username" 
-                                class="modern-input" 
-                                placeholder="Enter your email or username" 
-                                required 
-                                autocomplete="username"
-                            >
+                <!-- 7 Coal-Producing Subsidiaries -->
+                <div class="sub-group-header">
+                    <i class="fa-solid fa-industry" style="color: #38bdf8;"></i> 7 Coal-Producing Subsidiaries
+                </div>
+                <div class="portal-subsidiary-grid">
+                    <!-- CCL: Active Prototype -->
+                    <div class="portal-card ccl-active" onclick="navigateToCCL()">
+                        <div class="portal-card-top">
+                            <span class="portal-card-code">CCL</span>
+                            <span class="pulse-dot" title="Live Telemetry Connected"></span>
+                        </div>
+                        <div class="portal-card-name">Central Coalfields Limited</div>
+                        <div class="portal-card-badge">
+                            <i class="fa-solid fa-bolt"></i> [Active Live Prototype]
                         </div>
                     </div>
 
-                    <!-- Password Input -->
-                    <div class="input-group">
-                        <div class="input-field-wrap">
-                            <i class="fa-solid fa-lock field-icon"></i>
-                            <input 
-                                type="password" 
-                                id="password" 
-                                name="password" 
-                                class="modern-input" 
-                                placeholder="Enter your password" 
-                                required 
-                                autocomplete="current-password"
-                            >
-                            <button type="button" class="pwd-toggle-btn" onclick="togglePasswordVisibility()" title="Show/Hide Password">
-                                <i class="fa-regular fa-eye" id="pwdEyeIcon"></i>
+                    <!-- BCCL -->
+                    <div class="portal-card" onclick="showComingSoon('BCCL', 'Bharat Coking Coal Limited', 'Dhanbad, Jharkhand')">
+                        <div class="portal-card-top">
+                            <span class="portal-card-code">BCCL</span>
+                            <i class="fa-solid fa-shield" style="font-size: 11px; color: #64748b;"></i>
+                        </div>
+                        <div class="portal-card-name">Bharat Coking Coal Limited</div>
+                        <div class="portal-card-badge badge-enterprise-node">[Enterprise Ready]</div>
+                    </div>
+
+                    <!-- ECL -->
+                    <div class="portal-card" onclick="showComingSoon('ECL', 'Eastern Coalfields Limited', 'Sanctoria, West Bengal')">
+                        <div class="portal-card-top">
+                            <span class="portal-card-code">ECL</span>
+                            <i class="fa-solid fa-shield" style="font-size: 11px; color: #64748b;"></i>
+                        </div>
+                        <div class="portal-card-name">Eastern Coalfields Limited</div>
+                        <div class="portal-card-badge badge-enterprise-node">[Enterprise Ready]</div>
+                    </div>
+
+                    <!-- MCL -->
+                    <div class="portal-card" onclick="showComingSoon('MCL', 'Mahanadi Coalfields Limited', 'Sambalpur, Odisha')">
+                        <div class="portal-card-top">
+                            <span class="portal-card-code">MCL</span>
+                            <i class="fa-solid fa-shield" style="font-size: 11px; color: #64748b;"></i>
+                        </div>
+                        <div class="portal-card-name">Mahanadi Coalfields Limited</div>
+                        <div class="portal-card-badge badge-enterprise-node">[Enterprise Ready]</div>
+                    </div>
+
+                    <!-- NCL -->
+                    <div class="portal-card" onclick="showComingSoon('NCL', 'Northern Coalfields Limited', 'Singrauli, MP')">
+                        <div class="portal-card-top">
+                            <span class="portal-card-code">NCL</span>
+                            <i class="fa-solid fa-shield" style="font-size: 11px; color: #64748b;"></i>
+                        </div>
+                        <div class="portal-card-name">Northern Coalfields Limited</div>
+                        <div class="portal-card-badge badge-enterprise-node">[Enterprise Ready]</div>
+                    </div>
+
+                    <!-- SECL -->
+                    <div class="portal-card" onclick="showComingSoon('SECL', 'South Eastern Coalfields Limited', 'Bilaspur, CG')">
+                        <div class="portal-card-top">
+                            <span class="portal-card-code">SECL</span>
+                            <i class="fa-solid fa-shield" style="font-size: 11px; color: #64748b;"></i>
+                        </div>
+                        <div class="portal-card-name">South Eastern Coalfields Limited</div>
+                        <div class="portal-card-badge badge-enterprise-node">[Enterprise Ready]</div>
+                    </div>
+
+                    <!-- WCL -->
+                    <div class="portal-card" onclick="showComingSoon('WCL', 'Western Coalfields Limited', 'Nagpur, Maharashtra')">
+                        <div class="portal-card-top">
+                            <span class="portal-card-code">WCL</span>
+                            <i class="fa-solid fa-shield" style="font-size: 11px; color: #64748b;"></i>
+                        </div>
+                        <div class="portal-card-name">Western Coalfields Limited</div>
+                        <div class="portal-card-badge badge-enterprise-node">[Enterprise Ready]</div>
+                    </div>
+
+                    <!-- 1 Planning & Design Institute: CMPDIL -->
+                    <div class="portal-card" onclick="showComingSoon('CMPDIL', 'Central Mine Planning & Design Institute Limited', 'Ranchi, Jharkhand')">
+                        <div class="portal-card-top">
+                            <span class="portal-card-code">CMPDIL</span>
+                            <i class="fa-solid fa-compass-drafting" style="font-size: 11px; color: #a78bfa;"></i>
+                        </div>
+                        <div class="portal-card-name">Mine Planning & Design Institute</div>
+                        <div class="portal-card-badge badge-enterprise-node">[Planning Node]</div>
+                    </div>
+                </div>
+
+            </div>
+
+
+            <!-- ========================================================== -->
+            <!-- SCREEN 2: CCL AUTHENTICATION & ROLE SELECTION              -->
+            <!-- ========================================================== -->
+            <div id="screenLogin" class="screen-view">
+                <button type="button" class="btn-back-nav" onclick="navigateToPortal()">
+                    <i class="fa-solid fa-arrow-left"></i>
+                    <span>Switch CIL Subsidiary</span>
+                </button>
+
+                <div class="node-active-banner">
+                    <div class="node-banner-info">
+                        <span class="pulse-dot"></span>
+                        <span class="node-banner-title">Central Coalfields Limited (CCL)</span>
+                    </div>
+                    <span class="node-banner-tag">[Active Live Prototype]</span>
+                </div>
+
+                <h1 class="view-title" style="font-size: 21px;">Officer Authentication</h1>
+                <p class="view-subtitle" style="margin-bottom: 16px;">Select your authorized operational role and sign into the CCL Command Center.</p>
+
+                {% if error %}
+                <div class="alert-error">
+                    <i class="fa-solid fa-triangle-exclamation"></i>
+                    <span>{{ error }}</span>
+                </div>
+                {% endif %}
+
+                <form action="/login" method="POST" id="loginForm">
+                    <input type="hidden" name="subsidiary" id="selectedSubsidiaryInput" value="CCL">
+
+                    <!-- Role Selector -->
+                    <div style="margin-bottom: 12px;">
+                        <div style="font-size: 10px; font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 6px;">
+                            Select Designation
+                        </div>
+                        <div class="role-chips-grid">
+                            <!-- GM -->
+                            <label class="role-chip" onclick="handleRoleChange('gm', 'General Manager', 'gm@trace.gov.in', 'gm@trace2026')">
+                                <input type="radio" name="role" value="gm" id="role_gm" checked>
+                                <div class="chip-box">
+                                    <i class="fa-solid fa-user-tie"></i>
+                                    <span>General Manager</span>
+                                </div>
+                            </label>
+
+                            <!-- Vigilance -->
+                            <label class="role-chip" onclick="handleRoleChange('vigilance', 'Vigilance Officer', 'vigilance@trace.gov.in', 'vigilance@trace2026')">
+                                <input type="radio" name="role" value="vigilance" id="role_vigilance">
+                                <div class="chip-box">
+                                    <i class="fa-solid fa-shield-halved"></i>
+                                    <span>Vigilance Officer</span>
+                                </div>
+                            </label>
+
+                            <!-- Surveillance -->
+                            <label class="role-chip" onclick="handleRoleChange('surveillance', 'Surveillance Officer', 'surveillance@trace.gov.in', 'surveillance@trace2026')">
+                                <input type="radio" name="role" value="surveillance" id="role_surveillance">
+                                <div class="chip-box">
+                                    <i class="fa-solid fa-video"></i>
+                                    <span>Surveillance Officer</span>
+                                </div>
+                            </label>
+
+                            <!-- Dispatch -->
+                            <label class="role-chip" onclick="handleRoleChange('dispatch', 'Dispatch Officer (DO)', 'dispatch@trace.gov.in', 'dispatch@trace2026')">
+                                <input type="radio" name="role" value="dispatch" id="role_dispatch">
+                                <div class="chip-box">
+                                    <i class="fa-solid fa-truck-fast"></i>
+                                    <span>Dispatch Officer</span>
+                                </div>
+                            </label>
+
+                            <!-- Operator -->
+                            <label class="role-chip" onclick="handleRoleChange('operator', 'Control Operator', 'operator@trace.gov.in', 'operator@trace2026')">
+                                <input type="radio" name="role" value="operator" id="role_operator">
+                                <div class="chip-box">
+                                    <i class="fa-solid fa-sliders"></i>
+                                    <span>Control Operator</span>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Credentials -->
+                    <div style="margin-bottom: 12px;">
+                        <div class="cred-quick-row">
+                            <span style="color: #94a3b8; font-weight: 600;">Sign in as <strong id="selectedRoleLabel" style="color: #38bdf8;">General Manager</strong></span>
+                            <button type="button" class="btn-quick-fill" onclick="autoFillCurrentCredentials()">
+                                <i class="fa-solid fa-bolt"></i> Auto-fill Demo
                             </button>
                         </div>
-                    </div>
-                </div>
 
-                <!-- reCAPTCHA Checkbox -->
-                <div class="recaptcha-mini" onclick="toggleCaptcha()">
-                    <div style="display: flex; align-items: center;">
-                        <div class="recaptcha-check-circle" id="captchaBox">
-                            <i class="fa-solid fa-check" id="captchaCheck" style="display: none; font-size: 11px;"></i>
+                        <div class="input-group">
+                            <div class="input-field-wrap">
+                                <i class="fa-regular fa-envelope field-icon"></i>
+                                <input type="text" id="username" name="username" class="modern-input" placeholder="Enter username or email" required autocomplete="username">
+                            </div>
                         </div>
-                        <span class="recaptcha-label-text">I'm not a robot</span>
-                    </div>
-                    <div style="display: flex; align-items: center; gap: 4px; color: #64748b; font-size: 11px;">
-                        <i class="fa-solid fa-shield" style="color: #38bdf8;"></i>
-                        <span style="font-size: 9.5px; font-weight: 600;">reCAPTCHA</span>
-                    </div>
-                </div>
 
-                <!-- Primary Accent Login Button -->
-                <button type="submit" class="btn-continue-blue" id="btnLogin">
-                    <span id="btnLoginText">Continue to Dashboard</span>
-                    <i class="fa-solid fa-arrow-right" style="font-size: 12px;"></i>
-                </button>
-            </form>
+                        <div class="input-group">
+                            <div class="input-field-wrap">
+                                <i class="fa-solid fa-lock field-icon"></i>
+                                <input type="password" id="password" name="password" class="modern-input" placeholder="Enter password" required autocomplete="current-password">
+                                <button type="button" class="pwd-toggle-btn" onclick="togglePasswordVisibility()">
+                                    <i class="fa-regular fa-eye" id="pwdEyeIcon"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
 
-            <div class="auth-footer-terms">
-                By signing in you agree to TRACE Digital Mining security and compliance protocols.
+                    <!-- Captcha -->
+                    <div class="recaptcha-mini" onclick="toggleCaptcha()">
+                        <div style="display: flex; align-items: center;">
+                            <div class="recaptcha-check-circle" id="captchaBox">
+                                <i class="fa-solid fa-check" id="captchaCheck" style="display: none; font-size: 11px;"></i>
+                            </div>
+                            <span style="font-size: 11.5px; color: #cbd5e1; font-weight: 500; margin-left: 8px;">I'm not a robot</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 4px; color: #64748b; font-size: 11px;">
+                            <i class="fa-solid fa-shield" style="color: #38bdf8;"></i>
+                            <span style="font-size: 9.5px; font-weight: 600;">reCAPTCHA</span>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn-continue-blue" id="btnLogin">
+                        <span id="btnLoginText">Launch CCL Command Center</span>
+                        <i class="fa-solid fa-arrow-right" style="font-size: 12px;"></i>
+                    </button>
+                </form>
             </div>
+
+
+            <!-- ========================================================== -->
+            <!-- SCREEN 3: COMING SOON POPPING VIEW (SCALABLE SUBSIDIARIES) -->
+            <!-- ========================================================== -->
+            <div id="screenComingSoon" class="screen-view">
+                <button type="button" class="btn-back-nav" onclick="navigateToPortal()">
+                    <i class="fa-solid fa-arrow-left"></i>
+                    <span>Back to Subsidiary Selection</span>
+                </button>
+
+                <div class="coming-soon-card">
+                    <div class="coming-soon-badge-row">
+                        <i class="fa-solid fa-circle-nodes"></i>
+                        <span>Enterprise Onboarding In Progress</span>
+                    </div>
+
+                    <h2 class="coming-soon-target-name" id="comingSoonSubName">Bharat Coking Coal Limited</h2>
+                    <div class="coming-soon-target-code" id="comingSoonSubCode">Subsidiary Node: BCCL</div>
+
+                    <div class="coming-soon-description">
+                        <div style="color: #38bdf8; font-weight: 700; margin-bottom: 4px; font-size: 11.5px;">
+                            <i class="fa-solid fa-info-circle"></i> SIH Scalability Architecture:
+                        </div>
+                        The TRACE digital platform is architecturally unified and pre-configured to onboard this subsidiary. Live telemetry sensors, RFID weighbridges, and autonomous drone feeds are currently running live on the <strong>Central Coalfields Limited (CCL)</strong> prototype node.
+                    </div>
+
+                    <button type="button" class="btn-try-ccl" onclick="navigateToCCL()">
+                        <i class="fa-solid fa-bolt"></i>
+                        <span>Launch Live CCL Command Center Prototype</span>
+                    </button>
+
+                    <button type="button" class="btn-back-subsidiaries" onclick="navigateToPortal()">
+                        <i class="fa-solid fa-grid-2"></i> Select Another CIL Subsidiary
+                    </button>
+                </div>
+            </div>
+
         </div>
 
-        <!-- Right Side: Dark 3D Ribbon Artwork with Logo Positioned to the Left of the Lines -->
+        <!-- Right Side: Dark 3D Ribbon Artwork -->
         <div class="auth-artwork-side">
-            <!-- Integrated TRACE Hero Logo (includes emblem, TRACE name, and slogan) -->
             <div class="artwork-logo-wrap">
                 <img src="/static/media_screenshots/trace_login_hero_logo.png" alt="TRACE Mining AI" class="artwork-hero-img">
+                <div class="artwork-cil-badge">
+                    <strong>COAL INDIA LIMITED (CIL)</strong>
+                    <span>8 Interconnected Subsidiary Ecosystem</span>
+                </div>
             </div>
 
-            <!-- 3D Ribbon Vector Graphic in Vibrant Cyan & Blue Gradients -->
             <div class="artwork-svg-container">
                 <svg class="artwork-svg" viewBox="0 0 500 600" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <defs>
-                        <!-- Vibrant 3D Ribbon Gradients -->
                         <linearGradient id="darkBlueRibbon1" x1="10%" y1="0%" x2="90%" y2="100%">
                             <stop offset="0%" stop-color="#38bdf8" />
                             <stop offset="35%" stop-color="#0284c7" />
@@ -673,11 +1048,9 @@
                         </filter>
                     </defs>
 
-                    <!-- Background Ambient Glowing Light Orbs -->
                     <circle cx="340" cy="240" r="140" fill="#0284c7" fill-opacity="0.18" filter="url(#darkGlow)" />
                     <circle cx="220" cy="450" r="120" fill="#38bdf8" fill-opacity="0.12" filter="url(#darkGlow)" />
 
-                    <!-- Background Secondary Ribbon Tube -->
                     <path d="M 180 -50 C 240 80, 520 160, 500 380 C 480 540, 260 620, 200 680" 
                           stroke="url(#darkBlueRibbon2)" 
                           stroke-width="50" 
@@ -686,7 +1059,6 @@
                           opacity="0.55" 
                           filter="url(#ribbonDarkShadow)" />
 
-                    <!-- Primary 3D Front Ribbon Loop (Flowing gracefully to the right of the logo) -->
                     <path d="M 345 -60 C 415 80, 445 220, 415 340 C 365 480, 200 460, 175 650" 
                           stroke="url(#darkBlueRibbon1)" 
                           stroke-width="68" 
@@ -694,7 +1066,6 @@
                           fill="none" 
                           filter="url(#ribbonDarkShadow)" />
 
-                    <!-- Inner Tubular Light Streak for 3D Sheen -->
                     <path d="M 347 -40 C 413 90, 435 220, 409 335 C 363 465, 210 450, 183 630" 
                           stroke="#ffffff" 
                           stroke-width="7" 
@@ -704,14 +1075,37 @@
                 </svg>
             </div>
 
-            <!-- Version Tag -->
-            <div class="artwork-version-tag">TRACE AI v2.4.0</div>
         </div>
 
     </div>
 
     <script>
-        // State management for role selection
+        // Screen Navigation Functions
+        function showScreen(screenId) {
+            document.querySelectorAll('.screen-view').forEach(el => el.classList.remove('active'));
+            const target = document.getElementById(screenId);
+            if (target) target.classList.add('active');
+        }
+
+        function navigateToPortal() {
+            showScreen('screenPortal');
+            window.history.replaceState(null, '', '/login');
+        }
+
+        function navigateToCCL() {
+            document.getElementById('selectedSubsidiaryInput').value = 'CCL';
+            showScreen('screenLogin');
+            window.history.replaceState(null, '', '/login?subsidiary=CCL');
+        }
+
+        function showComingSoon(subCode, subName, location) {
+            document.getElementById('comingSoonSubName').textContent = subName;
+            document.getElementById('comingSoonSubCode').textContent = `Subsidiary Node: ${subCode} • (${location})`;
+            showScreen('screenComingSoon');
+            window.history.replaceState(null, '', `/login?subsidiary=${subCode}`);
+        }
+
+        // Role Selection & Credentials
         let currentRoleData = {
             role: 'gm',
             name: 'General Manager',
@@ -727,9 +1121,8 @@
                 password: defaultPass
             };
 
-            // Update UI elements
             document.getElementById('selectedRoleLabel').textContent = roleName;
-            document.getElementById('btnLoginText').textContent = 'Continue as ' + roleName;
+            document.getElementById('btnLoginText').textContent = 'Sign In as ' + roleName;
             
             const usernameInput = document.getElementById('username');
             usernameInput.placeholder = `e.g. ${defaultEmail} or ${roleKey}`;
@@ -777,9 +1170,32 @@
             }
         }
 
-        // Auto-check captcha for smooth demo flow
+        // Initialize state on page load based on URL or error state
         window.addEventListener('DOMContentLoaded', () => {
             toggleCaptcha();
+            handleRoleChange('gm', 'General Manager', 'gm@trace.gov.in', 'gm@trace2026');
+
+            // If an error was returned from post_login, or URL has sub=CCL, open login directly
+            const urlParams = new URLSearchParams(window.location.search);
+            const subParam = urlParams.get('subsidiary');
+            const hasError = {{ 'true' if error else 'false' }};
+
+            if (hasError || subParam === 'CCL') {
+                navigateToCCL();
+            } else if (subParam && subParam !== 'CCL') {
+                const subNames = {
+                    'BCCL': 'Bharat Coking Coal Limited',
+                    'ECL': 'Eastern Coalfields Limited',
+                    'MCL': 'Mahanadi Coalfields Limited',
+                    'NCL': 'Northern Coalfields Limited',
+                    'SECL': 'South Eastern Coalfields Limited',
+                    'WCL': 'Western Coalfields Limited',
+                    'CMPDIL': 'Central Mine Planning & Design Institute Limited'
+                };
+                showComingSoon(subParam, subNames[subParam] || subParam, 'Enterprise Region');
+            } else {
+                navigateToPortal();
+            }
         });
     </script>
 </body>

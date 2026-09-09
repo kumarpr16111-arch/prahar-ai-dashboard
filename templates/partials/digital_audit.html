@@ -1,0 +1,118 @@
+            <div class="tab-content-panel" id="digital-audit-trails-view" style="display: none;">
+                <div class="audit-dashboard-container">
+                    <!-- Clean Corporate Header -->
+                    <div class="audit-header-card">
+                        <div class="audit-header-main">
+                            <div class="audit-header-text">
+                                <span class="audit-section-tag">Statutory Documentation</span>
+                                <h2 class="audit-page-title">Digital Audit Trails & Regulatory Assurance Ledgers</h2>
+                                <p class="audit-page-subtitle">
+                                    5-Year Statutory Coal Mining Audit Archive (FY 2020–21 through FY 2025–26) organized into <strong>50 verified sectional packages</strong> with cryptographic SHA-256 integrity verification.
+                                </p>
+                            </div>
+                            <div class="audit-stats-row">
+                                <div class="audit-stat-box">
+                                    <span class="stat-number">50</span>
+                                    <span class="stat-label">Reports (10/Yr)</span>
+                                </div>
+                                <div class="audit-stat-box">
+                                    <span class="stat-number">2,003</span>
+                                    <span class="stat-label">Total Pages</span>
+                                </div>
+                                <div class="audit-stat-box">
+                                    <span class="stat-number">5 Years</span>
+                                    <span class="stat-label">Archive Span</span>
+                                </div>
+                                <div class="audit-stat-box">
+                                    <span class="stat-number" style="color: #059669;">100%</span>
+                                    <span class="stat-label">SHA-256 Valid</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Clean Standard Toolbar: Tabs & Search -->
+                    <div class="audit-toolbar">
+                        <div class="audit-year-tabs" id="auditYearPills">
+                            <button class="audit-tab-btn active" data-year="all" onclick="filterAuditReportsByYear('all')">All Years (50)</button>
+                            <button class="audit-tab-btn" data-year="2026" onclick="filterAuditReportsByYear('2026')">FY 2025–26 (10)</button>
+                            <button class="audit-tab-btn" data-year="2025" onclick="filterAuditReportsByYear('2025')">FY 2024–25 (10)</button>
+                            <button class="audit-tab-btn" data-year="2023" onclick="filterAuditReportsByYear('2023')">FY 2022–23 (10)</button>
+                            <button class="audit-tab-btn" data-year="2022" onclick="filterAuditReportsByYear('2022')">FY 2021–22 (10)</button>
+                            <button class="audit-tab-btn" data-year="2021" onclick="filterAuditReportsByYear('2021')">FY 2020–21 (10)</button>
+                        </div>
+
+                        <div class="audit-toolbar-right">
+                            <div class="audit-search-input-wrap">
+                                <i class="fa-solid fa-magnifying-glass"></i>
+                                <input type="text" id="auditSearchInput" placeholder="Search reports, topics, or hash..." oninput="handleAuditSearch()">
+                                <button class="btn-clear-search" id="btnClearAuditSearch" onclick="clearAuditSearch()" style="display: none;"><i class="fa-solid fa-xmark"></i></button>
+                            </div>
+                            <select id="auditCategoryFilter" class="audit-select-dropdown" onchange="handleAuditCategoryFilter()">
+                                <option value="all">All Regulatory Sectors</option>
+                                <option value="Governance & Board Review">Governance & Board Review</option>
+                                <option value="Production Operations">Production Operations</option>
+                                <option value="Weighbridge Logistics">Weighbridge Logistics</option>
+                                <option value="Fleet & Dispatch">Fleet & Dispatch (VTS)</option>
+                                <option value="Security & Surveillance">Security & Surveillance</option>
+                                <option value="Safety & Environment">Safety & Environment</option>
+                                <option value="Workforce & Compliance">Workforce & Compliance</option>
+                                <option value="Revenue & DO Ops">Revenue & DO Ops</option>
+                                <option value="Financial Audit">Financial Audit</option>
+                                <option value="Statutory Certification">Statutory Certification</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Results Summary Counter & Actions -->
+                    <!-- Results Summary Counter & Actions -->
+                    <div class="audit-results-meta">
+                        <span id="auditResultsCount">Showing <strong>50 of 50</strong> Verified Sectional Audit Documents</span>
+                        <div class="audit-results-actions">
+                            <button class="btn-audit-meta" onclick="exportAuditManifestJson()"><i class="fa-solid fa-code"></i> Export Manifest JSON</button>
+                            <button class="btn-audit-meta" onclick="verifyAllBlockchainHashes()"><img src="/static/media_screenshots/trace_main_logo.jpeg" alt="TRACE Logo" class="brand-logo-img"> Verify All 50 Hashes</button>
+                        </div>
+                    </div>
+
+                    <!-- 50 Split Audit Reports Grid -->
+                    <div class="audit-reports-grid" id="auditReportsGrid">
+                        <!-- Populated dynamically via JS -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- View Internal DO Data (Delivery Order Operations Register) -->
+    <!-- Audit PDF Inspection & Proof Modal -->
+    <div class="audit-pdf-modal-overlay" id="auditPdfModal" style="display: none;">
+        <div class="audit-pdf-modal-dialog">
+            <div class="audit-pdf-modal-header">
+                <div class="modal-title-group">
+                    <div class="modal-badge-row">
+                        <span class="modal-badge-tag" id="modalYearBadge">FY 2025-26</span>
+                        <span class="modal-badge-section" id="modalSectionBadge">Section 3 of 10</span>
+                        <span class="modal-badge-status"><img src="/static/media_screenshots/trace_main_logo.jpeg" alt="TRACE Logo" class="brand-logo-img"> IMMUTABLE LEDGER VERIFIED</span>
+                    </div>
+                    <h3 id="modalReportTitle">FY 2025-26 Weighbridge Net Weight Reconciliation & Telemetry</h3>
+                    <p id="modalReportMeta">Pages 81–120 (40 pgs) • SHA-256: 7f4a9b... • Block BLK-880427</p>
+                </div>
+                <div class="modal-header-actions">
+                    <a href="#" id="modalDirectDownloadBtn" class="btn-modal-action btn-modal-download" download><i class="fa-solid fa-download"></i> Download PDF</a>
+                    <button class="btn-modal-action" onclick="toggleAuditPdfFullscreen()" title="Fullscreen"><i class="fa-solid fa-expand"></i></button>
+                    <button class="btn-modal-close" onclick="closeAuditPdfModal()" title="Close Viewer"><i class="fa-solid fa-xmark"></i></button>
+                </div>
+            </div>
+            <div class="audit-pdf-modal-body">
+                <iframe id="auditPdfViewerIframe" src="" class="audit-pdf-iframe" title="PDF Document Viewer"></iframe>
+            </div>
+            <div class="audit-pdf-modal-footer">
+                <div class="audit-proof-pill">
+                    <i class="fa-solid fa-circle-check text-green"></i> 
+                    <span id="modalHashProofText">Cryptographic SHA-256 Verified On-Chain: 78abe24cd...</span>
+                </div>
+                <div class="audit-seal-tag">
+                    <i class="fa-solid fa-stamp"></i> Statutory Mining Audit Seal • DGMS Verified
+                </div>
+            </div>
+        </div>
+    </div>
+

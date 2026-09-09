@@ -1,0 +1,432 @@
+            <!-- Dashboard Content Container -->
+            <div class="content-body">
+                <!-- Top Tabs Bar -->
+                <div class="tabs-card" id="topTabsCard">
+                    <div class="tabs-header">
+                        <button class="tab-btn active" data-content="weighbridge-view">Weighbridge Summary</button>
+                        <button class="tab-btn" data-content="checkpost-view">Checkpost Summary</button>
+                        <button class="tab-btn" data-content="vts-view">VTS Summary</button>
+                    </div>
+                </div>
+
+                <!-- Tab View 1: Weighbridge Summary -->
+                <div class="tab-content-panel active" id="weighbridge-view">
+                    <div class="analytics-card">
+                        <div class="card-header">
+                            <div class="card-title-group">
+                                <div class="icon-analytics-bars">
+                                    <span class="bar bar-pink"></span>
+                                    <span class="bar bar-blue"></span>
+                                    <span class="bar bar-green"></span>
+                                </div>
+                                <h2 class="card-title">Weighment Analytics Summary</h2>
+                            </div>
+                            <div class="period-badge">
+                                <span class="period-label">Period:</span> From: <strong>{{ current_date }} 00:00:00</strong> to <strong>{{ current_date }} 23:59:59</strong>
+                            </div>
+                        </div>
+
+                        <div class="card-body">
+                            <!-- Section 1: Weighment Data -->
+                            <h3 class="section-subheading">Weighment Data</h3>
+                            <div class="table-responsive margin-bottom-lg">
+                                <table class="data-table">
+                                    <thead>
+                                        <tr>
+                                            <th class="text-center" style="width: 70px;">S.No</th>
+                                            <th>Area / Project / WB</th>
+                                            <th class="text-right">Road Dispatch</th>
+                                            <th class="text-right">Internal Sending</th>
+                                            <th class="text-right">Internal Receiving</th>
+                                            <th class="text-right">Total</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for item in weighment_data %}
+                                        <tr>
+                                            <td class="text-center bold-sno">{{ item.s_no }}</td>
+                                            <td><a href="#" class="table-link">{{ item.name }}</a></td>
+                                            <td class="text-right">{{ item.road_dispatch }}</td>
+                                            <td class="text-right">{{ item.internal_sending }}</td>
+                                            <td class="text-right">{{ item.internal_receiving }}</td>
+                                            <td class="text-right total-cell">{{ item.total }}</td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                    <tfoot>
+                                        <tr class="summary-total-row">
+                                            <td colspan="2" class="text-bold">Total</td>
+                                            <td class="text-right text-bold">{{ weighment_total.road_dispatch }}</td>
+                                            <td class="text-right text-bold">{{ weighment_total.internal_sending }}</td>
+                                            <td class="text-right text-bold">{{ weighment_total.internal_receiving }}</td>
+                                            <td class="text-right text-bold">{{ weighment_total.total }}</td>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+
+                            <!-- Section 2: Weighbridge Status -->
+                            <h3 class="section-subheading">Weighbridge Status</h3>
+                            <div class="table-responsive margin-bottom-lg">
+                                <table class="data-table">
+                                    <thead>
+                                        <tr>
+                                            <th class="text-center" style="width: 70px;">S.No</th>
+                                            <th>Area / Project / WB</th>
+                                            <th class="text-center">Operational / Total</th>
+                                            <th class="text-center">Operational %</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for item in weighbridge_status_data %}
+                                        <tr>
+                                            <td class="text-center bold-sno">{{ item.s_no }}</td>
+                                            <td><a href="#" class="table-link">{{ item.name }}</a></td>
+                                            <td class="text-center">{{ item.operational_total }}</td>
+                                            <td class="text-center">{{ item.operational_pct }}</td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                    <tfoot>
+                                        <tr class="summary-total-row">
+                                            <td colspan="2" class="text-bold">Total</td>
+                                            <td class="text-center text-bold">{{ weighbridge_status_total.operational_total }}</td>
+                                            <td class="text-center text-bold">{{ weighbridge_status_total.operational_pct }}</td>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+
+                            <!-- Section 3: Advanced Analytics -->
+                            <h3 class="section-subheading">Advanced Analytics</h3>
+                            <div class="table-responsive">
+                                <table class="data-table multi-header-table">
+                                    <thead>
+                                        <tr>
+                                            <th rowspan="2" class="text-center" style="width: 60px;">S.No</th>
+                                            <th rowspan="2">Area / Project / WB</th>
+                                            <th colspan="3" class="text-center">Transactions</th>
+                                            <th rowspan="2" class="text-center">Manual Vehicle Bypassing</th>
+                                            <th rowspan="2" class="text-center">Manual Boom Barrier Operation</th>
+                                            <th rowspan="2" class="text-center">Long Vehicle (100T)</th>
+                                            <th colspan="3" class="text-center">Long Vehicle (LV)</th>
+                                            <th colspan="3" class="text-center">ANPR Mis-Match</th>
+                                        </tr>
+                                        <tr>
+                                            <th class="text-center">Road Dispatch</th>
+                                            <th class="text-center">Internal</th>
+                                            <th class="text-center">Total</th>
+                                            <th class="text-center">Road Dispatch</th>
+                                            <th class="text-center">Internal</th>
+                                            <th class="text-center">Total</th>
+                                            <th class="text-center">Road Dispatch</th>
+                                            <th class="text-center">Internal</th>
+                                            <th class="text-center">Total</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for item in advanced_analytics_data %}
+                                        <tr>
+                                            <td class="text-center bold-sno">{{ item.s_no }}</td>
+                                            <td><a href="#" class="table-link">{{ item.name }}</a></td>
+                                            <td class="text-center">{{ item.tx_road }}</td>
+                                            <td class="text-center">{{ item.tx_internal }}</td>
+                                            <td class="text-center total-cell">{{ item.tx_total }}</td>
+                                            <td class="text-center">{{ item.bypassing }}</td>
+                                            <td class="text-center">{{ item.barrier }}</td>
+                                            <td class="text-center total-cell">{{ item.lv_100t }}</td>
+                                            <td class="text-center">{{ item.lv_road }}</td>
+                                            <td class="text-center">{{ item.lv_internal }}</td>
+                                            <td class="text-center total-cell">{{ item.lv_total }}</td>
+                                            <td class="text-center">{{ item.anpr_road }}</td>
+                                            <td class="text-center">{{ item.anpr_internal }}</td>
+                                            <td class="text-center total-cell">{{ item.anpr_total }}</td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                    <tfoot>
+                                        <tr class="summary-total-row">
+                                            <td colspan="2" class="text-bold">Total</td>
+                                            <td class="text-center text-bold">{{ advanced_analytics_total.tx_road }}</td>
+                                            <td class="text-center text-bold">{{ advanced_analytics_total.tx_internal }}</td>
+                                            <td class="text-center text-bold">{{ advanced_analytics_total.tx_total }}</td>
+                                            <td class="text-center text-bold">{{ advanced_analytics_total.bypassing }}</td>
+                                            <td class="text-center text-bold">{{ advanced_analytics_total.barrier }}</td>
+                                            <td class="text-center text-bold">{{ advanced_analytics_total.lv_100t }}</td>
+                                            <td class="text-center text-bold">{{ advanced_analytics_total.lv_road }}</td>
+                                            <td class="text-center text-bold">{{ advanced_analytics_total.lv_internal }}</td>
+                                            <td class="text-center text-bold">{{ advanced_analytics_total.lv_total }}</td>
+                                            <td class="text-center text-bold">{{ advanced_analytics_total.anpr_road }}</td>
+                                            <td class="text-center text-bold">{{ advanced_analytics_total.anpr_internal }}</td>
+                                            <td class="text-center text-bold">{{ advanced_analytics_total.anpr_total }}</td>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tab View 2: Checkpost Summary -->
+                <div class="tab-content-panel" id="checkpost-view">
+                    <div class="analytics-card">
+                        <div class="card-header">
+                            <div class="card-title-group">
+                                <div class="icon-analytics-bars">
+                                    <span class="bar bar-green"></span>
+                                    <span class="bar bar-pink"></span>
+                                    <span class="bar bar-blue"></span>
+                                </div>
+                                <h2 class="card-title">Checkpost Summary</h2>
+                            </div>
+                            <div class="period-badge">
+                                <span class="period-label">Period:</span> From: <strong>{{ current_date }} 00:00:00</strong> to <strong>{{ current_date }} 23:59:59</strong>
+                            </div>
+                        </div>
+
+                        <div class="card-body">
+                            <!-- Section 1: Checkpost Status -->
+                            <h3 class="section-subheading">Checkpost Status</h3>
+                            <div class="table-responsive margin-bottom-lg">
+                                <table class="data-table">
+                                    <thead>
+                                        <tr>
+                                            <th class="text-center" style="width: 70px;">S.No</th>
+                                            <th>Area / Project / Checkpost</th>
+                                            <th class="text-center">Operational / Total</th>
+                                            <th class="text-center">Operational %</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for item in checkpost_status_data %}
+                                        <tr>
+                                            <td class="text-center bold-sno">{{ item.s_no }}</td>
+                                            <td><a href="#" class="table-link">{{ item.name }}</a></td>
+                                            <td class="text-center">{{ item.operational_total }}</td>
+                                            <td class="text-center">{{ item.operational_pct }}</td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                    <tfoot>
+                                        <tr class="summary-total-row">
+                                            <td colspan="2" class="text-bold">Total</td>
+                                            <td class="text-center text-bold">{{ checkpost_status_total.operational_total }}</td>
+                                            <td class="text-center text-bold">{{ checkpost_status_total.operational_pct }}</td>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+
+                            <!-- Section 2: Checkpost Analytics -->
+                            <h3 class="section-subheading">Checkpost Analytics</h3>
+                            <div class="table-responsive">
+                                <table class="data-table multi-header-table">
+                                    <thead>
+                                        <tr>
+                                            <th rowspan="2" class="text-center" style="width: 60px;">S.No</th>
+                                            <th rowspan="2">Area / Project / Checkpost</th>
+                                            <th colspan="2" class="text-center">Entry Transactions</th>
+                                            <th colspan="2" class="text-center">Exit Transactions</th>
+                                            <th colspan="4" class="text-center">Manual Boom Operation</th>
+                                        </tr>
+                                        <tr>
+                                            <th class="text-center">Total</th>
+                                            <th class="text-center">ANPR Mis-Match</th>
+                                            <th class="text-center">Total</th>
+                                            <th class="text-center">ANPR Mis-Match</th>
+                                            <th class="text-center">Total</th>
+                                            <th class="text-center">Others</th>
+                                            <th class="text-center">Departmental</th>
+                                            <th class="text-center">% of Total</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for item in checkpost_analytics_data %}
+                                        <tr>
+                                            <td class="text-center bold-sno">{{ item.s_no }}</td>
+                                            <td><a href="#" class="table-link">{{ item.name }}</a></td>
+                                            <td class="text-center">{{ item.entry_total }}</td>
+                                            <td class="text-center">{{ item.entry_anpr }}</td>
+                                            <td class="text-center">{{ item.exit_total }}</td>
+                                            <td class="text-center">{{ item.exit_anpr }}</td>
+                                            <td class="text-center total-cell">{{ item.boom_total }}</td>
+                                            <td class="text-center">{{ item.boom_others }}</td>
+                                            <td class="text-center">{{ item.boom_dept }}</td>
+                                            <td class="text-center">{{ item.boom_pct }}</td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                    <tfoot>
+                                        <tr class="summary-total-row">
+                                            <td colspan="2" class="text-bold">Total</td>
+                                            <td class="text-center text-bold">{{ checkpost_analytics_total.entry_total }}</td>
+                                            <td class="text-center text-bold">{{ checkpost_analytics_total.entry_anpr }}</td>
+                                            <td class="text-center text-bold">{{ checkpost_analytics_total.exit_total }}</td>
+                                            <td class="text-center text-bold">{{ checkpost_analytics_total.exit_anpr }}</td>
+                                            <td class="text-center text-bold">{{ checkpost_analytics_total.boom_total }}</td>
+                                            <td class="text-center text-bold">{{ checkpost_analytics_total.boom_others }}</td>
+                                            <td class="text-center text-bold">{{ checkpost_analytics_total.boom_dept }}</td>
+                                            <td class="text-center text-bold">{{ checkpost_analytics_total.boom_pct }}</td>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tab View 3: VTS Summary -->
+                <div class="tab-content-panel" id="vts-view">
+                    <div class="analytics-card">
+                        <div class="card-header">
+                            <div class="card-title-group">
+                                <div class="icon-analytics-bars">
+                                    <span class="bar bar-blue"></span>
+                                    <span class="bar bar-pink"></span>
+                                    <span class="bar bar-green"></span>
+                                </div>
+                                <h2 class="card-title">VTS Summary</h2>
+                            </div>
+                            <div class="period-badge">
+                                <span class="period-label">Period:</span> From: <strong>{{ current_date }} 00:00:00</strong> to: <strong>{{ current_date }} 23:59:00</strong>
+                            </div>
+                        </div>
+
+                        <div class="card-body">
+                            <!-- Section 1: Alert Summary -->
+                            <h3 class="section-subheading">Alert Summary</h3>
+                            <div class="table-responsive margin-bottom-lg">
+                                <table class="data-table multi-header-table">
+                                    <thead>
+                                        <tr>
+                                            <th rowspan="2" class="text-center" style="width: 50px;">S.No</th>
+                                            <th rowspan="2">Area / Project</th>
+                                            <th colspan="3" class="text-center">Offroute</th>
+                                            <th colspan="3" class="text-center">Off Area</th>
+                                            <th rowspan="2" class="text-center" style="width: 110px;">Offroute+OffArea Overlap <br><small style="font-weight: 400; color: #64748b;">(Vehicles)</small></th>
+                                            <th colspan="3" class="text-center">Device Tamper</th>
+                                            <th colspan="3" class="text-center">Unauthorized Stoppage</th>
+                                        </tr>
+                                        <tr>
+                                            <th class="text-center">Closed/Total</th>
+                                            <th class="text-center">% Closed</th>
+                                            <th class="text-center">% of Total</th>
+                                            <th class="text-center">Closed/Total</th>
+                                            <th class="text-center">% Closed</th>
+                                            <th class="text-center">% of Total</th>
+                                            <th class="text-center">Closed/Total</th>
+                                            <th class="text-center">% Closed</th>
+                                            <th class="text-center">% of Total</th>
+                                            <th class="text-center">Closed/Total</th>
+                                            <th class="text-center">% Closed</th>
+                                            <th class="text-center">% of Total</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for item in vts_alert_data %}
+                                        <tr>
+                                            <td class="text-center bold-sno">{{ item.s_no }}</td>
+                                            <td><a href="#" class="table-link">{{ item.name }}</a></td>
+                                            <td class="text-center">{{ item.offroute_closed }}</td>
+                                            <td class="text-center text-bold">{{ item.offroute_pct_closed }}</td>
+                                            <td class="text-center">{{ item.offroute_pct_total }}</td>
+                                            <td class="text-center">{{ item.offarea_closed }}</td>
+                                            <td class="text-center text-bold">{{ item.offarea_pct_closed }}</td>
+                                            <td class="text-center">{{ item.offarea_pct_total }}</td>
+                                            <td class="text-center">{{ item.overlap }}</td>
+                                            <td class="text-center">{{ item.tamper_closed }}</td>
+                                            <td class="text-center text-bold">{{ item.tamper_pct_closed }}</td>
+                                            <td class="text-center">{{ item.tamper_pct_total }}</td>
+                                            <td class="text-center">{{ item.stoppage_closed }}</td>
+                                            <td class="text-center text-bold">{{ item.stoppage_pct_closed }}</td>
+                                            <td class="text-center">{{ item.stoppage_pct_total }}</td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                    <tfoot>
+                                        <tr class="summary-total-row">
+                                            <td colspan="2" class="text-bold">Total</td>
+                                            <td class="text-center text-bold">{{ vts_alert_total.offroute_closed }}</td>
+                                            <td class="text-center text-bold">{{ vts_alert_total.offroute_pct_closed }}</td>
+                                            <td class="text-center text-bold">{{ vts_alert_total.offroute_pct_total }}</td>
+                                            <td class="text-center text-bold">{{ vts_alert_total.offarea_closed }}</td>
+                                            <td class="text-center text-bold">{{ vts_alert_total.offarea_pct_closed }}</td>
+                                            <td class="text-center text-bold">{{ vts_alert_total.offarea_pct_total }}</td>
+                                            <td class="text-center text-bold">{{ vts_alert_total.overlap }}</td>
+                                            <td class="text-center text-bold">{{ vts_alert_total.tamper_closed }}</td>
+                                            <td class="text-center text-bold">{{ vts_alert_total.tamper_pct_closed }}</td>
+                                            <td class="text-center text-bold">{{ vts_alert_total.tamper_pct_total }}</td>
+                                            <td class="text-center text-bold">{{ vts_alert_total.stoppage_closed }}</td>
+                                            <td class="text-center text-bold">{{ vts_alert_total.stoppage_pct_closed }}</td>
+                                            <td class="text-center text-bold">{{ vts_alert_total.stoppage_pct_total }}</td>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+
+                            <!-- Section 2: Fleet Info -->
+                            <h3 class="section-subheading">Fleet Info</h3>
+                            <p class="notice-text-red">** This data reflects the status at the time of report generation **</p>
+                            
+                            <div class="table-responsive">
+                                <table class="data-table">
+                                    <thead>
+                                        <tr>
+                                            <th class="text-center" style="width: 50px;">S.No</th>
+                                            <th>Area / Project</th>
+                                            <th class="text-center">Total Vehicle</th>
+                                            <th class="text-center">Online</th>
+                                            <th class="text-center">% Online</th>
+                                            <th class="text-center">Offline</th>
+                                            <th class="text-center">% Offline</th>
+                                            <th class="text-center">Workshop</th>
+                                            <th class="text-center">Offline >48h</th>
+                                            <th class="text-center">Offline >7 days</th>
+                                            <th class="text-center">No Data Found</th>
+                                            <th class="text-center">No Route Fleet</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for item in vts_fleet_data %}
+                                        <tr>
+                                            <td class="text-center bold-sno">{{ item.s_no }}</td>
+                                            <td><a href="#" class="table-link">{{ item.name }}</a></td>
+                                            <td class="text-center text-bold">{{ item.total_vehicle }}</td>
+                                            <td class="text-center">{{ item.online }}</td>
+                                            <td class="text-center">{{ item.pct_online }}</td>
+                                            <td class="text-center">{{ item.offline }}</td>
+                                            <td class="text-center">{{ item.pct_offline }}</td>
+                                            <td class="text-center">{{ item.workshop }}</td>
+                                            <td class="text-center">{{ item.offline_48h }}</td>
+                                            <td class="text-center">{{ item.offline_7d }}</td>
+                                            <td class="text-center">{{ item.no_data }}</td>
+                                            <td class="text-center">{{ item.no_route }}</td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                    <tfoot>
+                                        <tr class="summary-total-row">
+                                            <td colspan="2" class="text-bold">Total</td>
+                                            <td class="text-center text-bold">{{ vts_fleet_total.total_vehicle }}</td>
+                                            <td class="text-center text-bold">{{ vts_fleet_total.online }}</td>
+                                            <td class="text-center text-bold">{{ vts_fleet_total.pct_online }}</td>
+                                            <td class="text-center text-bold">{{ vts_fleet_total.offline }}</td>
+                                            <td class="text-center text-bold">{{ vts_fleet_total.pct_offline }}</td>
+                                            <td class="text-center text-bold">{{ vts_fleet_total.workshop }}</td>
+                                            <td class="text-center text-bold">{{ vts_fleet_total.offline_48h }}</td>
+                                            <td class="text-center text-bold">{{ vts_fleet_total.offline_7d }}</td>
+                                            <td class="text-center text-bold">{{ vts_fleet_total.no_data }}</td>
+                                            <td class="text-center text-bold">{{ vts_fleet_total.no_route }}</td>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+
+                            <div class="footer-timestamp">
+                                Generated on: {{ current_date }} 23:35:47
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Page View: Alert Dashboard (Dark Tactical Theme Layout) -->

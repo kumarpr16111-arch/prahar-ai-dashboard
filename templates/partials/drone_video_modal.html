@@ -1,0 +1,96 @@
+<div class="drone-modal-backdrop" id="droneVideoModal" style="display: none;" onclick="closeDroneVideoModal(event)">
+    <div class="drone-modal-container" onclick="event.stopPropagation()">
+        <!-- Modal Header -->
+        <div class="drone-modal-header">
+            <div class="drone-modal-title">
+                <i class="fa-solid fa-crosshairs" style="color: #38bdf8;"></i>
+                <span id="modalLocationHeading">NK Mines — Drone Feed & Video Still Inspection</span>
+                <span class="rec-live-badge"><span class="rec-dot-pulse"></span> REC LIVE</span>
+            </div>
+            <button type="button" class="drone-modal-close-btn" onclick="closeDroneVideoModalDirect()"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+
+        <!-- Location Selector Navigation Tabs -->
+        <div class="drone-modal-nav-tabs">
+            <button type="button" class="drone-loc-pill active" data-loc="nk_mines" onclick="switchDroneModalLocation('nk_mines')"><i class="fa-solid fa-location-dot"></i> NK Mines (SS-1, SS-2)</button>
+            <button type="button" class="drone-loc-pill" data-loc="amrapali" onclick="switchDroneModalLocation('amrapali')"><i class="fa-solid fa-location-dot"></i> Amrapali (SS-3, SS-4)</button>
+            <button type="button" class="drone-loc-pill" data-loc="magadh" onclick="switchDroneModalLocation('magadh')"><i class="fa-solid fa-location-dot"></i> Magadh (SS-5, SS-6)</button>
+            <button type="button" class="drone-loc-pill" data-loc="giridih" onclick="switchDroneModalLocation('giridih')"><i class="fa-solid fa-location-dot"></i> Giridih Kabribad (SS-7, SS-8)</button>
+            <button type="button" class="drone-loc-pill" data-loc="bukaro" onclick="switchDroneModalLocation('bukaro')"><i class="fa-solid fa-location-dot"></i> Bukaro (SS-9, SS-10)</button>
+        </div>
+
+        <!-- Modal Body (Player Viewport + Telemetry Sidebar) -->
+        <div class="drone-modal-body">
+            <!-- Left: High-Resolution Viewport & Controls -->
+            <div class="drone-player-section">
+                <!-- Dual Camera Switcher -->
+                <div class="drone-feed-switcher">
+                    <button type="button" class="btn-feed-switch active" id="modalBtnFeed0" onclick="switchDroneModalFeed(0)">
+                        <i class="fa-solid fa-camera"></i> <span id="modalFeed0Label">Video 1: CAM-01 (Pit Extraction)</span>
+                    </button>
+                    <button type="button" class="btn-feed-switch" id="modalBtnFeed1" onclick="switchDroneModalFeed(1)">
+                        <i class="fa-solid fa-camera"></i> <span id="modalFeed1Label">Video 2: CAM-02 (Stockpile Bench)</span>
+                    </button>
+                </div>
+
+                <!-- Video / Still Screen -->
+                <div class="drone-video-viewport" id="modalVideoViewport">
+                    <img src="/static/media_screenshots/SS-1.png" alt="Drone Video Still" id="modalMainStillImg">
+                    <div class="media-hud-overlay">
+                        <div class="hud-top-bar">
+                            <span id="modalHudCamTitle">CAM-01 [NK-MINES] 4K UHD</span>
+                            <span id="modalHudTimestamp">2026-08-19 10:14:22 UTC</span>
+                        </div>
+                        <div class="hud-bottom-bar">
+                            <span class="ai-detection-tag" id="modalHudDetectionTag"><i class="fa-solid fa-bullseye"></i> AI: Bench Clearance (98.4%)</span>
+                            <span id="modalHudFps">60 FPS • BITRATE: 12.4 Mbps</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Bottom Viewport Action Strip -->
+                <div style="display:flex; justify-content:space-between; align-items:center; background:#1e293b; padding:10px 14px; border-radius:8px; border:1px solid #334155; flex-wrap:wrap; gap:10px;">
+                    <div style="font-size:12px; color:#94a3b8; display:flex; align-items:center; gap:10px;">
+                        <span style="color:#f8fafc; font-weight:600;" id="modalActiveStillBadge">Still Photo: SS-1.png</span>
+                        <span>•</span>
+                        <span id="modalResolutionBadge">Resolution: 3840 x 2160 (Native 4K)</span>
+                    </div>
+                    <div style="display:flex; gap:8px;">
+                        <a href="/static/media_screenshots/SS-1.png" download="Surveillance_Still_Capture.png" id="modalDownloadLink" class="btn-mini-action" style="background:#0284c7; color:#fff; border-color:#0284c7;">
+                            <i class="fa-solid fa-download"></i> Download Full Still
+                        </a>
+                        <button type="button" class="btn-mini-action" onclick="openStillInNewTab()"><i class="fa-solid fa-arrow-up-right-from-square"></i> Open High-Res</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right: AI Telemetry & Metadata Sidebar -->
+            <div class="drone-meta-sidebar">
+                <div class="meta-card-block">
+                    <div class="meta-block-title"><i class="fa-solid fa-plane-up"></i> Flight Telemetry</div>
+                    <div class="meta-data-row"><span>Drone Platform:</span><span id="modalMetaDroneId">DRONE-NK-01</span></div>
+                    <div class="meta-data-row"><span>Sensor Package:</span><span id="modalMetaSensor">Optical 4K + FLIR Boson</span></div>
+                    <div class="meta-data-row"><span>Altitude AGL:</span><span id="modalMetaAlt">85.4 meters</span></div>
+                    <div class="meta-data-row"><span>GPS Coordinates:</span><span id="modalMetaGps">23.7842° N, 85.3421° E</span></div>
+                </div>
+
+                <div class="meta-card-block">
+                    <div class="meta-block-title"><i class="fa-solid fa-brain"></i> Edge AI Detection</div>
+                    <div class="meta-data-row"><span>Active Model:</span><span>YOLOv11 Mining-Vision v4</span></div>
+                    <div class="meta-data-row"><span>Inference Latency:</span><span>14.2 ms</span></div>
+                    <div class="meta-data-row"><span>Target Classification:</span><span id="modalMetaTarget" style="color:#38bdf8;">Haul Truck Clearance</span></div>
+                    <div class="meta-data-row"><span>Safety Compliance:</span><span id="modalMetaSafety" style="color:#10b981;">98.4% Compliant</span></div>
+                </div>
+
+                <div class="meta-card-block">
+                    <div class="meta-block-title"><i class="fa-solid fa-file-shield"></i> Location Inferred Report</div>
+                    <div class="meta-data-row"><span>Associated Report:</span><span id="modalMetaReport">NK_19-08-2026.pdf</span></div>
+                    <div class="meta-data-row"><span>Status:</span><span style="color:#10b981;">Verified by Geo-AI</span></div>
+                    <div class="meta-data-row"><span>ATR Action:</span><span>Auto-Logged in TRACE</span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Officer Identity & Security Profile Modal -->

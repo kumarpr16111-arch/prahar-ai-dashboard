@@ -1,0 +1,360 @@
+                <div class="tab-content-panel" id="alert-dashboard-view" style="display: none;">
+                    <div class="alert-dashboard-container">
+                        
+                        <!-- 1. Mission Control Telemetry & Live Ticker Strip -->
+                        <div class="alert-mission-strip">
+                            <div class="mission-threat-group">
+                                <div class="threat-badge-pill" id="threatLevelBadge">
+                                    <span class="threat-pulse-dot"></span>
+                                    <span id="threatLevelText">DEFCON 2 • ACTIVE SURVEILLANCE</span>
+                                </div>
+                            </div>
+                            
+                            <div class="mission-ticker-group">
+                                <span class="ticker-label"><i class="fa-solid fa-satellite-dish"></i> LIVE TICKER:</span>
+                                <span class="ticker-content" id="liveAlertTickerText">Monitoring 2,279 Vehicles & 146 Weighbridges across 14 Mining Sectors...</span>
+                            </div>
+
+                            <div class="mission-telemetry-meta">
+                                <div class="meta-item">
+                                    <span>Supabase DB:</span>
+                                    <span class="meta-value" id="supabaseLatencyText">18ms (Online)</span>
+                                </div>
+                                <div class="meta-item">
+                                    <span>GNSS RTK:</span>
+                                    <span class="meta-value">±0.18m Locked</span>
+                                </div>
+                                <div class="meta-item">
+                                    <span>Last Feed:</span>
+                                    <span class="meta-value" id="lastAlertSyncTime">Just now</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 2. Dark Mode Header Bar & Controls -->
+                        <div class="alert-header">
+                            <div class="alert-header-left">
+                                <button type="button" class="btn-action" onclick="if(window.showSummaryTab){window.showSummaryTab('weighbridge');} else {window.location.href='/';}" style="background: rgba(30, 41, 59, 0.9); color: #38bdf8; border: 1px solid #334155; padding: 6px 13px; border-radius: 6px; font-weight: 700; font-size: 11.5px; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; margin-right: 12px; transition: all 0.2s ease;">
+                                    <i class="fa-solid fa-house"></i> <span>Home</span>
+                                </button>
+                                <div class="alert-title-group">
+                                    <h1 class="alert-title">Alert Dashboard</h1>
+                                    <span class="alert-subtitle">REAL TIME MONITORING SYSTEM</span>
+                                </div>
+                                <div class="live-status-pill" id="btnToggleLiveFeed" title="Click to Pause / Resume Live Polling Feed">
+                                    <span class="live-dot"></span>
+                                    <span id="liveFeedPillText"><i class="fa-solid fa-pause"></i> LIVE STREAM</span>
+                                </div>
+                                <div class="live-status-pill auto-sim-pill" id="btnToggleAutoSim" onclick="toggleAutoSimulateAlerts()" title="Click to Enable Live Pitch Anomaly Stream (Generates every 10-15s with Sound Ping)" style="cursor: pointer; background: rgba(100, 116, 139, 0.15); border: 1px solid rgba(100, 116, 139, 0.3); color: #94a3b8; display: inline-flex; align-items: center; gap: 6px; padding: 5px 11px; border-radius: 20px; font-size: 11px; font-weight: 700; margin-left: 8px;">
+                                    <span class="live-dot" style="background: #94a3b8;"></span>
+                                    <span id="autoSimPillText"><i class="fa-solid fa-pause"></i> ALERTS: PAUSED (Click for Pitch)</span>
+                                </div>
+                            </div>
+                            
+                            <div class="alert-header-right">
+                                <button class="btn-dark-icon" id="btnToggleLockView" title="Lock View / Freeze Auto-Refresh"><i class="fa-solid fa-lock"></i></button>
+                                
+                                <div class="volume-control-group" title="Alert Siren Volume & Alarm Control">
+                                    <i class="fa-solid fa-bell bell-icon" style="color: #38bdf8; font-size: 13px;"></i>
+                                    <input type="range" min="0" max="100" value="75" class="volume-slider" id="alertVolumeSlider" title="Alarm Chime Volume">
+                                    <button type="button" class="mute-badge-btn" id="btnMuteAlerts" title="Mute / Unmute Audio Alarms">
+                                        <i class="fa-solid fa-volume-high" id="volumeIcon"></i>
+                                        <span class="badge-count" id="headerBadgeCount">0</span>
+                                    </button>
+                                </div>
+
+                                <div class="filter-dropdown">
+                                    <span class="filter-label">DETECTION</span>
+                                    <select class="dark-select" id="detectionTypeSelect">
+                                        <option value="All Types" selected>All Categories (Overview)</option>
+                                        <option value="Unauthorized stoppage">Unauthorized stoppage</option>
+                                        <option value="Off Route Alerts">Off Route Alerts</option>
+                                        <option value="Off Area Alerts">Off Area Alerts</option>
+                                        <option value="Tamper Alerts">Device Tamper Alerts</option>
+                                        <option value="Over Speed">Over Speed Violations</option>
+                                        <option value="Open Boom Barriers">Open Boom Barriers</option>
+                                        <option value="Vehicle Detection">Vehicle Detection (VA)</option>
+                                        <option value="Crowd">Crowd Detection (VA)</option>
+                                        <option value="Person Detection">Person Detection (VA)</option>
+                                        <option value="Intrusion Detection">Intrusion Detection (VA)</option>
+                                        <option value="Traffic Congestion">Traffic Congestion (VA)</option>
+                                        <option value="Loaded-Unloaded Alerts">Loaded-Unloaded Variance (VA)</option>
+                                        <option value="Camera Tampering">Camera Tampering (VA)</option>
+                                        <option value="Safety Hazard">Safety Hazard (VA)</option>
+                                        <option value="Insufficient Illumination">Insufficient Illumination (VA)</option>
+                                    </select>
+                                </div>
+
+                                <div class="filter-dropdown">
+                                    <span class="filter-label">AREA</span>
+                                    <select class="dark-select" id="alertAreaSelect">
+                                        <option value="all" selected>All Mining Areas</option>
+                                        <option value="Amrapali">Amrapali & Chandragupta (CO07)</option>
+                                        <option value="Argada">Argada Area (CO02)</option>
+                                        <option value="Barka Sayal">Barka Sayal (CO01)</option>
+                                        <option value="Bokaro">Bokaro & Kargali (CO04)</option>
+                                        <option value="Dhori">Dhori Area (CO12)</option>
+                                        <option value="Giridih">Giridih Area (CO15)</option>
+                                        <option value="Hazaribagh">Hazaribagh Area (CO10)</option>
+                                        <option value="Kathara">Kathara Washery (CO05)</option>
+                                        <option value="Kuju">Kuju Area (CO09)</option>
+                                        <option value="Magadh">Magadh Open Cast (CO06)</option>
+                                        <option value="NK">North Karanpura (CO03)</option>
+                                        <option value="Piparwar">Piparwar & Ashoka (CO13)</option>
+                                        <option value="Rajhara">Rajhara Area (CO08)</option>
+                                        <option value="Rajrappa">Rajrappa Area (CO11)</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 3. Triage Quick Filter Chips & Incident Search -->
+                        <div class="alert-triage-bar">
+                            <div class="triage-chips-group">
+                                <button type="button" class="chip-btn active" id="chipFilterAll" onclick="setSeverityFilter('ALL')">
+                                    <span>All Alerts</span>
+                                    <span class="chip-badge-num" id="chipBadgeAll">0</span>
+                                </button>
+                                <button type="button" class="chip-btn chip-critical" id="chipFilterCritical" onclick="setSeverityFilter('CRITICAL')">
+                                    <i class="fa-solid fa-circle-radiation" style="color: #ef4444;"></i>
+                                    <span>Critical</span>
+                                    <span class="chip-badge-num" id="chipBadgeCritical">0</span>
+                                </button>
+                                <button type="button" class="chip-btn chip-high" id="chipFilterHigh" onclick="setSeverityFilter('HIGH')">
+                                    <i class="fa-solid fa-triangle-exclamation" style="color: #f59e0b;"></i>
+                                    <span>High Priority</span>
+                                    <span class="chip-badge-num" id="chipBadgeHigh">0</span>
+                                </button>
+                                <button type="button" class="chip-btn" id="chipFilterWarning" onclick="setSeverityFilter('WARNING')">
+                                    <i class="fa-solid fa-circle-exclamation" style="color: #38bdf8;"></i>
+                                    <span>Warnings</span>
+                                    <span class="chip-badge-num" id="chipBadgeWarning">0</span>
+                                </button>
+                                <button type="button" class="chip-btn" id="chipFilterActiveOnly" onclick="setStatusFilter('ACTIVE')">
+                                    <span class="live-dot" style="background:#10b981; width:5px; height:5px;"></span>
+                                    <span>Active Only</span>
+                                </button>
+                                <button type="button" class="chip-btn" id="chipFilterAck" onclick="setStatusFilter('ACKNOWLEDGED')">
+                                    <i class="fa-solid fa-check" style="color: #38bdf8;"></i>
+                                    <span>Acknowledged</span>
+                                </button>
+                                <button type="button" class="chip-btn" id="chipFilterResolved" onclick="setStatusFilter('RESOLVED')">
+                                    <i class="fa-solid fa-shield-check" style="color: #34d399;"></i>
+                                    <span>Resolved</span>
+                                </button>
+                            </div>
+
+                            <div class="alert-search-wrapper">
+                                <i class="fa-solid fa-magnifying-glass" style="color: #64748b; font-size: 11px;"></i>
+                                <input type="text" id="alertSearchInput" class="alert-search-input" placeholder="Search vehicle, location, ID..." oninput="handleAlertSearch(this.value)">
+                                <button type="button" style="background:none; border:none; color:#64748b; cursor:pointer;" onclick="document.getElementById('alertSearchInput').value=''; handleAlertSearch('');" title="Clear Search"><i class="fa-solid fa-xmark"></i></button>
+                            </div>
+                        </div>
+
+                        <!-- 4. Original Overview View (Default View) -->
+                        <div class="alert-overview-container" id="alertOverviewContainer">
+
+                            <!-- Section A: VIDEO ANALYTICS ALERT -->
+                            <div class="alert-section-card margin-bottom-lg">
+                                <div class="alert-section-header">
+                                    <div class="section-title-group">
+                                        <span class="vertical-bar bar-teal"></span>
+                                        <i class="fa-solid fa-video section-icon"></i>
+                                        <h3 class="alert-section-title">VIDEO ANALYTICS ALERT</h3>
+                                    </div>
+                                    <span class="events-status-text" id="vaSectionStatusText">• NO EVENTS</span>
+                                </div>
+
+                                <div class="cards-grid grid-6">
+                                    <div class="metric-card card-highlight-teal" data-card-type="Crowd" onclick="setAlertDetectionType('Crowd')">
+                                        <div class="card-metric-info"><span class="metric-number highlight-teal-text">1</span><span class="metric-label">CROWD DETEC...</span></div>
+                                        <div class="metric-icon-circle highlight-teal-icon"><i class="fa-solid fa-users"></i></div>
+                                    </div>
+                                    <div class="metric-card card-highlight-teal" data-card-type="Vehicle Detection" onclick="setAlertDetectionType('Vehicle Detection')">
+                                        <div class="card-metric-info"><span class="metric-number highlight-teal-text">1</span><span class="metric-label">VEHICLE DETE...</span></div>
+                                        <div class="metric-icon-circle highlight-teal-icon"><i class="fa-solid fa-car"></i></div>
+                                    </div>
+                                    <div class="metric-card card-highlight-orange" data-card-type="Person Detection" onclick="setAlertDetectionType('Person Detection')">
+                                        <div class="card-metric-info"><span class="metric-number highlight-orange-text">1</span><span class="metric-label">PERSON DETE...</span></div>
+                                        <div class="metric-icon-circle highlight-orange-icon"><i class="fa-solid fa-user"></i></div>
+                                    </div>
+                                    <div class="metric-card card-highlight-red" data-card-type="Intrusion Detection" onclick="setAlertDetectionType('Intrusion Detection')">
+                                        <div class="card-metric-info"><span class="metric-number highlight-orange-text">1</span><span class="metric-label">INTRUSION DE...</span></div>
+                                        <div class="metric-icon-circle highlight-orange-icon"><img src="/static/media_screenshots/trace_main_logo.jpeg" alt="TRACE Logo" class="brand-logo-img"></div>
+                                    </div>
+                                    <div class="metric-card card-highlight-orange" data-card-type="Traffic Congestion" onclick="setAlertDetectionType('Traffic Congestion')">
+                                        <div class="card-metric-info"><span class="metric-number highlight-orange-text">1</span><span class="metric-label">TRAFFIC CONG...</span></div>
+                                        <div class="metric-icon-circle highlight-orange-icon"><i class="fa-solid fa-traffic-light"></i></div>
+                                    </div>
+                                    <div class="metric-card card-highlight-teal" data-card-type="Loaded-Unloaded Alerts" onclick="setAlertDetectionType('Loaded-Unloaded Alerts')">
+                                        <div class="card-metric-info"><span class="metric-number highlight-teal-text">2</span><span class="metric-label">LOADED-UNLO...</span></div>
+                                        <div class="metric-icon-circle highlight-teal-icon"><i class="fa-solid fa-truck-ramp-box"></i></div>
+                                    </div>
+                                    <div class="metric-card card-highlight-orange" data-card-type="Camera Tampering" onclick="setAlertDetectionType('Camera Tampering')">
+                                        <div class="card-metric-info"><span class="metric-number highlight-orange-text">2</span><span class="metric-label">CAMERA TAMP...</span></div>
+                                        <div class="metric-icon-circle highlight-orange-icon"><i class="fa-solid fa-video-slash"></i></div>
+                                    </div>
+                                    <div class="metric-card card-highlight-orange" data-card-type="Safety Hazard" onclick="setAlertDetectionType('Safety Hazard')">
+                                        <div class="card-metric-info"><span class="metric-number highlight-orange-text">1</span><span class="metric-label">SAFETY HAZARD</span></div>
+                                        <div class="metric-icon-circle highlight-orange-icon"><i class="fa-solid fa-triangle-exclamation"></i></div>
+                                    </div>
+                                    <div class="metric-card card-highlight-teal" data-card-type="Insufficient Illumination" onclick="setAlertDetectionType('Insufficient Illumination')">
+                                        <div class="card-metric-info"><span class="metric-number highlight-teal-text">1</span><span class="metric-label">INSUFFICIENT I...</span></div>
+                                        <div class="metric-icon-circle highlight-teal-icon"><i class="fa-solid fa-lightbulb"></i></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Section B: GPS-RFID ALERTS -->
+                            <div class="alert-section-card">
+                                <div class="alert-section-header">
+                                    <div class="section-title-group">
+                                        <span class="vertical-bar bar-orange"></span>
+                                        <i class="fa-solid fa-bus section-icon"></i>
+                                        <h3 class="alert-section-title">GPS-RFID ALERTS</h3>
+                                    </div>
+                                    <span class="events-status-text red-live-text" id="gpsLiveCountText">• 12 LIVE</span>
+                                </div>
+
+                                <div class="cards-grid grid-5">
+                                    <div class="metric-card card-highlight-orange" data-card-type="Off Route Alerts" data-alert-cat="off_route" onclick="setAlertDetectionType('Off Route Alerts')">
+                                        <div class="card-metric-info"><span class="metric-number highlight-orange-text">3</span><span class="metric-label">OFF ROUTE ALERTS</span></div>
+                                        <div class="metric-icon-circle highlight-orange-icon"><i class="fa-solid fa-route"></i></div>
+                                    </div>
+                                    <div class="metric-card card-highlight-orange" data-card-type="Off Area Alerts" data-alert-cat="off_area" onclick="setAlertDetectionType('Off Area Alerts')">
+                                        <div class="card-metric-info"><span class="metric-number highlight-orange-text">1</span><span class="metric-label">OFF AREA ALERTS</span></div>
+                                        <div class="metric-icon-circle highlight-orange-icon"><i class="fa-solid fa-ban"></i></div>
+                                    </div>
+                                    <div class="metric-card card-highlight-orange" data-card-type="Tamper Alerts" data-alert-cat="tamper" onclick="setAlertDetectionType('Tamper Alerts')">
+                                        <div class="card-metric-info"><span class="metric-number highlight-orange-text">2</span><span class="metric-label">TAMPER ALERTS</span></div>
+                                        <div class="metric-icon-circle highlight-orange-icon"><i class="fa-solid fa-shield-virus"></i></div>
+                                    </div>
+                                    <div class="metric-card card-highlight-red" data-card-type="Unauthorized stoppage" data-alert-cat="stoppage" onclick="setAlertDetectionType('Unauthorized stoppage')">
+                                        <div class="card-metric-info"><span class="metric-number highlight-orange-text">2</span><span class="metric-label">UNAUTHORIZED STOP...</span></div>
+                                        <div class="metric-icon-circle highlight-orange-icon"><i class="fa-solid fa-hand"></i></div>
+                                    </div>
+                                    <div class="metric-card card-highlight-orange" data-card-type="Over Speed" data-alert-cat="over_speed" onclick="setAlertDetectionType('Over Speed')">
+                                        <div class="card-metric-info"><span class="metric-number highlight-orange-text">1</span><span class="metric-label">OVER SPEED</span></div>
+                                        <div class="metric-icon-circle highlight-orange-icon"><i class="fa-solid fa-gauge-high"></i></div>
+                                    </div>
+                                    <div class="metric-card card-highlight-orange" data-card-type="Open Boom Barriers" data-alert-cat="boom_barrier" onclick="setAlertDetectionType('Open Boom Barriers')">
+                                        <div class="card-metric-info"><span class="metric-number highlight-orange-text">3</span><span class="metric-label">OPEN BOOM BARRIERS</span></div>
+                                        <div class="metric-icon-circle highlight-orange-icon"><i class="fa-solid fa-traffic-light"></i></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 5. Detail View (Drilldown when category or filter is selected) -->
+                        <div class="alert-main-grid-layout" id="alertDetailContainer" style="display: none; width: 100%;">
+                            <!-- Full-Width Incident Forensics Card -->
+                            <div class="alert-detail-card" id="alertDetailCard" style="width: 100%;">
+                                <div class="alert-detail-header">
+                                    <div class="detail-title-group">
+                                        <button type="button" class="btn-icon-action" onclick="setAlertDetectionType('All Types')" title="Back to All Categories" style="margin-right: 6px; padding: 6px 12px; background: #1e293b; color: #38bdf8; border: 1px solid #334155; border-radius: 6px; font-size: 12px; font-weight: 600; display: inline-flex; align-items: center; gap: 6px; cursor: pointer;">
+                                            <i class="fa-solid fa-arrow-left"></i> <span>Back to Overview</span>
+                                        </button>
+                                        <i class="fa-solid fa-triangle-exclamation detail-icon-orange" id="detailIcon"></i>
+                                        <h3 class="detail-title" id="detailTitle">Unauthorized stoppage <span class="detail-tag" id="detailTag">(Vehicle Alerts)</span></h3>
+                                    </div>
+                                    <div class="detail-actions">
+                                        <button type="button" class="btn-action" onclick="acknowledgeAllInCategory()" title="Acknowledge All in Category" style="padding: 6px 12px; font-size: 11.5px; background:#1e293b; color:#38bdf8; border: 1px solid #334155; border-radius: 6px;">
+                                            <i class="fa-solid fa-check-double"></i> Ack All
+                                        </button>
+                                        <button type="button" class="btn-action" onclick="exportAlertsCsv()" title="Export Filtered Alerts to CSV" style="padding: 6px 12px; font-size: 11.5px; background:#1e293b; color:#34d399; border: 1px solid #334155; border-radius: 6px;">
+                                            <i class="fa-solid fa-file-csv"></i> Export CSV
+                                        </button>
+                                        <button type="button" class="btn-icon-action" onclick="clearResolvedAlerts()" title="Dismiss / Clear Resolved" style="padding: 6px 10px; background:#1e293b; color:#94a3b8; border: 1px solid #334155; border-radius: 6px;"><i class="fa-solid fa-trash-can"></i></button>
+                                        <button type="button" class="btn-icon-action" id="btnCloseDetail" onclick="setAlertDetectionType('All Types')" title="Close Detail" style="padding: 6px 10px; background:#1e293b; color:#94a3b8; border: 1px solid #334155; border-radius: 6px;"><i class="fa-solid fa-xmark"></i></button>
+                                    </div>
+                                </div>
+
+                                <div class="detail-subtitle-bar" id="detailSubtitleBar">
+                                    <span class="subtitle-events-text" id="detailSubtitleText">• SHOWING 0 OF 0 EVENTS</span>
+                                    <span style="font-size: 11px; color: #94a3b8;"><i class="fa-solid fa-arrow-pointer" style="margin-right: 4px;"></i>Click "Inspect Forensics & Feed" on any incident to open full surveillance diagnostics</span>
+                                </div>
+
+                                <!-- Events Container -->
+                                <div class="detail-events-body" id="detailEventsBody">
+                                    <!-- Rendered dynamically by JavaScript -->
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- 6. Surveillance Forensic Incident Drilldown Modal -->
+                <div class="incident-modal-backdrop" id="incidentInspectModal" style="display: none;" onclick="closeIncidentModal(event)">
+                    <div class="incident-modal-box" onclick="event.stopPropagation()">
+                        <div class="incident-modal-header">
+                            <div class="incident-modal-title">
+                                <i class="fa-solid fa-crosshairs" style="color: #ef4444;"></i>
+                                <span id="modalIncidentTitle">INCIDENT FORENSICS & TELEMETRY</span>
+                                <span class="threat-badge-pill" id="modalIncidentSeverityBadge" style="margin-left: 8px;">CRITICAL</span>
+                            </div>
+                            <button type="button" class="btn-icon-action" onclick="closeIncidentModalDirect()"><i class="fa-solid fa-xmark"></i></button>
+                        </div>
+                        
+                        <div class="incident-modal-body">
+                            <!-- Visual Snapshot & Map Preview -->
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px;">
+                                <div style="background: #111827; border: 1px solid #1e293b; border-radius: 8px; overflow: hidden; position: relative;">
+                                    <img src="/static/media_screenshots/SS-1.png" id="modalIncidentStillImg" alt="CCTV Incident Evidence" style="width: 100%; height: 180px; object-fit: cover; display: block;">
+                                    <div style="position: absolute; bottom: 8px; left: 8px; background: rgba(0,0,0,0.7); padding: 3px 8px; border-radius: 4px; font-size: 10.5px; color: #38bdf8;">
+                                        <i class="fa-solid fa-camera"></i> <span id="modalIncidentCamBadge">CAM-WB-02 (4K Capture)</span>
+                                    </div>
+                                </div>
+                                <div style="background: #111827; border: 1px solid #1e293b; border-radius: 8px; padding: 12px; display: flex; flex-direction: column; justify-content: space-between;">
+                                    <div>
+                                        <div style="font-size: 11px; font-weight: 700; color: #64748b; text-transform: uppercase;">AI Edge Anomaly Detection</div>
+                                        <div style="font-size: 14px; font-weight: 800; color: #f8fafc; margin-top: 4px;" id="modalIncidentSummaryType">Unauthorized Stoppage</div>
+                                        <p style="font-size: 12px; color: #94a3b8; margin: 6px 0 0 0; line-height: 1.45;" id="modalIncidentDescText">Vehicle stationary in unapproved transit sector > 18 mins with coal payload.</p>
+                                    </div>
+                                    <div style="background: rgba(0,0,0,0.3); padding: 8px; border-radius: 6px; font-size: 11px; display: flex; justify-content: space-between;">
+                                        <span>AI Model: <strong style="color: #38bdf8;">YOLOv11 Mining-Vision</strong></span>
+                                        <span>Confidence: <strong style="color: #34d399;" id="modalIncidentConfText">96.8%</strong></span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Telemetry Grid -->
+                            <div class="incident-meta-grid">
+                                <div class="incident-meta-item">
+                                    <span class="label"><i class="fa-solid fa-truck" style="margin-right: 4px; color: #38bdf8;"></i> Vehicle Registration</span>
+                                    <span class="val" id="modalIncidentVehicle">JH01-AX-9912</span>
+                                </div>
+                                <div class="incident-meta-item">
+                                    <span class="label"><i class="fa-solid fa-location-dot" style="margin-right: 4px; color: #f59e0b;"></i> Incident Location</span>
+                                    <span class="val" id="modalIncidentLocation">Amrapali Haul Corridor #4</span>
+                                </div>
+                                <div class="incident-meta-item">
+                                    <span class="label"><i class="fa-solid fa-satellite" style="margin-right: 4px; color: #34d399;"></i> GPS Coordinates</span>
+                                    <span class="val" id="modalIncidentGps">23.8542° N, 85.0512° E</span>
+                                </div>
+                                <div class="incident-meta-item">
+                                    <span class="label"><i class="fa-solid fa-id-card" style="margin-right: 4px; color: #64748b;"></i> Assigned Driver</span>
+                                    <span class="val" id="modalIncidentDriver">Rajesh Kumar Soren</span>
+                                </div>
+                                <div class="incident-meta-item">
+                                    <span class="label"><i class="fa-solid fa-file-invoice" style="margin-right: 4px; color: #64748b;"></i> e-Way / DO Pass #</span>
+                                    <span class="val" id="modalIncidentDo">DO-8891-CCL</span>
+                                </div>
+                                <div class="incident-meta-item">
+                                    <span class="label"><i class="fa-solid fa-clock" style="margin-right: 4px; color: #64748b;"></i> Detection Timestamp</span>
+                                    <span class="val" id="modalIncidentTime">2026-08-24 21:18:40</span>
+                                </div>
+                            </div>
+
+                            <!-- Tactical Action Buttons -->
+                            <div class="incident-action-strip">
+                                <button type="button" class="btn-incident-cmd btn-dismiss" onclick="printIncidentReport()"><i class="fa-solid fa-print"></i> Print FIR Report</button>
+                                <button type="button" class="btn-incident-cmd btn-hold" id="modalBtnHoldGate" onclick="executeGateHoldModal()"><i class="fa-solid fa-hand"></i> Lock Checkpost Gate</button>
+                                <button type="button" class="btn-incident-cmd btn-qrt" id="modalBtnDispatchQrt" onclick="executeQrtDispatchModal()"><i class="fa-solid fa-car-on"></i> Dispatch QRT Patrol</button>
+                                <button type="button" class="btn-incident-cmd btn-resolve" id="modalBtnResolve" onclick="executeResolveModal()"><i class="fa-solid fa-shield-check"></i> Resolve Incident</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Page View: VTS Dashboard (Dark Mode Theme) -->

@@ -1,0 +1,589 @@
+                <div class="tab-content-panel" id="camera-grid-view" style="display: none;">
+                    <div class="camera-dashboard-container">
+                        <!-- Top Action Control Bar -->
+                        <div class="cam-top-control-bar">
+                            <div class="cam-top-left">
+                                <div class="cam-title-badge">
+                                    <i class="fa-solid fa-video" style="color: #ef4444;"></i>
+                                    <span class="cam-main-title">Live CCTV Grid & AI Vision Matrix</span>
+                                    <span class="live-pulsing-tag"><span class="pulse-dot"></span> LIVE REC</span>
+                                </div>
+                                <div class="cam-meta-stats">
+                                    <span class="meta-item"><i class="fa-solid fa-server"></i> 24/24 Online</span>
+                                    <span class="meta-item"><i class="fa-solid fa-brain"></i> AI ANPR & Safety Active</span>
+                                    <span class="meta-item"><i class="fa-solid fa-film"></i> 1080p 60FPS</span>
+                                </div>
+                            </div>
+                            <div class="cam-top-right">
+                                <!-- Area Filter -->
+                                <div class="cam-filter-group">
+                                    <label><i class="fa-solid fa-filter"></i> Area:</label>
+                                    <select id="camAreaFilter" class="cam-select" onchange="filterCameraFeeds()">
+                                        <option value="all">All Mine Areas</option>
+                                        <option value="co07">Amrapali & Chandragupta (CO07)</option>
+                                        <option value="co01">Barka Sayal (CO01)</option>
+                                        <option value="co13">Piparwar (CO13)</option>
+                                        <option value="co06">Magadh & Sanghmitra (CO06)</option>
+                                        <option value="co04">Bokaro & Kargali (CO04)</option>
+                                    </select>
+                                </div>
+
+                                <!-- Feed Type Filter -->
+                                <div class="cam-filter-group">
+                                    <label><i class="fa-solid fa-layer-group"></i> Zone:</label>
+                                    <select id="camZoneFilter" class="cam-select" onchange="filterCameraFeeds()">
+                                        <option value="all">All Zones</option>
+                                        <option value="weighbridge">Weighbridges</option>
+                                        <option value="checkpost">Checkposts & Boom Barriers</option>
+                                        <option value="conveyor">Coal Conveyors & Stockpiles</option>
+                                        <option value="pit">Open-Cast Pits</option>
+                                    </select>
+                                </div>
+
+                                <!-- Grid Layout Switcher -->
+                                <div class="grid-layout-buttons">
+                                    <button class="layout-btn" data-layout="1x1" onclick="setGridLayout('1x1')" title="Single Focus View"><i class="fa-regular fa-square"></i></button>
+                                    <button class="layout-btn active" data-layout="2x2" onclick="setGridLayout('2x2')" title="2x2 Grid View"><i class="fa-solid fa-table-cells-large"></i></button>
+                                    <button class="layout-btn" data-layout="3x3" onclick="setGridLayout('3x3')" title="3x3 Matrix"><i class="fa-solid fa-table-cells"></i></button>
+                                    <button class="layout-btn" data-layout="4x4" onclick="setGridLayout('4x4')" title="4x4 Multi-Stream"><i class="fa-solid fa-border-all"></i></button>
+                                </div>
+
+                                <button class="btn-cam-action btn-snapshot" onclick="takeGridSnapshot()" title="Capture Multi-Camera Snapshot">
+                                    <i class="fa-solid fa-camera"></i> Snapshot
+                                </button>
+                                <button class="btn-cam-action btn-alarm" onclick="triggerTestAlarm()" title="Emergency Sound Alarm">
+                                    <i class="fa-solid fa-bullhorn"></i> Alarm
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Camera Feeds Grid with Real Surveillance Stills (SS-1 to SS-10) -->
+                        <div class="camera-streams-grid layout-2x2" id="cameraStreamsGrid">
+                            <!-- Camera Card 1: SS-1.png -->
+                            <div class="cam-card" data-zone="pit" data-area="co07">
+                                <div class="cam-card-header">
+                                    <div class="cam-card-title">
+                                        <span class="cam-badge">CAM-01</span>
+                                        <span class="cam-name">NK Mines • Pit Extraction & Haul Road</span>
+                                    </div>
+                                    <div class="cam-card-tags">
+                                        <span class="tag-ai-active"><i class="fa-solid fa-microchip"></i> HAUL AI (98.4%)</span>
+                                        <span class="tag-fps">60 FPS</span>
+                                    </div>
+                                </div>
+                                <div class="cam-video-container">
+                                    <div class="video-overlay-feed">
+                                        <img src="/static/media_screenshots/SS-1.png" alt="CAM-01 Feed Still" class="cam-feed-still-img">
+                                        <div class="scanlines"></div>
+                                        <div class="live-clock" data-clock="live">2026-09-03 23:45:12.82</div>
+                                    </div>
+                                    <div class="cam-hover-controls">
+                                        <button onclick="focusCamera(this)" title="Focus View"><i class="fa-solid fa-expand"></i></button>
+                                        <button onclick="toggleCamPTZ('CAM-01')" title="PTZ Controls"><i class="fa-solid fa-arrows-up-down-left-right"></i></button>
+                                        <button onclick="openDroneVideoModal('nk_mines', 0)" title="Surveillance Inspector"><i class="fa-solid fa-binoculars"></i></button>
+                                    </div>
+                                </div>
+                                <div class="cam-card-footer">
+                                    <span><i class="fa-solid fa-location-dot"></i> NK Mines Active Pit Face</span>
+                                    <span class="speed-bitrate"><i class="fa-solid fa-wifi"></i> 4.8 Mbps (H.265)</span>
+                                </div>
+                            </div>
+
+                            <!-- Camera Card 2: SS-2.png -->
+                            <div class="cam-card" data-zone="conveyor" data-area="co07">
+                                <div class="cam-card-header">
+                                    <div class="cam-card-title">
+                                        <span class="cam-badge">CAM-02</span>
+                                        <span class="cam-name">NK Mines • Coal Stockpile Platform</span>
+                                    </div>
+                                    <div class="cam-card-tags">
+                                        <span class="tag-ai-active"><img src="/static/media_screenshots/trace_main_logo.jpeg" alt="TRACE Logo" class="brand-logo-img"> PERIMETER (99.1%)</span>
+                                        <span class="tag-fps">60 FPS</span>
+                                    </div>
+                                </div>
+                                <div class="cam-video-container">
+                                    <div class="video-overlay-feed">
+                                        <img src="/static/media_screenshots/SS-2.png" alt="CAM-02 Feed Still" class="cam-feed-still-img">
+                                        <div class="scanlines"></div>
+                                        <div class="live-clock" data-clock="live">2026-09-03 23:45:12.82</div>
+                                    </div>
+                                    <div class="cam-hover-controls">
+                                        <button onclick="focusCamera(this)" title="Focus View"><i class="fa-solid fa-expand"></i></button>
+                                        <button onclick="toggleCamPTZ('CAM-02')" title="PTZ Controls"><i class="fa-solid fa-arrows-up-down-left-right"></i></button>
+                                        <button onclick="openDroneVideoModal('nk_mines', 1)" title="Surveillance Inspector"><i class="fa-solid fa-binoculars"></i></button>
+                                    </div>
+                                </div>
+                                <div class="cam-card-footer">
+                                    <span><i class="fa-solid fa-mountain"></i> Coal Stockyard Grid 3</span>
+                                    <span class="speed-bitrate"><i class="fa-solid fa-wifi"></i> 4.4 Mbps (H.265)</span>
+                                </div>
+                            </div>
+
+                            <!-- Camera Card 3: SS-3.png -->
+                            <div class="cam-card" data-zone="pit" data-area="co01">
+                                <div class="cam-card-header">
+                                    <div class="cam-card-title">
+                                        <span class="cam-badge">CAM-03</span>
+                                        <span class="cam-name">Amrapali • North Highwall & Shovel</span>
+                                    </div>
+                                    <div class="cam-card-tags">
+                                        <span class="tag-ai-active"><i class="fa-solid fa-mountain-city"></i> HIGHWALL STABLE</span>
+                                        <span class="tag-fps">60 FPS</span>
+                                    </div>
+                                </div>
+                                <div class="cam-video-container">
+                                    <div class="video-overlay-feed">
+                                        <img src="/static/media_screenshots/SS-3.png" alt="CAM-03 Feed Still" class="cam-feed-still-img">
+                                        <div class="scanlines"></div>
+                                        <div class="live-clock" data-clock="live">2026-09-03 23:45:12.82</div>
+                                    </div>
+                                    <div class="cam-hover-controls">
+                                        <button onclick="focusCamera(this)" title="Focus View"><i class="fa-solid fa-expand"></i></button>
+                                        <button onclick="toggleCamPTZ('CAM-03')" title="PTZ Controls"><i class="fa-solid fa-arrows-up-down-left-right"></i></button>
+                                        <button onclick="openDroneVideoModal('amrapali', 0)" title="Surveillance Inspector"><i class="fa-solid fa-binoculars"></i></button>
+                                    </div>
+                                </div>
+                                <div class="cam-card-footer">
+                                    <span><i class="fa-solid fa-compass"></i> Amrapali North Quarry</span>
+                                    <span class="speed-bitrate"><i class="fa-solid fa-wifi"></i> 5.1 Mbps (H.265)</span>
+                                </div>
+                            </div>
+
+                            <!-- Camera Card 4: SS-4.png -->
+                            <div class="cam-card" data-zone="weighbridge" data-area="co01">
+                                <div class="cam-card-header">
+                                    <div class="cam-card-title">
+                                        <span class="cam-badge">CAM-04</span>
+                                        <span class="cam-name">Amrapali • Central Incline Haul Corridor</span>
+                                    </div>
+                                    <div class="cam-card-tags">
+                                        <span class="tag-ai-active"><i class="fa-solid fa-gauge-high"></i> SPEED: 18 KM/H</span>
+                                        <span class="tag-fps">60 FPS</span>
+                                    </div>
+                                </div>
+                                <div class="cam-video-container">
+                                    <div class="video-overlay-feed">
+                                        <img src="/static/media_screenshots/SS-4.png" alt="CAM-04 Feed Still" class="cam-feed-still-img">
+                                        <div class="scanlines"></div>
+                                        <div class="live-clock" data-clock="live">2026-09-03 23:45:12.82</div>
+                                    </div>
+                                    <div class="cam-hover-controls">
+                                        <button onclick="focusCamera(this)" title="Focus View"><i class="fa-solid fa-expand"></i></button>
+                                        <button onclick="toggleCamPTZ('CAM-04')" title="PTZ Controls"><i class="fa-solid fa-arrows-up-down-left-right"></i></button>
+                                        <button onclick="openDroneVideoModal('amrapali', 1)" title="Surveillance Inspector"><i class="fa-solid fa-binoculars"></i></button>
+                                    </div>
+                                </div>
+                                <div class="cam-card-footer">
+                                    <span><i class="fa-solid fa-road"></i> Central Incline Gradient 1:12</span>
+                                    <span class="speed-bitrate"><i class="fa-solid fa-wifi"></i> 4.6 Mbps (H.265)</span>
+                                </div>
+                            </div>
+
+                            <!-- Camera Card 5: SS-5.png -->
+                            <div class="cam-card" data-zone="pit" data-area="co06">
+                                <div class="cam-card-header">
+                                    <div class="cam-card-title">
+                                        <span class="cam-badge">CAM-05</span>
+                                        <span class="cam-name">Magadh • Coal Seam 04 Machinery Face</span>
+                                    </div>
+                                    <div class="cam-card-tags">
+                                        <span class="tag-ai-active"><i class="fa-solid fa-microchip"></i> SEAM 04 ACTIVE</span>
+                                        <span class="tag-fps">60 FPS</span>
+                                    </div>
+                                </div>
+                                <div class="cam-video-container">
+                                    <div class="video-overlay-feed">
+                                        <img src="/static/media_screenshots/SS-5.png" alt="CAM-05 Feed Still" class="cam-feed-still-img">
+                                        <div class="scanlines"></div>
+                                        <div class="live-clock" data-clock="live">2026-09-03 23:45:12.82</div>
+                                    </div>
+                                    <div class="cam-hover-controls">
+                                        <button onclick="focusCamera(this)" title="Focus View"><i class="fa-solid fa-expand"></i></button>
+                                        <button onclick="toggleCamPTZ('CAM-05')" title="PTZ Controls"><i class="fa-solid fa-arrows-up-down-left-right"></i></button>
+                                        <button onclick="openDroneVideoModal('magadh', 0)" title="Surveillance Inspector"><i class="fa-solid fa-binoculars"></i></button>
+                                    </div>
+                                </div>
+                                <div class="cam-card-footer">
+                                    <span><i class="fa-solid fa-mountain"></i> Magadh Seam 04 Face</span>
+                                    <span class="speed-bitrate"><i class="fa-solid fa-wifi"></i> 4.9 Mbps (H.265)</span>
+                                </div>
+                            </div>
+
+                            <!-- Camera Card 6: SS-6.png -->
+                            <div class="cam-card" data-zone="checkpost" data-area="co06">
+                                <div class="cam-card-header">
+                                    <div class="cam-card-title">
+                                        <span class="cam-badge">CAM-06</span>
+                                        <span class="cam-name">Magadh • Outer Haul Junction & CP</span>
+                                    </div>
+                                    <div class="cam-card-tags">
+                                        <span class="tag-ai-active"><i class="fa-solid fa-scale-balanced"></i> ANPR & TRIP OK</span>
+                                        <span class="tag-fps">60 FPS</span>
+                                    </div>
+                                </div>
+                                <div class="cam-video-container">
+                                    <div class="video-overlay-feed">
+                                        <img src="/static/media_screenshots/SS-6.png" alt="CAM-06 Feed Still" class="cam-feed-still-img">
+                                        <div class="scanlines"></div>
+                                        <div class="live-clock" data-clock="live">2026-09-03 23:45:12.82</div>
+                                    </div>
+                                    <div class="cam-hover-controls">
+                                        <button onclick="focusCamera(this)" title="Focus View"><i class="fa-solid fa-expand"></i></button>
+                                        <button onclick="toggleCamPTZ('CAM-06')" title="PTZ Controls"><i class="fa-solid fa-arrows-up-down-left-right"></i></button>
+                                        <button onclick="openDroneVideoModal('magadh', 1)" title="Surveillance Inspector"><i class="fa-solid fa-binoculars"></i></button>
+                                    </div>
+                                </div>
+                                <div class="cam-card-footer">
+                                    <span><i class="fa-solid fa-road"></i> Outer Haulage Road Outbound</span>
+                                    <span class="speed-bitrate"><i class="fa-solid fa-wifi"></i> 4.2 Mbps (H.265)</span>
+                                </div>
+                            </div>
+
+                            <!-- Camera Card 7: SS-7.png -->
+                            <div class="cam-card" data-zone="pit" data-area="co04">
+                                <div class="cam-card-header">
+                                    <div class="cam-card-title">
+                                        <span class="cam-badge">CAM-07</span>
+                                        <span class="cam-name">Giridih Kabribad • Dump Slope Berm</span>
+                                    </div>
+                                    <div class="cam-card-tags">
+                                        <span class="tag-ai-active"><i class="fa-solid fa-layer-group"></i> SLOPE: 99.2%</span>
+                                        <span class="tag-fps">60 FPS</span>
+                                    </div>
+                                </div>
+                                <div class="cam-video-container">
+                                    <div class="video-overlay-feed">
+                                        <img src="/static/media_screenshots/SS-7.png" alt="CAM-07 Feed Still" class="cam-feed-still-img">
+                                        <div class="scanlines"></div>
+                                        <div class="live-clock" data-clock="live">2026-09-03 23:45:12.82</div>
+                                    </div>
+                                    <div class="cam-hover-controls">
+                                        <button onclick="focusCamera(this)" title="Focus View"><i class="fa-solid fa-expand"></i></button>
+                                        <button onclick="toggleCamPTZ('CAM-07')" title="PTZ Controls"><i class="fa-solid fa-arrows-up-down-left-right"></i></button>
+                                        <button onclick="openDroneVideoModal('giridih', 0)" title="Surveillance Inspector"><i class="fa-solid fa-binoculars"></i></button>
+                                    </div>
+                                </div>
+                                <div class="cam-card-footer">
+                                    <span><i class="fa-solid fa-location-dot"></i> Giridih Kabribad Dump Sector</span>
+                                    <span class="speed-bitrate"><i class="fa-solid fa-wifi"></i> 4.5 Mbps (H.265)</span>
+                                </div>
+                            </div>
+
+                            <!-- Camera Card 8: SS-8.png -->
+                            <div class="cam-card" data-zone="conveyor" data-area="co04">
+                                <div class="cam-card-header">
+                                    <div class="cam-card-title">
+                                        <span class="cam-badge">CAM-08</span>
+                                        <span class="cam-name">Giridih • Primary Feeder & Personnel</span>
+                                    </div>
+                                    <div class="cam-card-tags">
+                                        <span class="tag-ai-active"><i class="fa-solid fa-hard-hat"></i> PPE COMPLIANT</span>
+                                        <span class="tag-fps">60 FPS</span>
+                                    </div>
+                                </div>
+                                <div class="cam-video-container">
+                                    <div class="video-overlay-feed">
+                                        <img src="/static/media_screenshots/SS-8.png" alt="CAM-08 Feed Still" class="cam-feed-still-img">
+                                        <div class="scanlines"></div>
+                                        <div class="live-clock" data-clock="live">2026-09-03 23:45:12.82</div>
+                                    </div>
+                                    <div class="cam-hover-controls">
+                                        <button onclick="focusCamera(this)" title="Focus View"><i class="fa-solid fa-expand"></i></button>
+                                        <button onclick="toggleCamPTZ('CAM-08')" title="PTZ Controls"><i class="fa-solid fa-arrows-up-down-left-right"></i></button>
+                                        <button onclick="openDroneVideoModal('giridih', 1)" title="Surveillance Inspector"><i class="fa-solid fa-binoculars"></i></button>
+                                    </div>
+                                </div>
+                                <div class="cam-card-footer">
+                                    <span><i class="fa-solid fa-industry"></i> Primary Crusher Inflow Feeder</span>
+                                    <span class="speed-bitrate"><i class="fa-solid fa-wifi"></i> 4.7 Mbps (H.265)</span>
+                                </div>
+                            </div>
+
+                            <!-- Camera Card 9: SS-9.png -->
+                            <div class="cam-card" data-zone="weighbridge" data-area="co13">
+                                <div class="cam-card-header">
+                                    <div class="cam-card-title">
+                                        <span class="cam-badge">CAM-09</span>
+                                        <span class="cam-name">Bukaro • Rail Loading Terminal & Yard</span>
+                                    </div>
+                                    <div class="cam-card-tags">
+                                        <span class="tag-ai-active"><i class="fa-solid fa-train"></i> RAKE LOADING</span>
+                                        <span class="tag-fps">60 FPS</span>
+                                    </div>
+                                </div>
+                                <div class="cam-video-container">
+                                    <div class="video-overlay-feed">
+                                        <img src="/static/media_screenshots/SS-9.png" alt="CAM-09 Feed Still" class="cam-feed-still-img">
+                                        <div class="scanlines"></div>
+                                        <div class="live-clock" data-clock="live">2026-09-03 23:45:12.82</div>
+                                    </div>
+                                    <div class="cam-hover-controls">
+                                        <button onclick="focusCamera(this)" title="Focus View"><i class="fa-solid fa-expand"></i></button>
+                                        <button onclick="toggleCamPTZ('CAM-09')" title="PTZ Controls"><i class="fa-solid fa-arrows-up-down-left-right"></i></button>
+                                        <button onclick="openDroneVideoModal('bukaro', 0)" title="Surveillance Inspector"><i class="fa-solid fa-binoculars"></i></button>
+                                    </div>
+                                </div>
+                                <div class="cam-card-footer">
+                                    <span><i class="fa-solid fa-train-track"></i> Railway Siding Rake Track 2</span>
+                                    <span class="speed-bitrate"><i class="fa-solid fa-wifi"></i> 5.2 Mbps (H.265)</span>
+                                </div>
+                            </div>
+
+                            <!-- Camera Card 10: SS-10.png -->
+                            <div class="cam-card" data-zone="checkpost" data-area="co13">
+                                <div class="cam-card-header">
+                                    <div class="cam-card-title">
+                                        <span class="cam-badge">CAM-10</span>
+                                        <span class="cam-name">Bukaro • West Exit Gate & Drainage</span>
+                                    </div>
+                                    <div class="cam-card-tags">
+                                        <span class="tag-ai-active"><i class="fa-solid fa-droplet"></i> SUMP LEVEL: NOMINAL</span>
+                                        <span class="tag-fps">60 FPS</span>
+                                    </div>
+                                </div>
+                                <div class="cam-video-container">
+                                    <div class="video-overlay-feed">
+                                        <img src="/static/media_screenshots/SS-10.png" alt="CAM-10 Feed Still" class="cam-feed-still-img">
+                                        <div class="scanlines"></div>
+                                        <div class="live-clock" data-clock="live">2026-09-03 23:45:12.82</div>
+                                    </div>
+                                    <div class="cam-hover-controls">
+                                        <button onclick="focusCamera(this)" title="Focus View"><i class="fa-solid fa-expand"></i></button>
+                                        <button onclick="toggleCamPTZ('CAM-10')" title="PTZ Controls"><i class="fa-solid fa-arrows-up-down-left-right"></i></button>
+                                        <button onclick="openDroneVideoModal('bukaro', 1)" title="Surveillance Inspector"><i class="fa-solid fa-binoculars"></i></button>
+                                    </div>
+                                </div>
+                                <div class="cam-card-footer">
+                                    <span><i class="fa-solid fa-water"></i> Western Mine Perimeter Drainage Sump</span>
+                                    <span class="speed-bitrate"><i class="fa-solid fa-wifi"></i> 4.1 Mbps (H.265)</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- PTZ Control Floating Modal -->
+                        <div class="ptz-modal-backdrop" id="ptzModalBackdrop" style="display: none;" onclick="closeCamPTZ(event)">
+                            <div class="ptz-modal-card" onclick="event.stopPropagation()">
+                                <div class="ptz-modal-header">
+                                    <div class="ptz-title">
+                                        <i class="fa-solid fa-gamepad" style="color: #0284c7;"></i>
+                                        <span>PTZ Joystick & Optical Zoom - <strong id="ptzCamId">CAM-01</strong></span>
+                                    </div>
+                                    <button class="ptz-close-btn" onclick="closeCamPTZDirect()"><i class="fa-solid fa-xmark"></i></button>
+                                </div>
+                                <div class="ptz-modal-body">
+                                    <!-- Joystick Control Circle -->
+                                    <div class="joystick-container">
+                                        <div class="joystick-pad">
+                                            <button class="joy-btn joy-up" onclick="sendPTZCommand('UP')"><i class="fa-solid fa-chevron-up"></i></button>
+                                            <button class="joy-btn joy-left" onclick="sendPTZCommand('LEFT')"><i class="fa-solid fa-chevron-left"></i></button>
+                                            <div class="joy-center" onclick="sendPTZCommand('CENTER')"><i class="fa-solid fa-crosshairs"></i></div>
+                                            <button class="joy-btn joy-right" onclick="sendPTZCommand('RIGHT')"><i class="fa-solid fa-chevron-right"></i></button>
+                                            <button class="joy-btn joy-down" onclick="sendPTZCommand('DOWN')"><i class="fa-solid fa-chevron-down"></i></button>
+                                        </div>
+                                    </div>
+
+                                    <!-- Zoom & Focus Controls -->
+                                    <div class="ptz-zoom-panel">
+                                        <div class="ptz-control-row">
+                                            <label>Optical Zoom</label>
+                                            <div class="btn-zoom-group">
+                                                <button onclick="sendPTZCommand('ZOOM_IN')"><i class="fa-solid fa-plus"></i> In (30x)</button>
+                                                <button onclick="sendPTZCommand('ZOOM_OUT')"><i class="fa-solid fa-minus"></i> Out</button>
+                                            </div>
+                                        </div>
+                                        <div class="ptz-control-row">
+                                            <label>IR Night Vision</label>
+                                            <button class="btn-toggle-ir" id="btnIrToggle" onclick="toggleIRMode()"><i class="fa-solid fa-moon"></i> Auto IR ON</button>
+                                        </div>
+                                        <div class="ptz-presets">
+                                            <label>Quick Angle Presets</label>
+                                            <div class="preset-btn-chips">
+                                                <button onclick="sendPTZCommand('PRESET_1')">WB Scale (P1)</button>
+                                                <button onclick="sendPTZCommand('PRESET_2')">ANPR Plate (P2)</button>
+                                                <button onclick="sendPTZCommand('PRESET_3')">Barrier (P3)</button>
+                                                <button onclick="sendPTZCommand('PRESET_4')">Cabin Driver (P4)</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ======================================================== -->
+                <!-- Tab View: Camera GIS View (Interactive Geospatial Map)  -->
+                <!-- ======================================================== -->
+                <div class="tab-content-panel" id="camera-gis-view" style="display: none;">
+                    <div class="gis-dashboard-container">
+                        <!-- Top GIS Control Ribbon -->
+                        <div class="gis-top-ribbon">
+                            <div class="gis-title-wrap">
+                                <div class="gis-icon-shield">
+                                    <i class="fa-solid fa-earth-asia"></i>
+                                </div>
+                                <div class="gis-title-details">
+                                    <h2>Geospatial GIS Camera & Checkpost Map</h2>
+                                    <p>Live Satellite Mine Surveillance • High-Resolution Telemetry Grid • Geo-Fenced Haulage Corridors</p>
+                                </div>
+                            </div>
+
+                            <div class="gis-controls-cluster">
+                                <div class="gis-select-box">
+                                    <label><i class="fa-solid fa-map-location-dot"></i> Coalfield Sector:</label>
+                                    <select id="gisMineSectorSelect" class="cam-select" onchange="switchGisMineSector()">
+                                        <option value="all">Jharkhand Coalfield Overview</option>
+                                        <option value="giridih">Giridih Area (CO15)</option>
+                                        <option value="argada">Argada Area (CO02)</option>
+                                        <option value="barka">Barka Sayal Mine Complex (CO01)</option>
+                                        <option value="bokaro">Bokaro & Kargali Basin (CO04)</option>
+                                        <option value="dhori">Dhori Area (CO12)</option>
+                                        <option value="hazaribagh">Hazaribagh Area (CO10)</option>
+                                        <option value="kathara">Kathara Washery (CO05)</option>
+                                        <option value="kuju">Kuju Area (CO09)</option>
+                                        <option value="magadh">Magadh Open Cast Sector (CO06)</option>
+                                        <option value="nk">North Karanpura (CO03)</option>
+                                        <option value="piparwar">Piparwar & Ashoka Basin (CO13)</option>
+                                        <option value="rajhara">Rajhara Area (CO08)</option>
+                                        <option value="rajrappa">Rajrappa Washery (CO11)</option>
+                                        <option value="amrapali">Amrapali & Chandragupta (CO07)</option>
+                                    </select>
+                                </div>
+
+                                <div class="gis-layer-toggles">
+                                    <button class="layer-pill active" id="layerSatToggle" onclick="setMapBaseLayer('satellite')"><i class="fa-solid fa-satellite"></i> Satellite</button>
+                                    <button class="layer-pill active" id="layerLabelsToggle" onclick="toggleLabelsLayer()"><i class="fa-solid fa-layer-group"></i> Hybrid Labels</button>
+                                    <button class="layer-pill" id="layerOsmToggle" onclick="setMapBaseLayer('osm')"><i class="fa-solid fa-map"></i> Topo/Street</button>
+                                    <button class="layer-pill active" id="layerCamsToggle" onclick="toggleCameraMarkers()"><i class="fa-solid fa-camera"></i> Cameras (32)</button>
+                                    <button class="layer-pill active" id="layerCheckpostsToggle" onclick="toggleCheckpostMarkers()"><i class="fa-solid fa-shield-cat"></i> Checkposts (14)</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Main Split Body: Left Camera Sidebar + Center Satellite Map -->
+                        <div class="gis-main-body">
+                            <!-- Left: Camera Directory Panel (Matching Screenshot 2) -->
+                            <aside class="gis-left-cam-sidebar">
+                                <div class="gis-cam-sidebar-header">
+                                    <div class="gis-search-wrapper">
+                                        <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                                        <input type="text" id="gisCamSearchInput" class="gis-cam-search-input" placeholder="Search cameras, checkposts..." oninput="filterGisCamSidebar()">
+                                    </div>
+                                    <div class="gis-cam-filter-row">
+                                        <div class="gis-cam-count-tab">
+                                            <i class="fa-solid fa-camera" style="color: #38bdf8;"></i>
+                                            <span>Camera</span>
+                                            <span class="badge-num" id="gisCamCountBadge">32</span>
+                                        </div>
+                                        <select id="gisCamAreaFilter" class="gis-cam-area-filter-select" onchange="filterGisCamSidebar()">
+                                            <option value="all">All Areas</option>
+                                            <option value="Giridih">Giridih</option>
+                                            <option value="Argada">Argada</option>
+                                            <option value="Barka Sayal">Barka Sayal</option>
+                                            <option value="Bokaro">Bokaro</option>
+                                            <option value="Dhori">Dhori</option>
+                                            <option value="Hazaribagh">Hazaribagh</option>
+                                            <option value="Kathara">Kathara</option>
+                                            <option value="Kuju">Kuju</option>
+                                            <option value="Magadh">Magadh</option>
+                                            <option value="North Karanpura">North Karanpura</option>
+                                            <option value="Piparwar">Piparwar</option>
+                                            <option value="Rajhara">Rajhara</option>
+                                            <option value="Rajrappa">Rajrappa</option>
+                                            <option value="Amrapali">Amrapali</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <!-- Scrollable Camera Items List -->
+                                <div class="gis-cam-scroll-list" id="gisCamSidebarList">
+                                    <!-- Rendered dynamically by renderGisCamSidebarList() -->
+                                </div>
+                            </aside>
+
+                            <!-- Center/Right: Interactive High-Resolution Satellite Map -->
+                            <div class="gis-map-wrapper">
+                                <div id="gisLeafletMap" class="gis-leaflet-canvas"></div>
+                                
+                                <!-- Floating Telemetry HUD Overlay -->
+                                <div class="gis-map-hud-overlay" id="gisMapHudOverlay">
+                                    <div class="hud-item"><i class="fa-solid fa-satellite-dish" style="color: #38bdf8;"></i> GPS Precision: <strong id="hudGpsPrecision">±0.4m RTK Dual-Band</strong></div>
+                                    <div class="hud-item"><i class="fa-solid fa-truck-moving" style="color: #f59e0b;"></i> Active Fleet in Region: <strong id="hudActiveFleet">2,279 Vehicles</strong></div>
+                                    <div class="hud-item"><i class="fa-solid fa-shield-halved" style="color: #10b981;"></i> Geo-Fence Surveillance: <strong id="hudGeoFence">ALL SECTORS SECURE</strong></div>
+                                </div>
+
+                                <!-- Floating Live Camera Popup (PiP Stream matching Screenshot 3) -->
+                                <div class="gis-pip-camera-box" id="gisPipCameraBox" style="display: none;">
+                                    <div class="pip-header">
+                                        <div class="pip-header-left">
+                                            <i class="fa-solid fa-video" id="pipCamIcon" style="color: #10b981; font-size: 13px;"></i>
+                                            <span class="pip-title-text" id="pipCamTitle">Giridih ICCC Control Room</span>
+                                        </div>
+                                        <div class="pip-header-actions">
+                                            <button class="pip-tool-btn" onclick="takeGisPipSnapshot()" title="Capture Snapshot"><i class="fa-solid fa-camera"></i></button>
+                                            <button class="pip-tool-btn" onclick="reconnectGisPipCamera()" title="Reconnect / Reload Feed"><i class="fa-solid fa-rotate-right"></i></button>
+                                            <button class="pip-tool-btn" onclick="toggleGisPipFullscreen()" title="Fullscreen / Maximize"><i class="fa-solid fa-expand"></i></button>
+                                            <button class="pip-tool-btn btn-close" onclick="closeGisPipCamera()" title="Close Player"><i class="fa-solid fa-xmark"></i></button>
+                                        </div>
+                                    </div>
+
+                                    <div class="pip-video-feed" id="pipVideoFeed">
+                                        <!-- Connecting Delay Animated Overlay (User requirement) -->
+                                        <div class="pip-connecting-overlay" id="pipConnectingOverlay" style="display: flex;">
+                                            <div class="connecting-radar">
+                                                <div class="radar-ring"></div>
+                                                <div class="radar-ring"></div>
+                                                <div class="radar-ring"></div>
+                                                <div class="radar-center-dot"></div>
+                                            </div>
+                                            <div class="connecting-status-title" id="pipConnectingTitle">Connecting to CCTV Node...</div>
+                                            <div class="connecting-step-log" id="pipConnectingLog">[SYS] Initiating RTSP Handshake over Edge TLS...</div>
+                                        </div>
+
+                                        <!-- Offline State Overlay for Red Markers -->
+                                        <div class="pip-offline-overlay" id="pipOfflineOverlay" style="display: none;">
+                                            <i class="fa-solid fa-video-slash offline-icon"></i>
+                                            <div class="offline-title">Camera Offline</div>
+                                            <div class="offline-msg">No RTSP video stream received from this node</div>
+                                            <div class="offline-details">[ERR_RTSP_TIMEOUT] Sensor Power Offline / Maintenance • 0 FPS</div>
+                                            <button class="btn-retry-node" onclick="reconnectGisPipCamera()"><i class="fa-solid fa-rotate-right"></i> Retry Connection</button>
+                                        </div>
+
+                                        <!-- Live Camera Feed Image -->
+                                        <img src="/static/media_screenshots/SS-1.png" alt="Live Camera Feed" id="pipStillImg" class="pip-feed-still-img">
+                                        
+                                        <!-- Scanline raster effect -->
+                                        <div class="pip-scanlines"></div>
+                                        
+                                        <!-- Live timestamp clock -->
+                                        <div class="pip-timestamp" id="pipTimestamp">2026-09-04 18:55:00</div>
+                                        
+                                        <!-- Live badge -->
+                                        <div class="pip-badge-live" id="pipBadgeLive">
+                                            <span class="live-dot"></span> Live
+                                        </div>
+
+                                        <!-- Digital Zoom Control (Screenshot 3 style) -->
+                                        <div class="pip-zoom-control">
+                                            <button onclick="adjustGisPipZoom(-0.25)"><i class="fa-solid fa-magnifying-glass-minus"></i></button>
+                                            <span id="pipZoomLevel">100%</span>
+                                            <button onclick="adjustGisPipZoom(0.25)"><i class="fa-solid fa-magnifying-glass-plus"></i></button>
+                                        </div>
+
+                                        <!-- Snapshot Toast Notification -->
+                                        <div class="pip-toast-notification" id="pipSnapshotToast" style="display: none;">
+                                            <i class="fa-solid fa-check"></i> Snapshot saved to dispatch logs!
+                                        </div>
+                                    </div>
+
+                                    <div class="pip-footer">
+                                        <div class="pip-meta-info" id="pipMetaInfo">Lat: 24.1840° N, Lon: 86.3021° E • Bitrate: 4.8 Mbps</div>
+                                        <span id="pipFpsBadge" style="color: #10b981; font-weight: 700; font-size: 10px;">● 60 FPS H.265</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Digital Audit Trails View (50 Split Yearly Reports with Cryptographic Verification) -->

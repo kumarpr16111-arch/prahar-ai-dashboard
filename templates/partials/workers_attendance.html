@@ -1,0 +1,76 @@
+                <div class="tab-content-panel" id="workers-attendance-view" style="display: none;">
+                    <div class="workers-attendance-container">
+                        <!-- Top Header Bar -->
+                        <div class="attendance-top-header">
+                            <h1 class="attendance-title">Location Attendance Dashboard</h1>
+                            <div class="attendance-filter-group">
+                                <div class="date-picker-box">
+                                    <input type="text" class="date-input-field" value="25-08-2026" readonly>
+                                    <i class="fa-regular fa-calendar date-icon"></i>
+                                </div>
+                                <button class="btn-go-blue">Go</button>
+                            </div>
+                        </div>
+
+                        <!-- 3 Summary Cards Row -->
+                        <div class="attendance-cards-grid">
+                            <!-- Card 1: Active Member -->
+                            <div class="att-card">
+                                <div class="att-icon-box purple-icon">
+                                    <i class="fa-solid fa-users"></i>
+                                </div>
+                                <span class="att-card-label">Active Member</span>
+                                <span class="att-card-number">32489</span>
+                            </div>
+
+                            <!-- Card 2: Present (87%) -->
+                            <div class="att-card">
+                                <div class="att-icon-box black-icon">
+                                    <i class="fa-solid fa-user-check"></i>
+                                </div>
+                                <span class="att-card-label">Present</span>
+                                <span class="att-card-number">28265</span>
+                            </div>
+
+                            <!-- Card 3: Absent (13%) -->
+                            <div class="att-card">
+                                <div class="att-icon-box black-icon">
+                                    <i class="fa-solid fa-user-xmark"></i>
+                                </div>
+                                <span class="att-card-label">Absent</span>
+                                <span class="att-card-number">4224</span>
+                            </div>
+                        </div>
+
+                        <!-- Attendance Overview Section -->
+                        <div class="attendance-overview-card margin-top-lg">
+                            <h2 class="overview-section-title">Attendance Overview</h2>
+                            
+                            <div class="doughnut-chart-container">
+                                <div class="doughnut-wrapper">
+                                    <svg viewBox="0 0 200 200" class="attendance-svg-doughnut">
+                                        <!-- Background Ring (13% Absent - Dark Arc) -->
+                                        <circle cx="100" cy="100" r="70" fill="transparent" stroke="#1e293b" stroke-width="28" />
+                                        <!-- Foreground Ring (87% Present - Vibrant Orange #f59e0b) -->
+                                        <!-- Circumference = 2 * PI * 70 = 439.82. 87% of 439.82 = 382.64 -->
+                                        <circle cx="100" cy="100" r="70" fill="transparent" stroke="#f59e0b" stroke-width="28"
+                                                stroke-dasharray="382.64 439.82" stroke-dashoffset="0" transform="rotate(-90 100 100)" />
+                                        
+                                        <!-- Percentage labels inside doughnut matching screenshot structure -->
+                                        <text x="100" y="42" text-anchor="middle" font-size="12" font-weight="800" fill="#ffffff">13%</text>
+                                        <text x="100" y="170" text-anchor="middle" font-size="13" font-weight="800" fill="#0f172a">87%</text>
+                                    </svg>
+                                </div>
+                            </div>
+
+                            <!-- Floating More Details Button -->
+                            <div class="more-details-footer">
+                                <button class="btn-more-details-pill">More Details</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ======================================================== -->
+                <!-- Tab View: Camera Grid View (Surveillance & AI Analytics) -->
+                <!-- ======================================================== -->

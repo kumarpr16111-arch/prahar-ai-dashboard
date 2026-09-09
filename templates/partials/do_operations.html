@@ -1,0 +1,279 @@
+            <div class="tab-content-panel" id="view-internal-do-view" style="display: none;">
+                <div class="do-dashboard-container">
+                    <!-- Clean Corporate Header -->
+                    <div class="do-header-card">
+                        <div class="do-header-main">
+                            <div class="do-header-text">
+                                <span class="do-section-tag"><i class="fa-solid fa-file-contract"></i> Internal Despatch Logistics</span>
+                                <h2 class="do-page-title">Internal Delivery Order (DO) Operations Register</h2>
+                                <p class="do-page-subtitle">
+                                    Central Coalfields Statutory Despatch Ledger • <strong>352 DO Allocations</strong> verified across Area Weighbridges & Checkposts.
+                                </p>
+                            </div>
+                            <div class="do-stats-row">
+                                <div class="do-stat-box">
+                                    <span class="stat-number" id="doKpiTotalCount">352</span>
+                                    <span class="stat-label">Total DOs</span>
+                                </div>
+                                <div class="do-stat-box">
+                                    <span class="stat-number" style="color: #34d399;" id="doKpiTotalOrderQty">176.54M</span>
+                                    <span class="stat-label">Order Qty (MT)</span>
+                                </div>
+                                <div class="do-stat-box">
+                                    <span class="stat-number" style="color: #fbbf24;" id="doKpiTotalBalanceQty">154.24M</span>
+                                    <span class="stat-label">Balance Qty (MT)</span>
+                                </div>
+                                <div class="do-stat-box">
+                                    <span class="stat-number" style="color: #38bdf8;">14 Areas</span>
+                                    <span class="stat-label">Mining Clusters</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Toolbar: Search, Filters & Actions -->
+                    <div class="do-toolbar">
+                        <div class="do-toolbar-left">
+                            <div class="do-search-input-wrap">
+                                <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                                <input type="text" id="doSearchInput" class="do-search-input" placeholder="Search DO #, Contractor, Grade, Area, Plant, WB, User..." oninput="handleDoSearch()">
+                                <button class="btn-clear-do-search" id="btnClearDoSearch" onclick="clearDoSearch()" style="display: none;"><i class="fa-solid fa-xmark"></i></button>
+                            </div>
+                        </div>
+
+                        <div class="do-toolbar-right">
+                            <select id="doAreaFilter" class="do-select-dropdown" onchange="handleDoFilter()">
+                                <option value="all">All Areas</option>
+                            </select>
+
+                            <select id="doGradeFilter" class="do-select-dropdown" onchange="handleDoFilter()">
+                                <option value="all">All Coal Grades</option>
+                            </select>
+
+                            <select id="doPageSizeSelect" class="do-select-dropdown" onchange="handleDoPageSize()">
+                                <option value="25">25 / Page</option>
+                                <option value="50" selected>50 / Page</option>
+                                <option value="100">100 / Page</option>
+                                <option value="all">All 352 Records</option>
+                            </select>
+
+                            <button class="btn-do-action" onclick="exportDoDataCsv()"><i class="fa-solid fa-file-csv"></i> Export CSV</button>
+                            <button class="btn-do-action" onclick="printDoTable()"><i class="fa-solid fa-print"></i> Print</button>
+                            <button class="btn-do-action btn-do-primary" onclick="showAddInternalDO()"><i class="fa-solid fa-plus"></i> Add New DO</button>
+                        </div>
+                    </div>
+
+                    <!-- Results Counter -->
+                    <div class="do-results-meta">
+                        <span id="doResultsCounter">Showing <strong>1–50</strong> of <strong>352</strong> Delivery Orders</span>
+                        <span id="doFilteredNotice" style="display:none; color:#38bdf8;">Filters active</span>
+                    </div>
+
+                    <!-- 19-Column Tabular Grid Matching Screenshot 2 -->
+                    <div class="do-table-card">
+                        <div class="do-table-wrapper">
+                            <table class="do-data-table" id="internalDoDataTable">
+                                <thead>
+                                    <tr>
+                                        <th rowspan="2" class="sno-col">#</th>
+                                        <th rowspan="2" onclick="sortDoTable('do_no')" style="cursor: pointer;" title="Click to sort by DO #">DO # <i class="fa-solid fa-sort" style="font-size: 9px; margin-left: 3px; color: #64748b;"></i></th>
+                                        <th rowspan="2" onclick="sortDoTable('contractor')" style="cursor: pointer;" title="Click to sort by Contractor">Contractor <i class="fa-solid fa-sort" style="font-size: 9px; margin-left: 3px; color: #64748b;"></i></th>
+                                        <th rowspan="2" onclick="sortDoTable('grade')" style="cursor: pointer;">Grade</th>
+                                        <th rowspan="2" onclick="sortDoTable('order_qty')" style="cursor: pointer; text-align: right;">Order Qty</th>
+                                        <th rowspan="2" onclick="sortDoTable('balance_qty')" style="cursor: pointer; text-align: right;">Balance Qty</th>
+                                        <th rowspan="2" onclick="sortDoTable('validity')" style="cursor: pointer;">Validity</th>
+                                        <!-- Group 1: From -->
+                                        <th colspan="5" class="group-th from-group"><i class="fa-solid fa-arrow-right-from-bracket"></i> From</th>
+                                        <!-- Group 2: To -->
+                                        <th colspan="5" class="group-th to-group"><i class="fa-solid fa-arrow-right-to-bracket"></i> To</th>
+                                        <!-- Group 3: Created -->
+                                        <th colspan="2" class="group-th created-group"><i class="fa-regular fa-clock"></i> Created</th>
+                                    </tr>
+                                    <tr>
+                                        <!-- Under From -->
+                                        <th class="from-sub">Area</th>
+                                        <th class="from-sub">Plant</th>
+                                        <th class="from-sub">Checkpost(s)</th>
+                                        <th class="from-sub">WB(s)</th>
+                                        <th class="from-sub">Location(s)</th>
+                                        <!-- Under To -->
+                                        <th class="to-sub">Area</th>
+                                        <th class="to-sub">Plant</th>
+                                        <th class="to-sub">Checkpost(s)</th>
+                                        <th class="to-sub">WB(s)</th>
+                                        <th class="to-sub">Location(s)</th>
+                                        <!-- Under Created -->
+                                        <th class="created-sub">User</th>
+                                        <th class="created-sub">On Date</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="internalDoTableBody">
+                                    <!-- Rendered dynamically via renderInternalDoTable() -->
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <!-- Pagination Footer -->
+                        <div class="do-pagination-bar">
+                            <div id="doPageInfoText">Page 1 of 8 (50 rows per page)</div>
+                            <div class="do-page-buttons" id="doPaginationControls">
+                                <!-- Rendered dynamically -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Add Internal DO Data View Panel -->
+            <div class="tab-content-panel" id="add-internal-do-view" style="display: none;">
+                <div class="do-dashboard-container">
+                    <div class="do-header-card">
+                        <span class="do-section-tag"><i class="fa-solid fa-plus-circle"></i> New Allocation</span>
+                        <h2 class="do-page-title">Add Internal DO Data</h2>
+                        <p class="do-page-subtitle">Create a new Internal Coal Delivery Order allocation across Central Coalfields weighbridges and checkposts.</p>
+                    </div>
+                    <div class="do-form-card">
+                        <form id="formAddInternalDo" onsubmit="handleCreateDoSubmit(event)">
+                            <div class="do-form-grid">
+                                <div class="do-form-section-title"><i class="fa-solid fa-file-invoice"></i> Primary DO Details</div>
+                                <div class="do-form-group">
+                                    <label class="do-form-label">DO Number *</label>
+                                    <input type="text" id="addDoNumber" class="do-form-input" placeholder="e.g. 3080250002" required>
+                                </div>
+                                <div class="do-form-group">
+                                    <label class="do-form-label">Contractor Code & Name *</label>
+                                    <input type="text" id="addDoContractor" class="do-form-input" placeholder="e.g. 10016590:M/s Dharti JV" required>
+                                </div>
+                                <div class="do-form-group">
+                                    <label class="do-form-label">Coal Grade *</label>
+                                    <input type="text" id="addDoGrade" class="do-form-input" placeholder="e.g. Washery Grade IV, G-1" required>
+                                </div>
+                                <div class="do-form-group">
+                                    <label class="do-form-label">Order Quantity (MT) *</label>
+                                    <input type="number" step="0.001" id="addDoOrderQty" class="do-form-input" placeholder="50000.000" required>
+                                </div>
+                                <div class="do-form-group">
+                                    <label class="do-form-label">Balance Quantity (MT)</label>
+                                    <input type="number" step="0.001" id="addDoBalanceQty" class="do-form-input" placeholder="50000.000">
+                                </div>
+                                <div class="do-form-group">
+                                    <label class="do-form-label">Validity Date *</label>
+                                    <input type="text" id="addDoValidity" class="do-form-input" placeholder="DD-MM-YYYY (e.g. 31-03-2027)" required>
+                                </div>
+
+                                <div class="do-form-section-title" style="color: #38bdf8;"><i class="fa-solid fa-arrow-right-from-bracket"></i> Source (From) Allocation</div>
+                                <div class="do-form-group">
+                                    <label class="do-form-label">From Area *</label>
+                                    <input type="text" id="addDoFromArea" class="do-form-input" placeholder="e.g. Kathara" required>
+                                </div>
+                                <div class="do-form-group">
+                                    <label class="do-form-label">From Plant / Mine *</label>
+                                    <input type="text" id="addDoFromPlant" class="do-form-input" placeholder="e.g. Jarangdih OC" required>
+                                </div>
+                                <div class="do-form-group">
+                                    <label class="do-form-label">From Checkpost(s)</label>
+                                    <input type="text" id="addDoFromCheckposts" class="do-form-input" placeholder="e.g. CP0511 CP0512 or NA">
+                                </div>
+                                <div class="do-form-group">
+                                    <label class="do-form-label">From Weighbridge(s)</label>
+                                    <input type="text" id="addDoFromWbs" class="do-form-input" placeholder="e.g. RD0801 RD0802 or NA">
+                                </div>
+                                <div class="do-form-group">
+                                    <label class="do-form-label">From Location(s)</label>
+                                    <input type="text" id="addDoFromLocations" class="do-form-input" placeholder="e.g. Jarangdih Stock or NA">
+                                </div>
+
+                                <div class="do-form-section-title" style="color: #34d399;"><i class="fa-solid fa-arrow-right-to-bracket"></i> Destination (To) Allocation</div>
+                                <div class="do-form-group">
+                                    <label class="do-form-label">To Area</label>
+                                    <input type="text" id="addDoToArea" class="do-form-input" placeholder="e.g. Kathara">
+                                </div>
+                                <div class="do-form-group">
+                                    <label class="do-form-label">To Plant / Siding</label>
+                                    <input type="text" id="addDoToPlant" class="do-form-input" placeholder="e.g. Swang Washery">
+                                </div>
+                                <div class="do-form-group">
+                                    <label class="do-form-label">To Checkpost(s)</label>
+                                    <input type="text" id="addDoToCheckposts" class="do-form-input" placeholder="e.g. CP0521 or NA">
+                                </div>
+                                <div class="do-form-group">
+                                    <label class="do-form-label">To Weighbridge(s)</label>
+                                    <input type="text" id="addDoToWbs" class="do-form-input" placeholder="e.g. RD0807 or NA">
+                                </div>
+                                <div class="do-form-group">
+                                    <label class="do-form-label">To Location(s)</label>
+                                    <input type="text" id="addDoToLocations" class="do-form-input" placeholder="e.g. SWANG WASHERY or NA">
+                                </div>
+                            </div>
+                            <div class="do-form-actions">
+                                <button type="button" class="btn-do-action" onclick="showViewInternalDO()">Cancel</button>
+                                <button type="submit" class="btn-do-action btn-do-primary"><i class="fa-solid fa-check"></i> Save & Log Delivery Order</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Edit DO or Map to WB View Panel -->
+            <div class="tab-content-panel" id="edit-internal-do-view" style="display: none;">
+                <div class="do-dashboard-container">
+                    <div class="do-header-card">
+                        <span class="do-section-tag"><i class="fa-solid fa-pen-to-square"></i> Weighbridge Mapping</span>
+                        <h2 class="do-page-title">Edit DO or Map to Weighbridge (WB)</h2>
+                        <p class="do-page-subtitle">Configure weighbridge routing, checkpost gates, and valid unloading sidings for active delivery orders.</p>
+                    </div>
+                    <div class="do-form-card">
+                        <div class="do-form-grid">
+                            <div class="do-form-section-title"><i class="fa-solid fa-magnifying-glass"></i> Select DO for Mapping</div>
+                            <div class="do-form-group" style="grid-column: 1 / -1;">
+                                <label class="do-form-label">Select Delivery Order</label>
+                                <select id="editDoSelector" class="do-form-select" onchange="populateEditDoForm(this.value)">
+                                    <option value="">-- Choose DO to configure --</option>
+                                </select>
+                            </div>
+                            <div class="do-form-group">
+                                <label class="do-form-label">Mapped Source Weighbridges (From WB)</label>
+                                <input type="text" id="editFromWbs" class="do-form-input" placeholder="e.g. RD0801 RD0802 RD0803">
+                            </div>
+                            <div class="do-form-group">
+                                <label class="do-form-label">Mapped Destination Weighbridges (To WB)</label>
+                                <input type="text" id="editToWbs" class="do-form-input" placeholder="e.g. RD1504 RD1505">
+                            </div>
+                            <div class="do-form-group">
+                                <label class="do-form-label">Assigned Source Checkposts</label>
+                                <input type="text" id="editFromCheckposts" class="do-form-input" placeholder="e.g. CP1101 CP1102">
+                            </div>
+                            <div class="do-form-group">
+                                <label class="do-form-label">Assigned Destination Checkposts</label>
+                                <input type="text" id="editToCheckposts" class="do-form-input" placeholder="e.g. CP1221 CP1222">
+                            </div>
+                        </div>
+                        <div class="do-form-actions">
+                            <button type="button" class="btn-do-action" onclick="showViewInternalDO()">Cancel</button>
+                            <button type="button" class="btn-do-action btn-do-primary" onclick="handleSaveDoMapping()"><i class="fa-solid fa-save"></i> Save Mapping Configuration</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Road Dispatch View Panel -->
+            <div class="tab-content-panel" id="road-dispatch-view" style="display: none;">
+                <div class="do-dashboard-container">
+                    <div class="do-header-card">
+                        <span class="do-section-tag"><i class="fa-solid fa-truck-moving"></i> Commercial Dispatch</span>
+                        <h2 class="do-page-title">Road Dispatch Operations</h2>
+                        <p class="do-page-subtitle">Commercial Road Coal Dispatch & Outward Weighment Assurance Portal.</p>
+                    </div>
+                    <div class="do-form-card" style="text-align: center; padding: 40px 20px;">
+                        <i class="fa-solid fa-truck-ramp-box" style="font-size: 42px; color: #38bdf8; margin-bottom: 16px;"></i>
+                        <h3 style="color: #f1f5f9; font-size: 18px; margin-bottom: 8px;">Road Dispatch Telemetry Ready</h3>
+                        <p style="color: #94a3b8; max-width: 500px; margin: 0 auto 20px auto; font-size: 13px;">Commercial external road dispatch orders are synced with CCL Weighbridge Gate telemetry and RFID vehicle passes.</p>
+                        <button class="btn-do-action btn-do-primary" onclick="showViewInternalDO()"><i class="fa-solid fa-table-list"></i> Go to View Internal DO Data</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ========================================================
+                 Configuration Master Views (Idle Widgets)
+                 ======================================================== -->
+            <!-- 1. Area Master (Idle Configuration View) -->

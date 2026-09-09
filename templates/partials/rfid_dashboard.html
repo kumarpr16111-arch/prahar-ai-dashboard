@@ -1,0 +1,251 @@
+                <div class="tab-content-panel" id="rfid-dashboard-view" style="display: none;">
+                    <div class="rfid-dashboard-container">
+                        <!-- Top Title & Links Bar -->
+                        <div class="rfid-header-row">
+                            <div class="rfid-title-group">
+                                <h1 class="rfid-page-title">All Areas Areas</h1>
+                                <div class="rfid-links-group">
+                                    <a href="#" class="rfid-op-link">Operation Weighbridges (Today): <strong>109/167</strong></a>
+                                    <a href="#" class="rfid-op-link">Operation Check-Post (Today): <strong>83/114</strong></a>
+                                </div>
+                            </div>
+
+                            <div class="rfid-filter-group">
+                                <label class="rfid-select-label">Select Area</label>
+                                <select class="rfid-select">
+                                    <option>All Areas</option>
+                                    <option>Barka Sayal</option>
+                                    <option>Argada</option>
+                                    <option>Piparwar</option>
+                                    <option>NK</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Time Period Radio Selector -->
+                        <div class="rfid-period-row">
+                            <label class="radio-label"><input type="radio" name="rfidPeriod" checked> Today</label>
+                            <label class="radio-label"><input type="radio" name="rfidPeriod"> This Week</label>
+                            <label class="radio-label"><input type="radio" name="rfidPeriod"> This Month</label>
+                            <label class="radio-label"><input type="radio" name="rfidPeriod"> Financial Year</label>
+                        </div>
+
+                        <!-- Top Metric Cards Grid (4 Cards from RFID dashboard-1.png) -->
+                        <div class="rfid-cards-grid">
+                            <!-- Card 1: Road Dispatch (Pink/Red) -->
+                            <div class="rfid-card card-pink">
+                                <span class="rfid-card-title">Road Dispatch</span>
+                                <div class="rfid-card-weight">358.600 <small>t</small></div>
+                                <span class="rfid-card-trips">Total Trips: 13</span>
+                            </div>
+                            <!-- Card 2: Internal Sending (Vibrant Green) -->
+                            <div class="rfid-card card-green">
+                                <span class="rfid-card-title">Internal Sending</span>
+                                <div class="rfid-card-weight">962.560 <small>t</small></div>
+                                <span class="rfid-card-trips">Total Trips: 34</span>
+                            </div>
+                            <!-- Card 3: Internal Receiving (Vibrant Blue) -->
+                            <div class="rfid-card card-blue">
+                                <span class="rfid-card-title">Internal Receiving</span>
+                                <div class="rfid-card-weight">447.730 <small>t</small></div>
+                                <span class="rfid-card-trips">Total Trips: 17</span>
+                            </div>
+                            <!-- Card 4: Total Weighment (Vibrant Orange) -->
+                            <div class="rfid-card card-orange">
+                                <span class="rfid-card-title">Total Weighment</span>
+                                <div class="rfid-card-weight">1,768.890 <small>t</small></div>
+                                <span class="rfid-card-trips">Total Trips: 64</span>
+                            </div>
+                        </div>
+
+                        <!-- Analytics Charts Section (Dispatch & Internal line graphs) -->
+                        <div class="rfid-charts-grid margin-top-lg">
+                            <!-- Chart 1: Dispatch -->
+                            <div class="rfid-chart-card">
+                                <div class="chart-header">
+                                    <h3 class="chart-title">Dispatch</h3>
+                                    <div class="chart-legend">
+                                        <span class="legend-color-box legend-pink"></span> Dispatch (Mt)
+                                    </div>
+                                </div>
+                                <div class="chart-canvas-container">
+                                    <svg viewBox="0 0 500 200" class="chart-svg">
+                                        <line x1="40" y1="20" x2="480" y2="20" stroke="#eff6ff" stroke-width="1"/>
+                                        <line x1="40" y1="60" x2="480" y2="60" stroke="#eff6ff" stroke-width="1"/>
+                                        <line x1="40" y1="100" x2="480" y2="100" stroke="#eff6ff" stroke-width="1"/>
+                                        <line x1="40" y1="140" x2="480" y2="140" stroke="#eff6ff" stroke-width="1"/>
+                                        <line x1="40" y1="180" x2="480" y2="180" stroke="#93c5fd" stroke-width="1"/>
+                                        
+                                        <text x="35" y="24" text-anchor="end" font-size="9" fill="#94a3b8">90,000</text>
+                                        <text x="35" y="64" text-anchor="end" font-size="9" fill="#94a3b8">70,000</text>
+                                        <text x="35" y="104" text-anchor="end" font-size="9" fill="#94a3b8">50,000</text>
+                                        <text x="35" y="144" text-anchor="end" font-size="9" fill="#94a3b8">20,000</text>
+                                        <text x="35" y="184" text-anchor="end" font-size="9" fill="#94a3b8">0</text>
+
+                                        <polyline points="60,24 130,38 200,178 270,180 340,180 410,180 470,180" fill="none" stroke="#ff4757" stroke-width="2.5"/>
+                                        <circle cx="60" cy="24" r="3.5" fill="#ff4757"/>
+                                        <circle cx="130" cy="38" r="3.5" fill="#ff4757"/>
+                                        <circle cx="200" cy="178" r="3.5" fill="#ff4757"/>
+
+                                        <text x="60" y="195" text-anchor="middle" font-size="9" fill="#64748b">Sun</text>
+                                        <text x="130" y="195" text-anchor="middle" font-size="9" fill="#64748b">Mon</text>
+                                        <text x="200" y="195" text-anchor="middle" font-size="9" fill="#64748b">Tues</text>
+                                        <text x="270" y="195" text-anchor="middle" font-size="9" fill="#64748b">Wed</text>
+                                        <text x="340" y="195" text-anchor="middle" font-size="9" fill="#64748b">Thu</text>
+                                        <text x="410" y="195" text-anchor="middle" font-size="9" fill="#64748b">Fri</text>
+                                        <text x="470" y="195" text-anchor="middle" font-size="9" fill="#64748b">Sat</text>
+                                    </svg>
+                                </div>
+                            </div>
+
+                            <!-- Chart 2: Internal -->
+                            <div class="rfid-chart-card">
+                                <div class="chart-header">
+                                    <h3 class="chart-title">Internal</h3>
+                                    <div class="chart-legend">
+                                        <span class="legend-color-box legend-teal"></span> Sending(Mt)
+                                        <span class="legend-color-box legend-blue margin-left-sm"></span> Receiving(Mt)
+                                    </div>
+                                </div>
+                                <div class="chart-canvas-container">
+                                    <svg viewBox="0 0 500 200" class="chart-svg">
+                                        <line x1="40" y1="20" x2="480" y2="20" stroke="#eff6ff" stroke-width="1"/>
+                                        <line x1="40" y1="60" x2="480" y2="60" stroke="#eff6ff" stroke-width="1"/>
+                                        <line x1="40" y1="100" x2="480" y2="100" stroke="#eff6ff" stroke-width="1"/>
+                                        <line x1="40" y1="140" x2="480" y2="140" stroke="#eff6ff" stroke-width="1"/>
+                                        <line x1="40" y1="180" x2="480" y2="180" stroke="#93c5fd" stroke-width="1"/>
+
+                                        <text x="35" y="24" text-anchor="end" font-size="9" fill="#94a3b8">160,000</text>
+                                        <text x="35" y="64" text-anchor="end" font-size="9" fill="#94a3b8">120,000</text>
+                                        <text x="35" y="104" text-anchor="end" font-size="9" fill="#94a3b8">80,000</text>
+                                        <text x="35" y="144" text-anchor="end" font-size="9" fill="#94a3b8">40,000</text>
+                                        <text x="35" y="184" text-anchor="end" font-size="9" fill="#94a3b8">0</text>
+
+                                        <polyline points="60,24 130,48 200,178 270,180 340,180 410,180 470,180" fill="none" stroke="#00b894" stroke-width="2.5"/>
+                                        <circle cx="60" cy="24" r="3.5" fill="#00b894"/>
+                                        <circle cx="130" cy="48" r="3.5" fill="#00b894"/>
+                                        <circle cx="200" cy="178" r="3.5" fill="#00b894"/>
+
+                                        <polyline points="60,120 130,124 200,178 270,180 340,180 410,180 470,180" fill="none" stroke="#3b82f6" stroke-width="2.5"/>
+                                        <circle cx="60" cy="120" r="3.5" fill="#3b82f6"/>
+                                        <circle cx="130" cy="124" r="3.5" fill="#3b82f6"/>
+                                        <circle cx="200" cy="178" r="3.5" fill="#3b82f6"/>
+
+                                        <text x="60" y="195" text-anchor="middle" font-size="9" fill="#64748b">Sun</text>
+                                        <text x="130" y="195" text-anchor="middle" font-size="9" fill="#64748b">Mon</text>
+                                        <text x="200" y="195" text-anchor="middle" font-size="9" fill="#64748b">Tues</text>
+                                        <text x="270" y="195" text-anchor="middle" font-size="9" fill="#64748b">Wed</text>
+                                        <text x="340" y="195" text-anchor="middle" font-size="9" fill="#64748b">Thu</text>
+                                        <text x="410" y="195" text-anchor="middle" font-size="9" fill="#64748b">Fri</text>
+                                        <text x="470" y="195" text-anchor="middle" font-size="9" fill="#64748b">Sat</text>
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 4 Status Quadrant Tables (from RFID dashboard-2.png) -->
+                        <div class="rfid-tables-grid margin-top-lg">
+                            <!-- Table 1: Operation WBs (Today): 109/167 -->
+                            <div class="rfid-table-card">
+                                <h3 class="rfid-table-title green-title">Operation WBs (Today): 109/167</h3>
+                                <div class="table-scroll-wrapper">
+                                    <table class="rfid-mini-table">
+                                        <thead>
+                                            <tr>
+                                                <th style="width: 40px;">#</th>
+                                                <th style="width: 120px;">Area</th>
+                                                <th>Weighbridge</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for row in rfid_op_wbs %}
+                                            <tr>
+                                                <td class="text-center">{{ row.s_no }}</td>
+                                                <td>{{ row.area }}</td>
+                                                <td><a href="#" class="rfid-blue-link">{{ row.weighbridge }}</a></td>
+                                            </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <!-- Table 2: Non-Operation WBs (Today): 58/167 -->
+                            <div class="rfid-table-card">
+                                <h3 class="rfid-table-title red-title">Non-Operation WBs (Today): 58/167</h3>
+                                <div class="table-scroll-wrapper">
+                                    <table class="rfid-mini-table">
+                                        <thead>
+                                            <tr>
+                                                <th style="width: 40px;">#</th>
+                                                <th style="width: 120px;">Area</th>
+                                                <th>Weighbridge</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for row in rfid_non_op_wbs %}
+                                            <tr>
+                                                <td class="text-center">{{ row.s_no }}</td>
+                                                <td>{{ row.area }}</td>
+                                                <td><a href="#" class="rfid-blue-link">{{ row.weighbridge }}</a></td>
+                                            </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <!-- Table 3: Operation CPs (Today): 83/114 -->
+                            <div class="rfid-table-card">
+                                <h3 class="rfid-table-title green-title">Operation CPs (Today): 83/114</h3>
+                                <div class="table-scroll-wrapper">
+                                    <table class="rfid-mini-table">
+                                        <thead>
+                                            <tr>
+                                                <th style="width: 40px;">#</th>
+                                                <th style="width: 120px;">Area</th>
+                                                <th>Check-Post</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for row in rfid_op_cps %}
+                                            <tr>
+                                                <td class="text-center">{{ row.s_no }}</td>
+                                                <td>{{ row.area }}</td>
+                                                <td>{{ row.checkpost }}</td>
+                                            </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <!-- Table 4: Non-Operation CPs (Today): 31/114 -->
+                            <div class="rfid-table-card">
+                                <h3 class="rfid-table-title red-title">Non-Operation CPs (Today): 31/114</h3>
+                                <div class="table-scroll-wrapper">
+                                    <table class="rfid-mini-table">
+                                        <thead>
+                                            <tr>
+                                                <th style="width: 40px;">#</th>
+                                                <th style="width: 120px;">Area</th>
+                                                <th>Check-Post</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for row in rfid_non_op_cps %}
+                                            <tr>
+                                                <td class="text-center">{{ row.s_no }}</td>
+                                                <td>{{ row.area }}</td>
+                                                <td>{{ row.checkpost }}</td>
+                                            </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Page View: Irregular Weighments (Abnormal Weighment Report) -->

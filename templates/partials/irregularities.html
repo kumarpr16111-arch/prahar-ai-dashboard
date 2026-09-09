@@ -1,0 +1,267 @@
+                <div class="tab-content-panel" id="irregular-weighments-view" style="display: none;">
+                    <div class="irr-container">
+                        <!-- Top Main Nav Tabs -->
+                        <div class="irr-main-tabs">
+                            <button class="irr-main-tab active">SUMMARY</button>
+                            <button class="irr-main-tab">AREA-WISE REPORTS</button>
+                            <button class="irr-main-tab">WEIGHBRIDGE-WISE REPORTS</button>
+                            <button class="irr-main-tab">VEHICLE-WISE REPORTS</button>
+                        </div>
+
+                        <!-- Sub-Tabs under SUMMARY -->
+                        <div class="irr-sub-tabs-bar">
+                            <button class="irr-sub-tab active">DAILY SUMMARY</button>
+                            <button class="irr-sub-tab">WEEKLY SUMMARY</button>
+                            <button class="irr-sub-tab">MONTHLY SUMMARY</button>
+                            <button class="irr-sub-tab">CUSTOM RANGE</button>
+                        </div>
+
+                        <!-- Threshold Banner Box -->
+                        <div class="irr-threshold-box">
+                            <span class="threshold-label">Standard Deviation Threshold:</span>
+                            <div class="threshold-input-group">
+                                <input type="text" class="threshold-input" value="10.0%" readonly>
+                                <button class="btn-edit-threshold" title="Edit Threshold"><i class="fa-solid fa-pen-to-square"></i></button>
+                            </div>
+                        </div>
+
+                        <!-- Abnormal Deviations Today Banner -->
+                        <div class="irr-deviations-banner">
+                            <span class="deviations-label">Abnormal Deviations (Today):</span>
+                            <span class="deviations-count">24</span>
+                        </div>
+
+                        <!-- 3 Violation Summary Cards Grid -->
+                        <div class="irr-cards-grid">
+                            <!-- Card 1: Area with Most Deviations -->
+                            <div class="irr-summary-card">
+                                <div class="irr-card-top-header">
+                                    <span class="top-label">Total Areas:</span>
+                                    <span class="top-val">6</span>
+                                </div>
+                                <div class="irr-card-content-body">
+                                    <div class="irr-accent-tag">Area with Most Deviations</div>
+                                    <div class="irr-data-rows">
+                                        <div class="data-row"><span class="lbl">Area:</span> <strong class="val bold-val">Barka Sayal</strong></div>
+                                        <div class="data-row"><span class="lbl">Total Weighments:</span> <strong class="val">675</strong></div>
+                                        <div class="data-row"><span class="lbl">Tare Violations:</span> <strong class="val">0</strong></div>
+                                        <div class="data-row"><span class="lbl">Gross Violations:</span> <strong class="val">7</strong></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Card 2: WB with Most Violations -->
+                            <div class="irr-summary-card">
+                                <div class="irr-card-top-header">
+                                    <span class="top-label">Total Weighbridges:</span>
+                                    <span class="top-val">11</span>
+                                </div>
+                                <div class="irr-card-content-body">
+                                    <div class="irr-accent-tag">WB with Most Violations</div>
+                                    <div class="irr-data-rows">
+                                        <div class="data-row"><span class="lbl">WB:</span> <strong class="val bold-val">Kathara Colliery WB</strong></div>
+                                        <div class="data-row"><span class="lbl">Total Weighments:</span> <strong class="val">213</strong></div>
+                                        <div class="data-row"><span class="lbl">Tare Violations:</span> <strong class="val">0</strong></div>
+                                        <div class="data-row"><span class="lbl">Gross Violations:</span> <strong class="val">5</strong></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Card 3: Vehicle with Most Violations -->
+                            <div class="irr-summary-card">
+                                <div class="irr-card-top-header">
+                                    <span class="top-label">Total Vehicles:</span>
+                                    <span class="top-val">18</span>
+                                </div>
+                                <div class="irr-card-content-body">
+                                    <div class="irr-accent-tag">Vehicle with Most Violations</div>
+                                    <div class="irr-data-rows">
+                                        <div class="data-row"><span class="lbl">Vehicle Number:</span> <strong class="val bold-val">JH02BT5349</strong></div>
+                                        <div class="data-row"><span class="lbl">Total Weighments:</span> <strong class="val">4</strong></div>
+                                        <div class="data-row"><span class="lbl">Tare Violations:</span> <strong class="val">4</strong></div>
+                                        <div class="data-row"><span class="lbl">Gross Violations:</span> <strong class="val">0</strong></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Page View: Irregular Trips (Abnormal Trips Report) -->
+                <div class="tab-content-panel" id="irregular-trips-view" style="display: none;">
+                    <div class="irr-trips-container">
+                        <!-- Top Main Nav Tabs -->
+                        <div class="irr-main-tabs">
+                            <button class="irr-main-tab active">SUMMARY REPORTS</button>
+                            <button class="irr-main-tab">UNIT-WISE REPORTS</button>
+                        </div>
+
+                        <!-- Sub-Tabs under SUMMARY REPORTS -->
+                        <div class="irr-sub-tabs-bar">
+                            <button class="irr-sub-tab active">RECENT SUMMARY</button>
+                            <button class="irr-sub-tab">WEEKLY SUMMARY</button>
+                            <button class="irr-sub-tab">MONTHLY SUMMARY</button>
+                            <button class="irr-sub-tab">CUSTOM RANGE</button>
+                        </div>
+
+                        <!-- Section Title -->
+                        <div class="trips-title-header">
+                            <h2 class="trips-main-title">Recent Trips Summary</h2>
+                            <span class="trips-subtitle">Most Recent 1000 trips</span>
+                        </div>
+
+                        <!-- Top Overview Metric Banner (Trip Time Reports Overview IQR-Based) -->
+                        <div class="iqr-overview-box">
+                            <div class="iqr-header">
+                                <span class="iqr-title">Trip Time Reports Overview (IQR-Based)</span>
+                                <i class="fa-solid fa-circle-info iqr-info-icon" title="IQR-Based Analysis"></i>
+                            </div>
+                            <div class="iqr-metrics-grid">
+                                <div class="iqr-metric-col">
+                                    <span class="iqr-label">Irregular Trips</span>
+                                    <span class="iqr-val red-text">61</span>
+                                </div>
+                                <div class="iqr-metric-col">
+                                    <span class="iqr-label">Total Trips</span>
+                                    <span class="iqr-val blue-text">1000</span>
+                                </div>
+                                <div class="iqr-metric-col">
+                                    <span class="iqr-label">Normal Trips</span>
+                                    <span class="iqr-val green-text">939</span>
+                                </div>
+                                <div class="iqr-metric-col">
+                                    <span class="iqr-label">Trip Time Deviation Rate</span>
+                                    <span class="iqr-val red-text">6.1%</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 3 Category Cards Grid (Vehicles, Delivery Orders, Units) -->
+                        <div class="trips-category-grid margin-top-lg">
+                            <!-- Card 1: Vehicles -->
+                            <div class="trips-cat-card">
+                                <h3 class="cat-card-title">Vehicles</h3>
+                                <div class="cat-card-rows">
+                                    <div class="cat-row"><span class="lbl">Vehicles with Irregular Trips</span><strong class="val red-val">53</strong></div>
+                                    <div class="cat-row"><span class="lbl">Unique Vehicles</span><strong class="val blue-val">449</strong></div>
+                                </div>
+                            </div>
+
+                            <!-- Card 2: Delivery Orders -->
+                            <div class="trips-cat-card">
+                                <h3 class="cat-card-title">Delivery Orders</h3>
+                                <div class="cat-card-rows">
+                                    <div class="cat-row"><span class="lbl">DOs with Irregular Trips</span><strong class="val red-val">23</strong></div>
+                                    <div class="cat-row"><span class="lbl">Total Unique DOs</span><strong class="val blue-val">43</strong></div>
+                                </div>
+                            </div>
+
+                            <!-- Card 3: Units -->
+                            <div class="trips-cat-card">
+                                <h3 class="cat-card-title">Units</h3>
+                                <div class="cat-card-rows">
+                                    <div class="cat-row"><span class="lbl">Units with Irregular Trips</span><strong class="val red-val">18</strong></div>
+                                    <div class="cat-row"><span class="lbl">Total Unique Units</span><strong class="val blue-val">25</strong></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Table 1: Top Vehicles by Irregular Trips -->
+                        <div class="trips-table-section margin-top-xl">
+                            <h3 class="table-section-title">Top Vehicles by Irregular Trips</h3>
+                            <div class="table-responsive-card">
+                                <table class="trips-table">
+                                    <thead>
+                                        <tr>
+                                            <th>VEHICLE NUMBER</th>
+                                            <th>UNIT</th>
+                                            <th>DO NUMBER</th>
+                                            <th class="text-center">IRREGULAR TRIPS</th>
+                                            <th>SOURCE</th>
+                                            <th>DESTINATION</th>
+                                            <th class="text-center">ACTION</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for row in irregular_vehicles %}
+                                        <tr>
+                                            <td class="font-bold">{{ row.veh_no }}</td>
+                                            <td>{{ row.unit }}</td>
+                                            <td>{{ row.do_no }}</td>
+                                            <td class="text-center red-bold-text">{{ row.irr_trips }}</td>
+                                            <td>
+                                                <div class="location-cell">
+                                                    <span class="co-title">{{ row.src_co }}</span>
+                                                    <span class="wb-sub">WB: {{ row.src_wb }}</span>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="location-cell">
+                                                    <span class="co-title">{{ row.dst_co }}</span>
+                                                    <span class="wb-sub">WB: {{ row.dst_wb }}</span>
+                                                </div>
+                                            </td>
+                                            <td class="text-center">
+                                                <a href="#" class="action-view-link">
+                                                    <i class="fa-solid fa-table-cells action-icon"></i>
+                                                    <span>View records</span>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <!-- Table 2: Top Delivery Orders by Irregular Trip Times -->
+                        <div class="trips-table-section margin-top-xl">
+                            <h3 class="table-section-title">Top Delivery Orders by Irregular Trip Times</h3>
+                            <div class="table-responsive-card">
+                                <table class="trips-table">
+                                    <thead>
+                                        <tr>
+                                            <th>DO NUMBER</th>
+                                            <th>UNIT</th>
+                                            <th class="text-center">IRREGULAR TRIPS</th>
+                                            <th class="text-center"># VEHICLES</th>
+                                            <th>SOURCE</th>
+                                            <th>DESTINATION</th>
+                                            <th class="text-center">ACTION</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for row in irregular_dos %}
+                                        <tr>
+                                            <td class="font-bold">{{ row.do_no }}</td>
+                                            <td>{{ row.unit }}</td>
+                                            <td class="text-center red-bold-text">{{ row.irr_trips }}</td>
+                                            <td class="text-center">{{ row.num_vehicles }}</td>
+                                            <td>
+                                                <div class="location-cell">
+                                                    <span class="co-title">{{ row.src_co }}</span>
+                                                    <span class="wb-sub">WB: {{ row.src_wb }}</span>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="location-cell">
+                                                    <span class="co-title">{{ row.dst_co }}</span>
+                                                    <span class="wb-sub">WB: {{ row.dst_wb }}</span>
+                                                </div>
+                                            </td>
+                                            <td class="text-center">
+                                                <a href="#" class="action-view-link">
+                                                    <i class="fa-solid fa-table-cells action-icon"></i>
+                                                    <span>View records</span>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Page View: AI Driven Drone Monitoring Dashboard -->

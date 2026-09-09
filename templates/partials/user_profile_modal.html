@@ -1,0 +1,52 @@
+<div class="incident-modal-backdrop" id="userProfileModal" style="display: none;" onclick="closeUserProfileModal(event)">
+    <div class="incident-modal-box" style="max-width: 480px; padding: 22px; border-radius: 10px; background: #0b1120; border: 1px solid #334155; box-shadow: 0 20px 50px rgba(0,0,0,0.8);" onclick="event.stopPropagation()">
+        <div class="incident-modal-header" style="border-bottom: 1px solid #1e293b; padding-bottom: 12px; margin-bottom: 16px; display: flex; justify-content: space-between; align-items: center;">
+            <div class="incident-modal-title" style="display: flex; align-items: center; gap: 8px;">
+                <i class="fa-solid fa-user-shield" style="color: #38bdf8; font-size: 16px;"></i>
+                <span style="font-size: 14px; font-weight: 700; color: #f8fafc; letter-spacing: 0.03em;">OFFICER CREDENTIALS & ACCESS</span>
+            </div>
+            <button type="button" class="drone-modal-close-btn" onclick="closeUserProfileModalDirect()"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+
+        <div style="display: flex; align-items: center; gap: 14px; background: rgba(15, 23, 42, 0.9); border: 1px solid #1e293b; padding: 14px; border-radius: 8px; margin-bottom: 16px;">
+            <div style="background: #141b29; color: #38bdf8; width: 50px; height: 50px; border-radius: 10px; border: 1px solid #243042; display: flex; align-items: center; justify-content: center; font-size: 22px;">
+                <i class="fa-solid fa-user-tie"></i>
+            </div>
+            <div>
+                <h3 style="margin: 0; font-size: 15px; color: #f8fafc; font-weight: 700;">{{ user_name }}</h3>
+                <span style="font-size: 11.5px; color: #38bdf8; font-weight: 600;">{{ user_designation }}</span>
+                <div style="margin-top: 5px; display: flex; gap: 6px;">
+                    <span style="font-size: 9.5px; background: rgba(16, 185, 129, 0.2); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.4); padding: 2px 6px; border-radius: 3px; font-weight: 700;">ACTIVE SESSION</span>
+                    <span style="font-size: 9.5px; background: rgba(56, 189, 248, 0.2); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.4); padding: 2px 6px; border-radius: 3px; font-weight: 700;">TIER-1 CLEARANCE</span>
+                </div>
+            </div>
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 10px; font-size: 12px; margin-bottom: 20px;">
+            <div style="display: flex; justify-content: space-between; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 6px;">
+                <span style="color: #94a3b8;"><i class="fa-solid fa-building" style="margin-right: 6px; color: #64748b;"></i> Command Station:</span>
+                <strong style="color: #f1f5f9;">Central CCL Transit Directorate</strong>
+            </div>
+            <div style="display: flex; justify-content: space-between; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 6px;">
+                <span style="color: #94a3b8;"><i class="fa-solid fa-key" style="margin-right: 6px; color: #64748b;"></i> Access Role:</span>
+                <strong style="color: #38bdf8; text-transform: uppercase;">{{ user_role }}</strong>
+            </div>
+            <div style="display: flex; justify-content: space-between; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 6px;">
+                <span style="color: #94a3b8;"><i class="fa-solid fa-shield-halved" style="margin-right: 6px; color: #64748b;"></i> Encryption & Telemetry:</span>
+                <strong style="color: #34d399;">TLS 1.3 • AES-256 GCM</strong>
+            </div>
+            <div style="display: flex; justify-content: space-between;">
+                <span style="color: #94a3b8;"><i class="fa-solid fa-database" style="margin-right: 6px; color: #64748b;"></i> Live Database:</span>
+                <strong style="color: #34d399;">Supabase PostgreSQL (Cloud)</strong>
+            </div>
+        </div>
+
+        <div style="display: flex; justify-content: space-between; gap: 10px;">
+            <a href="/logout" class="btn-action" style="flex: 1; text-align: center; justify-content: center; background: rgba(220, 38, 38, 0.2); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.4); padding: 8px 12px; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 11.5px; display: inline-flex; align-items: center; gap: 6px;">
+                <i class="fa-solid fa-power-off"></i> Sign Out
+            </a>
+            <button type="button" class="btn-action" onclick="closeUserProfileModalDirect()" style="padding: 8px 18px; background: #1e293b; color: #cbd5e1; border: 1px solid #334155; border-radius: 6px; font-weight: 600; font-size: 11.5px; cursor: pointer;">
+                Close
+            </button>
+        </div>
+    </div>

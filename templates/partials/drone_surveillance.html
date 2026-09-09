@@ -1,0 +1,860 @@
+                <div class="tab-content-panel" id="drone-dashboard-view" style="display: none;">
+                    <div class="drone-dashboard-container">
+                        <!-- Top Navigation Sub-Tabs Bar -->
+                        <div class="drone-sub-nav-bar">
+                            <button class="drone-tab-btn active" data-drone-tab="dashboard"><i class="fa-solid fa-chart-line"></i> Dashboard</button>
+                            <button class="drone-tab-btn" data-drone-tab="features"><i class="fa-solid fa-layer-group"></i> Features</button>
+                            <button class="drone-tab-btn" data-drone-tab="sites"><i class="fa-solid fa-location-dot"></i> Sites</button>
+                            <button class="drone-tab-btn" data-drone-tab="reports"><i class="fa-solid fa-file-invoice"></i> Inferred Reports</button>
+                        </div>
+
+                        <!-- SUB-VIEW 1: Dashboard Overview (Default) -->
+                        <div class="drone-sub-view" id="droneSubViewDashboard">
+                            <div class="drone-header-bar margin-top-md">
+                                <div class="header-left-info">
+                                    <h1 class="drone-title">Dashboard</h1>
+                                    <span class="drone-subtitle">Analytics and monitoring overview</span>
+                                </div>
+                                <button class="btn-refresh-blue"><i class="fa-solid fa-arrows-rotate"></i> Refresh</button>
+                            </div>
+
+                            <!-- Top 4 Summary Cards Grid -->
+                            <div class="drone-cards-grid margin-top-md">
+                                <div class="drone-card">
+                                    <div class="card-text-block"><span class="card-label">Total Violations</span><span class="card-value">1898</span></div>
+                                    <div class="card-badge-circle badge-red"><i class="fa-solid fa-triangle-exclamation"></i></div>
+                                </div>
+                                <div class="drone-card">
+                                    <div class="card-text-block"><span class="card-label">Drone IDs</span><span class="card-value">336</span></div>
+                                    <div class="card-badge-circle badge-blue"><i class="fa-solid fa-wave-square"></i></div>
+                                </div>
+                                <div class="drone-card">
+                                    <div class="card-text-block"><span class="card-label">Locations</span><span class="card-value">70</span></div>
+                                    <div class="card-badge-circle badge-green"><i class="fa-solid fa-location-dot"></i></div>
+                                </div>
+                                <div class="drone-card">
+                                    <div class="card-text-block"><span class="card-label">Violation Types</span><span class="card-value">26</span></div>
+                                    <div class="card-badge-circle badge-purple"><i class="fa-solid fa-user-group"></i></div>
+                                </div>
+                            </div>
+
+                            <!-- Middle Row: 2 Analytics Charts -->
+                            <div class="drone-charts-row margin-top-lg">
+                                <div class="drone-chart-card">
+                                    <h3 class="chart-card-title">Violation Type Distribution</h3>
+                                    <div class="pie-chart-wrapper">
+                                        <svg viewBox="0 0 200 200" class="pie-svg">
+                                            <circle r="70" cx="100" cy="100" fill="transparent" stroke="#ff6b6b" stroke-width="40" stroke-dasharray="110 330" stroke-dashoffset="0" />
+                                            <circle r="70" cx="100" cy="100" fill="transparent" stroke="#4ecdc4" stroke-width="40" stroke-dasharray="75 365" stroke-dashoffset="-110" />
+                                            <circle r="70" cx="100" cy="100" fill="transparent" stroke="#45b7d1" stroke-width="40" stroke-dasharray="60 380" stroke-dashoffset="-185" />
+                                            <circle r="70" cx="100" cy="100" fill="transparent" stroke="#96ceb4" stroke-width="40" stroke-dasharray="45 395" stroke-dashoffset="-245" />
+                                            <circle r="70" cx="100" cy="100" fill="transparent" stroke="#ffeaa7" stroke-width="40" stroke-dasharray="50 390" stroke-dashoffset="-290" />
+                                            <circle r="70" cx="100" cy="100" fill="transparent" stroke="#a29bfe" stroke-width="40" stroke-dasharray="100 340" stroke-dashoffset="-340" />
+                                        </svg>
+                                    </div>
+                                    <div class="drone-legend-flex">
+                                        <span class="legend-pill"><span class="dot" style="background:#ff6b6b;"></span> cracks</span>
+                                        <span class="legend-pill"><span class="dot" style="background:#4ecdc4;"></span> exit_boom_barrier_open</span>
+                                        <span class="legend-pill"><span class="dot" style="background:#45b7d1;"></span> fire</span>
+                                        <span class="legend-pill"><span class="dot" style="background:#96ceb4;"></span> light_pole</span>
+                                        <span class="legend-pill"><span class="dot" style="background:#ffeaa7;"></span> lighting_arrangement</span>
+                                        <span class="legend-pill"><span class="dot" style="background:#a29bfe;"></span> lmv_tipper_plying_on_same_road</span>
+                                        <span class="legend-pill"><span class="dot" style="background:#fdcb6e;"></span> overcrowding_person</span>
+                                        <span class="legend-pill"><span class="dot" style="background:#6c5ce7;"></span> overhanging_loose_boulders</span>
+                                        <span class="legend-pill"><span class="dot" style="background:#74b9ff;"></span> person_near_edge_unsafe_area</span>
+                                        <span class="legend-pill"><span class="dot" style="background:#ff7675;"></span> person_unsafe</span>
+                                        <span class="legend-pill"><span class="dot" style="background:#00cec9;"></span> rest_shelter</span>
+                                        <span class="legend-pill"><span class="dot" style="background:#fd79a8;"></span> scrap_management</span>
+                                    </div>
+                                </div>
+
+                                <div class="drone-chart-card">
+                                    <h3 class="chart-card-title">Violations by Drone</h3>
+                                    <div class="bar-chart-wrapper">
+                                        <svg viewBox="0 0 500 240" class="bar-svg">
+                                            <line x1="30" y1="20" x2="480" y2="20" stroke="#eff6ff"/><text x="20" y="24" text-anchor="end" font-size="10" fill="#94a3b8">8</text>
+                                            <line x1="30" y1="60" x2="480" y2="60" stroke="#eff6ff"/><text x="20" y="64" text-anchor="end" font-size="10" fill="#94a3b8">6</text>
+                                            <line x1="30" y1="100" x2="480" y2="100" stroke="#eff6ff"/><text x="20" y="104" text-anchor="end" font-size="10" fill="#94a3b8">4</text>
+                                            <line x1="30" y1="140" x2="480" y2="140" stroke="#eff6ff"/><text x="20" y="144" text-anchor="end" font-size="10" fill="#94a3b8">2</text>
+                                            <line x1="30" y1="180" x2="480" y2="180" stroke="#93c5fd"/><text x="20" y="184" text-anchor="end" font-size="10" fill="#94a3b8">0</text>
+
+                                            {% for i in range(1, 45) %}
+                                            <rect x="{{ 35 + i * 10 }}" y="{{ 60 + (i % 7) * 15 }}" width="3" height="{{ 120 - (i % 7) * 15 }}" fill="#3b82f6"/>
+                                            {% endfor %}
+
+                                            <text x="50" y="195" transform="rotate(35, 50, 195)" font-size="8" fill="#64748b">JARANGDIH_11-01-2026_2</text>
+                                            <text x="110" y="195" transform="rotate(35, 110, 195)" font-size="8" fill="#64748b">akk_ocp_2026-05-08_8</text>
+                                            <text x="170" y="195" transform="rotate(35, 170, 195)" font-size="8" fill="#64748b">amrapali_2026-07-09_1</text>
+                                            <text x="230" y="195" transform="rotate(35, 230, 195)" font-size="8" fill="#64748b">bukaro_2026-05-07_1</text>
+                                            <text x="290" y="195" transform="rotate(35, 290, 195)" font-size="8" fill="#64748b">dhori_2026-05-06_9</text>
+                                            <text x="350" y="195" transform="rotate(35, 350, 195)" font-size="8" fill="#64748b">giddi_c_argada_2026-05-12_5</text>
+                                            <text x="410" y="195" transform="rotate(35, 410, 195)" font-size="8" fill="#64748b">piparwar_2026-02-23_2</text>
+                                        </svg>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Bottom Line Chart -->
+                            <div class="drone-chart-card margin-top-lg">
+                                <h3 class="chart-card-title">Violations Over Time</h3>
+                                <div class="line-chart-wrapper">
+                                    <svg viewBox="0 0 800 180" class="line-svg">
+                                        <line x1="40" y1="20" x2="780" y2="20" stroke="#eff6ff"/><text x="30" y="24" text-anchor="end" font-size="10" fill="#94a3b8">120</text>
+                                        <line x1="40" y1="70" x2="780" y2="70" stroke="#eff6ff"/><text x="30" y="74" text-anchor="end" font-size="10" fill="#94a3b8">80</text>
+                                        <line x1="40" y1="120" x2="780" y2="120" stroke="#eff6ff"/><text x="30" y="124" text-anchor="end" font-size="10" fill="#94a3b8">40</text>
+                                        <line x1="40" y1="160" x2="780" y2="160" stroke="#93c5fd"/><text x="30" y="164" text-anchor="end" font-size="10" fill="#94a3b8">0</text>
+                                        <path d="M 50 150 Q 150 140 250 130 T 450 30 T 600 140 T 770 150" fill="none" stroke="#3b82f6" stroke-width="3"/>
+                                        <circle cx="450" cy="30" r="5" fill="#3b82f6" stroke="#ffffff" stroke-width="2"/>
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- SUB-VIEW 2: Features (from Drone features-1.png & Drone features-2.png) -->
+                        <div class="drone-sub-view" id="droneSubViewFeatures" style="display: none;">
+                            <div class="drone-header-bar margin-top-md">
+                                <div class="header-left-info">
+                                    <h1 class="drone-title">Features</h1>
+                                    <span class="drone-subtitle">Manage and monitor detection features</span>
+                                </div>
+                                <span class="features-total-badge">Total: 34 features</span>
+                            </div>
+
+                            <div class="drone-search-box margin-top-md">
+                                <i class="fa-solid fa-magnifying-glass search-icn"></i>
+                                <input type="text" placeholder="Search features..." class="drone-search-input">
+                            </div>
+
+                            <div class="features-cards-grid margin-top-lg">
+                                <!-- Card 1: Cracks -->
+                                <div class="feature-card">
+                                    <div class="feature-title-row"><i class="fa-solid fa-chart-simple blue-icon"></i> <h3>Cracks</h3></div>
+                                    <div class="feature-metrics-row">
+                                        <div class="f-metric"><span class="num red-num">16</span><span class="lbl">Violations</span></div>
+                                        <div class="f-metric"><span class="num blue-num">4</span><span class="lbl">Drones</span></div>
+                                        <div class="f-metric"><span class="num green-num">4</span><span class="lbl">Locations</span></div>
+                                    </div>
+                                    <div class="feature-footer"><span class="last-date">Last detected: 2/23/2026</span><a href="#" class="view-det-link"><i class="fa-solid fa-eye"></i> View Details</a></div>
+                                </div>
+
+                                <!-- Card 2: Crowding Of People -->
+                                <div class="feature-card">
+                                    <div class="feature-title-row"><i class="fa-solid fa-chart-simple blue-icon"></i> <h3>Crowding Of People</h3></div>
+                                    <div class="feature-metrics-row">
+                                        <div class="f-metric"><span class="num red-num">0</span><span class="lbl">Violations</span></div>
+                                        <div class="f-metric"><span class="num blue-num">0</span><span class="lbl">Drones</span></div>
+                                        <div class="f-metric"><span class="num green-num">0</span><span class="lbl">Locations</span></div>
+                                    </div>
+                                    <div class="feature-footer"><a href="#" class="view-det-link"><i class="fa-solid fa-eye"></i> View Details</a></div>
+                                </div>
+
+                                <!-- Card 3: Crowding Of Vehicles -->
+                                <div class="feature-card">
+                                    <div class="feature-title-row"><i class="fa-solid fa-chart-simple blue-icon"></i> <h3>Crowding Of Vehicles</h3></div>
+                                    <div class="feature-metrics-row">
+                                        <div class="f-metric"><span class="num red-num">0</span><span class="lbl">Violations</span></div>
+                                        <div class="f-metric"><span class="num blue-num">0</span><span class="lbl">Drones</span></div>
+                                        <div class="f-metric"><span class="num green-num">0</span><span class="lbl">Locations</span></div>
+                                    </div>
+                                    <div class="feature-footer"><a href="#" class="view-det-link"><i class="fa-solid fa-eye"></i> View Details</a></div>
+                                </div>
+
+                                <!-- Card 4: Exit Boom Barrier Open -->
+                                <div class="feature-card">
+                                    <div class="feature-title-row"><i class="fa-solid fa-chart-simple blue-icon"></i> <h3>Exit Boom Barrier Open</h3></div>
+                                    <div class="feature-metrics-row">
+                                        <div class="f-metric"><span class="num red-num">1</span><span class="lbl">Violations</span></div>
+                                        <div class="f-metric"><span class="num blue-num">1</span><span class="lbl">Drones</span></div>
+                                        <div class="f-metric"><span class="num green-num">1</span><span class="lbl">Locations</span></div>
+                                    </div>
+                                    <div class="feature-footer"><span class="last-date">Last detected: 2/7/2026</span><a href="#" class="view-det-link"><i class="fa-solid fa-eye"></i> View Details</a></div>
+                                </div>
+
+                                <!-- Card 5: Fire -->
+                                <div class="feature-card">
+                                    <div class="feature-title-row"><i class="fa-solid fa-chart-simple blue-icon"></i> <h3>Fire</h3></div>
+                                    <div class="feature-metrics-row">
+                                        <div class="f-metric"><span class="num red-num">5</span><span class="lbl">Violations</span></div>
+                                        <div class="f-metric"><span class="num blue-num">2</span><span class="lbl">Drones</span></div>
+                                        <div class="f-metric"><span class="num green-num">1</span><span class="lbl">Locations</span></div>
+                                    </div>
+                                    <div class="feature-footer"><span class="last-date">Last detected: 3/26/2026</span><a href="#" class="view-det-link"><i class="fa-solid fa-eye"></i> View Details</a></div>
+                                </div>
+
+                                <!-- Card 6: Fire Smoke -->
+                                <div class="feature-card">
+                                    <div class="feature-title-row"><i class="fa-solid fa-chart-simple blue-icon"></i> <h3>Fire Smoke</h3></div>
+                                    <div class="feature-metrics-row">
+                                        <div class="f-metric"><span class="num red-num">0</span><span class="lbl">Violations</span></div>
+                                        <div class="f-metric"><span class="num blue-num">0</span><span class="lbl">Drones</span></div>
+                                        <div class="f-metric"><span class="num green-num">0</span><span class="lbl">Locations</span></div>
+                                    </div>
+                                    <div class="feature-footer"><a href="#" class="view-det-link"><i class="fa-solid fa-eye"></i> View Details</a></div>
+                                </div>
+
+                                <!-- Card 7: Illegal mining pit -->
+                                <div class="feature-card">
+                                    <div class="feature-title-row"><i class="fa-solid fa-chart-simple blue-icon"></i> <h3>Illegal mining pit</h3></div>
+                                    <div class="feature-metrics-row">
+                                        <div class="f-metric"><span class="num red-num">0</span><span class="lbl">Violations</span></div>
+                                        <div class="f-metric"><span class="num blue-num">0</span><span class="lbl">Drones</span></div>
+                                        <div class="f-metric"><span class="num green-num">0</span><span class="lbl">Locations</span></div>
+                                    </div>
+                                    <div class="feature-footer"><a href="#" class="view-det-link"><i class="fa-solid fa-eye"></i> View Details</a></div>
+                                </div>
+
+                                <!-- Card 8: Light Pole -->
+                                <div class="feature-card">
+                                    <div class="feature-title-row"><i class="fa-solid fa-chart-simple blue-icon"></i> <h3>Light Pole</h3></div>
+                                    <div class="feature-metrics-row">
+                                        <div class="f-metric"><span class="num red-num">1</span><span class="lbl">Violations</span></div>
+                                        <div class="f-metric"><span class="num blue-num">1</span><span class="lbl">Drones</span></div>
+                                        <div class="f-metric"><span class="num green-num">1</span><span class="lbl">Locations</span></div>
+                                    </div>
+                                    <div class="feature-footer"><span class="last-date">Last detected: 5/6/2026</span><a href="#" class="view-det-link"><i class="fa-solid fa-eye"></i> View Details</a></div>
+                                </div>
+
+                                <!-- Card 9: Lighting Arrangement -->
+                                <div class="feature-card">
+                                    <div class="feature-title-row"><i class="fa-solid fa-chart-simple blue-icon"></i> <h3>Lighting Arrangement</h3></div>
+                                    <div class="feature-metrics-row">
+                                        <div class="f-metric"><span class="num red-num">157</span><span class="lbl">Violations</span></div>
+                                        <div class="f-metric"><span class="num blue-num">108</span><span class="lbl">Drones</span></div>
+                                        <div class="f-metric"><span class="num green-num">39</span><span class="lbl">Locations</span></div>
+                                    </div>
+                                    <div class="feature-footer"><span class="last-date">Last detected: 8/19/2026</span><a href="#" class="view-det-link"><i class="fa-solid fa-eye"></i> View Details</a></div>
+                                </div>
+
+                                <!-- Card 10: Lmv Tipper Plying On Same Road -->
+                                <div class="feature-card">
+                                    <div class="feature-title-row"><i class="fa-solid fa-chart-simple blue-icon"></i> <h3>Lmv Tipper Plying On Same Road</h3></div>
+                                    <div class="feature-metrics-row">
+                                        <div class="f-metric"><span class="num red-num">8</span><span class="lbl">Violations</span></div>
+                                        <div class="f-metric"><span class="num blue-num">8</span><span class="lbl">Drones</span></div>
+                                        <div class="f-metric"><span class="num green-num">6</span><span class="lbl">Locations</span></div>
+                                    </div>
+                                    <div class="feature-footer"><span class="last-date">Last detected: 7/15/2026</span><a href="#" class="view-det-link"><i class="fa-solid fa-eye"></i> View Details</a></div>
+                                </div>
+
+                                <!-- Card 11: Loose Boulder -->
+                                <div class="feature-card">
+                                    <div class="feature-title-row"><i class="fa-solid fa-chart-simple blue-icon"></i> <h3>Loose Boulder</h3></div>
+                                    <div class="feature-metrics-row">
+                                        <div class="f-metric"><span class="num red-num">0</span><span class="lbl">Violations</span></div>
+                                        <div class="f-metric"><span class="num blue-num">0</span><span class="lbl">Drones</span></div>
+                                        <div class="f-metric"><span class="num green-num">0</span><span class="lbl">Locations</span></div>
+                                    </div>
+                                    <div class="feature-footer"><a href="#" class="view-det-link"><i class="fa-solid fa-eye"></i> View Details</a></div>
+                                </div>
+
+                                <!-- Card 12: Overcrowding Person -->
+                                <div class="feature-card">
+                                    <div class="feature-title-row"><i class="fa-solid fa-chart-simple blue-icon"></i> <h3>Overcrowding Person</h3></div>
+                                    <div class="feature-metrics-row">
+                                        <div class="f-metric"><span class="num red-num">56</span><span class="lbl">Violations</span></div>
+                                        <div class="f-metric"><span class="num blue-num">35</span><span class="lbl">Drones</span></div>
+                                        <div class="f-metric"><span class="num green-num">24</span><span class="lbl">Locations</span></div>
+                                    </div>
+                                    <div class="feature-footer"><span class="last-date">Last detected: 8/18/2026</span><a href="#" class="view-det-link"><i class="fa-solid fa-eye"></i> View Details</a></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- SUB-VIEW 3: Sites (from Site management.png) -->
+                        <div class="drone-sub-view" id="droneSubViewSites" style="display: none;">
+                            <div class="drone-header-bar margin-top-md">
+                                <div class="header-left-info">
+                                    <h1 class="drone-title">Site Management</h1>
+                                    <span class="drone-subtitle">View mining sites and locations</span>
+                                </div>
+                            </div>
+
+                            <div class="sites-cards-grid margin-top-lg">
+                                <div class="site-card"><div class="site-card-header"><i class="fa-solid fa-location-dot blue-pin"></i> <h3>Amrapali</h3></div><div class="site-card-meta"><span class="video-links-active" onclick="openDroneVideoModal('amrapali', 0)"><i class="fa-solid fa-video"></i> 2 video links (SS-3, SS-4)</span><span>Created 2/28/2026</span></div></div>
+                                <div class="site-card"><div class="site-card-header"><i class="fa-solid fa-location-dot blue-pin"></i> <h3>Argada</h3></div><div class="site-card-meta"><span><i class="fa-solid fa-video"></i> 0 video links</span><span>Created 2/12/2026</span></div></div>
+                                <div class="site-card"><div class="site-card-header"><i class="fa-solid fa-location-dot blue-pin"></i> <h3>BNK Mines</h3></div><div class="site-card-meta"><span class="video-links-active" onclick="openDroneVideoModal('nk_mines', 0)"><i class="fa-solid fa-video"></i> 2 video links (SS-1, SS-2)</span><span>Created 1/27/2026</span></div></div>
+                                <div class="site-card"><div class="site-card-header"><i class="fa-solid fa-location-dot blue-pin"></i> <h3>Barkasayal</h3></div><div class="site-card-meta"><span><i class="fa-solid fa-video"></i> 0 video links</span><span>Created 2/11/2026</span></div></div>
+                                <div class="site-card"><div class="site-card-header"><i class="fa-solid fa-location-dot blue-pin"></i> <h3>Bukaro</h3></div><div class="site-card-meta"><span class="video-links-active" onclick="openDroneVideoModal('bukaro', 0)"><i class="fa-solid fa-video"></i> 2 video links (SS-9, SS-10)</span><span>Created 1/27/2026</span></div></div>
+                                <div class="site-card"><div class="site-card-header"><i class="fa-solid fa-location-dot blue-pin"></i> <h3>Chandrgupt</h3></div><div class="site-card-meta"><span><i class="fa-solid fa-video"></i> 0 video links</span><span>Created 2/28/2026</span></div></div>
+                                <div class="site-card"><div class="site-card-header"><i class="fa-solid fa-location-dot blue-pin"></i> <h3>Dhori</h3></div><div class="site-card-meta"><span><i class="fa-solid fa-video"></i> 0 video links</span><span>Created 1/27/2026</span></div></div>
+                                <div class="site-card"><div class="site-card-header"><i class="fa-solid fa-location-dot blue-pin"></i> <h3>Giridih Kabribad</h3></div><div class="site-card-meta"><span class="video-links-active" onclick="openDroneVideoModal('giridih', 0)"><i class="fa-solid fa-video"></i> 2 video links (SS-7, SS-8)</span><span>Created 2/3/2026</span></div></div>
+                                <div class="site-card"><div class="site-card-header"><i class="fa-solid fa-location-dot blue-pin"></i> <h3>Hazaribagh</h3></div><div class="site-card-meta"><span><i class="fa-solid fa-video"></i> 0 video links</span><span>Created 2/18/2026</span></div></div>
+                                <div class="site-card"><div class="site-card-header"><i class="fa-solid fa-location-dot blue-pin"></i> <h3>Jarangdih</h3></div><div class="site-card-meta"><span><i class="fa-solid fa-video"></i> 0 video links</span><span>Created 1/28/2026</span></div></div>
+                                <div class="site-card"><div class="site-card-header"><i class="fa-solid fa-location-dot blue-pin"></i> <h3>Jharkhand</h3></div><div class="site-card-meta"><span><i class="fa-solid fa-video"></i> 0 video links</span><span>Created 2/18/2026</span></div></div>
+                                <div class="site-card"><div class="site-card-header"><i class="fa-solid fa-location-dot blue-pin"></i> <h3>KHASMAHAL</h3></div><div class="site-card-meta"><span><i class="fa-solid fa-video"></i> 0 video links</span><span>Created 2/2/2026</span></div></div>
+                                <div class="site-card"><div class="site-card-header"><i class="fa-solid fa-location-dot blue-pin"></i> <h3>Karo</h3></div><div class="site-card-meta"><span><i class="fa-solid fa-video"></i> 0 video links</span><span>Created 2/14/2026</span></div></div>
+                                <div class="site-card"><div class="site-card-header"><i class="fa-solid fa-location-dot blue-pin"></i> <h3>Kathara</h3></div><div class="site-card-meta"><span><i class="fa-solid fa-video"></i> 0 video links</span><span>Created 2/18/2026</span></div></div>
+                                <div class="site-card"><div class="site-card-header"><i class="fa-solid fa-location-dot blue-pin"></i> <h3>Kuju</h3></div><div class="site-card-meta"><span><i class="fa-solid fa-video"></i> 0 video links</span><span>Created 2/12/2026</span></div></div>
+                                <div class="site-card"><div class="site-card-header"><i class="fa-solid fa-location-dot blue-pin"></i> <h3>Magadh</h3></div><div class="site-card-meta"><span class="video-links-active" onclick="openDroneVideoModal('magadh', 0)"><i class="fa-solid fa-video"></i> 2 video links (SS-5, SS-6)</span><span>Created 2/15/2026</span></div></div>
+                            </div>
+                        </div>
+
+                        <!-- SUB-VIEW 4: Inferred Reports (from drone inferred report.png) -->
+                        <div class="drone-sub-view" id="droneSubViewReports" style="display: none;">
+                            <div class="drone-header-bar margin-top-md">
+                                <div class="header-left-info">
+                                    <h1 class="drone-title">Inferred Reports & Surveillance Stills</h1>
+                                    <span class="drone-subtitle">High-resolution drone surveillance footage, AI detection telemetry and attached video stills across mining sites</span>
+                                </div>
+                                <button class="btn-refresh-outline" onclick="window.location.reload()"><i class="fa-solid fa-arrows-rotate"></i> Refresh</button>
+                            </div>
+
+                            <!-- Filter Controls Box -->
+                            <div class="reports-filter-card margin-top-md">
+                                <div class="search-input-group">
+                                    <input type="text" placeholder="Search by filename, site, or camera ID..." class="reports-search-input">
+                                    <button class="btn-search-blue"><i class="fa-solid fa-magnifying-glass"></i> Search</button>
+                                </div>
+                                <div class="filter-controls-group">
+                                    <div class="date-filter-box">
+                                        <label>Date Filter:</label>
+                                        <input type="text" placeholder="dd-mm-yyyy" class="date-input" value="19-08-2026">
+                                    </div>
+                                    <div class="site-filter-box">
+                                        <label>Site Filter:</label>
+                                        <select class="site-select">
+                                            <option>All Sites (5 Active)</option>
+                                            <option>NK Mines (2 Videos)</option>
+                                            <option>Amrapali (2 Videos)</option>
+                                            <option>Magadh (2 Videos)</option>
+                                            <option>Giridih Kabribad (2 Videos)</option>
+                                            <option>Bukaro (2 Videos)</option>
+                                        </select>
+                                    </div>
+                                    <button class="btn-clear-filters"><i class="fa-solid fa-filter-circle-xmark"></i> Clear Filters</button>
+                                </div>
+                            </div>
+
+                            <!-- Reports Table Card -->
+                            <div class="reports-table-card margin-top-lg">
+                                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 16px;">
+                                    <h3 class="reports-table-heading" style="margin-bottom:0;">Mining Location Reports & Attached Video Stills</h3>
+                                    <span style="font-size:12px; color:#0284c7; font-weight:600; background:#e0f2fe; padding:4px 10px; border-radius:12px;"><i class="fa-solid fa-video"></i> 10 Video Stills Attached (2 Per Site)</span>
+                                </div>
+                                <div class="table-scroll-wrapper">
+                                    <table class="reports-table">
+                                        <thead>
+                                            <tr>
+                                                <th style="width: 50px;">S. NO.</th>
+                                                <th>FILE NAME</th>
+                                                <th class="text-center">ACTIONS</th>
+                                                <th>SITE NAME</th>
+                                                <th>REPORT DATE</th>
+                                                <th class="text-center" style="min-width: 220px;">VIDEO LINKS & STILLS</th>
+                                                <th class="text-center">UPLOAD ATR</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <!-- LOCATION 1: NK MINES (SS-1, SS-2) -->
+                                            <tr>
+                                                <td class="text-center">1</td>
+                                                <td><i class="fa-regular fa-file-pdf pdf-icn"></i> NK_19-08-2026.pdf</td>
+                                                <td class="text-center"><a href="#" class="action-eye-btn" title="View Report"><i class="fa-solid fa-eye"></i></a></td>
+                                                <td><strong>nk mines</strong></td>
+                                                <td>Aug 19, 2026</td>
+                                                <td class="text-center">
+                                                    <div class="video-links-cell">
+                                                        <div class="video-chips-row">
+                                                            <button type="button" class="video-pill-btn" onclick="openDroneVideoModal('nk_mines', 0)"><i class="fa-solid fa-circle-play"></i> Video 1</button>
+                                                            <button type="button" class="video-pill-btn" onclick="openDroneVideoModal('nk_mines', 1)"><i class="fa-solid fa-circle-play"></i> Video 2</button>
+                                                        </div>
+                                                        <button type="button" class="btn-toggle-stills active" id="btn-toggle-nk_mines" onclick="toggleLocationStills('stills-drawer-nk_mines')">
+                                                            <i class="fa-solid fa-images"></i> Stills (2) <i class="fa-solid fa-chevron-down toggle-arrow"></i>
+                                                        </button>
+                                                    </div>
+                                                </td>
+                                                <td class="text-center"><button class="btn-upload-atr"><i class="fa-solid fa-arrow-up-from-bracket"></i> Upload ATR</button></td>
+                                            </tr>
+                                            <!-- Collapsible Stills Showcase Row for Location 1 -->
+                                            <tr class="stills-drawer-row" id="stills-drawer-nk_mines">
+                                                <td colspan="7">
+                                                    <div class="stills-drawer-content">
+                                                        <div class="stills-drawer-header">
+                                                            <div class="stills-drawer-title">
+                                                                <i class="fa-solid fa-video text-blue"></i>
+                                                                <span>Surveillance Feeds & High-Res Stills — NK Mines</span>
+                                                                <span class="stills-badge-count">2 Videos Attached</span>
+                                                            </div>
+                                                            <button type="button" class="btn-mini-action" onclick="openDroneVideoModal('nk_mines', 0)"><i class="fa-solid fa-expand"></i> Launch Multi-Feed Player</button>
+                                                        </div>
+                                                        <div class="stills-grid-2col">
+                                                            <!-- Video 1 (Still SS-1) -->
+                                                            <div class="drone-video-card">
+                                                                <div class="drone-video-card-header">
+                                                                    <div class="drone-cam-name"><i class="fa-solid fa-camera"></i> CAM-01: Pit Extraction & Haul Road</div>
+                                                                    <span class="rec-live-badge"><span class="rec-dot-pulse"></span> REC LIVE</span>
+                                                                </div>
+                                                                <div class="drone-video-media-wrapper" onclick="openDroneVideoModal('nk_mines', 0)">
+                                                                    <img src="/static/media_screenshots/SS-1.png" alt="NK Mines Pit Extraction Still" class="drone-still-img" loading="lazy">
+                                                                    <div class="media-hud-overlay">
+                                                                        <div class="hud-top-bar">
+                                                                            <span>CAM-01 [NK-MINES] 4K UHD</span>
+                                                                            <span>2026-08-19 10:14:22 UTC</span>
+                                                                        </div>
+                                                                        <div class="hud-bottom-bar">
+                                                                            <span class="ai-detection-tag"><i class="fa-solid fa-bullseye"></i> AI: Bench Clearance (98.4%)</span>
+                                                                            <span>60 FPS</span>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="media-play-overlay"><i class="fa-solid fa-play"></i></div>
+                                                                </div>
+                                                                <div class="drone-video-card-footer">
+                                                                    <div class="still-footer-left">
+                                                                        <span class="still-caption">Still #SS-1: Active Pit Face & Haulage Corridor</span>
+                                                                        <span class="still-meta">Drone ID: DRONE-NK-01 | Lat: 23.7842° N, Lon: 85.3421° E</span>
+                                                                    </div>
+                                                                    <div class="still-footer-actions">
+                                                                        <button type="button" class="btn-mini-action" onclick="openDroneVideoModal('nk_mines', 0)"><i class="fa-solid fa-magnifying-glass-plus"></i> View Still</button>
+                                                                        <a href="/static/media_screenshots/SS-1.png" download="NK_Mines_Still_SS1.png" class="btn-mini-action"><i class="fa-solid fa-download"></i></a>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <!-- Video 2 (Still SS-2) -->
+                                                            <div class="drone-video-card">
+                                                                <div class="drone-video-card-header">
+                                                                    <div class="drone-cam-name"><i class="fa-solid fa-camera"></i> CAM-02: Coal Stockpile & Loading Bench</div>
+                                                                    <span class="rec-live-badge"><span class="rec-dot-pulse"></span> REC LIVE</span>
+                                                                </div>
+                                                                <div class="drone-video-media-wrapper" onclick="openDroneVideoModal('nk_mines', 1)">
+                                                                    <img src="/static/media_screenshots/SS-2.png" alt="NK Mines Stockpile Still" class="drone-still-img" loading="lazy">
+                                                                    <div class="media-hud-overlay">
+                                                                        <div class="hud-top-bar">
+                                                                            <span>CAM-02 [NK-STOCKPILE] 4K UHD</span>
+                                                                            <span>2026-08-19 11:32:05 UTC</span>
+                                                                        </div>
+                                                                        <div class="hud-bottom-bar">
+                                                                            <span class="ai-detection-tag"><img src="/static/media_screenshots/trace_main_logo.jpeg" alt="TRACE Logo" class="brand-logo-img"> AI: Boundary Perimeter Safe (99.1%)</span>
+                                                                            <span>60 FPS</span>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="media-play-overlay"><i class="fa-solid fa-play"></i></div>
+                                                                </div>
+                                                                <div class="drone-video-card-footer">
+                                                                    <div class="still-footer-left">
+                                                                        <span class="still-caption">Still #SS-2: Stockpile Platform & Feed Conveyor</span>
+                                                                        <span class="still-meta">Drone ID: DRONE-NK-02 | Lat: 23.7850° N, Lon: 85.3435° E</span>
+                                                                    </div>
+                                                                    <div class="still-footer-actions">
+                                                                        <button type="button" class="btn-mini-action" onclick="openDroneVideoModal('nk_mines', 1)"><i class="fa-solid fa-magnifying-glass-plus"></i> View Still</button>
+                                                                        <a href="/static/media_screenshots/SS-2.png" download="NK_Mines_Still_SS2.png" class="btn-mini-action"><i class="fa-solid fa-download"></i></a>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+
+                                            <!-- LOCATION 2: AMRAPALI (SS-3, SS-4) -->
+                                            <tr>
+                                                <td class="text-center">2</td>
+                                                <td><i class="fa-regular fa-file-pdf pdf-icn"></i> AMRAPALI_18-08-2026.pdf</td>
+                                                <td class="text-center"><a href="#" class="action-eye-btn" title="View Report"><i class="fa-solid fa-eye"></i></a></td>
+                                                <td><strong>Amrapali</strong></td>
+                                                <td>Aug 18, 2026</td>
+                                                <td class="text-center">
+                                                    <div class="video-links-cell">
+                                                        <div class="video-chips-row">
+                                                            <button type="button" class="video-pill-btn" onclick="openDroneVideoModal('amrapali', 0)"><i class="fa-solid fa-circle-play"></i> Video 1</button>
+                                                            <button type="button" class="video-pill-btn" onclick="openDroneVideoModal('amrapali', 1)"><i class="fa-solid fa-circle-play"></i> Video 2</button>
+                                                        </div>
+                                                        <button type="button" class="btn-toggle-stills active" id="btn-toggle-amrapali" onclick="toggleLocationStills('stills-drawer-amrapali')">
+                                                            <i class="fa-solid fa-images"></i> Stills (2) <i class="fa-solid fa-chevron-down toggle-arrow"></i>
+                                                        </button>
+                                                    </div>
+                                                </td>
+                                                <td class="text-center"><button class="btn-upload-atr"><i class="fa-solid fa-arrow-up-from-bracket"></i> Upload ATR</button></td>
+                                            </tr>
+                                            <!-- Collapsible Stills Showcase Row for Location 2 -->
+                                            <tr class="stills-drawer-row" id="stills-drawer-amrapali">
+                                                <td colspan="7">
+                                                    <div class="stills-drawer-content">
+                                                        <div class="stills-drawer-header">
+                                                            <div class="stills-drawer-title">
+                                                                <i class="fa-solid fa-video text-blue"></i>
+                                                                <span>Surveillance Feeds & High-Res Stills — Amrapali</span>
+                                                                <span class="stills-badge-count">2 Videos Attached</span>
+                                                            </div>
+                                                            <button type="button" class="btn-mini-action" onclick="openDroneVideoModal('amrapali', 0)"><i class="fa-solid fa-expand"></i> Launch Multi-Feed Player</button>
+                                                        </div>
+                                                        <div class="stills-grid-2col">
+                                                            <!-- Video 1 (Still SS-3) -->
+                                                            <div class="drone-video-card">
+                                                                <div class="drone-video-card-header">
+                                                                    <div class="drone-cam-name"><i class="fa-solid fa-camera"></i> CAM-01: North Quarry Highwall & Shovel Grid</div>
+                                                                    <span class="rec-live-badge"><span class="rec-dot-pulse"></span> REC LIVE</span>
+                                                                </div>
+                                                                <div class="drone-video-media-wrapper" onclick="openDroneVideoModal('amrapali', 0)">
+                                                                    <img src="/static/media_screenshots/SS-3.png" alt="Amrapali North Quarry Still" class="drone-still-img" loading="lazy">
+                                                                    <div class="media-hud-overlay">
+                                                                        <div class="hud-top-bar">
+                                                                            <span>CAM-01 [AMRAPALI-NORTH] 4K UHD</span>
+                                                                            <span>2026-08-18 09:45:10 UTC</span>
+                                                                        </div>
+                                                                        <div class="hud-bottom-bar">
+                                                                            <span class="ai-detection-tag"><i class="fa-solid fa-mountain"></i> AI: Highwall Stability Checked</span>
+                                                                            <span>60 FPS</span>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="media-play-overlay"><i class="fa-solid fa-play"></i></div>
+                                                                </div>
+                                                                <div class="drone-video-card-footer">
+                                                                    <div class="still-footer-left">
+                                                                        <span class="still-caption">Still #SS-3: Highwall Ridge & Excavation Shovel</span>
+                                                                        <span class="still-meta">Drone ID: DRONE-AMR-04 | Lat: 23.8210° N, Lon: 85.2014° E</span>
+                                                                    </div>
+                                                                    <div class="still-footer-actions">
+                                                                        <button type="button" class="btn-mini-action" onclick="openDroneVideoModal('amrapali', 0)"><i class="fa-solid fa-magnifying-glass-plus"></i> View Still</button>
+                                                                        <a href="/static/media_screenshots/SS-3.png" download="Amrapali_Still_SS3.png" class="btn-mini-action"><i class="fa-solid fa-download"></i></a>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <!-- Video 2 (Still SS-4) -->
+                                                            <div class="drone-video-card">
+                                                                <div class="drone-video-card-header">
+                                                                    <div class="drone-cam-name"><i class="fa-solid fa-camera"></i> CAM-02: Central Incline & Haulage Corridor</div>
+                                                                    <span class="rec-live-badge"><span class="rec-dot-pulse"></span> REC LIVE</span>
+                                                                </div>
+                                                                <div class="drone-video-media-wrapper" onclick="openDroneVideoModal('amrapali', 1)">
+                                                                    <img src="/static/media_screenshots/SS-4.png" alt="Amrapali Central Incline Still" class="drone-still-img" loading="lazy">
+                                                                    <div class="media-hud-overlay">
+                                                                        <div class="hud-top-bar">
+                                                                            <span>CAM-02 [AMRAPALI-INCLINE] 4K UHD</span>
+                                                                            <span>2026-08-18 14:18:40 UTC</span>
+                                                                        </div>
+                                                                        <div class="hud-bottom-bar">
+                                                                            <span class="ai-detection-tag"><i class="fa-solid fa-truck-moving"></i> AI: Heavy Hauler Speed & Spacing Normal</span>
+                                                                            <span>60 FPS</span>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="media-play-overlay"><i class="fa-solid fa-play"></i></div>
+                                                                </div>
+                                                                <div class="drone-video-card-footer">
+                                                                    <div class="still-footer-left">
+                                                                        <span class="still-caption">Still #SS-4: Dumper Transit Incline & Safety Berm</span>
+                                                                        <span class="still-meta">Drone ID: DRONE-AMR-02 | Lat: 23.8245° N, Lon: 85.2050° E</span>
+                                                                    </div>
+                                                                    <div class="still-footer-actions">
+                                                                        <button type="button" class="btn-mini-action" onclick="openDroneVideoModal('amrapali', 1)"><i class="fa-solid fa-magnifying-glass-plus"></i> View Still</button>
+                                                                        <a href="/static/media_screenshots/SS-4.png" download="Amrapali_Still_SS4.png" class="btn-mini-action"><i class="fa-solid fa-download"></i></a>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+
+                                            <!-- LOCATION 3: MAGADH (SS-5, SS-6) -->
+                                            <tr>
+                                                <td class="text-center">3</td>
+                                                <td><i class="fa-regular fa-file-pdf pdf-icn"></i> MAGHA_17-08-2026.pdf</td>
+                                                <td class="text-center"><a href="#" class="action-eye-btn" title="View Report"><i class="fa-solid fa-eye"></i></a></td>
+                                                <td><strong>Magadh</strong></td>
+                                                <td>Aug 17, 2026</td>
+                                                <td class="text-center">
+                                                    <div class="video-links-cell">
+                                                        <div class="video-chips-row">
+                                                            <button type="button" class="video-pill-btn" onclick="openDroneVideoModal('magadh', 0)"><i class="fa-solid fa-circle-play"></i> Video 1</button>
+                                                            <button type="button" class="video-pill-btn" onclick="openDroneVideoModal('magadh', 1)"><i class="fa-solid fa-circle-play"></i> Video 2</button>
+                                                        </div>
+                                                        <button type="button" class="btn-toggle-stills active" id="btn-toggle-magadh" onclick="toggleLocationStills('stills-drawer-magadh')">
+                                                            <i class="fa-solid fa-images"></i> Stills (2) <i class="fa-solid fa-chevron-down toggle-arrow"></i>
+                                                        </button>
+                                                    </div>
+                                                </td>
+                                                <td class="text-center"><button class="btn-upload-atr"><i class="fa-solid fa-arrow-up-from-bracket"></i> Upload ATR</button></td>
+                                            </tr>
+                                            <!-- Collapsible Stills Showcase Row for Location 3 -->
+                                            <tr class="stills-drawer-row" id="stills-drawer-magadh">
+                                                <td colspan="7">
+                                                    <div class="stills-drawer-content">
+                                                        <div class="stills-drawer-header">
+                                                            <div class="stills-drawer-title">
+                                                                <i class="fa-solid fa-video text-blue"></i>
+                                                                <span>Surveillance Feeds & High-Res Stills — Magadh</span>
+                                                                <span class="stills-badge-count">2 Videos Attached</span>
+                                                            </div>
+                                                            <button type="button" class="btn-mini-action" onclick="openDroneVideoModal('magadh', 0)"><i class="fa-solid fa-expand"></i> Launch Multi-Feed Player</button>
+                                                        </div>
+                                                        <div class="stills-grid-2col">
+                                                            <!-- Video 1 (Still SS-5) -->
+                                                            <div class="drone-video-card">
+                                                                <div class="drone-video-card-header">
+                                                                    <div class="drone-cam-name"><i class="fa-solid fa-camera"></i> CAM-01: Coal Seam 04 Heavy Machinery Face</div>
+                                                                    <span class="rec-live-badge"><span class="rec-dot-pulse"></span> REC LIVE</span>
+                                                                </div>
+                                                                <div class="drone-video-media-wrapper" onclick="openDroneVideoModal('magadh', 0)">
+                                                                    <img src="/static/media_screenshots/SS-5.png" alt="Magadh Coal Seam Still" class="drone-still-img" loading="lazy">
+                                                                    <div class="media-hud-overlay">
+                                                                        <div class="hud-top-bar">
+                                                                            <span>CAM-01 [MAGADH-SEAM4] 4K UHD</span>
+                                                                            <span>2026-08-17 08:30:15 UTC</span>
+                                                                        </div>
+                                                                        <div class="hud-bottom-bar">
+                                                                            <span class="ai-detection-tag"><i class="fa-solid fa-gear"></i> AI: Machinery Operating Radius Safe</span>
+                                                                            <span>60 FPS</span>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="media-play-overlay"><i class="fa-solid fa-play"></i></div>
+                                                                </div>
+                                                                <div class="drone-video-card-footer">
+                                                                    <div class="still-footer-left">
+                                                                        <span class="still-caption">Still #SS-5: Seam 04 Excavator & Tipper Loading</span>
+                                                                        <span class="still-meta">Drone ID: DRONE-MGD-01 | Lat: 23.8512° N, Lon: 85.1245° E</span>
+                                                                    </div>
+                                                                    <div class="still-footer-actions">
+                                                                        <button type="button" class="btn-mini-action" onclick="openDroneVideoModal('magadh', 0)"><i class="fa-solid fa-magnifying-glass-plus"></i> View Still</button>
+                                                                        <a href="/static/media_screenshots/SS-5.png" download="Magadh_Still_SS5.png" class="btn-mini-action"><i class="fa-solid fa-download"></i></a>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <!-- Video 2 (Still SS-6) -->
+                                                            <div class="drone-video-card">
+                                                                <div class="drone-video-card-header">
+                                                                    <div class="drone-cam-name"><i class="fa-solid fa-camera"></i> CAM-02: Outer Haul Road Junction & Checkpoint</div>
+                                                                    <span class="rec-live-badge"><span class="rec-dot-pulse"></span> REC LIVE</span>
+                                                                </div>
+                                                                <div class="drone-video-media-wrapper" onclick="openDroneVideoModal('magadh', 1)">
+                                                                    <img src="/static/media_screenshots/SS-6.png" alt="Magadh Haul Road Junction Still" class="drone-still-img" loading="lazy">
+                                                                    <div class="media-hud-overlay">
+                                                                        <div class="hud-top-bar">
+                                                                            <span>CAM-02 [MAGADH-CHECKPOINT] 4K UHD</span>
+                                                                            <span>2026-08-17 13:50:22 UTC</span>
+                                                                        </div>
+                                                                        <div class="hud-bottom-bar">
+                                                                            <span class="ai-detection-tag"><i class="fa-solid fa-id-card"></i> AI: ANPR & Trip Verified (100%)</span>
+                                                                            <span>60 FPS</span>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="media-play-overlay"><i class="fa-solid fa-play"></i></div>
+                                                                </div>
+                                                                <div class="drone-video-card-footer">
+                                                                    <div class="still-footer-left">
+                                                                        <span class="still-caption">Still #SS-6: Haul Road Weighbridge Approach</span>
+                                                                        <span class="still-meta">Drone ID: DRONE-MGD-03 | Lat: 23.8560° N, Lon: 85.1290° E</span>
+                                                                    </div>
+                                                                    <div class="still-footer-actions">
+                                                                        <button type="button" class="btn-mini-action" onclick="openDroneVideoModal('magadh', 1)"><i class="fa-solid fa-magnifying-glass-plus"></i> View Still</button>
+                                                                        <a href="/static/media_screenshots/SS-6.png" download="Magadh_Still_SS6.png" class="btn-mini-action"><i class="fa-solid fa-download"></i></a>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+
+                                            <!-- LOCATION 4: GIRIDIH KABRIBAD (SS-7, SS-8) -->
+                                            <tr>
+                                                <td class="text-center">4</td>
+                                                <td><i class="fa-regular fa-file-pdf pdf-icn"></i> GIRDIH_13-08-2026.pdf</td>
+                                                <td class="text-center"><a href="#" class="action-eye-btn" title="View Report"><i class="fa-solid fa-eye"></i></a></td>
+                                                <td><strong>Giridih Kabribad</strong></td>
+                                                <td>Aug 13, 2026</td>
+                                                <td class="text-center">
+                                                    <div class="video-links-cell">
+                                                        <div class="video-chips-row">
+                                                            <button type="button" class="video-pill-btn" onclick="openDroneVideoModal('giridih', 0)"><i class="fa-solid fa-circle-play"></i> Video 1</button>
+                                                            <button type="button" class="video-pill-btn" onclick="openDroneVideoModal('giridih', 1)"><i class="fa-solid fa-circle-play"></i> Video 2</button>
+                                                        </div>
+                                                        <button type="button" class="btn-toggle-stills active" id="btn-toggle-giridih" onclick="toggleLocationStills('stills-drawer-giridih')">
+                                                            <i class="fa-solid fa-images"></i> Stills (2) <i class="fa-solid fa-chevron-down toggle-arrow"></i>
+                                                        </button>
+                                                    </div>
+                                                </td>
+                                                <td class="text-center"><button class="btn-upload-atr"><i class="fa-solid fa-arrow-up-from-bracket"></i> Upload ATR</button></td>
+                                            </tr>
+                                            <!-- Collapsible Stills Showcase Row for Location 4 -->
+                                            <tr class="stills-drawer-row" id="stills-drawer-giridih">
+                                                <td colspan="7">
+                                                    <div class="stills-drawer-content">
+                                                        <div class="stills-drawer-header">
+                                                            <div class="stills-drawer-title">
+                                                                <i class="fa-solid fa-video text-blue"></i>
+                                                                <span>Surveillance Feeds & High-Res Stills — Giridih Kabribad</span>
+                                                                <span class="stills-badge-count">2 Videos Attached</span>
+                                                            </div>
+                                                            <button type="button" class="btn-mini-action" onclick="openDroneVideoModal('giridih', 0)"><i class="fa-solid fa-expand"></i> Launch Multi-Feed Player</button>
+                                                        </div>
+                                                        <div class="stills-grid-2col">
+                                                            <!-- Video 1 (Still SS-7) -->
+                                                            <div class="drone-video-card">
+                                                                <div class="drone-video-card-header">
+                                                                    <div class="drone-cam-name"><i class="fa-solid fa-camera"></i> CAM-01: Waste Dump Slope & Embankment Edge</div>
+                                                                    <span class="rec-live-badge"><span class="rec-dot-pulse"></span> REC LIVE</span>
+                                                                </div>
+                                                                <div class="drone-video-media-wrapper" onclick="openDroneVideoModal('giridih', 0)">
+                                                                    <img src="/static/media_screenshots/SS-7.png" alt="Giridih Waste Dump Still" class="drone-still-img" loading="lazy">
+                                                                    <div class="media-hud-overlay">
+                                                                        <div class="hud-top-bar">
+                                                                            <span>CAM-01 [GIRIDIH-DUMP] 4K UHD</span>
+                                                                            <span>2026-08-13 11:05:33 UTC</span>
+                                                                        </div>
+                                                                        <div class="hud-bottom-bar">
+                                                                            <span class="ai-detection-tag"><i class="fa-solid fa-triangle-exclamation"></i> AI: Embankment Slope Monitoring</span>
+                                                                            <span>60 FPS</span>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="media-play-overlay"><i class="fa-solid fa-play"></i></div>
+                                                                </div>
+                                                                <div class="drone-video-card-footer">
+                                                                    <div class="still-footer-left">
+                                                                        <span class="still-caption">Still #SS-7: Overburden Dump Slope & Terracing</span>
+                                                                        <span class="still-meta">Drone ID: DRONE-GRD-02 | Lat: 24.1840° N, Lon: 86.3021° E</span>
+                                                                    </div>
+                                                                    <div class="still-footer-actions">
+                                                                        <button type="button" class="btn-mini-action" onclick="openDroneVideoModal('giridih', 0)"><i class="fa-solid fa-magnifying-glass-plus"></i> View Still</button>
+                                                                        <a href="/static/media_screenshots/SS-7.png" download="Giridih_Still_SS7.png" class="btn-mini-action"><i class="fa-solid fa-download"></i></a>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <!-- Video 2 (Still SS-8) -->
+                                                            <div class="drone-video-card">
+                                                                <div class="drone-video-card-header">
+                                                                    <div class="drone-cam-name"><i class="fa-solid fa-camera"></i> CAM-02: Primary Feeder & Personnel Safety Perimeter</div>
+                                                                    <span class="rec-live-badge"><span class="rec-dot-pulse"></span> REC LIVE</span>
+                                                                </div>
+                                                                <div class="drone-video-media-wrapper" onclick="openDroneVideoModal('giridih', 1)">
+                                                                    <img src="/static/media_screenshots/SS-8.png" alt="Giridih Primary Feeder Still" class="drone-still-img" loading="lazy">
+                                                                    <div class="media-hud-overlay">
+                                                                        <div class="hud-top-bar">
+                                                                            <span>CAM-02 [GIRIDIH-FEEDER] 4K UHD</span>
+                                                                            <span>2026-08-13 16:22:18 UTC</span>
+                                                                        </div>
+                                                                        <div class="hud-bottom-bar">
+                                                                            <span class="ai-detection-tag"><i class="fa-solid fa-vest"></i> AI: PPE & Safety Zone Compliant</span>
+                                                                            <span>60 FPS</span>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="media-play-overlay"><i class="fa-solid fa-play"></i></div>
+                                                                </div>
+                                                                <div class="drone-video-card-footer">
+                                                                    <div class="still-footer-left">
+                                                                        <span class="still-caption">Still #SS-8: Feeder Hopper & Crushing Perimeter</span>
+                                                                        <span class="still-meta">Drone ID: DRONE-GRD-01 | Lat: 24.1865° N, Lon: 86.3055° E</span>
+                                                                    </div>
+                                                                    <div class="still-footer-actions">
+                                                                        <button type="button" class="btn-mini-action" onclick="openDroneVideoModal('giridih', 1)"><i class="fa-solid fa-magnifying-glass-plus"></i> View Still</button>
+                                                                        <a href="/static/media_screenshots/SS-8.png" download="Giridih_Still_SS8.png" class="btn-mini-action"><i class="fa-solid fa-download"></i></a>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+
+                                            <!-- LOCATION 5: BUKARO (SS-9, SS-10) -->
+                                            <tr>
+                                                <td class="text-center">5</td>
+                                                <td><i class="fa-regular fa-file-pdf pdf-icn"></i> BUKARO_12-08-2026.pdf</td>
+                                                <td class="text-center"><a href="#" class="action-eye-btn" title="View Report"><i class="fa-solid fa-eye"></i></a></td>
+                                                <td><strong>Bukaro</strong></td>
+                                                <td>Aug 12, 2026</td>
+                                                <td class="text-center">
+                                                    <div class="video-links-cell">
+                                                        <div class="video-chips-row">
+                                                            <button type="button" class="video-pill-btn" onclick="openDroneVideoModal('bukaro', 0)"><i class="fa-solid fa-circle-play"></i> Video 1</button>
+                                                            <button type="button" class="video-pill-btn" onclick="openDroneVideoModal('bukaro', 1)"><i class="fa-solid fa-circle-play"></i> Video 2</button>
+                                                        </div>
+                                                        <button type="button" class="btn-toggle-stills active" id="btn-toggle-bukaro" onclick="toggleLocationStills('stills-drawer-bukaro')">
+                                                            <i class="fa-solid fa-images"></i> Stills (2) <i class="fa-solid fa-chevron-down toggle-arrow"></i>
+                                                        </button>
+                                                    </div>
+                                                </td>
+                                                <td class="text-center"><button class="btn-upload-atr"><i class="fa-solid fa-arrow-up-from-bracket"></i> Upload ATR</button></td>
+                                            </tr>
+                                            <!-- Collapsible Stills Showcase Row for Location 5 -->
+                                            <tr class="stills-drawer-row" id="stills-drawer-bukaro">
+                                                <td colspan="7">
+                                                    <div class="stills-drawer-content">
+                                                        <div class="stills-drawer-header">
+                                                            <div class="stills-drawer-title">
+                                                                <i class="fa-solid fa-video text-blue"></i>
+                                                                <span>Surveillance Feeds & High-Res Stills — Bukaro</span>
+                                                                <span class="stills-badge-count">2 Videos Attached</span>
+                                                            </div>
+                                                            <button type="button" class="btn-mini-action" onclick="openDroneVideoModal('bukaro', 0)"><i class="fa-solid fa-expand"></i> Launch Multi-Feed Player</button>
+                                                        </div>
+                                                        <div class="stills-grid-2col">
+                                                            <!-- Video 1 (Still SS-9) -->
+                                                            <div class="drone-video-card">
+                                                                <div class="drone-video-card-header">
+                                                                    <div class="drone-cam-name"><i class="fa-solid fa-camera"></i> CAM-01: Rail Loading Terminal & Yard Cam</div>
+                                                                    <span class="rec-live-badge"><span class="rec-dot-pulse"></span> REC LIVE</span>
+                                                                </div>
+                                                                <div class="drone-video-media-wrapper" onclick="openDroneVideoModal('bukaro', 0)">
+                                                                    <img src="/static/media_screenshots/SS-9.png" alt="Bukaro Rail Siding Still" class="drone-still-img" loading="lazy">
+                                                                    <div class="media-hud-overlay">
+                                                                        <div class="hud-top-bar">
+                                                                            <span>CAM-01 [BUKARO-RAIL] 4K UHD</span>
+                                                                            <span>2026-08-12 10:10:45 UTC</span>
+                                                                        </div>
+                                                                        <div class="hud-bottom-bar">
+                                                                            <span class="ai-detection-tag"><i class="fa-solid fa-train"></i> AI: Rake Wagon Loading Clear</span>
+                                                                            <span>60 FPS</span>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="media-play-overlay"><i class="fa-solid fa-play"></i></div>
+                                                                </div>
+                                                                <div class="drone-video-card-footer">
+                                                                    <div class="still-footer-left">
+                                                                        <span class="still-caption">Still #SS-9: Railway Siding & Rapid Loading System</span>
+                                                                        <span class="still-meta">Drone ID: DRONE-BKR-01 | Lat: 23.7920° N, Lon: 85.9840° E</span>
+                                                                    </div>
+                                                                    <div class="still-footer-actions">
+                                                                        <button type="button" class="btn-mini-action" onclick="openDroneVideoModal('bukaro', 0)"><i class="fa-solid fa-magnifying-glass-plus"></i> View Still</button>
+                                                                        <a href="/static/media_screenshots/SS-9.png" download="Bukaro_Still_SS9.png" class="btn-mini-action"><i class="fa-solid fa-download"></i></a>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <!-- Video 2 (Still SS-10) -->
+                                                            <div class="drone-video-card">
+                                                                <div class="drone-video-card-header">
+                                                                    <div class="drone-cam-name"><i class="fa-solid fa-camera"></i> CAM-02: Western Exit Gate & Drainage Sump</div>
+                                                                    <span class="rec-live-badge"><span class="rec-dot-pulse"></span> REC LIVE</span>
+                                                                </div>
+                                                                <div class="drone-video-media-wrapper" onclick="openDroneVideoModal('bukaro', 1)">
+                                                                    <img src="/static/media_screenshots/SS-10.png" alt="Bukaro Exit Gate Still" class="drone-still-img" loading="lazy">
+                                                                    <div class="media-hud-overlay">
+                                                                        <div class="hud-top-bar">
+                                                                            <span>CAM-02 [BUKARO-GATE] 4K UHD</span>
+                                                                            <span>2026-08-12 15:40:55 UTC</span>
+                                                                        </div>
+                                                                        <div class="hud-bottom-bar">
+                                                                            <span class="ai-detection-tag"><i class="fa-solid fa-water"></i> AI: Sump Drainage & Gate Nominal</span>
+                                                                            <span>60 FPS</span>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="media-play-overlay"><i class="fa-solid fa-play"></i></div>
+                                                                </div>
+                                                                <div class="drone-video-card-footer">
+                                                                    <div class="still-footer-left">
+                                                                        <span class="still-caption">Still #SS-10: Mine Western Exit & Sump Area</span>
+                                                                        <span class="still-meta">Drone ID: DRONE-BKR-05 | Lat: 23.7965° N, Lon: 85.9890° E</span>
+                                                                    </div>
+                                                                    <div class="still-footer-actions">
+                                                                        <button type="button" class="btn-mini-action" onclick="openDroneVideoModal('bukaro', 1)"><i class="fa-solid fa-magnifying-glass-plus"></i> View Still</button>
+                                                                        <a href="/static/media_screenshots/SS-10.png" download="Bukaro_Still_SS10.png" class="btn-mini-action"><i class="fa-solid fa-download"></i></a>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Page View: Workers Attendance -->
