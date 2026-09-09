@@ -1,237 +1,675 @@
+            <!-- ======================================================== -->
+            <!-- 1. Area Master (Interactive View)                           -->
+            <!-- ======================================================== -->
             <div class="tab-content-panel" id="config-area-view" style="display: none;">
-                <div class="config-idle-container">
-                    <div class="config-idle-header">
-                        <div class="config-idle-header-left">
-                            <div class="config-idle-icon" style="color: #38bdf8; background: rgba(56, 189, 248, 0.1); border-color: rgba(56, 189, 248, 0.25);">
+                <div class="config-master-container">
+                    <div class="config-master-header">
+                        <div class="config-master-header-left">
+                            <div class="config-master-icon icon-area">
                                 <i class="fa-solid fa-mountain-city"></i>
                             </div>
                             <div>
-                                <h2 class="config-idle-title">Area Master</h2>
-                                <p class="config-idle-subtitle">Administrative mining areas, headquarters, production allocations, and zonal boundary configuration.</p>
+                                <h2 class="config-master-title">Area Master</h2>
+                                <p class="config-master-subtitle">Administrative mining areas, zonal boundary geofences, regional headquarters, and annual production targets.</p>
                             </div>
                         </div>
-                        <span class="config-idle-badge"><i class="fa-solid fa-shield-halved"></i> Master Active</span>
+                        <div class="config-master-actions">
+                            <button class="btn-action-primary" onclick="openAddMasterModal('area')">
+                                <i class="fa-solid fa-plus"></i> <span>Add New Area</span>
+                            </button>
+                            <button class="btn-action-secondary" onclick="exportMasterTableToCsv('area')">
+                                <i class="fa-solid fa-file-csv"></i> <span>Export CSV</span>
+                            </button>
+                        </div>
                     </div>
 
-                    <div class="config-idle-grid">
-                        <div class="config-idle-card">
-                            <div class="config-idle-card-title"><i class="fa-solid fa-layer-group" style="color: #38bdf8;"></i> Mining Area Parameters</div>
-                            <div class="config-idle-stat-row">
-                                <div class="config-idle-stat-box">
-                                    <span class="config-idle-stat-val">14</span>
-                                    <span class="config-idle-stat-lbl">Administrative Areas</span>
-                                </div>
-                                <div class="config-idle-stat-box">
-                                    <span class="config-idle-stat-val">50</span>
-                                    <span class="config-idle-stat-lbl">Connected Coal Plants</span>
-                                </div>
-                                <div class="config-idle-stat-box">
-                                    <span class="config-idle-stat-val">318.9 MT</span>
-                                    <span class="config-idle-stat-lbl">Annual Production Target</span>
-                                </div>
+                    <!-- 4 Interactive Metric Widgets -->
+                    <div class="master-widgets-grid">
+                        <div class="master-widget-card">
+                            <div class="widget-icon-circle widget-blue"><i class="fa-solid fa-mountain-city"></i></div>
+                            <div class="widget-info">
+                                <span class="widget-val" id="areaCountWidget">14</span>
+                                <span class="widget-lbl">Administrative Areas</span>
                             </div>
+                            <span class="widget-pill-badge badge-teal">All Active</span>
                         </div>
+                        <div class="master-widget-card">
+                            <div class="widget-icon-circle widget-green"><i class="fa-solid fa-industry"></i></div>
+                            <div class="widget-info">
+                                <span class="widget-val">50</span>
+                                <span class="widget-lbl">Connected Coal Mines</span>
+                            </div>
+                            <span class="widget-pill-badge badge-blue">OCP & UG</span>
+                        </div>
+                        <div class="master-widget-card">
+                            <div class="widget-icon-circle widget-purple"><i class="fa-solid fa-bullseye"></i></div>
+                            <div class="widget-info">
+                                <span class="widget-val">318.9 MT</span>
+                                <span class="widget-lbl">Annual Target Target</span>
+                            </div>
+                            <span class="widget-pill-badge badge-gold">FY 2026-27</span>
+                        </div>
+                        <div class="master-widget-card">
+                            <div class="widget-icon-circle widget-amber"><i class="fa-solid fa-draw-polygon"></i></div>
+                            <div class="widget-info">
+                                <span class="widget-val">100%</span>
+                                <span class="widget-lbl">Geofenced Boundaries</span>
+                            </div>
+                            <span class="widget-pill-badge badge-teal">WGS-84 Mapped</span>
+                        </div>
+                    </div>
 
-                        <div class="config-idle-card">
-                            <div class="config-idle-card-title"><i class="fa-solid fa-map-location-dot" style="color: #34d399;"></i> Spatial Hierarchy Specifications</div>
-                            <div class="config-idle-list">
-                                <div class="config-idle-item"><span>Coordinate Projection:</span><strong>WGS-84 (EPSG:4326)</strong></div>
-                                <div class="config-idle-item"><span>Regional Headquarters:</span><strong>Central Coalfields Ltd (CCL)</strong></div>
-                                <div class="config-idle-item"><span>Zonal Boundary Resolution:</span><strong>Polygon Vector Geofence</strong></div>
-                            </div>
+                    <!-- Filter & Search Toolbar -->
+                    <div class="master-toolbar">
+                        <div class="master-search-box">
+                            <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                            <input type="text" id="searchAreaInput" class="master-search-input" placeholder="Search area code, name, zone, or GM in-charge..." oninput="filterMasterTable('area')">
                         </div>
+                        <div class="master-filter-group">
+                            <select id="filterAreaZone" class="master-select-filter" onchange="filterMasterTable('area')">
+                                <option value="all">All Mining Zones</option>
+                                <option value="North Karanpura">North Karanpura Zone</option>
+                                <option value="South Karanpura">South Karanpura Zone</option>
+                                <option value="Bokaro Basin">Bokaro Basin</option>
+                                <option value="Rajrappa Region">Rajrappa Region</option>
+                            </select>
+                            <select id="filterAreaStatus" class="master-select-filter" onchange="filterMasterTable('area')">
+                                <option value="all">All Statuses</option>
+                                <option value="Active">Active</option>
+                                <option value="Operational">Operational</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Interactive Master Data Table -->
+                    <div class="table-responsive">
+                        <table class="master-data-table" id="masterTableArea">
+                            <thead>
+                                <tr>
+                                    <th style="width: 100px;">Area Code</th>
+                                    <th>Area Name</th>
+                                    <th>Zone / Region</th>
+                                    <th>Headquarters</th>
+                                    <th class="text-right">Connected Mines</th>
+                                    <th class="text-right">Annual Target</th>
+                                    <th>In-Charge GM</th>
+                                    <th>Status</th>
+                                    <th class="text-center" style="width: 120px;">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="areaMasterTableBody">
+                                <!-- Populated dynamically by config_masters.js -->
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
 
-            <!-- 2. Plant Master (Idle Configuration View) -->
+            <!-- ======================================================== -->
+            <!-- 2. Plant Master (Interactive View)                          -->
+            <!-- ======================================================== -->
             <div class="tab-content-panel" id="config-plant-view" style="display: none;">
-                <div class="config-idle-container">
-                    <div class="config-idle-header">
-                        <div class="config-idle-header-left">
-                            <div class="config-idle-icon" style="color: #34d399; background: rgba(52, 211, 153, 0.1); border-color: rgba(52, 211, 153, 0.25);">
+                <div class="config-master-container">
+                    <div class="config-master-header">
+                        <div class="config-master-header-left">
+                            <div class="config-master-icon icon-plant">
                                 <i class="fa-solid fa-industry"></i>
                             </div>
                             <div>
-                                <h2 class="config-idle-title">Plant Master</h2>
-                                <p class="config-idle-subtitle">Preparation plants, coal washeries, opencast/underground extraction units, and rated throughput ceilings.</p>
+                                <h2 class="config-master-title">Plant Master</h2>
+                                <p class="config-master-subtitle">Preparation plants, heavy washeries, opencast pits, extraction units, and SCADA telemetry integration.</p>
                             </div>
                         </div>
-                        <span class="config-idle-badge"><i class="fa-solid fa-shield-halved"></i> Master Active</span>
+                        <div class="config-master-actions">
+                            <button class="btn-action-primary" onclick="openAddMasterModal('plant')">
+                                <i class="fa-solid fa-plus"></i> <span>Add New Plant</span>
+                            </button>
+                            <button class="btn-action-secondary" onclick="exportMasterTableToCsv('plant')">
+                                <i class="fa-solid fa-file-csv"></i> <span>Export CSV</span>
+                            </button>
+                        </div>
                     </div>
 
-                    <div class="config-idle-grid">
-                        <div class="config-idle-card">
-                            <div class="config-idle-card-title"><i class="fa-solid fa-industry" style="color: #34d399;"></i> Plant Classification Summary</div>
-                            <div class="config-idle-stat-row">
-                                <div class="config-idle-stat-box">
-                                    <span class="config-idle-stat-val">50</span>
-                                    <span class="config-idle-stat-lbl">Active Plants</span>
-                                </div>
-                                <div class="config-idle-stat-box">
-                                    <span class="config-idle-stat-val">28</span>
-                                    <span class="config-idle-stat-lbl">Opencast Pits (OCP)</span>
-                                </div>
-                                <div class="config-idle-stat-box">
-                                    <span class="config-idle-stat-val">6</span>
-                                    <span class="config-idle-stat-lbl">Heavy Washeries</span>
-                                </div>
+                    <!-- 4 Interactive Metric Widgets -->
+                    <div class="master-widgets-grid">
+                        <div class="master-widget-card">
+                            <div class="widget-icon-circle widget-green"><i class="fa-solid fa-industry"></i></div>
+                            <div class="widget-info">
+                                <span class="widget-val" id="plantCountWidget">50</span>
+                                <span class="widget-lbl">Active Plants & Mines</span>
                             </div>
+                            <span class="widget-pill-badge badge-teal">Operational</span>
                         </div>
+                        <div class="master-widget-card">
+                            <div class="widget-icon-circle widget-blue"><i class="fa-solid fa-cubes-stacked"></i></div>
+                            <div class="widget-info">
+                                <span class="widget-val">28</span>
+                                <span class="widget-lbl">Opencast Pits (OCP)</span>
+                            </div>
+                            <span class="widget-pill-badge badge-blue">High Yield</span>
+                        </div>
+                        <div class="master-widget-card">
+                            <div class="widget-icon-circle widget-purple"><i class="fa-solid fa-filter"></i></div>
+                            <div class="widget-info">
+                                <span class="widget-val">6</span>
+                                <span class="widget-lbl">Coal Washeries</span>
+                            </div>
+                            <span class="widget-pill-badge badge-gold">HMC Method</span>
+                        </div>
+                        <div class="master-widget-card">
+                            <div class="widget-icon-circle widget-amber"><i class="fa-solid fa-gauge-high"></i></div>
+                            <div class="widget-info">
+                                <span class="widget-val">94.8%</span>
+                                <span class="widget-lbl">Throughput Efficiency</span>
+                            </div>
+                            <span class="widget-pill-badge badge-teal">SCADA Linked</span>
+                        </div>
+                    </div>
 
-                        <div class="config-idle-card">
-                            <div class="config-idle-card-title"><i class="fa-solid fa-gears" style="color: #a855f7;"></i> Plant Processing Standards</div>
-                            <div class="config-idle-list">
-                                <div class="config-idle-item"><span>Standard ROM Feed Ceiling:</span><strong>30,000 TPD Max</strong></div>
-                                <div class="config-idle-item"><span>Washery Separation Method:</span><strong>Heavy Media Cyclone (HMC)</strong></div>
-                                <div class="config-idle-item"><span>Discharge Telemetry Sync:</span><strong>Automated SCADA Protocol</strong></div>
-                            </div>
+                    <!-- Filter & Search Toolbar -->
+                    <div class="master-toolbar">
+                        <div class="master-search-box">
+                            <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                            <input type="text" id="searchPlantInput" class="master-search-input" placeholder="Search plant code, colliery, washery, or parent area..." oninput="filterMasterTable('plant')">
                         </div>
+                        <div class="master-filter-group">
+                            <select id="filterPlantType" class="master-select-filter" onchange="filterMasterTable('plant')">
+                                <option value="all">All Plant Types</option>
+                                <option value="Opencast Pit (OCP)">Opencast Pit (OCP)</option>
+                                <option value="Heavy Washery">Heavy Washery</option>
+                                <option value="Underground (UG)">Underground (UG)</option>
+                                <option value="Railway Siding">Railway Siding</option>
+                            </select>
+                            <select id="filterPlantArea" class="master-select-filter" onchange="filterMasterTable('plant')">
+                                <option value="all">All Areas</option>
+                                <option value="North Karanpura">North Karanpura</option>
+                                <option value="Piparwar">Piparwar</option>
+                                <option value="Magadh">Magadh</option>
+                                <option value="Barka Sayal">Barka Sayal</option>
+                                <option value="Argada">Argada</option>
+                                <option value="Dhori">Dhori</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Interactive Master Data Table -->
+                    <div class="table-responsive">
+                        <table class="master-data-table" id="masterTablePlant">
+                            <thead>
+                                <tr>
+                                    <th style="width: 100px;">Plant Code</th>
+                                    <th>Plant / Colliery Name</th>
+                                    <th>Parent Area</th>
+                                    <th>Classification</th>
+                                    <th class="text-right">Daily Rating (TPD)</th>
+                                    <th>SCADA Telemetry</th>
+                                    <th>Status</th>
+                                    <th class="text-center" style="width: 120px;">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="plantMasterTableBody">
+                                <!-- Populated dynamically by config_masters.js -->
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
 
-            <!-- 3. WeighBridge Master (Idle Configuration View) -->
+            <!-- ======================================================== -->
+            <!-- 3. WeighBridge Master (Interactive View)                    -->
+            <!-- ======================================================== -->
             <div class="tab-content-panel" id="config-weighbridge-view" style="display: none;">
-                <div class="config-idle-container">
-                    <div class="config-idle-header">
-                        <div class="config-idle-header-left">
-                            <div class="config-idle-icon" style="color: #a855f7; background: rgba(168, 85, 247, 0.1); border-color: rgba(168, 85, 247, 0.25);">
+                <div class="config-master-container">
+                    <div class="config-master-header">
+                        <div class="config-master-header-left">
+                            <div class="config-master-icon icon-weighbridge">
                                 <i class="fa-solid fa-scale-balanced"></i>
                             </div>
                             <div>
-                                <h2 class="config-idle-title">WeighBridge Master</h2>
-                                <p class="config-idle-subtitle">Weighting scale bridges, load cell telemetry standards, DGMS tolerance thresholds, and ANPR camera associations.</p>
+                                <h2 class="config-master-title">WeighBridge Master</h2>
+                                <p class="config-master-subtitle">Scale bridges, load cell diagnostics, DGMS precision thresholds, and ANPR camera IP bindings.</p>
                             </div>
                         </div>
-                        <span class="config-idle-badge"><i class="fa-solid fa-shield-halved"></i> Master Active</span>
+                        <div class="config-master-actions">
+                            <button class="btn-action-primary" onclick="openAddMasterModal('weighbridge')">
+                                <i class="fa-solid fa-plus"></i> <span>Register Weighbridge</span>
+                            </button>
+                            <button class="btn-action-secondary" onclick="exportMasterTableToCsv('weighbridge')">
+                                <i class="fa-solid fa-file-csv"></i> <span>Export CSV</span>
+                            </button>
+                        </div>
                     </div>
 
-                    <div class="config-idle-grid">
-                        <div class="config-idle-card">
-                            <div class="config-idle-card-title"><i class="fa-solid fa-scale-balanced" style="color: #a855f7;"></i> Scale Infrastructure Specifications</div>
-                            <div class="config-idle-stat-row">
-                                <div class="config-idle-stat-box">
-                                    <span class="config-idle-stat-val">161</span>
-                                    <span class="config-idle-stat-lbl">Weighbridge Scales</span>
-                                </div>
-                                <div class="config-idle-stat-box">
-                                    <span class="config-idle-stat-val">100 MT</span>
-                                    <span class="config-idle-stat-lbl">Gross Scale Rating</span>
-                                </div>
-                                <div class="config-idle-stat-box">
-                                    <span class="config-idle-stat-val">±20 kg</span>
-                                    <span class="config-idle-stat-lbl">DGMS Tolerance Margin</span>
-                                </div>
+                    <!-- 4 Interactive Metric Widgets -->
+                    <div class="master-widgets-grid">
+                        <div class="master-widget-card">
+                            <div class="widget-icon-circle widget-purple"><i class="fa-solid fa-scale-balanced"></i></div>
+                            <div class="widget-info">
+                                <span class="widget-val" id="wbCountWidget">161</span>
+                                <span class="widget-lbl">Total Scales</span>
                             </div>
+                            <span class="widget-pill-badge badge-blue">CIL Network</span>
                         </div>
+                        <div class="master-widget-card">
+                            <div class="widget-icon-circle widget-green"><i class="fa-solid fa-circle-check"></i></div>
+                            <div class="widget-info">
+                                <span class="widget-val">152</span>
+                                <span class="widget-lbl">Operational Online</span>
+                            </div>
+                            <span class="widget-pill-badge badge-teal">94.4% Live</span>
+                        </div>
+                        <div class="master-widget-card">
+                            <div class="widget-icon-circle widget-amber"><i class="fa-solid fa-screwdriver-wrench"></i></div>
+                            <div class="widget-info">
+                                <span class="widget-val">9</span>
+                                <span class="widget-lbl">In Calibration</span>
+                            </div>
+                            <span class="widget-pill-badge badge-gold">Scheduled</span>
+                        </div>
+                        <div class="master-widget-card">
+                            <div class="widget-icon-circle widget-blue"><i class="fa-solid fa-shield-check"></i></div>
+                            <div class="widget-info">
+                                <span class="widget-val">±20 kg</span>
+                                <span class="widget-lbl">DGMS Tolerance Margin</span>
+                            </div>
+                            <span class="widget-pill-badge badge-teal">Certified</span>
+                        </div>
+                    </div>
 
-                        <div class="config-idle-card">
-                            <div class="config-idle-card-title"><i class="fa-solid fa-video" style="color: #38bdf8;"></i> ANPR & Optical Hardware Standards</div>
-                            <div class="config-idle-list">
-                                <div class="config-idle-item"><span>CCTV Binding Standard:</span><strong>Dual ANPR (Front Plate + Top Overhead)</strong></div>
-                                <div class="config-idle-item"><span>Load Cell Architecture:</span><strong>4x 30T Digital Compression Cells</strong></div>
-                                <div class="config-idle-item"><span>Anti-Theft Optical Beam:</span><strong>Active Infrared (IR) Interlock</strong></div>
-                            </div>
+                    <!-- Filter & Search Toolbar -->
+                    <div class="master-toolbar">
+                        <div class="master-search-box">
+                            <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                            <input type="text" id="searchWbInput" class="master-search-input" placeholder="Search weighbridge name, WB code, colliery, or ANPR camera..." oninput="filterMasterTable('weighbridge')">
                         </div>
+                        <div class="master-filter-group">
+                            <select id="filterWbStatus" class="master-select-filter" onchange="filterMasterTable('weighbridge')">
+                                <option value="all">All Operational Statuses</option>
+                                <option value="Online">Online (Active)</option>
+                                <option value="Calibration">In Calibration</option>
+                                <option value="Offline">Offline / Standby</option>
+                            </select>
+                            <select id="filterWbCapacity" class="master-select-filter" onchange="filterMasterTable('weighbridge')">
+                                <option value="all">All Capacities</option>
+                                <option value="100 MT">100 MT Heavy Scale</option>
+                                <option value="80 MT">80 MT Scale</option>
+                                <option value="60 MT">60 MT Scale</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Interactive Master Data Table -->
+                    <div class="table-responsive">
+                        <table class="master-data-table" id="masterTableWeighbridge">
+                            <thead>
+                                <tr>
+                                    <th style="width: 100px;">WB Code</th>
+                                    <th>Weighbridge Name</th>
+                                    <th>Associated Colliery / Area</th>
+                                    <th>Gross Capacity</th>
+                                    <th>Load Cell Architecture</th>
+                                    <th>ANPR Cameras</th>
+                                    <th>Last Calibration</th>
+                                    <th>Status</th>
+                                    <th class="text-center" style="width: 120px;">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="wbMasterTableBody">
+                                <!-- Populated dynamically by config_masters.js -->
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
 
-            <!-- 4. Checkpost Master (Idle Configuration View) -->
+            <!-- ======================================================== -->
+            <!-- 4. Checkpost Master (Interactive View)                      -->
+            <!-- ======================================================== -->
             <div class="tab-content-panel" id="config-checkpost-view" style="display: none;">
-                <div class="config-idle-container">
-                    <div class="config-idle-header">
-                        <div class="config-idle-header-left">
-                            <div class="config-idle-icon" style="color: #f87171; background: rgba(248, 113, 113, 0.1); border-color: rgba(248, 113, 113, 0.25);">
+                <div class="config-master-container">
+                    <div class="config-master-header">
+                        <div class="config-master-header-left">
+                            <div class="config-master-icon icon-checkpost">
                                 <i class="fa-solid fa-shield-halved"></i>
                             </div>
                             <div>
-                                <h2 class="config-idle-title">Checkpost Master</h2>
-                                <p class="config-idle-subtitle">Security checkposts, automated boom barrier protocols, long-range RFID tag scanners, and perimeter control gates.</p>
+                                <h2 class="config-master-title">Checkpost Master</h2>
+                                <p class="config-master-subtitle">Perimeter security gates, automated RFID boom barriers, optical beam interlocks, and lane passage rules.</p>
                             </div>
                         </div>
-                        <span class="config-idle-badge"><i class="fa-solid fa-shield-halved"></i> Master Active</span>
+                        <div class="config-master-actions">
+                            <button class="btn-action-primary" onclick="openAddMasterModal('checkpost')">
+                                <i class="fa-solid fa-plus"></i> <span>Add Checkpost Gate</span>
+                            </button>
+                            <button class="btn-action-secondary" onclick="exportMasterTableToCsv('checkpost')">
+                                <i class="fa-solid fa-file-csv"></i> <span>Export CSV</span>
+                            </button>
+                        </div>
                     </div>
 
-                    <div class="config-idle-grid">
-                        <div class="config-idle-card">
-                            <div class="config-idle-card-title"><i class="fa-solid fa-torii-gate" style="color: #f87171;"></i> Security Gate Parameters</div>
-                            <div class="config-idle-stat-row">
-                                <div class="config-idle-stat-box">
-                                    <span class="config-idle-stat-val">96</span>
-                                    <span class="config-idle-stat-lbl">Checkposts Mapped</span>
-                                </div>
-                                <div class="config-idle-stat-box">
-                                    <span class="config-idle-stat-val">100%</span>
-                                    <span class="config-idle-stat-lbl">Automated Boom Barriers</span>
-                                </div>
-                                <div class="config-idle-stat-box">
-                                    <span class="config-idle-stat-val">UHF Gen2</span>
-                                    <span class="config-idle-stat-lbl">RFID Scanner Standard</span>
-                                </div>
+                    <!-- 4 Interactive Metric Widgets -->
+                    <div class="master-widgets-grid">
+                        <div class="master-widget-card">
+                            <div class="widget-icon-circle widget-red"><i class="fa-solid fa-shield-halved"></i></div>
+                            <div class="widget-info">
+                                <span class="widget-val" id="cpCountWidget">96</span>
+                                <span class="widget-lbl">Mapped Checkposts</span>
                             </div>
+                            <span class="widget-pill-badge badge-teal">Active Defense</span>
                         </div>
+                        <div class="master-widget-card">
+                            <div class="widget-icon-circle widget-green"><i class="fa-solid fa-road-barrier"></i></div>
+                            <div class="widget-info">
+                                <span class="widget-val">100%</span>
+                                <span class="widget-lbl">Auto Boom Barriers</span>
+                            </div>
+                            <span class="widget-pill-badge badge-teal">RFID Synced</span>
+                        </div>
+                        <div class="master-widget-card">
+                            <div class="widget-icon-circle widget-blue"><i class="fa-solid fa-id-card-clip"></i></div>
+                            <div class="widget-info">
+                                <span class="widget-val">99.1%</span>
+                                <span class="widget-lbl">Scanner Read Rate</span>
+                            </div>
+                            <span class="widget-pill-badge badge-blue">UHF Gen2</span>
+                        </div>
+                        <div class="master-widget-card">
+                            <div class="widget-icon-circle widget-amber"><i class="fa-solid fa-truck-fast"></i></div>
+                            <div class="widget-info">
+                                <span class="widget-val">18,420</span>
+                                <span class="widget-lbl">Daily Gate Scans</span>
+                            </div>
+                            <span class="widget-pill-badge badge-gold">Auto Logged</span>
+                        </div>
+                    </div>
 
-                        <div class="config-idle-card">
-                            <div class="config-idle-card-title"><i class="fa-solid fa-id-badge" style="color: #38bdf8;"></i> Gate Passage Governance</div>
-                            <div class="config-idle-list">
-                                <div class="config-idle-item"><span>Barrier Operating Mode:</span><strong>AUTO (RFID Tag Verified Only)</strong></div>
-                                <div class="config-idle-item"><span>Lane Topology:</span><strong>Dedicated Inbound / Outbound Lanes</strong></div>
-                                <div class="config-idle-item"><span>Audit Log Protocol:</span><strong>Real-time Central Push to TRACE</strong></div>
-                            </div>
+                    <!-- Filter & Search Toolbar -->
+                    <div class="master-toolbar">
+                        <div class="master-search-box">
+                            <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                            <input type="text" id="searchCpInput" class="master-search-input" placeholder="Search gate code, checkpost name, area, or RFID IP..." oninput="filterMasterTable('checkpost')">
                         </div>
+                        <div class="master-filter-group">
+                            <select id="filterCpMode" class="master-select-filter" onchange="filterMasterTable('checkpost')">
+                                <option value="all">All Barrier Operating Modes</option>
+                                <option value="AUTO">AUTO (RFID Tag Verified)</option>
+                                <option value="MANUAL">MANUAL Override</option>
+                                <option value="MAINTENANCE">Maintenance Mode</option>
+                            </select>
+                            <select id="filterCpArea" class="master-select-filter" onchange="filterMasterTable('checkpost')">
+                                <option value="all">All Mining Sectors</option>
+                                <option value="North Karanpura">North Karanpura</option>
+                                <option value="Piparwar">Piparwar</option>
+                                <option value="Amrapali">Amrapali</option>
+                                <option value="Barka Sayal">Barka Sayal</option>
+                                <option value="Argada">Argada</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Interactive Master Data Table -->
+                    <div class="table-responsive">
+                        <table class="master-data-table" id="masterTableCheckpost">
+                            <thead>
+                                <tr>
+                                    <th style="width: 100px;">Gate Code</th>
+                                    <th>Checkpost Name</th>
+                                    <th>Mining Area</th>
+                                    <th>Lane Topology</th>
+                                    <th>RFID Reader Standard</th>
+                                    <th>Barrier Operating Mode</th>
+                                    <th>CCTV Live Feed</th>
+                                    <th>Status</th>
+                                    <th class="text-center" style="width: 120px;">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="cpMasterTableBody">
+                                <!-- Populated dynamically by config_masters.js -->
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
 
-            <!-- 5. Maintenance Master (Idle Configuration View) -->
+            <!-- ======================================================== -->
+            <!-- 5. Transporter Master (Interactive View - 6th Master)       -->
+            <!-- ======================================================== -->
+            <div class="tab-content-panel" id="config-transporter-view" style="display: none;">
+                <div class="config-master-container">
+                    <div class="config-master-header">
+                        <div class="config-master-header-left">
+                            <div class="config-master-icon icon-transporter">
+                                <i class="fa-solid fa-truck-moving"></i>
+                            </div>
+                            <div>
+                                <h2 class="config-master-title">Transporter Master</h2>
+                                <p class="config-master-subtitle">Contracted transport agencies, heavy haulage work orders, fleet allocations, and statutory driver compliance records.</p>
+                            </div>
+                        </div>
+                        <div class="config-master-actions">
+                            <button class="btn-action-primary" onclick="openAddMasterModal('transporter')">
+                                <i class="fa-solid fa-plus"></i> <span>Register Transporter</span>
+                            </button>
+                            <button class="btn-action-secondary" onclick="exportMasterTableToCsv('transporter')">
+                                <i class="fa-solid fa-file-csv"></i> <span>Export CSV</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- 4 Interactive Metric Widgets -->
+                    <div class="master-widgets-grid">
+                        <div class="master-widget-card">
+                            <div class="widget-icon-circle widget-blue"><i class="fa-solid fa-building-shield"></i></div>
+                            <div class="widget-info">
+                                <span class="widget-val" id="transporterCountWidget">38</span>
+                                <span class="widget-lbl">Contracted Agencies</span>
+                            </div>
+                            <span class="widget-pill-badge badge-teal">Empanelled</span>
+                        </div>
+                        <div class="master-widget-card">
+                            <div class="widget-icon-circle widget-green"><i class="fa-solid fa-truck"></i></div>
+                            <div class="widget-info">
+                                <span class="widget-val">2,242</span>
+                                <span class="widget-lbl">Registered Fleet Trucks</span>
+                            </div>
+                            <span class="widget-pill-badge badge-blue">GPS Tagged</span>
+                        </div>
+                        <div class="master-widget-card">
+                            <div class="widget-icon-circle widget-purple"><i class="fa-solid fa-file-signature"></i></div>
+                            <div class="widget-info">
+                                <span class="widget-val">64</span>
+                                <span class="widget-lbl">Active Work Orders</span>
+                            </div>
+                            <span class="widget-pill-badge badge-gold">CIL Contracts</span>
+                        </div>
+                        <div class="master-widget-card">
+                            <div class="widget-icon-circle widget-amber"><i class="fa-solid fa-shield-heart"></i></div>
+                            <div class="widget-info">
+                                <span class="widget-val">98.2%</span>
+                                <span class="widget-lbl">Safety & Audit Score</span>
+                            </div>
+                            <span class="widget-pill-badge badge-teal">Compliant</span>
+                        </div>
+                    </div>
+
+                    <!-- Filter & Search Toolbar -->
+                    <div class="master-toolbar">
+                        <div class="master-search-box">
+                            <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                            <input type="text" id="searchTransporterInput" class="master-search-input" placeholder="Search agency name, GSTIN, work order, or transporter code..." oninput="filterMasterTable('transporter')">
+                        </div>
+                        <div class="master-filter-group">
+                            <select id="filterTransporterTier" class="master-select-filter" onchange="filterMasterTable('transporter')">
+                                <option value="all">All Transporter Tiers</option>
+                                <option value="Tier 1">Tier 1 (Heavy Logistics)</option>
+                                <option value="Tier 2">Tier 2 (Internal Haulage)</option>
+                                <option value="Tier 3">Tier 3 (Local Dispatch)</option>
+                            </select>
+                            <select id="filterTransporterStatus" class="master-select-filter" onchange="filterMasterTable('transporter')">
+                                <option value="all">All Compliance Statuses</option>
+                                <option value="Active">Active / Approved</option>
+                                <option value="Renewal Due">Renewal Due (&lt;30d)</option>
+                                <option value="Suspended">Suspended / Flagged</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Interactive Master Data Table -->
+                    <div class="table-responsive">
+                        <table class="master-data-table" id="masterTableTransporter">
+                            <thead>
+                                <tr>
+                                    <th style="width: 100px;">Agency Code</th>
+                                    <th>Transporter Agency Name</th>
+                                    <th>GSTIN Number</th>
+                                    <th>Work Order Ref</th>
+                                    <th class="text-right">Allocated Trucks</th>
+                                    <th>Assigned Haul Corridors</th>
+                                    <th>Contract Expiry</th>
+                                    <th>Compliance Status</th>
+                                    <th class="text-center" style="width: 120px;">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="transporterMasterTableBody">
+                                <!-- Populated dynamically by config_masters.js -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ======================================================== -->
+            <!-- 6. Maintenance Master (Interactive View)                    -->
+            <!-- ======================================================== -->
             <div class="tab-content-panel" id="config-maintenance-view" style="display: none;">
-                <div class="config-idle-container">
-                    <div class="config-idle-header">
-                        <div class="config-idle-header-left">
-                            <div class="config-idle-icon" style="color: #fbbf24; background: rgba(251, 191, 36, 0.1); border-color: rgba(251, 191, 36, 0.25);">
+                <div class="config-master-container">
+                    <div class="config-master-header">
+                        <div class="config-master-header-left">
+                            <div class="config-master-icon icon-maintenance">
                                 <i class="fa-solid fa-screwdriver-wrench"></i>
                             </div>
                             <div>
-                                <h2 class="config-idle-title">Maintenance Master</h2>
-                                <p class="config-idle-subtitle">Asset health tracking, calibration cycle schedules, sensor diagnostic governance, and zero-fault tolerance regimes.</p>
+                                <h2 class="config-master-title">Maintenance Master</h2>
+                                <p class="config-master-subtitle">Preventive calibration cycles, sensor diagnostic logs, AMC SLA tracking, and scheduled repair tickets.</p>
                             </div>
                         </div>
-                        <span class="config-idle-badge"><i class="fa-solid fa-shield-halved"></i> Master Active</span>
+                        <div class="config-master-actions">
+                            <button class="btn-action-primary" onclick="openAddMasterModal('maintenance')">
+                                <i class="fa-solid fa-plus"></i> <span>Log Service Ticket</span>
+                            </button>
+                            <button class="btn-action-secondary" onclick="exportMasterTableToCsv('maintenance')">
+                                <i class="fa-solid fa-file-csv"></i> <span>Export CSV</span>
+                            </button>
+                        </div>
                     </div>
 
-                    <div class="config-idle-grid">
-                        <div class="config-idle-card">
-                            <div class="config-idle-card-title"><i class="fa-solid fa-clock-rotate-left" style="color: #fbbf24;"></i> Preventive Calibration Schedule</div>
-                            <div class="config-idle-stat-row">
-                                <div class="config-idle-stat-box">
-                                    <span class="config-idle-stat-val">90 Days</span>
-                                    <span class="config-idle-stat-lbl">Calibration Cycle</span>
-                                </div>
-                                <div class="config-idle-stat-box">
-                                    <span class="config-idle-stat-val">99.4%</span>
-                                    <span class="config-idle-stat-lbl">Fleet & Sensor Uptime</span>
-                                </div>
-                                <div class="config-idle-stat-box">
-                                    <span class="config-idle-stat-val">DGMS-2026</span>
-                                    <span class="config-idle-stat-lbl">Compliance Standard</span>
-                                </div>
+                    <!-- 4 Interactive Metric Widgets -->
+                    <div class="master-widgets-grid">
+                        <div class="master-widget-card">
+                            <div class="widget-icon-circle widget-amber"><i class="fa-solid fa-clock-rotate-left"></i></div>
+                            <div class="widget-info">
+                                <span class="widget-val">90 Days</span>
+                                <span class="widget-lbl">Calibration Cycle Standard</span>
                             </div>
+                            <span class="widget-pill-badge badge-teal">DGMS-2026</span>
                         </div>
+                        <div class="master-widget-card">
+                            <div class="widget-icon-circle widget-green"><i class="fa-solid fa-heart-pulse"></i></div>
+                            <div class="widget-info">
+                                <span class="widget-val">99.4%</span>
+                                <span class="widget-lbl">Fleet & Sensor Uptime</span>
+                            </div>
+                            <span class="widget-pill-badge badge-teal">SLA Exceeded</span>
+                        </div>
+                        <div class="master-widget-card">
+                            <div class="widget-icon-circle widget-red"><i class="fa-solid fa-ticket"></i></div>
+                            <div class="widget-info">
+                                <span class="widget-val" id="openTicketsCountWidget">14</span>
+                                <span class="widget-lbl">Open Service Tickets</span>
+                            </div>
+                            <span class="widget-pill-badge badge-red">In Progress</span>
+                        </div>
+                        <div class="master-widget-card">
+                            <div class="widget-icon-circle widget-blue"><i class="fa-solid fa-bullseye"></i></div>
+                            <div class="widget-info">
+                                <span class="widget-val">±5 kg</span>
+                                <span class="widget-lbl">Zero-Drift Tolerance</span>
+                            </div>
+                            <span class="widget-pill-badge badge-blue">Calibrated</span>
+                        </div>
+                    </div>
 
-                        <div class="config-idle-card">
-                            <div class="config-idle-card-title"><i class="fa-solid fa-heart-pulse" style="color: #34d399;"></i> Diagnostics & Health Interlocks</div>
-                            <div class="config-idle-list">
-                                <div class="config-idle-item"><span>Load Cell Zero-Drift Limit:</span><strong>±5 kg Max Drift Tolerance</strong></div>
-                                <div class="config-idle-item"><span>CCTV Video Loss Action:</span><strong>Automatic Checkpost Alert Trigger</strong></div>
-                                <div class="config-idle-item"><span>Barrier Motor Servicing:</span><strong>Semi-Annual Mechanical Inspection</strong></div>
-                            </div>
+                    <!-- Filter & Search Toolbar -->
+                    <div class="master-toolbar">
+                        <div class="master-search-box">
+                            <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                            <input type="text" id="searchMaintInput" class="master-search-input" placeholder="Search ticket #, asset ID, machine, technician, or issue..." oninput="filterMasterTable('maintenance')">
                         </div>
+                        <div class="master-filter-group">
+                            <select id="filterMaintCategory" class="master-select-filter" onchange="filterMasterTable('maintenance')">
+                                <option value="all">All Asset Categories</option>
+                                <option value="Weighbridge Scale">Weighbridge Scale</option>
+                                <option value="Boom Barrier">Boom Barrier</option>
+                                <option value="RFID Scanner">RFID Scanner</option>
+                                <option value="ANPR Optical Camera">ANPR Optical Camera</option>
+                                <option value="GPS Telemetry Unit">GPS Telemetry Unit</option>
+                            </select>
+                            <select id="filterMaintPriority" class="master-select-filter" onchange="filterMasterTable('maintenance')">
+                                <option value="all">All Priorities</option>
+                                <option value="Critical">Critical (Immediate)</option>
+                                <option value="High">High Priority</option>
+                                <option value="Routine">Routine Scheduled</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Interactive Master Data Table -->
+                    <div class="table-responsive">
+                        <table class="master-data-table" id="masterTableMaintenance">
+                            <thead>
+                                <tr>
+                                    <th style="width: 100px;">Ticket #</th>
+                                    <th>Asset / Machine ID</th>
+                                    <th>Category</th>
+                                    <th>Reported Task / Fault</th>
+                                    <th>Scheduled Date</th>
+                                    <th>Technician / AMC Partner</th>
+                                    <th>Priority</th>
+                                    <th>Status</th>
+                                    <th class="text-center" style="width: 120px;">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="maintMasterTableBody">
+                                <!-- Populated dynamically by config_masters.js -->
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
-            </div> <!-- Close content-body -->
-        </main>
-    </div>
 
+            <!-- ======================================================== -->
+            <!-- UNIVERSAL CONTRACT MANAGEMENT MODAL (Add / Edit Records) -->
+            <!-- ======================================================== -->
+            <div id="configMasterModal" class="modal" style="display: none;">
+                <div class="modal-backdrop" onclick="closeMasterModal()"></div>
+                <div class="modal-dialog config-modal-dialog">
+                    <div class="modal-header">
+                        <div class="modal-header-title">
+                            <i class="fa-solid fa-pen-to-square" id="masterModalIcon" style="color: #38bdf8;"></i>
+                            <h3 id="masterModalTitle">Add Master Record</h3>
+                        </div>
+                        <button type="button" class="modal-close-btn" onclick="closeMasterModal()">&times;</button>
+                    </div>
+                    <form id="configMasterForm" onsubmit="handleMasterFormSubmit(event)">
+                        <div class="modal-body" id="masterModalBody">
+                            <!-- Injected dynamically based on master type -->
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn-modal-cancel" onclick="closeMasterModal()">Cancel</button>
+                            <button type="submit" class="btn-modal-submit" id="masterModalSubmitBtn">
+                                <i class="fa-solid fa-check"></i> <span>Save Record</span>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>

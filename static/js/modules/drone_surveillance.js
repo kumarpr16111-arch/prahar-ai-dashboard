@@ -69,6 +69,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 4. Initialize Analytics Charts with Chart.js
     initOrResizeDroneCharts();
+
+    // 5. Dynamic Theme Change Listener
+    window.addEventListener('traceThemeChanged', () => {
+        initOrResizeDroneCharts();
+    });
 });
 
 window.initOrResizeDroneCharts = initOrResizeDroneCharts;
@@ -76,6 +81,11 @@ window.initOrResizeDroneCharts = initOrResizeDroneCharts;
 let droneTypeChartInstance = null;
 let droneBarChartInstance = null;
 let droneLineChartInstance = null;
+
+function isDroneDarkMode() {
+    const theme = document.documentElement.getAttribute('data-theme') || (localStorage.getItem('trace_theme') || 'dark');
+    return theme === 'dark';
+}
 
 function initOrResizeDroneCharts() {
     if (typeof Chart === 'undefined') {
@@ -120,6 +130,7 @@ function initViolationTypeDonutChart() {
         { label: 'unsafe_movement_lmv_near_shovel_dumper_dozer_drill', color: '#b197fc', value: 24 }
     ];
 
+    const isDark = isDroneDarkMode();
     const ctx = canvas.getContext('2d');
     droneTypeChartInstance = new Chart(ctx, {
         type: 'doughnut',
@@ -128,8 +139,8 @@ function initViolationTypeDonutChart() {
             datasets: [{
                 data: typeData.map(d => d.value),
                 backgroundColor: typeData.map(d => d.color),
-                borderWidth: 1.5,
-                borderColor: '#ffffff',
+                borderWidth: 2,
+                borderColor: isDark ? '#151d2e' : '#ffffff',
                 hoverOffset: 4
             }]
         },
@@ -142,7 +153,11 @@ function initViolationTypeDonutChart() {
                     display: false // Using custom HTML pill legend
                 },
                 tooltip: {
-                    backgroundColor: '#1e293b',
+                    backgroundColor: isDark ? '#0f172a' : '#1e293b',
+                    titleColor: '#ffffff',
+                    bodyColor: '#e2e8f0',
+                    borderColor: isDark ? '#334155' : '#cbd5e1',
+                    borderWidth: 1,
                     titleFont: { size: 12, weight: 'bold' },
                     bodyFont: { size: 11 },
                     padding: 8,
@@ -212,6 +227,7 @@ function initViolationsByDroneBarChart() {
         4, 3, 2, 5, 2, 6, 2, 3, 4, 2, 5, 2, 7, 3, 2, 4, 3, 6, 2, 4, 8, 3, 2, 5, 4
     ];
 
+    const isDark = isDroneDarkMode();
     const ctx = canvas.getContext('2d');
     droneBarChartInstance = new Chart(ctx, {
         type: 'bar',
@@ -220,8 +236,8 @@ function initViolationsByDroneBarChart() {
             datasets: [{
                 label: 'Violations',
                 data: droneValues,
-                backgroundColor: '#4a90e2',
-                borderRadius: 2,
+                backgroundColor: isDark ? '#38bdf8' : '#0284c7',
+                borderRadius: 3,
                 barPercentage: 0.55,
                 categoryPercentage: 0.8
             }]
@@ -232,7 +248,11 @@ function initViolationsByDroneBarChart() {
             plugins: {
                 legend: { display: false },
                 tooltip: {
-                    backgroundColor: '#1e293b',
+                    backgroundColor: isDark ? '#0f172a' : '#1e293b',
+                    titleColor: '#ffffff',
+                    bodyColor: '#e2e8f0',
+                    borderColor: isDark ? '#334155' : '#cbd5e1',
+                    borderWidth: 1,
                     titleFont: { size: 11, weight: 'bold' },
                     bodyFont: { size: 11 },
                     padding: 8,
@@ -245,11 +265,11 @@ function initViolationsByDroneBarChart() {
                     max: 8,
                     ticks: {
                         stepSize: 2,
-                        color: '#64748b',
+                        color: isDark ? '#94a3b8' : '#64748b',
                         font: { size: 10, weight: 500 }
                     },
                     grid: {
-                        color: '#f1f5f9',
+                        color: isDark ? 'rgba(255, 255, 255, 0.08)' : '#f1f5f9',
                         drawBorder: false
                     }
                 },
@@ -257,7 +277,7 @@ function initViolationsByDroneBarChart() {
                     ticks: {
                         maxRotation: 45,
                         minRotation: 45,
-                        color: '#64748b',
+                        color: isDark ? '#94a3b8' : '#64748b',
                         font: { size: 9, weight: 500 },
                         autoSkip: false
                     },
@@ -298,6 +318,7 @@ function initViolationsOverTimeLineChart() {
         41, 15, 20
     ];
 
+    const isDark = isDroneDarkMode();
     const ctx = canvas.getContext('2d');
     droneLineChartInstance = new Chart(ctx, {
         type: 'line',
@@ -306,13 +327,13 @@ function initViolationsOverTimeLineChart() {
             datasets: [{
                 label: 'Violations',
                 data: timeValues,
-                borderColor: '#2563eb',
-                backgroundColor: 'rgba(37, 99, 235, 0.04)',
+                borderColor: isDark ? '#38bdf8' : '#0284c7',
+                backgroundColor: isDark ? 'rgba(56, 189, 248, 0.08)' : 'rgba(2, 132, 199, 0.04)',
                 borderWidth: 2.2,
                 pointRadius: 3.5,
                 pointHoverRadius: 6,
-                pointBackgroundColor: '#2563eb',
-                pointBorderColor: '#ffffff',
+                pointBackgroundColor: isDark ? '#38bdf8' : '#0284c7',
+                pointBorderColor: isDark ? '#151d2e' : '#ffffff',
                 pointBorderWidth: 1.5,
                 tension: 0.1,
                 fill: false
@@ -324,7 +345,11 @@ function initViolationsOverTimeLineChart() {
             plugins: {
                 legend: { display: false },
                 tooltip: {
-                    backgroundColor: '#1e293b',
+                    backgroundColor: isDark ? '#0f172a' : '#1e293b',
+                    titleColor: '#ffffff',
+                    bodyColor: '#e2e8f0',
+                    borderColor: isDark ? '#334155' : '#cbd5e1',
+                    borderWidth: 1,
                     titleFont: { size: 11, weight: 'bold' },
                     bodyFont: { size: 11 },
                     padding: 8,
@@ -342,11 +367,11 @@ function initViolationsOverTimeLineChart() {
                     max: 120,
                     ticks: {
                         stepSize: 20,
-                        color: '#64748b',
+                        color: isDark ? '#94a3b8' : '#64748b',
                         font: { size: 10, weight: 500 }
                     },
                     grid: {
-                        color: '#f1f5f9',
+                        color: isDark ? 'rgba(255, 255, 255, 0.08)' : '#f1f5f9',
                         drawBorder: false
                     }
                 },
@@ -354,12 +379,13 @@ function initViolationsOverTimeLineChart() {
                     ticks: {
                         maxRotation: 45,
                         minRotation: 45,
-                        color: '#64748b',
+                        color: isDark ? '#94a3b8' : '#64748b',
                         font: { size: 9, weight: 500 },
-                        autoSkip: false
+                        autoSkip: true,
+                        maxTicksLimit: 16
                     },
                     grid: {
-                        color: '#f8fafc'
+                        color: isDark ? 'rgba(255, 255, 255, 0.04)' : '#f8fafc'
                     }
                 }
             }

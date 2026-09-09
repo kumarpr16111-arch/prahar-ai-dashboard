@@ -199,7 +199,9 @@ function renderFleetTable() {
                 <td>
                     <div style="display: flex; align-items: center; gap: 8px;">
                         <i class="fa-solid fa-truck" style="color: #0284c7; font-size: 13px;"></i>
-                        <span class="vts-vehicle-plate">${escapeHtml(item.vehicle_no)}</span>
+                        <a href="javascript:void(0)" onclick="closeFleetModal(); openVtsLiveTrackingView('${escapeHtml(item.vehicle_no)}');" class="vts-vehicle-plate" style="text-decoration: none; cursor: pointer;" title="Click to track live on Satellite Map">
+                            ${escapeHtml(item.vehicle_no)} <i class="fa-solid fa-location-crosshairs" style="font-size: 11px; margin-left: 4px; color: #0284c7;"></i>
+                        </a>
                     </div>
                 </td>
                 <td>
@@ -211,6 +213,11 @@ function renderFleetTable() {
                 <td><span style="color: #475569;">${escapeHtml(item.project)}</span></td>
                 <td><code class="vts-device-code">${escapeHtml(item.device_id)}</code></td>
                 <td><span style="font-size: 12.5px; color: #334155;">${escapeHtml(item.transporter)}</span></td>
+                <td style="text-align: center; white-space: nowrap;">
+                    <button type="button" onclick="closeFleetModal(); openVtsModifyModal('${escapeHtml(item.vehicle_no)}');" style="padding: 4px 10px; font-size: 11.5px; font-weight: 700; color: #b45309; background: #fef3c7; border: 1px solid #fde68a; border-radius: 4px; cursor: pointer; transition: all 0.15s;" title="Modify vehicle details">
+                        <i class="fa-solid fa-pen-to-square"></i> Edit
+                    </button>
+                </td>
             </tr>
         `;
     });
@@ -594,7 +601,9 @@ function renderAlertsTable() {
                 <td>
                     <div style="display: flex; align-items: center; gap: 8px;">
                         <i class="fa-solid fa-truck" style="color: #0284c7; font-size: 13px;"></i>
-                        <span class="vts-vehicle-plate">${escapeHtml(item.vehicle_no)}</span>
+                        <a href="javascript:void(0)" onclick="closeAlertsModal(); openVtsLiveTrackingView('${escapeHtml(item.vehicle_no)}');" class="vts-vehicle-plate" style="text-decoration: none; cursor: pointer;" title="Click to track live on Satellite Map">
+                            ${escapeHtml(item.vehicle_no)} <i class="fa-solid fa-location-crosshairs" style="font-size: 11px; margin-left: 4px; color: #0284c7;"></i>
+                        </a>
                     </div>
                 </td>
                 <td>
@@ -785,3 +794,251 @@ window.exportAlertsPDF = function() {
     printWindow.document.write(printHtml);
     printWindow.document.close();
 };
+
+// ========================================================
+// VTS CONFIGURATION ACTIONS (Register, Modify, Routes, Devices)
+// ========================================================
+
+// 1. REGISTER NEW VEHICLE / DEVICE
+window.openVtsRegisterModal = function() {
+    const modal = document.getElementById('vtsRegisterModal');
+    if (!modal) return;
+    const form = document.getElementById('vtsRegisterForm');
+    if (form) form.reset();
+    modal.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+};
+
+window.closeVtsRegisterModal = function() {
+    const modal = document.getElementById('vtsRegisterModal');
+    if (modal) {
+        modal.style.display = 'none';
+        document.body.style.overflow = '';
+    }
+};
+
+window.handleVtsRegisterSubmit = function(e) {
+    e.preventDefault();
+    const vehicleNo = (document.getElementById('regVehicleNo')?.value || '').trim().toUpperCase();
+    const area = document.getElementById('regArea')?.value || 'Amrapali & Chandragupta';
+    const project = (document.getElementById('regProject')?.value || '').trim();
+    const deviceId = (document.getElementById('regDeviceId')?.value || '').trim();
+    const transporter = (document.getElementById('regTransporter')?.value || '').trim();
+    const status = document.getElementById('regStatus')?.value || 'Online';
+
+    if (!vehicleNo || !deviceId) {
+        alert('Please fill in required fields (Vehicle Number & Device ID).');
+        return;
+    }
+
+    if (!window.VTS_FLEET_DATA) window.VTS_FLEET_DATA = [];
+
+    // Create new fleet entry
+    const newEntry = {
+        sno: String(window.VTS_FLEET_DATA.length + 1),
+        vehicle_no: vehicleNo,
+        area: area,
+        project: project || area,
+        device_id: deviceId,
+        transporter: transporter || 'CCL Contract Carrier',
+        status: status
+    };
+
+    window.VTS_FLEET_DATA.unshift(newEntry);
+
+    showVtsToast(`✅ Registered ${vehicleNo} (${deviceId}) successfully!`, '#16a34a');
+    closeVtsRegisterModal();
+
+    // Refresh tables if open
+    if (typeof renderFleetTable === 'function') renderFleetTable();
+    initVtsFleetAreaOptions();
+};
+
+// 2. MODIFY EXISTING VEHICLE RECORD
+window.openVtsModifyModal = function(targetVehNo = null) {
+    const modal = document.getElementById('vtsModifyModal');
+    if (!modal || !window.VTS_FLEET_DATA) return;
+
+    const select = document.getElementById('modVehicleSelect');
+    if (select) {
+        select.innerHTML = '';
+        window.VTS_FLEET_DATA.slice(0, 300).forEach(v => {
+            const opt = document.createElement('option');
+            opt.value = v.vehicle_no;
+            opt.textContent = `${v.vehicle_no} — ${v.area} (${v.status})`;
+            select.appendChild(opt);
+        });
+
+        if (targetVehNo) {
+            select.value = targetVehNo;
+        }
+        onModifyVehicleSelect(select.value);
+    }
+
+    modal.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+};
+
+window.closeVtsModifyModal = function() {
+    const modal = document.getElementById('vtsModifyModal');
+    if (modal) {
+        modal.style.display = 'none';
+        document.body.style.overflow = '';
+    }
+};
+
+window.onModifyVehicleSelect = function(vehNo) {
+    if (!window.VTS_FLEET_DATA) return;
+    const v = window.VTS_FLEET_DATA.find(item => item.vehicle_no === vehNo);
+    if (!v) return;
+
+    const setVal = (id, val) => {
+        const el = document.getElementById(id);
+        if (el) el.value = val || '';
+    };
+
+    setVal('modVehicleNo', v.vehicle_no);
+    setVal('modArea', v.area);
+    setVal('modProject', v.project);
+    setVal('modDeviceId', v.device_id);
+    setVal('modTransporter', v.transporter);
+    setVal('modStatus', v.status);
+};
+
+window.handleVtsModifySubmit = function(e) {
+    e.preventDefault();
+    const origVehNo = document.getElementById('modVehicleSelect')?.value;
+    const newVehNo = (document.getElementById('modVehicleNo')?.value || '').trim().toUpperCase();
+    const area = document.getElementById('modArea')?.value;
+    const project = (document.getElementById('modProject')?.value || '').trim();
+    const deviceId = (document.getElementById('modDeviceId')?.value || '').trim();
+    const transporter = (document.getElementById('modTransporter')?.value || '').trim();
+    const status = document.getElementById('modStatus')?.value || 'Online';
+
+    if (!window.VTS_FLEET_DATA) return;
+    const v = window.VTS_FLEET_DATA.find(item => item.vehicle_no === origVehNo);
+    if (v) {
+        v.vehicle_no = newVehNo;
+        v.area = area;
+        v.project = project;
+        v.device_id = deviceId;
+        v.transporter = transporter;
+        v.status = status;
+
+        showVtsToast(`✏️ Updated record for ${newVehNo} successfully!`, '#d97706');
+        closeVtsModifyModal();
+
+        if (typeof renderFleetTable === 'function') renderFleetTable();
+    }
+};
+
+// 3. ROUTE & WORKSHOP ASSIGNMENT
+window.openVtsRouteWorkshopModal = function() {
+    const modal = document.getElementById('vtsRouteWorkshopModal');
+    if (!modal || !window.VTS_FLEET_DATA) return;
+
+    const select = document.getElementById('rwVehicleSelect');
+    if (select) {
+        select.innerHTML = '';
+        window.VTS_FLEET_DATA.slice(0, 200).forEach(v => {
+            const opt = document.createElement('option');
+            opt.value = v.vehicle_no;
+            opt.textContent = `${v.vehicle_no} — ${v.area} (${v.status})`;
+            select.appendChild(opt);
+        });
+    }
+
+    modal.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+};
+
+window.closeVtsRouteWorkshopModal = function() {
+    const modal = document.getElementById('vtsRouteWorkshopModal');
+    if (modal) {
+        modal.style.display = 'none';
+        document.body.style.overflow = '';
+    }
+};
+
+window.handleVtsRouteWorkshopSubmit = function(e) {
+    e.preventDefault();
+    const vehNo = document.getElementById('rwVehicleSelect')?.value;
+    const route = document.getElementById('rwRouteSelect')?.value;
+    const state = document.getElementById('rwStateSelect')?.value;
+
+    const v = window.VTS_FLEET_DATA?.find(item => item.vehicle_no === vehNo);
+    if (v) {
+        v.status = state;
+    }
+
+    showVtsToast(`🛣️ Assigned route & set status to ${state} for ${vehNo}!`, '#0284c7');
+    closeVtsRouteWorkshopModal();
+    if (typeof renderFleetTable === 'function') renderFleetTable();
+};
+
+// 4. DEVICE ACTIONS (REMOVE / REINSTALL)
+window.openVtsDeviceActionModal = function() {
+    const modal = document.getElementById('vtsDeviceActionModal');
+    if (!modal || !window.VTS_FLEET_DATA) return;
+
+    const select = document.getElementById('daVehicleSelect');
+    if (select) {
+        select.innerHTML = '';
+        window.VTS_FLEET_DATA.slice(0, 200).forEach(v => {
+            const opt = document.createElement('option');
+            opt.value = v.vehicle_no;
+            opt.textContent = `${v.vehicle_no} (Device: ${v.device_id})`;
+            select.appendChild(opt);
+        });
+    }
+
+    modal.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+};
+
+window.closeVtsDeviceActionModal = function() {
+    const modal = document.getElementById('vtsDeviceActionModal');
+    if (modal) {
+        modal.style.display = 'none';
+        document.body.style.overflow = '';
+    }
+};
+
+window.handleVtsDeviceActionSubmit = function(e) {
+    e.preventDefault();
+    const vehNo = document.getElementById('daVehicleSelect')?.value;
+    const action = document.getElementById('daActionType')?.value;
+    const notes = document.getElementById('daNotes')?.value;
+
+    const v = window.VTS_FLEET_DATA?.find(item => item.vehicle_no === vehNo);
+    if (v && action === 'deactivate') {
+        v.status = 'Offline';
+    }
+
+    showVtsToast(`📡 Device action applied for ${vehNo} successfully!`, '#0284c7');
+    closeVtsDeviceActionModal();
+    if (typeof renderFleetTable === 'function') renderFleetTable();
+};
+
+// Sleek Toast Utility
+function showVtsToast(message, bgColor = '#0284c7') {
+    const toast = document.createElement('div');
+    toast.style.position = 'fixed';
+    toast.style.bottom = '28px';
+    toast.style.right = '28px';
+    toast.style.background = bgColor;
+    toast.style.color = '#ffffff';
+    toast.style.padding = '12px 20px';
+    toast.style.borderRadius = '8px';
+    toast.style.boxShadow = '0 10px 25px rgba(0,0,0,0.4)';
+    toast.style.zIndex = '999999';
+    toast.style.fontWeight = '700';
+    toast.style.fontSize = '13px';
+    toast.style.display = 'flex';
+    toast.style.alignItems = 'center';
+    toast.style.gap = '8px';
+    toast.innerHTML = message;
+    document.body.appendChild(toast);
+    setTimeout(() => toast.remove(), 3200);
+}
+

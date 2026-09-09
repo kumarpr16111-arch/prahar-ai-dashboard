@@ -1,0 +1,247 @@
+<!-- ======================================================== -->
+<!-- VTS LIVE TRACKING VIEW (Satellite Map & Real-time Swarm) -->
+<!-- Multi-Mine Sector Tracking across CCL Coalfields        -->
+<!-- ======================================================== -->
+<div class="tab-content-panel vts-live-map-panel" id="vts-live-map-view" style="display: none;">
+    <div class="vts-map-layout-wrapper">
+        
+        <!-- LEFT SIDEBAR: VEHICLE SEARCH & FLEET SELECTION -->
+        <aside class="vts-map-sidebar" id="vtsMapSidebar">
+            <!-- Sidebar Header / Search & Area Select -->
+            <div class="vts-map-sidebar-header">
+                <!-- Mining Area Selector Dropdown -->
+                <div class="vts-area-select-wrap">
+                    <label class="vts-area-select-label"><i class="fa-solid fa-layer-group"></i> Active Mine Sector:</label>
+                    <select id="vtsLiveAreaSelect" class="vts-live-area-select" onchange="handleVtsAreaSelect(this.value)">
+                        <option value="amrapali">Amrapali Open Cast Project (CO07)</option>
+                        <option value="magadh">Magadh Open Cast Project (CO06)</option>
+                        <option value="piparwar">Ashoka & Piparwar OCP (CO13)</option>
+                        <option value="nk">Dakra & Rohini OCP (NK Area CO03)</option>
+                        <option value="barka">Urimari & Birsa OCP (Barka-Sayal CO01)</option>
+                        <option value="argada">Giddi-A & Religara OCP (Argada CO02)</option>
+                        <option value="kuju">Karma & Topa OCP (Kuju Area CO09)</option>
+                        <option value="hazaribagh">Tapin & Kedla OCP (Hazaribagh Area CO10)</option>
+                        <option value="bokaro">Karo & Kargali OCP (B&K Area CO04)</option>
+                        <option value="kathara">Kathara & Jarangdih OCP (CO05)</option>
+                        <option value="dhori">Selected Dhori & SD OCM (CO12)</option>
+                        <option value="rajrappa">Rajrappa Open Cast Project (CO11)</option>
+                        <option value="giridih">Kabribad OCP (Giridih Area CO15)</option>
+                        <option value="rajhara">Rajhara Colliery OCP (CO08)</option>
+                        <option value="all">🌐 All Coalfields Overview</option>
+                    </select>
+                </div>
+
+                <!-- Search Input -->
+                <div class="vts-map-search-box">
+                    <div class="vts-search-input-wrap">
+                        <i class="fa-solid fa-magnifying-glass search-inner-icon"></i>
+                        <input type="text" id="vtsLiveSearchInput" placeholder="Search Vehicle / Transporter..." oninput="handleVtsLiveSearch(this.value)" autocomplete="off">
+                    </div>
+                </div>
+
+                <!-- Status Filter Pills (Online / Offline / All) -->
+                <div class="vts-map-filter-pills">
+                    <button class="vts-pill-btn pill-online active" id="vtsPillOnline" onclick="setVtsLiveStatusFilter('Online')">
+                        <i class="fa-solid fa-tower-broadcast"></i> Online <span id="vtsCountOnline">10</span>
+                    </button>
+                    <button class="vts-pill-btn pill-offline" id="vtsPillOffline" onclick="setVtsLiveStatusFilter('Offline')">
+                        <i class="fa-solid fa-battery-empty"></i> Offline <span id="vtsCountOffline">2</span>
+                    </button>
+                    <button class="vts-pill-btn pill-all" id="vtsPillAll" onclick="setVtsLiveStatusFilter('all')">
+                        All <span id="vtsCountAll">12</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Scrollable Vehicle List -->
+            <div class="vts-map-vehicle-list" id="vtsMapVehicleList">
+                <!-- Dynamically populated via JS -->
+            </div>
+
+            <!-- Sidebar Bottom Footer Controls -->
+            <div class="vts-map-sidebar-footer">
+                <button class="vts-foot-action-btn" onclick="closeVtsLiveTrackingView()" title="Return to VTS Dashboard">
+                    <i class="fa-solid fa-house"></i>
+                    <span>Home</span>
+                </button>
+                <button class="vts-foot-action-btn" id="vtsBtnToggleReplay" onclick="toggleVtsReplayMode()" title="Open GPS Route Replay History">
+                    <i class="fa-solid fa-route"></i>
+                    <span>Replay</span>
+                </button>
+            </div>
+        </aside>
+
+        <!-- CENTER / MAIN MAP VIEW -->
+        <div class="vts-map-canvas-container" id="vtsMapCanvasContainer">
+            <!-- Leaflet Map Mount Point -->
+            <div id="vtsLiveMapContainer" style="width: 100%; height: 100%; min-height: 100%;"></div>
+
+            <!-- Top Floating Quick Mine Selector Chips Bar -->
+            <div class="vts-mine-chips-bar" id="vtsMineChipsBar">
+                <button class="vts-mine-chip active" data-mine="amrapali" onclick="selectMineSector('amrapali')">
+                    <i class="fa-solid fa-mountain"></i> Amrapali
+                </button>
+                <button class="vts-mine-chip" data-mine="magadh" onclick="selectMineSector('magadh')">
+                    <i class="fa-solid fa-mountain"></i> Magadh
+                </button>
+                <button class="vts-mine-chip" data-mine="piparwar" onclick="selectMineSector('piparwar')">
+                    <i class="fa-solid fa-mountain"></i> Piparwar
+                </button>
+                <button class="vts-mine-chip" data-mine="nk" onclick="selectMineSector('nk')">
+                    <i class="fa-solid fa-mountain"></i> NK Mines
+                </button>
+                <button class="vts-mine-chip" data-mine="barka" onclick="selectMineSector('barka')">
+                    <i class="fa-solid fa-mountain"></i> Barka-Sayal
+                </button>
+                <button class="vts-mine-chip" data-mine="argada" onclick="selectMineSector('argada')">
+                    <i class="fa-solid fa-mountain"></i> Argada
+                </button>
+                <button class="vts-mine-chip" data-mine="kuju" onclick="selectMineSector('kuju')">
+                    <i class="fa-solid fa-mountain"></i> Kuju
+                </button>
+                <button class="vts-mine-chip" data-mine="hazaribagh" onclick="selectMineSector('hazaribagh')">
+                    <i class="fa-solid fa-mountain"></i> Hazaribagh
+                </button>
+                <button class="vts-mine-chip" data-mine="bokaro" onclick="selectMineSector('bokaro')">
+                    <i class="fa-solid fa-mountain"></i> Bokaro
+                </button>
+                <button class="vts-mine-chip" data-mine="kathara" onclick="selectMineSector('kathara')">
+                    <i class="fa-solid fa-mountain"></i> Kathara
+                </button>
+                <button class="vts-mine-chip" data-mine="dhori" onclick="selectMineSector('dhori')">
+                    <i class="fa-solid fa-mountain"></i> Dhori
+                </button>
+                <button class="vts-mine-chip" data-mine="giridih" onclick="selectMineSector('giridih')">
+                    <i class="fa-solid fa-mountain"></i> Giridih
+                </button>
+                <button class="vts-mine-chip" data-mine="all" onclick="selectMineSector('all')">
+                    <i class="fa-solid fa-globe"></i> Overview
+                </button>
+            </div>
+
+            <!-- Top Right Map Floating Controls -->
+            <div class="vts-map-floating-controls">
+                <button class="vts-map-ctrl-btn" onclick="toggleMapFullscreen()" title="Toggle Fullscreen Map">
+                    <i class="fa-solid fa-expand" id="vtsMapFsIcon"></i>
+                </button>
+                <button class="vts-map-ctrl-btn" onclick="vtsMapZoomIn()" title="Zoom In">
+                    <i class="fa-solid fa-plus"></i>
+                </button>
+                <button class="vts-map-ctrl-btn" onclick="vtsMapZoomOut()" title="Zoom Out">
+                    <i class="fa-solid fa-minus"></i>
+                </button>
+                <button class="vts-map-ctrl-btn" onclick="recenterActiveMine()" title="Focus Current Mine Pit">
+                    <i class="fa-solid fa-crosshairs"></i>
+                </button>
+                <button class="vts-map-ctrl-btn" id="vtsBtnLayers" onclick="toggleVtsMapLayer()" title="Switch Satellite / Hybrid / Terrain Layer">
+                    <i class="fa-solid fa-layer-group"></i>
+                </button>
+                <button class="vts-map-ctrl-btn" id="vtsBtnGeofences" onclick="toggleVtsGeofences()" title="Toggle Geofence Boundaries">
+                    <i class="fa-solid fa-draw-polygon"></i>
+                </button>
+                <button class="vts-map-ctrl-btn vts-alert-badge-btn" onclick="openAlertsModal('all')" title="Live Geofence Alerts">
+                    <i class="fa-solid fa-bell"></i>
+                    <span class="vts-ctrl-alert-dot"></span>
+                </button>
+            </div>
+
+            <!-- TOP FLOATING REPLAY CONTROLLER (Visible only when Replay mode active) -->
+            <div class="vts-replay-hud" id="vtsReplayHud" style="display: none;">
+                <div class="vts-replay-header">
+                    <div class="replay-title">
+                        <i class="fa-solid fa-clock-rotate-left"></i>
+                        <span>HISTORICAL GPS PLAYBACK: <strong id="vtsReplayVehicleTag">JH02BC9171</strong></span>
+                    </div>
+                    <button class="vts-replay-close-btn" onclick="toggleVtsReplayMode()">✕</button>
+                </div>
+                <div class="vts-replay-controls">
+                    <button class="replay-play-btn" id="vtsReplayPlayBtn" onclick="toggleReplayPlayPause()">
+                        <i class="fa-solid fa-play" id="vtsReplayPlayIcon"></i>
+                    </button>
+                    <div class="replay-scrubber-wrap">
+                        <input type="range" id="vtsReplayScrubber" min="0" max="100" value="0" oninput="handleReplayScrub(this.value)">
+                        <div class="replay-time-indicators">
+                            <span id="vtsReplayStartTime">2026-09-09 08:00:00</span>
+                            <span id="vtsReplayCurrentTime" style="color: #38bdf8; font-weight: 700;">2026-09-09 14:32:10</span>
+                            <span id="vtsReplayEndTime">2026-09-09 23:20:00</span>
+                        </div>
+                    </div>
+                    <div class="replay-speed-selector">
+                        <button class="speed-btn active" onclick="setReplaySpeed(1, this)">1x</button>
+                        <button class="speed-btn" onclick="setReplaySpeed(2, this)">2x</button>
+                        <button class="speed-btn" onclick="setReplaySpeed(5, this)">5x</button>
+                        <button class="speed-btn" onclick="setReplaySpeed(10, this)">10x</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- BOTTOM FLOATING TELEMETRY HUD (Matches user screenshot) -->
+            <div class="vts-telemetry-hud" id="vtsVehicleTelemetryHud" style="display: none;">
+                <div class="vts-telemetry-hud-inner">
+                    <!-- Top Row: Identification & Meta -->
+                    <div class="vts-hud-top-row">
+                        <div class="vts-hud-primary-info">
+                            <div class="vts-hud-item">
+                                <span class="vts-hud-label">Vehicle:</span>
+                                <span class="vts-hud-val val-highlight" id="hudVehicleNo">JH02BC9171</span>
+                            </div>
+                            <div class="vts-hud-item">
+                                <span class="vts-hud-label">Area:</span>
+                                <span class="vts-hud-val" id="hudArea">Amrapali</span>
+                            </div>
+                            <div class="vts-hud-item">
+                                <span class="vts-hud-label">Transporter:</span>
+                                <span class="vts-hud-val" id="hudTransporter">M/s varint commercial private limited</span>
+                            </div>
+                        </div>
+                        <div class="vts-hud-meta-info">
+                            <div class="vts-hud-item">
+                                <span class="vts-hud-label">LastUpdate:</span>
+                                <span class="vts-hud-val val-time" id="hudLastUpdate">2026-09-09 23:19:34</span>
+                            </div>
+                            <button class="vts-hud-close-btn" onclick="closeVtsTelemetryHud()" title="Close Details HUD">✕</button>
+                        </div>
+                    </div>
+
+                    <!-- Bottom Row: Telemetry Metrics -->
+                    <div class="vts-hud-bottom-row">
+                        <div class="vts-hud-metric">
+                            <span class="metric-title">Speed</span>
+                            <span class="metric-value" id="hudSpeed">4.10 km/h</span>
+                        </div>
+                        <div class="vts-hud-metric">
+                            <span class="metric-title">Motion</span>
+                            <span class="metric-value val-status-yes" id="hudMotion">Yes</span>
+                        </div>
+                        <div class="vts-hud-metric">
+                            <span class="metric-title">Power</span>
+                            <span class="metric-value" id="hudPower">26.87 V</span>
+                        </div>
+                        <div class="vts-hud-metric">
+                            <span class="metric-title">Charge</span>
+                            <span class="metric-value val-status-yes" id="hudCharge">Yes</span>
+                        </div>
+                        <div class="vts-hud-metric">
+                            <span class="metric-title">Operator</span>
+                            <span class="metric-value" id="hudOperator">airtel</span>
+                        </div>
+                        <div class="vts-hud-metric">
+                            <span class="metric-title">Tare Wt</span>
+                            <span class="metric-value" id="hudTareWt">15.90 Mt</span>
+                        </div>
+                        <div class="vts-hud-metric">
+                            <span class="metric-title">Gross Wt</span>
+                            <span class="metric-value" id="hudGrossWt">33.86 Mt</span>
+                        </div>
+                        <div class="vts-hud-metric">
+                            <span class="metric-title">Load State</span>
+                            <span class="metric-value val-load" id="hudLoadState">Loaded</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div> <!-- Close vts-map-canvas-container -->
+
+    </div> <!-- Close vts-map-layout-wrapper -->
+</div>

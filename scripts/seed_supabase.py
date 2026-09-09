@@ -136,13 +136,43 @@ IRREGULAR_DOS_DATA = [
     {"do_no": "DO-2026-9905", "unit": "North Karanpura", "irr_trips": 14, "num_vehicles": 3, "src_co": "CO09", "src_wb": "WB-01", "dst_co": "CO08", "dst_wb": "WB-03"}
 ]
 
+BLACKLISTED_VEHICLES_DATA = [
+    {"v_no": "JH02BZ8562", "remarks": "Created jaam disturb transporting", "blacklisted_by": "Avinash Kishore", "blacklisted_on": "2026-08-28 08:51:58", "status": "ACTIVE"},
+    {"v_no": "AP07TM1599", "remarks": "Procedure lapses and doute ful. Enquiry under process", "blacklisted_by": "Dispatch Officer KBP", "blacklisted_on": "2026-08-24 10:52:20", "status": "ACTIVE"},
+    {"v_no": "JH16F1434", "remarks": "Found indulge in illegal activity FIR lodged at balumath P.S", "blacklisted_by": "Avinash Kishore", "blacklisted_on": "2026-08-01 17:48:49", "status": "ACTIVE"},
+    {"v_no": "JH19E8824", "remarks": "found indulge in illegal activity on dated-23/07/2026.", "blacklisted_by": "Avinash Kishore", "blacklisted_on": "2026-07-24 13:27:03", "status": "ACTIVE"},
+    {"v_no": "JH02BU4231", "remarks": "Broken boom barrier at Checkpost 12 and did not got entry .", "blacklisted_by": "Avinash Kishore", "blacklisted_on": "2026-07-16 06:03:50", "status": "ACTIVE"},
+    {"v_no": "WB15D7999", "remarks": "This vehicle damaged the boom Barr of Checkpost 12", "blacklisted_by": "Avinash Kishore", "blacklisted_on": "2026-07-09 19:06:47", "status": "ACTIVE"},
+    {"v_no": "JH02BP2620", "remarks": "Ref No: HOD (Security)/CCL/Blacklist-Veh./2026/147 Dated: 16.06.2026", "blacklisted_by": "admin", "blacklisted_on": "2026-07-02 13:11:05", "status": "ACTIVE"},
+    {"v_no": "BR02GD3789", "remarks": "This vehicle damaged the boom Barrier of weigh bridge 11", "blacklisted_by": "Rajeev Ranjan", "blacklisted_on": "2026-07-02 07:35:44", "status": "ACTIVE"},
+    {"v_no": "CG07D1070", "remarks": "THIS VEHICLE DAMAGED BOOM BARRIER OF CHECKPOST NO. 12", "blacklisted_by": "Rajeev Ranjan", "blacklisted_on": "2026-07-01 11:51:22", "status": "ACTIVE"},
+    {"v_no": "JH02BY3436", "remarks": "THIS VEHICLE DAMAGED BOOM BARRIER OF CHECKPOST NO. 12", "blacklisted_by": "Rajeev Ranjan", "blacklisted_on": "2026-07-01 11:49:25", "status": "ACTIVE"},
+    {"v_no": "OD16K2800", "remarks": "The vehicle is being blacklisted due to tampering in GPS.", "blacklisted_by": "Bokaro & Kargali", "blacklisted_on": "2026-06-30 14:32:39", "status": "ACTIVE"},
+    {"v_no": "BR02GA4922", "remarks": "Already Blacklisted Vehicle. List given by Security Department. CCL HQ", "blacklisted_by": "admin", "blacklisted_on": "2026-06-26 17:37:22", "status": "ACTIVE"},
+    {"v_no": "BR02GA8258", "remarks": "Already Blacklisted Vehicle. List given by Security Department. CCL HQ", "blacklisted_by": "admin", "blacklisted_on": "2026-06-26 17:37:22", "status": "ACTIVE"},
+    {"v_no": "BR02GA8556", "remarks": "Already Blacklisted Vehicle. List given by Security Department. CCL HQ", "blacklisted_by": "admin", "blacklisted_on": "2026-06-26 17:37:22", "status": "ACTIVE"},
+    {"v_no": "BR09GA4905", "remarks": "Already Blacklisted Vehicle. List given by Security Department. CCL HQ", "blacklisted_by": "admin", "blacklisted_on": "2026-06-26 17:37:22", "status": "ACTIVE"},
+    {"v_no": "CG12AZ1003", "remarks": "Already Blacklisted Vehicle. List given by Security Department. CCL HQ", "blacklisted_by": "admin", "blacklisted_on": "2026-06-26 17:37:22", "status": "ACTIVE"},
+    {"v_no": "CG14D0484", "remarks": "Already Blacklisted Vehicle. List given by Security Department. CCL HQ", "blacklisted_by": "admin", "blacklisted_on": "2026-06-26 17:37:22", "status": "ACTIVE"},
+    {"v_no": "CG15AC2023", "remarks": "Already Blacklisted Vehicle. List given by Security Department. CCL HQ", "blacklisted_by": "admin", "blacklisted_on": "2026-06-26 17:37:22", "status": "ACTIVE"},
+    {"v_no": "HR55M1420", "remarks": "Already Blacklisted Vehicle. List given by Security Department. CCL HQ", "blacklisted_by": "admin", "blacklisted_on": "2026-06-26 17:37:22", "status": "ACTIVE"},
+    {"v_no": "JH01AH4118", "remarks": "Already Blacklisted Vehicle. List given by Security Department. CCL HQ", "blacklisted_by": "admin", "blacklisted_on": "2026-06-26 17:37:22", "status": "ACTIVE"},
+    {"v_no": "JH01AJ1079", "remarks": "Already Blacklisted Vehicle. List given by Security Department. CCL HQ", "blacklisted_by": "admin", "blacklisted_on": "2026-06-26 17:37:22", "status": "ACTIVE"},
+    {"v_no": "JH01AY6092", "remarks": "Already Blacklisted Vehicle. List given by Security Department. CCL HQ", "blacklisted_by": "admin", "blacklisted_on": "2026-06-26 17:37:22", "status": "ACTIVE"},
+    {"v_no": "JH01BZ1124", "remarks": "Already Blacklisted Vehicle. List given by Security Department. CCL HQ", "blacklisted_by": "admin", "blacklisted_on": "2026-06-26 17:37:22", "status": "ACTIVE"},
+    {"v_no": "JH01CH5792", "remarks": "Already Blacklisted Vehicle. List given by Security Department. CCL HQ", "blacklisted_by": "admin", "blacklisted_on": "2026-06-26 17:37:22", "status": "ACTIVE"},
+    {"v_no": "JH01EY8719", "remarks": "Already Blacklisted Vehicle. List given by Security Department. CCL HQ", "blacklisted_by": "admin", "blacklisted_on": "2026-06-26 17:37:22", "status": "ACTIVE"}
+]
+
 async def seed_table(client: httpx.AsyncClient, table_name: str, data_list: list):
     print(f"Seeding {table_name} with {len(data_list)} records...")
+    headers = get_headers().copy()
+    headers["Prefer"] = "resolution=merge-duplicates"
     for item in data_list:
         try:
             resp = await client.post(
                 f"{SUPABASE_URL}/rest/v1/{table_name}",
-                headers=get_headers(),
+                headers=headers,
                 json=item
             )
             if resp.status_code not in [200, 201]:
@@ -163,6 +193,7 @@ async def main():
         await seed_table(client, "rfid_config", RFID_LIST)
         await seed_table(client, "irregular_vehicles", IRREGULAR_VEHICLES_DATA)
         await seed_table(client, "irregular_dos", IRREGULAR_DOS_DATA)
+        await seed_table(client, "blacklisted_vehicles", BLACKLISTED_VEHICLES_DATA)
     print("Database seeding completed successfully!")
 
 if __name__ == "__main__":

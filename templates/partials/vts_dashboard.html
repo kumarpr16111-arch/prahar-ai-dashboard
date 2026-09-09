@@ -106,7 +106,7 @@
                                 </div>
                                 <div class="vts-grid grid-1">
                                     <!-- Live View Banner -->
-                                    <div class="vts-action-card card-teal-bg" onclick="window.location.hash='vts'; if(window.switchView) window.switchView('vts');" style="cursor: pointer;" title="Open Live GPS Tracking Map">
+                                    <div class="vts-action-card card-teal-bg" onclick="openVtsLiveTrackingView()" style="cursor: pointer;" title="Open Live GPS Tracking Map (Amrapali OCP)">
                                         <div class="action-card-text">
                                             <span class="action-title">LIVE VIEW</span>
                                             <span class="action-subtitle">REAL-TIME GPS TRACKING</span>
@@ -119,7 +119,57 @@
                             </div>
                         </div>
 
-                        <!-- SECTION 3: REPORTS -->
+                        <!-- SECTION 3: CONFIGURATION (Moved above Reports) -->
+                        <div class="vts-section margin-top-lg">
+                            <div class="vts-section-header">
+                                <span class="green-indicator-dot"></span>
+                                <h3 class="vts-section-title">CONFIGURATION</h3>
+                            </div>
+                            <div class="vts-grid grid-4">
+                                <!-- Register: Add New Device -->
+                                <div class="vts-card vts-card-clickable" onclick="openVtsRegisterModal()" title="Register new vehicle & GPS device into fleet" style="cursor: pointer;">
+                                    <div class="vts-card-info">
+                                        <span class="vts-action-name">REGISTER</span>
+                                        <span class="vts-action-desc">ADD NEW DEVICE</span>
+                                    </div>
+                                    <div class="vts-icon-circle icon-circle-green">
+                                        <i class="fa-solid fa-plus"></i>
+                                    </div>
+                                </div>
+                                <!-- Modify: Edit Existing Device -->
+                                <div class="vts-card vts-card-clickable" onclick="openVtsModifyModal()" title="Select vehicle to edit registration, device or transporter" style="cursor: pointer;">
+                                    <div class="vts-card-info">
+                                        <span class="vts-action-name">MODIFY</span>
+                                        <span class="vts-action-desc">EDIT EXISTING DEVICE</span>
+                                    </div>
+                                    <div class="vts-icon-circle icon-circle-yellow">
+                                        <i class="fa-solid fa-pen-to-square"></i>
+                                    </div>
+                                </div>
+                                <!-- Route & Workshop -->
+                                <div class="vts-card vts-card-clickable" onclick="openVtsRouteWorkshopModal()" title="Assign haul corridors & toggle workshop maintenance" style="cursor: pointer;">
+                                    <div class="vts-card-info">
+                                        <span class="vts-action-name">ROUTE & WORKSHOP</span>
+                                        <span class="vts-action-desc">ASSIGN ROUTES</span>
+                                    </div>
+                                    <div class="vts-icon-circle icon-circle-cyan">
+                                        <i class="fa-solid fa-route"></i>
+                                    </div>
+                                </div>
+                                <!-- Remove / Reinstall -->
+                                <div class="vts-card vts-card-clickable" onclick="openVtsDeviceActionModal()" title="Manage GPS device binding, removal or reinstallation" style="cursor: pointer;">
+                                    <div class="vts-card-info">
+                                        <span class="vts-action-name">REMOVE / REINSTALL</span>
+                                        <span class="vts-action-desc">DEVICE ACTIONS</span>
+                                    </div>
+                                    <div class="vts-icon-circle icon-circle-blue">
+                                        <i class="fa-solid fa-sim-card"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- SECTION 4: REPORTS (Moved below Configuration) -->
                         <div class="vts-section margin-top-lg">
                             <div class="vts-section-header">
                                 <span class="green-indicator-dot"></span>
@@ -178,32 +228,6 @@
                             </div>
                         </div>
 
-                        <!-- SECTION 4: CONFIGURATION -->
-                        <div class="vts-section margin-top-lg">
-                            <div class="vts-section-header">
-                                <span class="green-indicator-dot"></span>
-                                <h3 class="vts-section-title">CONFIGURATION</h3>
-                            </div>
-                            <div class="vts-grid grid-4">
-                                <div class="vts-card">
-                                    <div class="vts-card-info"><span class="vts-action-name">REGISTER</span><span class="vts-action-desc">ADD NEW DEVICE</span></div>
-                                    <div class="vts-icon-circle icon-circle-green"><i class="fa-solid fa-plus"></i></div>
-                                </div>
-                                <div class="vts-card">
-                                    <div class="vts-card-info"><span class="vts-action-name">MODIFY</span><span class="vts-action-desc">EDIT EXISTING DEVICE</span></div>
-                                    <div class="vts-icon-circle icon-circle-yellow"><i class="fa-solid fa-pen-to-square"></i></div>
-                                </div>
-                                <div class="vts-card">
-                                    <div class="vts-card-info"><span class="vts-action-name">ROUTE & WORKSHOP</span><span class="vts-action-desc">ASSIGN ROUTES</span></div>
-                                    <div class="vts-icon-circle icon-circle-cyan"><i class="fa-solid fa-route"></i></div>
-                                </div>
-                                <div class="vts-card">
-                                    <div class="vts-card-info"><span class="vts-action-name">REMOVE / REINSTALL</span><span class="vts-action-desc">DEVICE ACTIONS</span></div>
-                                    <div class="vts-icon-circle icon-circle-blue"><i class="fa-solid fa-sim-card"></i></div>
-                                </div>
-                            </div>
-                        </div>
-
                         <!-- ======================================================== -->
                         <!-- VTS FLEET MASTER REPORT MODAL DIALOG                     -->
                         <!-- ======================================================== -->
@@ -220,17 +244,17 @@
                                             <p class="feature-modal-subtitle" style="color: #94a3b8; font-size: 12px;">Real-time Vehicle Tracking System & Telemetry Monitoring (2,242 Records)</p>
                                         </div>
                                     </div>
-                                    <div style="display: flex; align-items: center; gap: 10px;">
-                                        <!-- Export Actions -->
-                                        <button type="button" class="btn-export-csv" onclick="exportFleetCSV()" title="Download raw CSV spreadsheet">
+                                    <div class="vts-modal-actions">
+                                        <button type="button" class="btn-action-pill btn-export-excel" onclick="closeFleetModal(); openVtsRegisterModal();" style="background: #16a34a; border-color: #15803d; color: #ffffff;">
+                                            <i class="fa-solid fa-plus"></i> Register
+                                        </button>
+                                        <button type="button" class="btn-action-pill btn-export-excel" onclick="exportFleetCSV()">
                                             <i class="fa-solid fa-file-csv"></i> Export CSV
                                         </button>
-                                        <button type="button" class="btn-export-pdf" onclick="exportFleetPDF()" title="Print or save as PDF document">
+                                        <button type="button" class="btn-action-pill btn-export-pdf" onclick="exportFleetPDF()">
                                             <i class="fa-solid fa-file-pdf"></i> Export PDF
                                         </button>
-                                        <button class="feature-modal-close-btn" onclick="closeFleetModal()" style="color: #94a3b8; background: #1e293b; margin-left: 6px;">
-                                            <i class="fa-solid fa-xmark"></i>
-                                        </button>
+                                        <button type="button" class="feature-modal-close" onclick="closeFleetModal()" title="Close Window">&times;</button>
                                     </div>
                                 </div>
 
@@ -288,6 +312,7 @@
                                                 <th style="white-space: nowrap;">Project</th>
                                                 <th style="white-space: nowrap;">Device ID</th>
                                                 <th>Transporter</th>
+                                                <th style="text-align: center; width: 85px;">Action</th>
                                             </tr>
                                         </thead>
                                         <tbody id="vtsFleetTableBody">
@@ -423,7 +448,285 @@
                                 </div>
                             </div>
                         </div>
+
+                        <!-- ======================================================== -->
+                        <!-- 1. REGISTER NEW VEHICLE & DEVICE MODAL                    -->
+                        <!-- ======================================================== -->
+                        <div class="drone-modal-backdrop" id="vtsRegisterModal" style="display: none;" onclick="if(event.target===this) closeVtsRegisterModal();">
+                            <div class="feature-modal-container" role="dialog" aria-modal="true" style="max-width: 620px;">
+                                <div class="feature-modal-header" style="background: #0f172a; border-bottom: 1px solid #1e293b; color: #ffffff;">
+                                    <div class="feature-modal-title-wrap">
+                                        <div class="feature-modal-icon-badge" style="background: #16a34a; color: #ffffff;">
+                                            <i class="fa-solid fa-plus"></i>
+                                        </div>
+                                        <div>
+                                            <h2 class="feature-modal-title" style="color: #f8fafc; font-size: 16px; font-weight: 700;">Register New VTS Device</h2>
+                                            <p class="feature-modal-subtitle" style="color: #94a3b8; font-size: 12px;">Add new vehicle & GPS telematics unit into CCL master fleet</p>
+                                        </div>
+                                    </div>
+                                    <button class="feature-modal-close" onclick="closeVtsRegisterModal()" title="Close">&times;</button>
+                                </div>
+                                <form id="vtsRegisterForm" onsubmit="handleVtsRegisterSubmit(event)" style="padding: 20px; background: #ffffff;">
+                                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+                                        <!-- Field 1: Vehicle Number -->
+                                        <div class="form-group" style="grid-column: span 2;">
+                                            <label style="display: block; font-size: 12px; font-weight: 700; color: #334155; margin-bottom: 6px;">
+                                                Vehicle Number (Registration) <span style="color: #ef4444;">*</span>
+                                            </label>
+                                            <input type="text" id="regVehicleNo" required placeholder="e.g. JH02BC9171, JH02BR8931" style="width: 100%; padding: 9px 12px; border: 1.5px solid #cbd5e1; border-radius: 6px; font-size: 13.5px; font-family: monospace; font-weight: 700; text-transform: uppercase;">
+                                        </div>
+                                        <!-- Field 2: Mining Area -->
+                                        <div class="form-group">
+                                            <label style="display: block; font-size: 12px; font-weight: 700; color: #334155; margin-bottom: 6px;">
+                                                Mining Area <span style="color: #ef4444;">*</span>
+                                            </label>
+                                            <select id="regArea" required style="width: 100%; padding: 9px 12px; border: 1.5px solid #cbd5e1; border-radius: 6px; font-size: 13px; font-weight: 600;">
+                                                <option value="Amrapali & Chandragupta">Amrapali & Chandragupta (CO07)</option>
+                                                <option value="Magadh & Sanghmitra">Magadh & Sanghmitra (CO06)</option>
+                                                <option value="Piparwar">Piparwar (CO13)</option>
+                                                <option value="North Karanpura">North Karanpura (CO03)</option>
+                                                <option value="Barka-Sayal">Barka-Sayal (CO01)</option>
+                                                <option value="Argada">Argada (CO02)</option>
+                                                <option value="Kuju">Kuju (CO09)</option>
+                                                <option value="Hazaribagh">Hazaribagh (CO10)</option>
+                                                <option value="Bokaro & Kargali">Bokaro & Kargali (CO04)</option>
+                                                <option value="Kathara">Kathara (CO05)</option>
+                                                <option value="Dhori">Dhori (CO12)</option>
+                                                <option value="Rajrappa">Rajrappa (CO11)</option>
+                                                <option value="Giridih">Giridih (CO15)</option>
+                                                <option value="Rajhara">Rajhara (CO08)</option>
+                                            </select>
+                                        </div>
+                                        <!-- Field 3: Project -->
+                                        <div class="form-group">
+                                            <label style="display: block; font-size: 12px; font-weight: 700; color: #334155; margin-bottom: 6px;">
+                                                Project / Pit Name <span style="color: #ef4444;">*</span>
+                                            </label>
+                                            <input type="text" id="regProject" required placeholder="e.g. Amrapali, Tapin OCP" style="width: 100%; padding: 9px 12px; border: 1.5px solid #cbd5e1; border-radius: 6px; font-size: 13px;">
+                                        </div>
+                                        <!-- Field 4: Device ID -->
+                                        <div class="form-group">
+                                            <label style="display: block; font-size: 12px; font-weight: 700; color: #334155; margin-bottom: 6px;">
+                                                GPS Device ID / IMEI <span style="color: #ef4444;">*</span>
+                                            </label>
+                                            <input type="text" id="regDeviceId" required placeholder="e.g. 868221074172787" style="width: 100%; padding: 9px 12px; border: 1.5px solid #cbd5e1; border-radius: 6px; font-size: 13px; font-family: monospace;">
+                                        </div>
+                                        <!-- Field 5: Transporter -->
+                                        <div class="form-group">
+                                            <label style="display: block; font-size: 12px; font-weight: 700; color: #334155; margin-bottom: 6px;">
+                                                Transporter / Company Name <span style="color: #ef4444;">*</span>
+                                            </label>
+                                            <input type="text" id="regTransporter" required placeholder="e.g. M/s Varint Commercial Pvt Ltd" style="width: 100%; padding: 9px 12px; border: 1.5px solid #cbd5e1; border-radius: 6px; font-size: 13px;">
+                                        </div>
+                                        <!-- Initial Status -->
+                                        <div class="form-group" style="grid-column: span 2;">
+                                            <label style="display: block; font-size: 12px; font-weight: 700; color: #334155; margin-bottom: 6px;">
+                                                Initial Telemetry Status
+                                            </label>
+                                            <select id="regStatus" style="width: 100%; padding: 9px 12px; border: 1.5px solid #cbd5e1; border-radius: 6px; font-size: 13px; font-weight: 600;">
+                                                <option value="Online">🟢 Online (Active GPS & Telematics)</option>
+                                                <option value="Offline">🔴 Offline (Parked / Signal Loss)</option>
+                                                <option value="Workshop">🟡 Workshop (Scheduled Maintenance)</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div style="margin-top: 22px; display: flex; justify-content: flex-end; gap: 10px; border-top: 1px solid #e2e8f0; padding-top: 16px;">
+                                        <button type="button" onclick="closeVtsRegisterModal()" style="padding: 9px 18px; border: 1px solid #cbd5e1; background: #f8fafc; border-radius: 6px; font-size: 13px; font-weight: 600; cursor: pointer;">Cancel</button>
+                                        <button type="submit" style="padding: 9px 22px; background: #16a34a; color: #ffffff; border: none; border-radius: 6px; font-size: 13px; font-weight: 700; cursor: pointer; box-shadow: 0 2px 8px rgba(22, 163, 74, 0.4);">
+                                            <i class="fa-solid fa-plus" style="margin-right: 6px;"></i> Register Vehicle Device
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
+                        <!-- ======================================================== -->
+                        <!-- 2. MODIFY EXISTING VEHICLE & DEVICE MODAL                 -->
+                        <!-- ======================================================== -->
+                        <div class="drone-modal-backdrop" id="vtsModifyModal" style="display: none;" onclick="if(event.target===this) closeVtsModifyModal();">
+                            <div class="feature-modal-container" role="dialog" aria-modal="true" style="max-width: 660px;">
+                                <div class="feature-modal-header" style="background: #0f172a; border-bottom: 1px solid #1e293b; color: #ffffff;">
+                                    <div class="feature-modal-title-wrap">
+                                        <div class="feature-modal-icon-badge" style="background: #d97706; color: #ffffff;">
+                                            <i class="fa-solid fa-pen-to-square"></i>
+                                        </div>
+                                        <div>
+                                            <h2 class="feature-modal-title" style="color: #f8fafc; font-size: 16px; font-weight: 700;">Modify VTS Fleet Record</h2>
+                                            <p class="feature-modal-subtitle" style="color: #94a3b8; font-size: 12px;">Select vehicle to update registration, GPS telemetry, area or transporter</p>
+                                        </div>
+                                    </div>
+                                    <button class="feature-modal-close" onclick="closeVtsModifyModal()" title="Close">&times;</button>
+                                </div>
+                                <form id="vtsModifyForm" onsubmit="handleVtsModifySubmit(event)" style="padding: 20px; background: #ffffff;">
+                                    <!-- Vehicle Selector Search -->
+                                    <div style="background: #f8fafc; border: 1.5px solid #e2e8f0; border-radius: 8px; padding: 14px; margin-bottom: 18px;">
+                                        <label style="display: block; font-size: 12.5px; font-weight: 800; color: #0f172a; margin-bottom: 6px;">
+                                            <i class="fa-solid fa-truck" style="color: #d97706; margin-right: 6px;"></i> Select Vehicle to Edit:
+                                        </label>
+                                        <select id="modVehicleSelect" onchange="onModifyVehicleSelect(this.value)" style="width: 100%; padding: 10px 12px; border: 1.5px solid #cbd5e1; border-radius: 6px; font-size: 13.5px; font-weight: 700; font-family: monospace; background: #ffffff;">
+                                            <!-- Dynamically populated via JS -->
+                                        </select>
+                                    </div>
+
+                                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+                                        <!-- Editable Vehicle No -->
+                                        <div class="form-group">
+                                            <label style="display: block; font-size: 12px; font-weight: 700; color: #334155; margin-bottom: 6px;">Vehicle Registration No</label>
+                                            <input type="text" id="modVehicleNo" required style="width: 100%; padding: 9px 12px; border: 1.5px solid #cbd5e1; border-radius: 6px; font-size: 13.5px; font-family: monospace; font-weight: 700; text-transform: uppercase;">
+                                        </div>
+                                        <!-- Editable Mining Area -->
+                                        <div class="form-group">
+                                            <label style="display: block; font-size: 12px; font-weight: 700; color: #334155; margin-bottom: 6px;">Mining Area</label>
+                                            <select id="modArea" required style="width: 100%; padding: 9px 12px; border: 1.5px solid #cbd5e1; border-radius: 6px; font-size: 13px; font-weight: 600;">
+                                                <option value="Amrapali & Chandragupta">Amrapali & Chandragupta (CO07)</option>
+                                                <option value="Magadh & Sanghmitra">Magadh & Sanghmitra (CO06)</option>
+                                                <option value="Piparwar">Piparwar (CO13)</option>
+                                                <option value="North Karanpura">North Karanpura (CO03)</option>
+                                                <option value="Barka-Sayal">Barka-Sayal (CO01)</option>
+                                                <option value="Argada">Argada (CO02)</option>
+                                                <option value="Kuju">Kuju (CO09)</option>
+                                                <option value="Hazaribagh">Hazaribagh (CO10)</option>
+                                                <option value="Bokaro & Kargali">Bokaro & Kargali (CO04)</option>
+                                                <option value="Kathara">Kathara (CO05)</option>
+                                                <option value="Dhori">Dhori (CO12)</option>
+                                                <option value="Rajrappa">Rajrappa (CO11)</option>
+                                                <option value="Giridih">Giridih (CO15)</option>
+                                                <option value="Rajhara">Rajhara (CO08)</option>
+                                            </select>
+                                        </div>
+                                        <!-- Editable Project -->
+                                        <div class="form-group">
+                                            <label style="display: block; font-size: 12px; font-weight: 700; color: #334155; margin-bottom: 6px;">Project Name</label>
+                                            <input type="text" id="modProject" required style="width: 100%; padding: 9px 12px; border: 1.5px solid #cbd5e1; border-radius: 6px; font-size: 13px;">
+                                        </div>
+                                        <!-- Editable Device ID -->
+                                        <div class="form-group">
+                                            <label style="display: block; font-size: 12px; font-weight: 700; color: #334155; margin-bottom: 6px;">GPS Device ID (IMEI)</label>
+                                            <input type="text" id="modDeviceId" required style="width: 100%; padding: 9px 12px; border: 1.5px solid #cbd5e1; border-radius: 6px; font-size: 13px; font-family: monospace;">
+                                        </div>
+                                        <!-- Editable Transporter -->
+                                        <div class="form-group" style="grid-column: span 2;">
+                                            <label style="display: block; font-size: 12px; font-weight: 700; color: #334155; margin-bottom: 6px;">Transporter / Agency</label>
+                                            <input type="text" id="modTransporter" required style="width: 100%; padding: 9px 12px; border: 1.5px solid #cbd5e1; border-radius: 6px; font-size: 13px;">
+                                        </div>
+                                        <!-- Editable Status -->
+                                        <div class="form-group" style="grid-column: span 2;">
+                                            <label style="display: block; font-size: 12px; font-weight: 700; color: #334155; margin-bottom: 6px;">Operational Telemetry Status</label>
+                                            <select id="modStatus" style="width: 100%; padding: 9px 12px; border: 1.5px solid #cbd5e1; border-radius: 6px; font-size: 13px; font-weight: 600;">
+                                                <option value="Online">🟢 Online (Active GPS & Telematics)</option>
+                                                <option value="Offline">🔴 Offline (Parked / Signal Loss)</option>
+                                                <option value="Workshop">🟡 Workshop (Scheduled Maintenance)</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div style="margin-top: 22px; display: flex; justify-content: flex-end; gap: 10px; border-top: 1px solid #e2e8f0; padding-top: 16px;">
+                                        <button type="button" onclick="closeVtsModifyModal()" style="padding: 9px 18px; border: 1px solid #cbd5e1; background: #f8fafc; border-radius: 6px; font-size: 13px; font-weight: 600; cursor: pointer;">Cancel</button>
+                                        <button type="submit" style="padding: 9px 22px; background: #d97706; color: #ffffff; border: none; border-radius: 6px; font-size: 13px; font-weight: 700; cursor: pointer; box-shadow: 0 2px 8px rgba(217, 119, 6, 0.4);">
+                                            <i class="fa-solid fa-check" style="margin-right: 6px;"></i> Save Modifications
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
+                        <!-- ======================================================== -->
+                        <!-- 3. ROUTE & WORKSHOP ASSIGNMENT MODAL                     -->
+                        <!-- ======================================================== -->
+                        <div class="drone-modal-backdrop" id="vtsRouteWorkshopModal" style="display: none;" onclick="if(event.target===this) closeVtsRouteWorkshopModal();">
+                            <div class="feature-modal-container" role="dialog" aria-modal="true" style="max-width: 600px;">
+                                <div class="feature-modal-header" style="background: #0f172a; border-bottom: 1px solid #1e293b; color: #ffffff;">
+                                    <div class="feature-modal-title-wrap">
+                                        <div class="feature-modal-icon-badge" style="background: #0284c7; color: #ffffff;">
+                                            <i class="fa-solid fa-route"></i>
+                                        </div>
+                                        <div>
+                                            <h2 class="feature-modal-title" style="color: #f8fafc; font-size: 16px; font-weight: 700;">Haul Route & Workshop Assignment</h2>
+                                            <p class="feature-modal-subtitle" style="color: #94a3b8; font-size: 12px;">Assign active haulage corridor or toggle maintenance status</p>
+                                        </div>
+                                    </div>
+                                    <button class="feature-modal-close" onclick="closeVtsRouteWorkshopModal()" title="Close">&times;</button>
+                                </div>
+                                <form id="vtsRouteWorkshopForm" onsubmit="handleVtsRouteWorkshopSubmit(event)" style="padding: 20px; background: #ffffff;">
+                                    <div class="form-group" style="margin-bottom: 16px;">
+                                        <label style="display: block; font-size: 12px; font-weight: 700; color: #334155; margin-bottom: 6px;">Select Vehicle</label>
+                                        <select id="rwVehicleSelect" required style="width: 100%; padding: 9px 12px; border: 1.5px solid #cbd5e1; border-radius: 6px; font-size: 13.5px; font-family: monospace; font-weight: 700;">
+                                            <!-- Populated dynamically -->
+                                        </select>
+                                    </div>
+                                    <div class="form-group" style="margin-bottom: 16px;">
+                                        <label style="display: block; font-size: 12px; font-weight: 700; color: #334155; margin-bottom: 6px;">Assigned Haul Corridor</label>
+                                        <select id="rwRouteSelect" style="width: 100%; padding: 9px 12px; border: 1.5px solid #cbd5e1; border-radius: 6px; font-size: 13px; font-weight: 600;">
+                                            <option value="main_pit">🟠 Main Pit Extraction Route (WB 12 -> Stock 64 -> Pit Incline)</option>
+                                            <option value="ncc_route">🔵 NCC Loading Loop (Upper Bench -> NCC Zone)</option>
+                                            <option value="bla_route">🟡 BLA Infra Siding Corridor (Stock 55 -> Siding)</option>
+                                            <option value="perimeter_route">🟢 Perimeter Bypass & Checkpost Route</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group" style="margin-bottom: 16px;">
+                                        <label style="display: block; font-size: 12px; font-weight: 700; color: #334155; margin-bottom: 6px;">Operational State</label>
+                                        <select id="rwStateSelect" style="width: 100%; padding: 9px 12px; border: 1.5px solid #cbd5e1; border-radius: 6px; font-size: 13px; font-weight: 600;">
+                                            <option value="Online">Active Haulage (Online)</option>
+                                            <option value="Workshop">Workshop Maintenance (Parked in Bay)</option>
+                                        </select>
+                                    </div>
+                                    <div style="margin-top: 22px; display: flex; justify-content: flex-end; gap: 10px; border-top: 1px solid #e2e8f0; padding-top: 16px;">
+                                        <button type="button" onclick="closeVtsRouteWorkshopModal()" style="padding: 9px 18px; border: 1px solid #cbd5e1; background: #f8fafc; border-radius: 6px; font-size: 13px; font-weight: 600; cursor: pointer;">Cancel</button>
+                                        <button type="submit" style="padding: 9px 22px; background: #0284c7; color: #ffffff; border: none; border-radius: 6px; font-size: 13px; font-weight: 700; cursor: pointer; box-shadow: 0 2px 8px rgba(2, 132, 199, 0.4);">
+                                            <i class="fa-solid fa-route" style="margin-right: 6px;"></i> Update Route & State
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
+                        <!-- ======================================================== -->
+                        <!-- 4. REMOVE / REINSTALL DEVICE MODAL                        -->
+                        <!-- ======================================================== -->
+                        <div class="drone-modal-backdrop" id="vtsDeviceActionModal" style="display: none;" onclick="if(event.target===this) closeVtsDeviceActionModal();">
+                            <div class="feature-modal-container" role="dialog" aria-modal="true" style="max-width: 600px;">
+                                <div class="feature-modal-header" style="background: #0f172a; border-bottom: 1px solid #1e293b; color: #ffffff;">
+                                    <div class="feature-modal-title-wrap">
+                                        <div class="feature-modal-icon-badge" style="background: #0284c7; color: #ffffff;">
+                                            <i class="fa-solid fa-sim-card"></i>
+                                        </div>
+                                        <div>
+                                            <h2 class="feature-modal-title" style="color: #f8fafc; font-size: 16px; font-weight: 700;">Device Actions & Telematics Control</h2>
+                                            <p class="feature-modal-subtitle" style="color: #94a3b8; font-size: 12px;">Manage GPS hardware binding, de-registration or SIM re-installation</p>
+                                        </div>
+                                    </div>
+                                    <button class="feature-modal-close" onclick="closeVtsDeviceActionModal()" title="Close">&times;</button>
+                                </div>
+                                <form id="vtsDeviceActionForm" onsubmit="handleVtsDeviceActionSubmit(event)" style="padding: 20px; background: #ffffff;">
+                                    <div class="form-group" style="margin-bottom: 16px;">
+                                        <label style="display: block; font-size: 12px; font-weight: 700; color: #334155; margin-bottom: 6px;">Select Vehicle</label>
+                                        <select id="daVehicleSelect" required style="width: 100%; padding: 9px 12px; border: 1.5px solid #cbd5e1; border-radius: 6px; font-size: 13.5px; font-family: monospace; font-weight: 700;">
+                                            <!-- Populated dynamically -->
+                                        </select>
+                                    </div>
+                                    <div class="form-group" style="margin-bottom: 16px;">
+                                        <label style="display: block; font-size: 12px; font-weight: 700; color: #334155; margin-bottom: 6px;">Action Type</label>
+                                        <select id="daActionType" style="width: 100%; padding: 9px 12px; border: 1.5px solid #cbd5e1; border-radius: 6px; font-size: 13px; font-weight: 600;">
+                                            <option value="reinstall">🔄 Re-install GPS Unit on Replacement Vehicle</option>
+                                            <option value="replace_sim">📶 Replace SIM Card / GSM Network Telemetry</option>
+                                            <option value="deactivate">🛑 De-activate & Remove Telematics Binding</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group" style="margin-bottom: 16px;">
+                                        <label style="display: block; font-size: 12px; font-weight: 700; color: #334155; margin-bottom: 6px;">New Device ID / Action Notes</label>
+                                        <input type="text" id="daNotes" placeholder="e.g. SIM 899128... installed / Re-bound to dumper chassis" style="width: 100%; padding: 9px 12px; border: 1.5px solid #cbd5e1; border-radius: 6px; font-size: 13px;">
+                                    </div>
+                                    <div style="margin-top: 22px; display: flex; justify-content: flex-end; gap: 10px; border-top: 1px solid #e2e8f0; padding-top: 16px;">
+                                        <button type="button" onclick="closeVtsDeviceActionModal()" style="padding: 9px 18px; border: 1px solid #cbd5e1; background: #f8fafc; border-radius: 6px; font-size: 13px; font-weight: 600; cursor: pointer;">Cancel</button>
+                                        <button type="submit" style="padding: 9px 22px; background: #0284c7; color: #ffffff; border: none; border-radius: 6px; font-size: 13px; font-weight: 700; cursor: pointer; box-shadow: 0 2px 8px rgba(2, 132, 199, 0.4);">
+                                            <i class="fa-solid fa-check" style="margin-right: 6px;"></i> Apply Device Action
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
 
                 <!-- Page View: RFID Dashboard -->
+

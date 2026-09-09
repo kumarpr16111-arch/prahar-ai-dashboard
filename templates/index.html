@@ -22,10 +22,20 @@
     <!-- Internal VTS Live Alerts Dataset -->
     <script src="/static/js/vts_alerts_data.js"></script>
     <!-- Master Stylesheet -->
-    <link rel="stylesheet" href="/static/css/style.css">
-    <!-- Custom Stylesheet loaded via /static/css/style.css -->
+    <link rel="stylesheet" href="/static/css/style.css?v=1.2.3">
+    <!-- Immediate Theme Initializer to Prevent Flash of Unstyled Content -->
+    <script>
+        (function() {
+            try {
+                const savedTheme = localStorage.getItem('trace_theme') || 'dark';
+                document.documentElement.setAttribute('data-theme', savedTheme);
+                document.documentElement.classList.remove('theme-dark', 'theme-light');
+                document.documentElement.classList.add('theme-' + savedTheme);
+            } catch(e) {}
+        })();
+    </script>
 </head>
-<body>
+<body data-theme="dark">
     <div class="app-container">
         <!-- Sidebar Navigation -->
         <aside class="sidebar" id="sidebar">
@@ -197,34 +207,27 @@
                             {% if user_role in ['gm', 'vigilance', 'surveillance', 'dispatch'] %}
                             <!-- Blacklisted Vehicles Dropdown -->
                             <li class="nav-item has-sub" id="blacklistedNavItem">
-                                <a href="#" class="nav-link" id="blacklistedNavLink">
-                                    <svg class="nav-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="min-width: 18px; margin-right: 12px; display: inline-block; vertical-align: middle;">
-                                        <path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"/>
-                                        <path d="M15 18H9"/>
-                                        <path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.62L19.5 9.5a1 1 0 0 0-.78-.5H14"/>
-                                        <circle cx="7" cy="18" r="2"/>
-                                        <circle cx="17" cy="18" r="2"/>
-                                        <line x1="3" y1="3" x2="21" y2="21" stroke="#ef4444" stroke-width="2.2"/>
-                                    </svg>
+                                <a href="javascript:void(0)" class="nav-link" id="blacklistedNavLink" onclick="toggleBlacklistedDropdown(event);" style="cursor: pointer;">
+                                    <i class="fa-solid fa-ban nav-icon" style="color: #ef4444; font-size: 13px;"></i>
                                     <span class="nav-text">Blacklisted Vehicles</span>
                                     <i class="fa-solid fa-chevron-right arrow-icon" id="blacklistedArrow"></i>
                                 </a>
                                 <ul class="sub-nav-list" id="blacklistedSubList" style="display: none;">
-                                    <li class="sub-nav-item">
-                                        <a href="#" class="sub-nav-link">
-                                            <i class="fa-solid fa-angle-right nav-icon" style="font-size: 11px; margin-right: 8px;"></i>
+                                    <li class="sub-nav-item" id="blacklistedViewNavItem">
+                                        <a href="javascript:void(0)" class="sub-nav-link" onclick="showBlacklistedTab('view');">
+                                            <i class="fa-solid fa-list-check nav-icon" style="font-size: 11px; margin-right: 8px; color: #38bdf8;"></i>
                                             <span class="sub-nav-text">View</span>
                                         </a>
                                     </li>
-                                    <li class="sub-nav-item">
-                                        <a href="#" class="sub-nav-link">
-                                            <i class="fa-solid fa-angle-right nav-icon" style="font-size: 11px; margin-right: 8px;"></i>
+                                    <li class="sub-nav-item" id="blacklistedAddNavItem">
+                                        <a href="javascript:void(0)" class="sub-nav-link" onclick="showBlacklistedTab('add');">
+                                            <i class="fa-solid fa-plus-circle nav-icon" style="font-size: 11px; margin-right: 8px; color: #ef4444;"></i>
                                             <span class="sub-nav-text">Add</span>
                                         </a>
                                     </li>
-                                    <li class="sub-nav-item">
-                                        <a href="#" class="sub-nav-link">
-                                            <i class="fa-solid fa-angle-right nav-icon" style="font-size: 11px; margin-right: 8px;"></i>
+                                    <li class="sub-nav-item" id="blacklistedRemoveNavItem">
+                                        <a href="javascript:void(0)" class="sub-nav-link" onclick="showBlacklistedTab('remove');">
+                                            <i class="fa-solid fa-unlock nav-icon" style="font-size: 11px; margin-right: 8px; color: #34d399;"></i>
                                             <span class="sub-nav-text">Remove</span>
                                         </a>
                                     </li>
@@ -315,7 +318,7 @@
                             </li>
                             {% endif %}
 
-                            <!-- Contract Management Dropdown at Bottom (Area, Plant, Weighbridge, Checkpost, Maintenance Masters) -->
+                            <!-- Contract Management Dropdown at Bottom (Area, Plant, Weighbridge, Checkpost, Transporter, Maintenance Masters) -->
                             <li class="nav-item has-sub" id="configNavItem">
                                 <a href="#" class="nav-link" id="configNavLink" onclick="event.preventDefault(); toggleConfigDropdown(event);" style="cursor: pointer;">
                                     <i class="fa-solid fa-file-contract nav-icon" style="color: #94a3b8;"></i>
@@ -345,6 +348,12 @@
                                         <a href="#config-checkpost" class="sub-nav-link" onclick="event.preventDefault(); showConfigCheckpost();">
                                             <i class="fa-solid fa-shield-halved nav-icon" style="font-size: 11px; margin-right: 8px; color: #f87171;"></i>
                                             <span class="sub-nav-text">Checkpost Master</span>
+                                        </a>
+                                    </li>
+                                    <li class="sub-nav-item" id="configTransporterNavItem">
+                                        <a href="#config-transporter" class="sub-nav-link" onclick="event.preventDefault(); showConfigTransporter();">
+                                            <i class="fa-solid fa-truck-moving nav-icon" style="font-size: 11px; margin-right: 8px; color: #38bdf8;"></i>
+                                            <span class="sub-nav-text">Transporter Master</span>
                                         </a>
                                     </li>
                                     <li class="sub-nav-item" id="configMaintenanceNavItem">
@@ -442,12 +451,8 @@
         <main class="main-wrapper">
             <!-- Top Header Navbar -->
             <header class="top-navbar">
-                <div class="header-titles" style="display: flex; align-items: center; gap: 10px;">
+                <div class="header-titles">
                     <h1 class="header-main-title" id="headerMainTitle">TRACE DIGITAL DASHBOARD</h1>
-                    <span class="header-subsidiary-badge" style="font-size: 10.5px; font-weight: 700; color: #38bdf8; background: rgba(2, 132, 199, 0.12); border: 1px solid rgba(56, 189, 248, 0.25); border-radius: 4px; padding: 2px 8px; letter-spacing: 0.04em; display: inline-flex; align-items: center; gap: 5px;">
-                        <i class="fa-solid fa-layer-group" style="font-size: 10px;"></i>
-                        <span>CIL: {{ user_subsidiary }}{% if user_subsidiary == 'CCL' %} [Active Prototype]{% else %} [Enterprise Node]{% endif %}</span>
-                    </span>
                 </div>
 
                 <div class="header-actions">
@@ -457,32 +462,7 @@
                     
                     <div class="action-divider"></div>
 
-                    <div class="icon-group" style="position: relative;">
-                        <!-- Time Filter Button & Dropdown Menu -->
-                        <button type="button" class="icon-btn" id="btnTimeFilter" onclick="toggleTimeFilterDropdown(event)" title="Telemetry Time Window Filter">
-                            <i class="fa-regular fa-clock"></i>
-                            <i class="fa-solid fa-caret-down mini-caret"></i>
-                        </button>
-                        <div class="time-filter-dropdown" id="timeFilterDropdown" style="display: none; position: absolute; top: 38px; left: 0; z-index: 10000; background: #0f172a; border: 1px solid #334155; border-radius: 6px; box-shadow: 0 10px 25px rgba(0,0,0,0.6); min-width: 180px; padding: 6px 0;">
-                            <div style="font-size: 10px; font-weight: 700; color: #64748b; padding: 5px 12px; text-transform: uppercase; letter-spacing: 0.05em;">Time Filter</div>
-                            <a href="javascript:void(0)" onclick="setTimeFilterPreset('live')" class="time-dropdown-item active" id="timePresetLive" style="display: flex; align-items: center; justify-content: space-between; padding: 7px 12px; font-size: 12px; color: #f8fafc; text-decoration: none;">
-                                <span><i class="fa-solid fa-bolt" style="color: #38bdf8; margin-right: 6px;"></i> Live (Real-time)</span>
-                                <i class="fa-solid fa-check check-icn" style="color: #38bdf8; font-size: 11px;"></i>
-                            </a>
-                            <a href="javascript:void(0)" onclick="setTimeFilterPreset('1h')" class="time-dropdown-item" id="timePreset1h" style="display: flex; align-items: center; justify-content: space-between; padding: 7px 12px; font-size: 12px; color: #94a3b8; text-decoration: none;">
-                                <span><i class="fa-regular fa-clock" style="margin-right: 6px;"></i> Past 1 Hour</span>
-                                <i class="fa-solid fa-check check-icn" style="color: #38bdf8; font-size: 11px; display: none;"></i>
-                            </a>
-                            <a href="javascript:void(0)" onclick="setTimeFilterPreset('today')" class="time-dropdown-item" id="timePresetToday" style="display: flex; align-items: center; justify-content: space-between; padding: 7px 12px; font-size: 12px; color: #94a3b8; text-decoration: none;">
-                                <span><i class="fa-regular fa-calendar-day" style="margin-right: 6px;"></i> Today (24h)</span>
-                                <i class="fa-solid fa-check check-icn" style="color: #38bdf8; font-size: 11px; display: none;"></i>
-                            </a>
-                            <a href="javascript:void(0)" onclick="setTimeFilterPreset('7d')" class="time-dropdown-item" id="timePreset7d" style="display: flex; align-items: center; justify-content: space-between; padding: 7px 12px; font-size: 12px; color: #94a3b8; text-decoration: none;">
-                                <span><i class="fa-regular fa-calendar-week" style="margin-right: 6px;"></i> Past 7 Days</span>
-                                <i class="fa-solid fa-check check-icn" style="color: #38bdf8; font-size: 11px; display: none;"></i>
-                            </a>
-                        </div>
-
+                    <div class="icon-group">
                         <!-- Analytics View Button -->
                         <button type="button" class="icon-btn active" id="btnAnalyticsView" onclick="toggleAnalyticsView()" title="Toggle Visual Analytics & Chart View">
                             <i class="fa-solid fa-chart-simple"></i>
@@ -497,6 +477,32 @@
                         <button type="button" class="icon-btn" id="btnExportExcel" onclick="handleHeaderExportExcel()" title="Export Active Dataset to Excel (CSV / XLS)">
                             <i class="fa-regular fa-file-excel"></i>
                         </button>
+                    </div>
+
+                    <!-- Language Switcher Pill (English EN / हिन्दी HI) -->
+                    <div class="lang-switcher-container">
+                        <div class="lang-switcher-pill" id="langSwitcherPill" onclick="toggleLanguageMode()" title="Change Language (English / हिन्दी)">
+                            <span class="lang-slider-thumb"></span>
+                            <button type="button" class="lang-pill-btn active" id="langPillEn" data-lang="en" title="English">
+                                <i class="fa-solid fa-globe"></i> <span>EN</span>
+                            </button>
+                            <button type="button" class="lang-pill-btn" id="langPillHi" data-lang="hi" title="हिन्दी (Hindi)">
+                                <span>हिन्दी</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Theme Switcher Pill (Dark Mode 🌙 / Light Mode ☀️) -->
+                    <div class="theme-switcher-container">
+                        <div class="theme-switcher-pill" id="themeSwitcherPill" onclick="toggleThemeMode()" title="Switch Theme (Dark 🌙 / Light ☀️)">
+                            <span class="theme-slider-thumb"></span>
+                            <button type="button" class="theme-pill-btn active" id="themePillDark" data-theme="dark" title="Dark Mode (Obsidian Slate)">
+                                <i class="fa-solid fa-moon"></i> <span>Dark</span>
+                            </button>
+                            <button type="button" class="theme-pill-btn" id="themePillLight" data-theme="light" title="Light Mode (Azure White)">
+                                <i class="fa-solid fa-sun"></i> <span>Light</span>
+                            </button>
+                        </div>
                     </div>
 
                     <div class="user-profile-group" style="display: flex; align-items: center; gap: 12px;">
@@ -526,6 +532,7 @@
                 {% include 'partials/summary_view.html' %}
                 {% include 'partials/alert_dashboard.html' %}
                 {% include 'partials/vts_dashboard.html' %}
+                {% include 'partials/vts_live_map.html' %}
                 {% include 'partials/rfid_dashboard.html' %}
                 {% include 'partials/irregularities.html' %}
                 {% include 'partials/drone_surveillance.html' %}
@@ -534,6 +541,7 @@
                 {% include 'partials/digital_audit.html' %}
                 {% include 'partials/do_operations.html' %}
                 {% include 'partials/config_masters.html' %}
+                {% include 'partials/blacklisted_vehicles.html' %}
             </div> <!-- Close content-body -->
         </main>
     </div>
@@ -560,12 +568,15 @@
     <!-- ======================================================== -->
     <!-- APPLICATION JAVASCRIPT MODULES (Modular & Cached)        -->
     <!-- ======================================================== -->
-    <script src="/static/js/modules/drone_surveillance.js"></script>
-    <script src="/static/js/modules/digital_audit.js"></script>
-    <script src="/static/js/modules/do_operations.js"></script>
-    <script src="/static/js/modules/alert_dashboard.js"></script>
-    <script src="/static/js/modules/config_masters.js"></script>
-    <script src="/static/js/modules/vts_fleet.js"></script>
-    <script src="/static/js/main.js"></script>
+    <script src="/static/js/modules/i18n.js?v=1.2.3"></script>
+    <script src="/static/js/modules/drone_surveillance.js?v=1.2.3"></script>
+    <script src="/static/js/modules/digital_audit.js?v=1.2.3"></script>
+    <script src="/static/js/modules/do_operations.js?v=1.2.3"></script>
+    <script src="/static/js/modules/alert_dashboard.js?v=1.2.3"></script>
+    <script src="/static/js/modules/config_masters.js?v=1.2.3"></script>
+    <script src="/static/js/modules/blacklisted_vehicles.js?v=1.2.3"></script>
+    <script src="/static/js/modules/vts_fleet.js?v=1.2.3"></script>
+    <script src="/static/js/modules/vts_live_map.js?v=1.2.3"></script>
+    <script src="/static/js/main.js?v=1.2.3"></script>
 </body>
 </html>

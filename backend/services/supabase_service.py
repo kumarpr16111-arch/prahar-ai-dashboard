@@ -271,11 +271,67 @@ class SupabaseService(BaseService):
         return data if data else self.FALLBACK_IRREGULAR_VEHICLES
 
     async def fetch_irregular_dos(self) -> List[Dict[str, Any]]:
-        """Retrieves irregular Delivery Order compliance records."""
+        """Retrieves flagged irregular Delivery Orders (DOs)."""
         data = await self.get("irregular_dos", {"select": "*", "order": "id.asc"})
         return data if data else self.FALLBACK_IRREGULAR_DOS
+
+    FALLBACK_BLACKLISTED_VEHICLES: List[Dict[str, Any]] = [
+        {"id": 1, "v_no": "JH02BZ8562", "remarks": "Created jaam disturb transporting", "blacklisted_by": "Avinash Kishore", "blacklisted_on": "2026-08-28 08:51:58", "status": "ACTIVE"},
+        {"id": 2, "v_no": "AP07TM1599", "remarks": "Procedure lapses and doute ful. Enquiry under process", "blacklisted_by": "Dispatch Officer KBP", "blacklisted_on": "2026-08-24 10:52:20", "status": "ACTIVE"},
+        {"id": 3, "v_no": "JH16F1434", "remarks": "Found indulge in illegal activity FIR lodged at balumath P.S", "blacklisted_by": "Avinash Kishore", "blacklisted_on": "2026-08-01 17:48:49", "status": "ACTIVE"},
+        {"id": 4, "v_no": "JH19E8824", "remarks": "found indulge in illegal activity on dated-23/07/2026.", "blacklisted_by": "Avinash Kishore", "blacklisted_on": "2026-07-24 13:27:03", "status": "ACTIVE"},
+        {"id": 5, "v_no": "JH02BU4231", "remarks": "Broken boom barrier at Checkpost 12 and did not got entry .", "blacklisted_by": "Avinash Kishore", "blacklisted_on": "2026-07-16 06:03:50", "status": "ACTIVE"},
+        {"id": 6, "v_no": "WB15D7999", "remarks": "This vehicle damaged the boom Barr of Checkpost 12", "blacklisted_by": "Avinash Kishore", "blacklisted_on": "2026-07-09 19:06:47", "status": "ACTIVE"},
+        {"id": 7, "v_no": "JH02BP2620", "remarks": "Ref No: HOD (Security)/CCL/Blacklist-Veh./2026/147 Dated: 16.06.2026", "blacklisted_by": "admin", "blacklisted_on": "2026-07-02 13:11:05", "status": "ACTIVE"},
+        {"id": 8, "v_no": "BR02GD3789", "remarks": "This vehicle damaged the boom Barrier of weigh bridge 11", "blacklisted_by": "Rajeev Ranjan", "blacklisted_on": "2026-07-02 07:35:44", "status": "ACTIVE"},
+        {"id": 9, "v_no": "CG07D1070", "remarks": "THIS VEHICLE DAMAGED BOOM BARRIER OF CHECKPOST NO. 12", "blacklisted_by": "Rajeev Ranjan", "blacklisted_on": "2026-07-01 11:51:22", "status": "ACTIVE"},
+        {"id": 10, "v_no": "JH02BY3436", "remarks": "THIS VEHICLE DAMAGED BOOM BARRIER OF CHECKPOST NO. 12", "blacklisted_by": "Rajeev Ranjan", "blacklisted_on": "2026-07-01 11:49:25", "status": "ACTIVE"},
+        {"id": 11, "v_no": "OD16K2800", "remarks": "The vehicle is being blacklisted due to tampering in GPS.", "blacklisted_by": "Bokaro & Kargali", "blacklisted_on": "2026-06-30 14:32:39", "status": "ACTIVE"},
+        {"id": 12, "v_no": "BR02GA4922", "remarks": "Already Blacklisted Vehicle. List given by Security Department. CCL HQ", "blacklisted_by": "admin", "blacklisted_on": "2026-06-26 17:37:22", "status": "ACTIVE"},
+        {"id": 13, "v_no": "BR02GA8258", "remarks": "Already Blacklisted Vehicle. List given by Security Department. CCL HQ", "blacklisted_by": "admin", "blacklisted_on": "2026-06-26 17:37:22", "status": "ACTIVE"},
+        {"id": 14, "v_no": "BR02GA8556", "remarks": "Already Blacklisted Vehicle. List given by Security Department. CCL HQ", "blacklisted_by": "admin", "blacklisted_on": "2026-06-26 17:37:22", "status": "ACTIVE"},
+        {"id": 15, "v_no": "BR09GA4905", "remarks": "Already Blacklisted Vehicle. List given by Security Department. CCL HQ", "blacklisted_by": "admin", "blacklisted_on": "2026-06-26 17:37:22", "status": "ACTIVE"},
+        {"id": 16, "v_no": "CG12AZ1003", "remarks": "Already Blacklisted Vehicle. List given by Security Department. CCL HQ", "blacklisted_by": "admin", "blacklisted_on": "2026-06-26 17:37:22", "status": "ACTIVE"},
+        {"id": 17, "v_no": "CG14D0484", "remarks": "Already Blacklisted Vehicle. List given by Security Department. CCL HQ", "blacklisted_by": "admin", "blacklisted_on": "2026-06-26 17:37:22", "status": "ACTIVE"},
+        {"id": 18, "v_no": "CG15AC2023", "remarks": "Already Blacklisted Vehicle. List given by Security Department. CCL HQ", "blacklisted_by": "admin", "blacklisted_on": "2026-06-26 17:37:22", "status": "ACTIVE"},
+        {"id": 19, "v_no": "HR55M1420", "remarks": "Already Blacklisted Vehicle. List given by Security Department. CCL HQ", "blacklisted_by": "admin", "blacklisted_on": "2026-06-26 17:37:22", "status": "ACTIVE"},
+        {"id": 20, "v_no": "JH01AH4118", "remarks": "Already Blacklisted Vehicle. List given by Security Department. CCL HQ", "blacklisted_by": "admin", "blacklisted_on": "2026-06-26 17:37:22", "status": "ACTIVE"},
+        {"id": 21, "v_no": "JH01AJ1079", "remarks": "Already Blacklisted Vehicle. List given by Security Department. CCL HQ", "blacklisted_by": "admin", "blacklisted_on": "2026-06-26 17:37:22", "status": "ACTIVE"},
+        {"id": 22, "v_no": "JH01AY6092", "remarks": "Already Blacklisted Vehicle. List given by Security Department. CCL HQ", "blacklisted_by": "admin", "blacklisted_on": "2026-06-26 17:37:22", "status": "ACTIVE"},
+        {"id": 23, "v_no": "JH01BZ1124", "remarks": "Already Blacklisted Vehicle. List given by Security Department. CCL HQ", "blacklisted_by": "admin", "blacklisted_on": "2026-06-26 17:37:22", "status": "ACTIVE"},
+        {"id": 24, "v_no": "JH01CH5792", "remarks": "Already Blacklisted Vehicle. List given by Security Department. CCL HQ", "blacklisted_by": "admin", "blacklisted_on": "2026-06-26 17:37:22", "status": "ACTIVE"},
+        {"id": 25, "v_no": "JH01EY8719", "remarks": "Already Blacklisted Vehicle. List given by Security Department. CCL HQ", "blacklisted_by": "admin", "blacklisted_on": "2026-06-26 17:37:22", "status": "ACTIVE"}
+    ]
+
+    async def fetch_blacklisted_vehicles(self) -> List[Dict[str, Any]]:
+        """Retrieves active blacklisted vehicles from Supabase with fallback."""
+        data = await self.get("blacklisted_vehicles", {"select": "*", "order": "id.desc"})
+        return data if data else self.FALLBACK_BLACKLISTED_VEHICLES
+
+    async def add_blacklisted_vehicle(self, v_no: str, remarks: str, blacklisted_by: str) -> Optional[Dict[str, Any]]:
+        """Inserts a new blacklisted vehicle into Supabase."""
+        import datetime
+        now_str = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        payload = {
+            "v_no": v_no.strip().upper(),
+            "remarks": remarks.strip(),
+            "blacklisted_by": blacklisted_by.strip(),
+            "blacklisted_on": now_str,
+            "status": "ACTIVE"
+        }
+        res = await self.post("blacklisted_vehicles", payload)
+        # Invalidate cache
+        self._cache.clear()
+        return res if res else payload
+
+    async def remove_blacklisted_vehicle(self, v_no: str) -> bool:
+        """Removes/unblacklists a vehicle from Supabase."""
+        res = await self.delete("blacklisted_vehicles", f"v_no=eq.{v_no.strip().upper()}")
+        self._cache.clear()
+        return res
 
 
 # Global Singleton Instance
 supabase_service = SupabaseService()
+
 

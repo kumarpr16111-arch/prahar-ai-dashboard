@@ -1,0 +1,208 @@
+<!-- ======================================================== -->
+<!-- BLACKLISTED VEHICLES MODULE (View, Add, Remove/Unblacklist) -->
+<!-- ======================================================== -->
+
+<!-- 1. VIEW BLACKLISTED VEHICLES -->
+<div class="tab-content-panel" id="blacklisted-view-panel" style="display: none;">
+    <div class="blacklist-module-container">
+        <!-- Metric KPI Cards -->
+        <div class="blacklist-metrics-row">
+            <div class="bl-metric-card">
+                <div class="bl-metric-icon bl-icon-red"><i class="fa-solid fa-ban"></i></div>
+                <div class="bl-metric-content">
+                    <span class="bl-metric-val" id="totalBlacklistedCount">25</span>
+                    <span class="bl-metric-lbl">Total Blacklisted</span>
+                </div>
+                <span class="bl-pill bl-pill-red">Barred from Gates</span>
+            </div>
+            <div class="bl-metric-card">
+                <div class="bl-metric-icon bl-icon-amber"><i class="fa-solid fa-triangle-exclamation"></i></div>
+                <div class="bl-metric-content">
+                    <span class="bl-metric-val">6</span>
+                    <span class="bl-metric-lbl">Barrier Damage Violations</span>
+                </div>
+                <span class="bl-pill bl-pill-amber">Checkpost / WB</span>
+            </div>
+            <div class="bl-metric-card">
+                <div class="bl-metric-icon bl-icon-purple"><i class="fa-solid fa-satellite-dish"></i></div>
+                <div class="bl-metric-content">
+                    <span class="bl-metric-val">4</span>
+                    <span class="bl-metric-lbl">GPS Tampering / FIR</span>
+                </div>
+                <span class="bl-pill bl-pill-purple">Vigilance Action</span>
+            </div>
+            <div class="bl-metric-card">
+                <div class="bl-metric-icon bl-icon-green"><i class="fa-solid fa-circle-check"></i></div>
+                <div class="bl-metric-content">
+                    <span class="bl-metric-val" id="totalUnblacklistedCount">18</span>
+                    <span class="bl-metric-lbl">Cleared & Restored</span>
+                </div>
+                <span class="bl-pill bl-pill-green">Penalty Cleared</span>
+            </div>
+        </div>
+
+        <!-- Filter / Search Header (Exact UI as Screenshot 1) -->
+        <div class="bl-filter-section">
+            <label class="bl-filter-label" for="blacklistedFilterInput">Vehicle Number</label>
+            <div class="bl-search-box-wrapper">
+                <input type="text" id="blacklistedFilterInput" class="bl-filter-input" placeholder="Type to Filter" onkeyup="filterBlacklistedTable()" autocomplete="off" />
+                <button type="button" class="bl-filter-clear-btn" onclick="clearBlacklistFilter()" title="Clear Filter"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+        </div>
+
+        <!-- Data Table Container (Exact UI as Screenshot 1) -->
+        <div class="bl-table-container">
+            <table class="bl-data-table" id="blacklistedDataTable">
+                <thead>
+                    <tr>
+                        <th style="width: 45px; text-align: center;">#</th>
+                        <th style="width: 140px;">V_NO</th>
+                        <th>REMARKS</th>
+                        <th style="width: 200px;">BLACKLISTED BY</th>
+                        <th style="width: 175px;">BLACKLISTED ON</th>
+                        <th style="width: 100px; text-align: center;">ACTION</th>
+                    </tr>
+                </thead>
+                <tbody id="blacklistedTableBody">
+                    <!-- Populated dynamically via blacklisted_vehicles.js -->
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Table Footer Meta -->
+        <div class="bl-table-footer">
+            <span class="bl-records-info" id="blacklistedTableCount">Showing 25 blacklisted vehicles</span>
+            <div class="bl-table-actions">
+                <button class="bl-btn-secondary" onclick="exportBlacklistToCsv()"><i class="fa-solid fa-file-csv"></i> Export CSV</button>
+                <button class="bl-btn-primary" onclick="showBlacklistedTab('add')"><i class="fa-solid fa-plus"></i> Add New Blacklist</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 2. ADD A NEW BLACKLISTED VEHICLE (Exact UI as Screenshot 2) -->
+<div class="tab-content-panel" id="blacklisted-add-panel" style="display: none;">
+    <div class="blacklist-module-container form-view-container">
+        <!-- Form Box -->
+        <div class="bl-form-box">
+            <!-- Box Title Header -->
+            <div class="bl-form-header">
+                <h2>ADD A NEW BLACKLISTED VEHICLE</h2>
+            </div>
+
+            <!-- Form Table Grid -->
+            <table class="bl-form-grid-table">
+                <tbody>
+                    <tr>
+                        <td class="bl-form-label-cell">Vehicle Number</td>
+                        <td class="bl-form-input-cell">
+                            <input type="text" id="addBlacklistVehNo" class="bl-input-text" placeholder="Enter Vehicle Number" maxlength="15" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="bl-form-label-cell">Remarks</td>
+                        <td class="bl-form-input-cell">
+                            <textarea id="addBlacklistRemarks" class="bl-input-textarea" placeholder="Optional" rows="6"></textarea>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="bl-form-label-cell">Approver (OTP)</td>
+                        <td class="bl-form-input-cell">
+                            <div class="bl-approver-row">
+                                <select id="addBlacklistApprover" class="bl-select-approver">
+                                    <option value="">-- Select Approver --</option>
+                                    <option value="Avinash Kishore (GM Vigilance)">Avinash Kishore (GM Vigilance)</option>
+                                    <option value="Rajeev Ranjan (Security HOD)">Rajeev Ranjan (Security HOD)</option>
+                                    <option value="Dispatch Officer KBP">Dispatch Officer KBP</option>
+                                    <option value="Bokaro & Kargali Security Incharge">Bokaro & Kargali Security Incharge</option>
+                                    <option value="admin">System Admin (HQ)</option>
+                                </select>
+                                <button type="button" class="bl-btn-send-otp" id="btnSendOtpAdd" onclick="handleSendOtp('add')">Send OTP</button>
+                            </div>
+                            <div class="bl-otp-verify-group" id="addOtpVerifyGroup" style="display: none; margin-top: 10px;">
+                                <div style="display: flex; align-items: center; gap: 8px;">
+                                    <span style="font-size: 11.5px; color: #38bdf8;"><i class="fa-solid fa-mobile-screen-button"></i> OTP sent to approver phone.</span>
+                                    <input type="text" id="addOtpInput" class="bl-input-otp" placeholder="Enter 6-digit OTP" maxlength="6" value="784920" />
+                                    <span class="bl-otp-badge"><i class="fa-solid fa-circle-check"></i> Verified (Simulated)</span>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Submit Button Container -->
+        <div class="bl-form-action-container">
+            <button type="button" class="bl-btn-submit-action" onclick="submitBlacklistVehicle()">Blacklist Vehicle</button>
+        </div>
+
+        <!-- Feedback Alert Box -->
+        <div id="addBlacklistToast" class="bl-alert-toast" style="display: none;"></div>
+    </div>
+</div>
+
+<!-- 3. REMOVE / UNBLACKLIST VEHICLE (Same Layout as Screenshot 2, Unblacklist Theme) -->
+<div class="tab-content-panel" id="blacklisted-remove-panel" style="display: none;">
+    <div class="blacklist-module-container form-view-container">
+        <!-- Form Box -->
+        <div class="bl-form-box">
+            <!-- Box Title Header -->
+            <div class="bl-form-header">
+                <h2>REMOVE / UNBLACKLIST VEHICLE</h2>
+            </div>
+
+            <!-- Form Table Grid -->
+            <table class="bl-form-grid-table">
+                <tbody>
+                    <tr>
+                        <td class="bl-form-label-cell">Vehicle Number</td>
+                        <td class="bl-form-input-cell">
+                            <input type="text" id="removeBlacklistVehNo" list="blacklistedVehiclesList" class="bl-input-text" placeholder="Enter Vehicle Number" onchange="populateUnblacklistDetails(this.value)" />
+                            <datalist id="blacklistedVehiclesList">
+                                <!-- Populated dynamically from current blacklisted dataset -->
+                            </datalist>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="bl-form-label-cell">Remarks</td>
+                        <td class="bl-form-input-cell">
+                            <textarea id="removeBlacklistRemarks" class="bl-input-textarea" placeholder="Optional (e.g. Penalty paid, Boom barrier compensation cleared, Vigilance approval obtained)" rows="6"></textarea>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="bl-form-label-cell">Approver (OTP)</td>
+                        <td class="bl-form-input-cell">
+                            <div class="bl-approver-row">
+                                <select id="removeBlacklistApprover" class="bl-select-approver">
+                                    <option value="">-- Select Approver --</option>
+                                    <option value="Avinash Kishore (GM Vigilance)">Avinash Kishore (GM Vigilance)</option>
+                                    <option value="Rajeev Ranjan (Security HOD)">Rajeev Ranjan (Security HOD)</option>
+                                    <option value="Dispatch Officer KBP">Dispatch Officer KBP</option>
+                                    <option value="Bokaro & Kargali Security Incharge">Bokaro & Kargali Security Incharge</option>
+                                    <option value="admin">System Admin (HQ)</option>
+                                </select>
+                                <button type="button" class="bl-btn-send-otp" id="btnSendOtpRemove" onclick="handleSendOtp('remove')">Send OTP</button>
+                            </div>
+                            <div class="bl-otp-verify-group" id="removeOtpVerifyGroup" style="display: none; margin-top: 10px;">
+                                <div style="display: flex; align-items: center; gap: 8px;">
+                                    <span style="font-size: 11.5px; color: #34d399;"><i class="fa-solid fa-mobile-screen-button"></i> OTP sent to approver phone.</span>
+                                    <input type="text" id="removeOtpInput" class="bl-input-otp" placeholder="Enter 6-digit OTP" maxlength="6" value="319082" />
+                                    <span class="bl-otp-badge badge-green"><i class="fa-solid fa-circle-check"></i> Verified (Simulated)</span>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Submit Button Container -->
+        <div class="bl-form-action-container">
+            <button type="button" class="bl-btn-submit-action btn-unblacklist-theme" onclick="submitUnblacklistVehicle()">Unblacklist Vehicle</button>
+        </div>
+
+        <!-- Feedback Alert Box -->
+        <div id="removeBlacklistToast" class="bl-alert-toast" style="display: none;"></div>
+    </div>
+</div>

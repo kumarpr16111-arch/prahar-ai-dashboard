@@ -14,6 +14,7 @@ from backend.routes.auth_routes import router as auth_router
 from backend.routes.alerts_routes import router as alerts_router
 from backend.routes.fleet_routes import router as fleet_router
 from backend.routes.audit_routes import router as audit_router
+from backend.routes.blacklist_routes import router as blacklist_router
 
 
 def create_app() -> FastAPI:
@@ -44,6 +45,7 @@ def create_app() -> FastAPI:
     application.include_router(alerts_router)
     application.include_router(fleet_router)
     application.include_router(audit_router)
+    application.include_router(blacklist_router)
 
     return application
 

@@ -15,7 +15,7 @@ class BaseService:
 
     def __init__(self):
         self.config = config
-        self._timeout = httpx.Timeout(1.8, connect=1.0)
+        self._timeout = httpx.Timeout(5.0, connect=3.0)
 
     def _get_client(self) -> httpx.AsyncClient:
         """Instantiates an async HTTP client with standard timeout config."""
@@ -74,4 +74,15 @@ class BaseService:
                 return res.status_code in (200, 204)
         except Exception as e:
             print(f"[{self.__class__.__name__}] PATCH {endpoint} exception: {e}")
+            return False
+
+    async def delete(self, endpoint: str, query_params: str) -> bool:
+        """Performs an authenticated DELETE request to remove records from Supabase."""
+        url = f"{self.config.rest_url}/{endpoint}?{query_params}"
+        try:
+            async with self._get_client() as client:
+                res = await client.delete(url, headers=self.config.headers)
+                return res.status_code in (200, 204)
+        except Exception as e:
+            print(f"[{self.__class__.__name__}] DELETE {endpoint} exception: {e}")
             return False

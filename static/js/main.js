@@ -1,4 +1,64 @@
 document.addEventListener('DOMContentLoaded', () => {
+    // 0. Unified Theme Controller (Dark Mode 🌙 / Light Mode ☀️)
+    window.setTheme = function(theme) {
+        const activeTheme = theme === 'light' ? 'light' : 'dark';
+        document.documentElement.setAttribute('data-theme', activeTheme);
+        document.body.setAttribute('data-theme', activeTheme);
+        
+        document.documentElement.classList.remove('theme-dark', 'theme-light');
+        document.documentElement.classList.add('theme-' + activeTheme);
+        
+        try {
+            localStorage.setItem('trace_theme', activeTheme);
+        } catch(e) {}
+        
+        // Update Theme Pill UI
+        const btnDark = document.getElementById('themePillDark');
+        const btnLight = document.getElementById('themePillLight');
+        if (btnDark && btnLight) {
+            if (activeTheme === 'dark') {
+                btnDark.classList.add('active');
+                btnLight.classList.remove('active');
+            } else {
+                btnDark.classList.remove('active');
+                btnLight.classList.add('active');
+            }
+        }
+        
+        // Broadcast custom event for charts or components
+        window.dispatchEvent(new CustomEvent('traceThemeChanged', { detail: { theme: activeTheme } }));
+    };
+
+    window.toggleThemeMode = function() {
+        const currentTheme = document.documentElement.getAttribute('data-theme') || (localStorage.getItem('trace_theme') || 'dark');
+        const nextTheme = currentTheme === 'dark' ? 'light' : 'dark';
+        window.setTheme(nextTheme);
+    };
+
+    function initTheme() {
+        let savedTheme = 'dark';
+        try {
+            savedTheme = localStorage.getItem('trace_theme') || 'dark';
+        } catch(e) {}
+        window.setTheme(savedTheme);
+
+        const btnDark = document.getElementById('themePillDark');
+        const btnLight = document.getElementById('themePillLight');
+        if (btnDark) {
+            btnDark.addEventListener('click', (e) => {
+                e.stopPropagation();
+                window.setTheme('dark');
+            });
+        }
+        if (btnLight) {
+            btnLight.addEventListener('click', (e) => {
+                e.stopPropagation();
+                window.setTheme('light');
+            });
+        }
+    }
+    initTheme();
+
     // 1. Sidebar Collapse/Expand Toggle
     const sidebar = document.getElementById('sidebar');
     const sidebarToggle = document.getElementById('sidebarToggle');
@@ -509,7 +569,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('.sub-nav-item a').forEach(subLink => {
         subLink.addEventListener('click', function(e) {
             const parentSubItem = this.closest('.sub-nav-item');
-            if (parentSubItem && (parentSubItem.hasAttribute('data-tab') || parentSubItem.hasAttribute('data-view') || parentSubItem.id === 'cameraGridNavItem' || parentSubItem.id === 'cameraGisNavItem')) {
+            if (parentSubItem && (parentSubItem.hasAttribute('data-tab') || parentSubItem.hasAttribute('data-view') || parentSubItem.id === 'cameraGridNavItem' || parentSubItem.id === 'cameraGisNavItem' || parentSubItem.id?.startsWith('blacklisted') || parentSubItem.id?.startsWith('config') || parentSubItem.id?.startsWith('doOps'))) {
                 return;
             }
             e.preventDefault();
@@ -608,6 +668,31 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    // Blacklisted Vehicles Dropdown Toggle
+    window.toggleBlacklistedDropdown = function(e) {
+        if (e) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
+        const navItem = document.getElementById('blacklistedNavItem');
+        const list = document.getElementById('blacklistedSubList');
+        const arrow = document.getElementById('blacklistedArrow');
+        if (list) {
+            const isHidden = list.style.display === 'none' || getComputedStyle(list).display === 'none';
+            list.style.display = isHidden ? 'block' : 'none';
+            if (navItem) {
+                if (isHidden) {
+                    navItem.classList.add('expanded');
+                } else {
+                    navItem.classList.remove('expanded');
+                }
+            }
+            if (arrow) {
+                arrow.className = isHidden ? 'fa-solid fa-chevron-down arrow-icon' : 'fa-solid fa-chevron-right arrow-icon';
+            }
+        }
+    };
+
     // DO Operations Dropdown Toggle (Collapsed by default)
     window.toggleDoOpsDropdown = function(e) {
         if (e) e.preventDefault();
@@ -639,7 +724,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
-    setupDropdownToggle('blacklistedNavLink', 'blacklistedSubList', 'blacklistedArrow');
     setupDropdownToggle('cameraViewNavLink', 'cameraViewSubList', 'cameraViewArrow');
 
     // Camera Grid & GIS elements

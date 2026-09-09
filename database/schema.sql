@@ -216,3 +216,43 @@ CREATE TABLE irregular_dos (
     dst_co TEXT NOT NULL,
     dst_wb TEXT NOT NULL
 );
+
+-- 14. BLACKLISTED VEHICLES TABLE
+CREATE TABLE IF NOT EXISTS blacklisted_vehicles (
+    id SERIAL PRIMARY KEY,
+    v_no TEXT NOT NULL UNIQUE,
+    remarks TEXT NOT NULL,
+    blacklisted_by TEXT NOT NULL,
+    blacklisted_on TEXT NOT NULL,
+    status TEXT NOT NULL DEFAULT 'ACTIVE',
+    created_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+-- Seed Blacklisted Vehicles (CCL Security Department Dataset)
+INSERT INTO blacklisted_vehicles (v_no, remarks, blacklisted_by, blacklisted_on, status) VALUES
+('JH02BZ8562', 'Created jaam disturb transporting', 'Avinash Kishore', '2026-08-28 08:51:58', 'ACTIVE'),
+('AP07TM1599', 'Procedure lapses and doute ful. Enquiry under process', 'Dispatch Officer KBP', '2026-08-24 10:52:20', 'ACTIVE'),
+('JH16F1434', 'Found indulge in illegal activity FIR lodged at balumath P.S', 'Avinash Kishore', '2026-08-01 17:48:49', 'ACTIVE'),
+('JH19E8824', 'found indulge in illegal activity on dated-23/07/2026.', 'Avinash Kishore', '2026-07-24 13:27:03', 'ACTIVE'),
+('JH02BU4231', 'Broken boom barrier at Checkpost 12 and did not got entry .', 'Avinash Kishore', '2026-07-16 06:03:50', 'ACTIVE'),
+('WB15D7999', 'This vehicle damaged the boom Barr of Checkpost 12', 'Avinash Kishore', '2026-07-09 19:06:47', 'ACTIVE'),
+('JH02BP2620', 'Ref No: HOD (Security)/CCL/Blacklist-Veh./2026/147 Dated: 16.06.2026', 'admin', '2026-07-02 13:11:05', 'ACTIVE'),
+('BR02GD3789', 'This vehicle damaged the boom Barrier of weigh bridge 11', 'Rajeev Ranjan', '2026-07-02 07:35:44', 'ACTIVE'),
+('CG07D1070', 'THIS VEHICLE DAMAGED BOOM BARRIER OF CHECKPOST NO. 12', 'Rajeev Ranjan', '2026-07-01 11:51:22', 'ACTIVE'),
+('JH02BY3436', 'THIS VEHICLE DAMAGED BOOM BARRIER OF CHECKPOST NO. 12', 'Rajeev Ranjan', '2026-07-01 11:49:25', 'ACTIVE'),
+('OD16K2800', 'The vehicle is being blacklisted due to tampering in GPS.', 'Bokaro & Kargali', '2026-06-30 14:32:39', 'ACTIVE'),
+('BR02GA4922', 'Already Blacklisted Vehicle. List given by Security Department. CCL HQ', 'admin', '2026-06-26 17:37:22', 'ACTIVE'),
+('BR02GA8258', 'Already Blacklisted Vehicle. List given by Security Department. CCL HQ', 'admin', '2026-06-26 17:37:22', 'ACTIVE'),
+('BR02GA8556', 'Already Blacklisted Vehicle. List given by Security Department. CCL HQ', 'admin', '2026-06-26 17:37:22', 'ACTIVE'),
+('BR09GA4905', 'Already Blacklisted Vehicle. List given by Security Department. CCL HQ', 'admin', '2026-06-26 17:37:22', 'ACTIVE'),
+('CG12AZ1003', 'Already Blacklisted Vehicle. List given by Security Department. CCL HQ', 'admin', '2026-06-26 17:37:22', 'ACTIVE'),
+('CG14D0484', 'Already Blacklisted Vehicle. List given by Security Department. CCL HQ', 'admin', '2026-06-26 17:37:22', 'ACTIVE'),
+('CG15AC2023', 'Already Blacklisted Vehicle. List given by Security Department. CCL HQ', 'admin', '2026-06-26 17:37:22', 'ACTIVE'),
+('HR55M1420', 'Already Blacklisted Vehicle. List given by Security Department. CCL HQ', 'admin', '2026-06-26 17:37:22', 'ACTIVE'),
+('JH01AH4118', 'Already Blacklisted Vehicle. List given by Security Department. CCL HQ', 'admin', '2026-06-26 17:37:22', 'ACTIVE'),
+('JH01AJ1079', 'Already Blacklisted Vehicle. List given by Security Department. CCL HQ', 'admin', '2026-06-26 17:37:22', 'ACTIVE'),
+('JH01AY6092', 'Already Blacklisted Vehicle. List given by Security Department. CCL HQ', 'admin', '2026-06-26 17:37:22', 'ACTIVE'),
+('JH01BZ1124', 'Already Blacklisted Vehicle. List given by Security Department. CCL HQ', 'admin', '2026-06-26 17:37:22', 'ACTIVE'),
+('JH01CH5792', 'Already Blacklisted Vehicle. List given by Security Department. CCL HQ', 'admin', '2026-06-26 17:37:22', 'ACTIVE'),
+('JH01EY8719', 'Already Blacklisted Vehicle. List given by Security Department. CCL HQ', 'admin', '2026-06-26 17:37:22', 'ACTIVE')
+ON CONFLICT (v_no) DO UPDATE SET remarks = EXCLUDED.remarks, status = EXCLUDED.status;
