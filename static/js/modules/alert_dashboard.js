@@ -262,22 +262,38 @@ function updateAlertsDashboardUI() {
     // Update Threat Level Banner
     const threatBadge = document.getElementById('threatLevelBadge');
     const threatText = document.getElementById('threatLevelText');
+    const pulseDot = threatBadge ? threatBadge.querySelector('.threat-pulse-dot') : null;
     if (threatBadge && threatText) {
         if (criticalActive > 0) {
             threatBadge.style.background = 'rgba(239, 68, 68, 0.2)';
             threatBadge.style.borderColor = 'rgba(239, 68, 68, 0.6)';
             threatBadge.style.color = '#f87171';
-            threatText.innerHTML = `${criticalActive} CRITICAL ANOMALIES ACTIVE`;
+            threatBadge.style.boxShadow = '0 0 14px rgba(239, 68, 68, 0.35)';
+            if (pulseDot) {
+                pulseDot.style.backgroundColor = '#ef4444';
+                pulseDot.style.boxShadow = '0 0 10px #ef4444';
+            }
+            threatText.innerHTML = `CRITICAL • ${criticalActive} ANOMALIES ACTIVE`;
         } else if (totalActive > 0) {
             threatBadge.style.background = 'rgba(245, 158, 11, 0.2)';
             threatBadge.style.borderColor = 'rgba(245, 158, 11, 0.6)';
             threatBadge.style.color = '#fbbf24';
-            threatText.innerHTML = `${totalActive} SURVEILLANCE ANOMALIES ACTIVE`;
+            threatBadge.style.boxShadow = '0 0 14px rgba(245, 158, 11, 0.35)';
+            if (pulseDot) {
+                pulseDot.style.backgroundColor = '#f59e0b';
+                pulseDot.style.boxShadow = '0 0 10px #f59e0b';
+            }
+            threatText.innerHTML = `SURVEILLANCE • ${totalActive} ANOMALIES ACTIVE`;
         } else {
             threatBadge.style.background = 'rgba(16, 185, 129, 0.2)';
             threatBadge.style.borderColor = 'rgba(16, 185, 129, 0.6)';
             threatBadge.style.color = '#34d399';
-            threatText.innerHTML = `ALL 14 CORRIDORS SECURE`;
+            threatBadge.style.boxShadow = '0 0 14px rgba(16, 185, 129, 0.35)';
+            if (pulseDot) {
+                pulseDot.style.backgroundColor = '#10b981';
+                pulseDot.style.boxShadow = '0 0 10px #10b981';
+            }
+            threatText.innerHTML = `SECURE • ALL 14 CORRIDORS NORMAL`;
         }
     }
 
