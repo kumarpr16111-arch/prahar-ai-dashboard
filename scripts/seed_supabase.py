@@ -16,7 +16,7 @@ USERS_LIST = [
     {"username": "vigilance", "password": "vigilance@trace2026", "name": "Amitabh Roy", "designation": "Chief Vigilance Officer", "role": "vigilance", "email": "vigilance@trace.gov.in"},
     {"username": "surveillance", "password": "surveillance@trace2026", "name": "Sunil Verma", "designation": "Mining Surveillance Incharge", "role": "surveillance", "email": "surveillance@trace.gov.in"},
     {"username": "dispatch", "password": "dispatch@trace2026", "name": "Rakesh Kumar", "designation": "Central Dispatch Officer", "role": "dispatch", "email": "dispatch@trace.gov.in"},
-    {"username": "operator", "password": "operator@trace2026", "name": "Vikas Mahto", "designation": "Command Control Operator", "role": "operator", "email": "operator@trace.gov.in"},
+    {"username": "operator", "password": "operator@trace2026", "name": "Vikas Mahto", "designation": "Control Room Operator", "role": "operator", "email": "operator@trace.gov.in"},
     {"username": "admin", "password": "password123", "name": "System Administrator", "designation": "Command Center Chief", "role": "admin", "email": "admin@prahar.ai"}
 ]
 

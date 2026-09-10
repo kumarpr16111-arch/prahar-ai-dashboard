@@ -218,11 +218,43 @@ class SupabaseService(BaseService):
         if not db_users:
             return self.DEFAULT_USERS
         
-        existing_usernames = {u.get("username") for u in db_users}
-        merged = list(db_users)
-        for du in self.DEFAULT_USERS:
-            if du["username"] not in existing_usernames:
-                merged.append(du)
+        default_map = {du["username"]: dict(du) for du in self.DEFAULT_USERS}
+        merged: List[Dict[str, Any]] = []
+        seen_usernames = set()
+
+        for user in db_users:
+            uname = (user.get("username") or "").strip().lower()
+            if not uname:
+                continue
+            
+            # Map legacy shift/incharge usernames to operator
+            if uname in ("shift", "shift_incharge", "shift_operator", "control_operator", "control-operator"):
+                uname = "operator"
+            
+            user_copy = dict(user)
+            user_copy["username"] = uname
+
+            # Normalize designation and role for operator
+            if uname == "operator":
+                user_copy["role"] = "operator"
+                if not user_copy.get("designation") or "shift" in user_copy.get("designation", "").lower():
+                    user_copy["designation"] = "Control Room Operator"
+            
+            if uname in default_map:
+                def_user = default_map[uname]
+                if not user_copy.get("password"):
+                    user_copy["password"] = def_user["password"]
+                user_copy["default_password"] = def_user["password"]
+                if not user_copy.get("designation") or "shift" in user_copy.get("designation", "").lower():
+                    user_copy["designation"] = def_user["designation"]
+
+            seen_usernames.add(uname)
+            merged.append(user_copy)
+        
+        for uname, def_user in default_map.items():
+            if uname not in seen_usernames:
+                merged.append(dict(def_user))
+        
         return merged
 
     async def fetch_weighbridge_data(self) -> List[Dict[str, Any]]:

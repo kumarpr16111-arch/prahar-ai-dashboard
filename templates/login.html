@@ -1121,11 +1121,25 @@
                 password: defaultPass
             };
 
+            const radio = document.getElementById('role_' + roleKey);
+            if (radio) radio.checked = true;
+
             document.getElementById('selectedRoleLabel').textContent = roleName;
             document.getElementById('btnLoginText').textContent = 'Sign In as ' + roleName;
             
             const usernameInput = document.getElementById('username');
+            const passwordInput = document.getElementById('password');
             usernameInput.placeholder = `e.g. ${defaultEmail} or ${roleKey}`;
+            
+            // Automatically populate demo credentials when switching roles
+            usernameInput.value = defaultEmail;
+            passwordInput.value = defaultPass;
+
+            // Clear any previous error banner
+            const errorAlert = document.querySelector('.alert-error');
+            if (errorAlert) {
+                errorAlert.style.display = 'none';
+            }
         }
 
         function autoFillCurrentCredentials() {
@@ -1195,6 +1209,58 @@
                 showComingSoon(subParam, subNames[subParam] || subParam, 'Enterprise Region');
             } else {
                 navigateToPortal();
+            }
+
+            // Enhanced login submission with feedback
+            const loginForm = document.getElementById('loginForm');
+            if (loginForm) {
+                loginForm.addEventListener('submit', async function(e) {
+                    e.preventDefault();
+                    const btn = document.getElementById('btnLogin');
+                    const btnText = document.getElementById('btnLoginText');
+                    const originalText = btnText.textContent;
+
+                    btn.disabled = true;
+                    btnText.textContent = 'Authenticating...';
+
+                    try {
+                        const formData = new FormData(this);
+                        const response = await fetch('/login', {
+                            method: 'POST',
+                            body: formData,
+                            redirect: 'follow'
+                        });
+
+                        if (response.redirected) {
+                            window.location.href = response.url;
+                            return;
+                        }
+
+                        const text = await response.text();
+                        const parser = new DOMParser();
+                        const doc = parser.parseFromString(text, 'text/html');
+                        const errorEl = doc.querySelector('.alert-error');
+
+                        if (errorEl) {
+                            let localError = document.querySelector('.alert-error');
+                            if (!localError) {
+                                localError = document.createElement('div');
+                                localError.className = 'alert-error';
+                                loginForm.parentNode.insertBefore(localError, loginForm);
+                            }
+                            localError.innerHTML = errorEl.innerHTML;
+                            localError.style.display = 'flex';
+                        } else {
+                            window.location.href = '/';
+                        }
+                    } catch (err) {
+                        console.error('Authentication request error:', err);
+                        this.submit();
+                    } finally {
+                        btn.disabled = false;
+                        btnText.textContent = originalText;
+                    }
+                });
             }
         });
     </script>
