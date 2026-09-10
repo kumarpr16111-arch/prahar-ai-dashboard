@@ -267,17 +267,17 @@ function updateAlertsDashboardUI() {
             threatBadge.style.background = 'rgba(239, 68, 68, 0.2)';
             threatBadge.style.borderColor = 'rgba(239, 68, 68, 0.6)';
             threatBadge.style.color = '#f87171';
-            threatText.innerHTML = `DEFCON 1 • ${criticalActive} CRITICAL ANOMALIES ACTIVE`;
+            threatText.innerHTML = `${criticalActive} CRITICAL ANOMALIES ACTIVE`;
         } else if (totalActive > 0) {
             threatBadge.style.background = 'rgba(245, 158, 11, 0.2)';
             threatBadge.style.borderColor = 'rgba(245, 158, 11, 0.6)';
             threatBadge.style.color = '#fbbf24';
-            threatText.innerHTML = `DEFCON 2 • ${totalActive} SURVEILLANCE ANOMALIES ACTIVE`;
+            threatText.innerHTML = `${totalActive} SURVEILLANCE ANOMALIES ACTIVE`;
         } else {
             threatBadge.style.background = 'rgba(16, 185, 129, 0.2)';
             threatBadge.style.borderColor = 'rgba(16, 185, 129, 0.6)';
             threatBadge.style.color = '#34d399';
-            threatText.innerHTML = `DEFCON 3 • ALL 14 CORRIDORS SECURE`;
+            threatText.innerHTML = `ALL 14 CORRIDORS SECURE`;
         }
     }
 
@@ -362,7 +362,7 @@ function updateAlertsDashboardUI() {
     const sideCardCount = document.getElementById('sidebarLiveCardCount');
     const sideThreatText = document.getElementById('sidebarLiveThreatText');
     if (sideCardCount) sideCardCount.innerText = `${totalActive} Anomalies Active`;
-    if (sideThreatText) sideThreatText.innerText = criticalActive > 0 ? `• DEFCON 1 (${criticalActive} Critical)` : `• ${totalActive} Active`;
+    if (sideThreatText) sideThreatText.innerText = criticalActive > 0 ? `• ${criticalActive} Critical Active` : `• ${totalActive} Active`;
 
     // Re-render detail view if open
     const detailContainer = document.getElementById('alertDetailContainer');
