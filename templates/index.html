@@ -364,6 +364,15 @@
                                     </li>
                                 </ul>
                             </li>
+
+                            <!-- App Installation Section at Bottom of Sidebar -->
+                            <li class="nav-item" id="appInstallationNavItem" data-view="app-installation">
+                                <a href="#app-installation" class="nav-link" id="appInstallationNavLink" onclick="if(window.showAppInstallationTab){window.showAppInstallationTab();}else if(window.openAppInstallationModal){window.openAppInstallationModal();}" style="cursor: pointer;" title="Download TRACE Mobile App (APK)">
+                                    <i class="fa-solid fa-mobile-screen-button nav-icon" style="color: #38bdf8;"></i>
+                                    <span class="nav-text">App Installation</span>
+                                    <span class="badge badge-ai" style="font-size: 8.5px; height: 16px; padding: 0 5px; background: rgba(56, 189, 248, 0.15); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.35);">APK</span>
+                                </a>
+                            </li>
                         </ul>
                     </div>
                 </div>
@@ -542,6 +551,7 @@
                 {% include 'partials/do_operations.html' %}
                 {% include 'partials/config_masters.html' %}
                 {% include 'partials/blacklisted_vehicles.html' %}
+                {% include 'partials/app_installation_view.html' %}
             </div> <!-- Close content-body -->
         </main>
     </div>
@@ -550,6 +560,7 @@
     <!-- MODAL DIALOGUES (Jinja2 Components)                     -->
     <!-- ======================================================== -->
     {% include 'partials/user_profile_modal.html' %}
+    {% include 'partials/app_installation_modal.html' %}
 
     <!-- Custom JS -->
 

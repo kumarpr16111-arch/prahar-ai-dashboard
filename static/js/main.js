@@ -82,6 +82,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const droneDashboardItem = document.querySelector('[data-view="drone-dashboard"]');
     const workersAttendanceItem = document.querySelector('[data-view="workers-attendance"]');
     const digitalAuditTrailsItem = document.querySelector('[data-view="digital-audit-trails"]');
+    const appInstallationItem = document.querySelector('[data-view="app-installation"]');
     const mainSidebarMenu = document.getElementById('mainSidebarMenu');
     const alertSidebarMenu = document.getElementById('alertSidebarMenu');
     const btnBackHome = document.getElementById('btnBackHome');
@@ -378,6 +379,33 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         initAuditTrailsData();
+    };
+
+    // Function to show TRACE Mobile App Installation Center Mode
+    window.showAppInstallationTab = function() {
+        document.body.classList.remove('alert-mode-active');
+        document.body.classList.remove('gis-mode-active');
+        const sidebar = document.getElementById('sidebar');
+        if (sidebar) sidebar.style.display = '';
+        if (mainSidebarMenu) mainSidebarMenu.style.display = 'block';
+        if (alertSidebarMenu) alertSidebarMenu.style.display = 'none';
+        if (tabsCard) tabsCard.style.display = 'none';
+        
+        const appItem = document.getElementById('appInstallationNavItem') || appInstallationItem;
+        setActiveSidebarNav(appItem);
+        updateHeaderMainTitle('TRACE MOBILE™ APP INSTALLATION & TELEMETRY SUITE');
+
+        sidebarSummaryItems.forEach(item => item.classList.remove('active'));
+
+        tabPanels.forEach(panel => {
+            if (panel.id === 'app-installation-view') {
+                panel.classList.add('active');
+                panel.style.display = 'block';
+            } else {
+                panel.classList.remove('active');
+                panel.style.display = 'none';
+            }
+        });
     };
 
     // Drone Sub-Tabs Switcher (Dashboard, Features, Sites, Inferred Reports)
@@ -2131,3 +2159,87 @@ window.closeUserProfileModal = function(e) {
         closeUserProfileModalDirect();
     }
 };
+
+// 7. TRACE Mobile App Installation Modal & APK Download Controls
+window.openAppInstallationModal = function() {
+    const modal = document.getElementById('appInstallationModal');
+    if (modal) {
+        modal.style.display = 'flex';
+        if (typeof playAlertChime === 'function') playAlertChime('test');
+    }
+};
+
+window.closeAppInstallationModalDirect = function() {
+    const modal = document.getElementById('appInstallationModal');
+    if (modal) modal.style.display = 'none';
+};
+
+window.closeAppInstallationModal = function(e) {
+    if (e && e.target.id === 'appInstallationModal') {
+        closeAppInstallationModalDirect();
+    }
+};
+
+window.triggerTraceApkDownload = function() {
+    const progressBox = document.getElementById('apkDownloadProgressBox');
+    const statusText = document.getElementById('apkDownloadStatusText');
+    const percentText = document.getElementById('apkDownloadPercentText');
+    const progressBar = document.getElementById('apkDownloadProgressBar');
+    const btn = document.getElementById('btnTriggerApkDownload');
+
+    if (progressBox) progressBox.style.display = 'block';
+    if (btn) btn.disabled = true;
+
+    if (typeof showAuditToast === 'function') {
+        showAuditToast('📥 Initiating verified package download: TRACE_Mobile_v2.4.2.apk (42.8 MB)...');
+    }
+    if (typeof playAlertChime === 'function') playAlertChime('high');
+
+    let current = 0;
+    const interval = setInterval(() => {
+        current += 20;
+        if (progressBar) progressBar.style.width = current + '%';
+        if (percentText) percentText.textContent = current + '%';
+        if (statusText) statusText.textContent = `Downloading TRACE package... ${Math.round(current * 0.428)} MB / 42.8 MB`;
+
+        if (current >= 100) {
+            clearInterval(interval);
+            if (statusText) statusText.textContent = '✅ Download complete! Package ready for installation.';
+            
+            // Trigger actual browser download
+            const link = document.createElement('a');
+            link.href = '/static/downloads/trace_mobile_app_v2.4.apk';
+            link.download = 'TRACE_Mobile_v2.4.2_Production.apk';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+
+            if (typeof showAuditToast === 'function') {
+                showAuditToast('✅ TRACE_Mobile_v2.4.2_Production.apk downloaded successfully!');
+            }
+            if (btn) btn.disabled = false;
+        }
+    }, 100);
+};
+
+window.copyTraceApkLink = function() {
+    const url = 'https://trace.ccl.gov.in/downloads/mobile/trace-field-v2.4.apk';
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(url).then(() => {
+            const btnText = document.getElementById('copyLinkBtnText');
+            if (btnText) {
+                const old = btnText.textContent;
+                btnText.textContent = 'Copied! ✅';
+                setTimeout(() => { btnText.textContent = old; }, 2000);
+            }
+            if (typeof showAuditToast === 'function') {
+                showAuditToast('📋 Direct APK Download URL copied to clipboard!');
+            }
+        });
+    } else {
+        if (typeof showAuditToast === 'function') {
+            showAuditToast('📋 URL: ' + url);
+        }
+    }
+};
+
