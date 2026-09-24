@@ -12148,4 +12148,146 @@ body[data-theme="light"].alert-mode-active .user-name {
     color: #0f172a;
 }
 
+/* ==========================================================================
+   Header User Profile & Sign Out Button Unified Alignment
+   ========================================================================== */
+.user-profile-group {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    height: 38px;
+}
+
+.user-profile {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    cursor: pointer;
+    padding: 3px 8px;
+    border-radius: 6px;
+    transition: background 0.15s ease;
+    height: 38px;
+    box-sizing: border-box;
+}
+
+.user-profile:hover {
+    background: rgba(255, 255, 255, 0.06);
+}
+
+[data-theme="light"] .user-profile:hover {
+    background: rgba(0, 0, 0, 0.04);
+}
+
+.avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    flex-shrink: 0;
+}
+
+[data-theme="dark"] .avatar {
+    background: #141b29;
+    color: #38bdf8;
+    border: 1px solid #243042;
+}
+
+[data-theme="light"] .avatar {
+    background: #e0f2fe;
+    color: #0284c7;
+    border: 1px solid #bae6fd;
+}
+
+.user-profile-info {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    line-height: 1.2;
+    justify-content: center;
+}
+
+.user-name {
+    font-weight: 700;
+    font-size: 12.5px;
+    color: var(--text-main) !important;
+    white-space: nowrap;
+    line-height: 1.2;
+}
+
+.user-role-badge {
+    font-size: 9.5px;
+    font-weight: 700;
+    padding: 1.5px 6px;
+    border-radius: 3px;
+    display: inline-block;
+    width: fit-content;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    margin-top: 2px;
+    white-space: nowrap;
+    line-height: 1.2;
+}
+
+[data-theme="dark"] .user-role-badge {
+    background: #141b29;
+    border: 1px solid #243042;
+    color: #38bdf8;
+}
+
+[data-theme="dark"] .user-role-badge.user-role-vigilance {
+    color: #34d399;
+}
+
+[data-theme="dark"] .user-role-badge.user-role-surveillance {
+    color: #38bdf8;
+}
+
+[data-theme="dark"] .user-role-badge.user-role-dispatch {
+    color: #a78bfa;
+}
+
+[data-theme="light"] .user-role-badge {
+    background: #e0f2fe;
+    border: 1px solid #bae6fd;
+    color: #0284c7;
+}
+
+.btn-logout {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    height: 32px;
+    padding: 0 12px;
+    border-radius: 6px;
+    font-size: 11.5px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.15s ease;
+    box-sizing: border-box;
+    white-space: nowrap;
+}
+
+[data-theme="dark"] .btn-logout {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid #243042;
+    color: #94a3b8;
+}
+
+[data-theme="light"] .btn-logout {
+    background: #f8fafc;
+    border: 1px solid #cbd5e1;
+    color: #475569;
+}
+
+.btn-logout:hover {
+    background: rgba(239, 68, 68, 0.12) !important;
+    border-color: rgba(239, 68, 68, 0.4) !important;
+    color: #ef4444 !important;
+}
+
+
 

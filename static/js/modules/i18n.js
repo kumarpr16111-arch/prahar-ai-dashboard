@@ -1,6 +1,6 @@
 /**
- * TRACE Command Center - Internationalization (i18n) Engine
- * Seamless Dual-Language Support (English 🇬🇧 / हिन्दी 🇮🇳)
+ * TRACE Command Center - Comprehensive Internationalization (i18n) Engine
+ * Dual-Language System (English 🇬🇧 / हिन्दी 🇮🇳)
  */
 
 (function() {
@@ -8,22 +8,24 @@
 
     const TRANSLATIONS = {
         en: {
-            // Header
+            // Header & Profile
             "TRACE DIGITAL DASHBOARD": "TRACE DIGITAL DASHBOARD",
             "Full Screen": "Full Screen",
+            "Exit Fullscreen": "Exit Fullscreen",
             "Exit Full Screen": "Exit Full Screen",
-            "Time Filter": "Time Filter",
-            "Live (Real-time)": "Live (Real-time)",
-            "Past 1 Hour": "Past 1 Hour",
-            "Today (24h)": "Today (24h)",
-            "Past 7 Days": "Past 7 Days",
+            "Visual Analytics": "Visual Analytics",
+            "Export PDF": "Export PDF",
+            "Export Excel": "Export Excel",
             "Dark": "Dark",
             "Light": "Light",
             "Sign Out": "Sign Out",
-            "Active Prototype": "Active Prototype",
-            "Enterprise Node": "Enterprise Node",
+            "GENERAL MANAGER (MINING & OPS)": "GENERAL MANAGER (MINING & OPS)",
+            "VIGILANCE OFFICER": "VIGILANCE OFFICER",
+            "SURVEILLANCE COMMANDER": "SURVEILLANCE COMMANDER",
+            "DISPATCH CONTROLLER": "DISPATCH CONTROLLER",
+            "WEIGHBRIDGE OPERATOR": "WEIGHBRIDGE OPERATOR",
             
-            // Sidebar Main Navigation
+            // Sidebar Navigation
             "HOME": "HOME",
             "Summary": "Summary",
             "Weighbridge summary": "Weighbridge summary",
@@ -33,16 +35,34 @@
             "AI Driven Drone Monitoring": "AI Driven Drone Monitoring",
             "Camera View": "Camera View",
             "Grid View": "Grid View",
+            "GIS View": "GIS View",
             "GIS Map View": "GIS Map View",
+            "VTS Dashboard": "VTS Dashboard",
+            "RFID Dashboard": "RFID Dashboard",
             "RFID Status & Configuration": "RFID Status & Configuration",
             "Irregular Weighments": "Irregular Weighments",
             "Irregular Trips": "Irregular Trips",
-            "Workers Attendance (Mining / Plant)": "Workers Attendance (Mining / Plant)",
             "Workers Attendance": "Workers Attendance",
+            "Workers Attendance (Mining / Plant)": "Workers Attendance (Mining / Plant)",
+            "Digital Audit Trails": "Digital Audit Trails",
             "Blacklisted Vehicles": "Blacklisted Vehicles",
             "View": "View",
+            "Add": "Add",
+            "Remove": "Remove",
             "Add Blacklisted Vehicle": "Add Blacklisted Vehicle",
             "Remove / Unblacklist Vehicle": "Remove / Unblacklist Vehicle",
+            "DO Operations": "DO Operations",
+            "View Internal DO Data": "View Internal DO Data",
+            "Add Internal DO Data": "Add Internal DO Data",
+            "Edit DO or Map to WB": "Edit DO or Map to WB",
+            "Reports": "Reports",
+            "Road Dispatch": "Road Dispatch",
+            "Internal Transport": "Internal Transport",
+            "Checkpost Report": "Checkpost Report",
+            "Active Vehicle": "Active Vehicle",
+            "Reconcile Report": "Reconcile Report",
+            "Manual Operations": "Manual Operations",
+            "Manual Boom Operations": "Manual Boom Operations",
             "Contract Management": "Contract Management",
             "Area Master": "Area Master",
             "Plant Master": "Plant Master",
@@ -50,61 +70,117 @@
             "Checkpost Master": "Checkpost Master",
             "Transporter Master": "Transporter Master",
             "Maintenance Master": "Maintenance Master",
-            "Reports & Analytics": "Reports & Analytics",
+            "App Installation": "App Installation",
+            "DASHBOARD": "DASHBOARD",
             "ANALYTICS": "ANALYTICS",
-            "DASHBOARDS & OPERATIONS": "DASHBOARDS & OPERATIONS",
-            "SECURITY & SURVEILLANCE": "SECURITY & SURVEILLANCE",
-            "SYSTEM CONFIGURATION": "SYSTEM CONFIGURATION",
-            
-            // Blacklisted Vehicles Module
-            "Blacklisted Vehicles Master Registry": "Blacklisted Vehicles Master Registry",
-            "Total Blacklisted": "Total Blacklisted",
-            "Recent Violations": "Recent Violations",
-            "Security Escalations": "Security Escalations",
-            "Compliance Actions": "Compliance Actions",
-            "Filter by Vehicle Number": "Filter by Vehicle Number",
-            "Type to filter...": "Type to filter...",
-            "Export CSV": "Export CSV",
-            "Vehicle Number": "Vehicle Number",
-            "Remarks": "Remarks",
-            "Blacklisted By": "Blacklisted By",
-            "Blacklisted On": "Blacklisted On",
-            "Action": "Action",
-            "Unblacklist": "Unblacklist",
-            "ADD BLACKLISTED VEHICLE": "ADD BLACKLISTED VEHICLE",
-            "REMOVE / UNBLACKLIST VEHICLE": "REMOVE / UNBLACKLIST VEHICLE",
-            "Approver (OTP)": "Approver (OTP)",
-            "Select Approver": "Select Approver",
-            "Send OTP": "Send OTP",
-            "Enter OTP": "Enter OTP",
-            "Blacklist Vehicle": "Blacklist Vehicle",
-            "Unblacklist Vehicle": "Unblacklist Vehicle",
-            "Reason / Violation Details": "Reason / Violation Details",
-            "Enter reasons for blacklisting (e.g. boom barrier damage, tampering)...": "Enter reasons for blacklisting (e.g. boom barrier damage, tampering)...",
-            "Reason / Justification for Removal": "Reason / Justification for Removal",
-            "Enter justification for removing vehicle from blacklist...": "Enter justification for removing vehicle from blacklist...",
-            "Enter vehicle number (e.g. JH02BZ8562)...": "Enter vehicle number (e.g. JH02BZ8562)...",
-            
-            // Summary Tabs & Dashboard
+            "Reports & Analytics": "Reports & Analytics",
+            "Live Dashboard": "Live Dashboard",
+            "MOBILE APP": "MOBILE APP",
+
+            // App Installation Center
+            "TRACE Mobile App Installation Center": "TRACE Mobile App Installation Center",
+            "TRACE Mobile Field Assistant™": "TRACE Mobile Field Assistant™",
+            "TRACE Mobile Field Assistant": "TRACE Mobile Field Assistant",
+            "TRACE MOBILE™ APP INSTALLATION": "TRACE MOBILE™ APP INSTALLATION",
+            "Geo-tagged mobile application for field inspections, safety observations, attendance, and incident reporting with offline support.": "Geo-tagged mobile application for field inspections, safety observations, attendance, and incident reporting with offline support.",
+            "Geo-Tagged Field Inspections": "Geo-Tagged Field Inspections",
+            "Safety Observations": "Safety Observations",
+            "Workers Attendance": "Workers Attendance",
+            "Incident Reporting (Offline Support)": "Incident Reporting (Offline Support)",
+            "Incident Reporting (Offline)": "Incident Reporting (Offline)",
+            "Incident Reporting": "Incident Reporting",
+            "Download APK (42.8 MB)": "Download APK (42.8 MB)",
+            "Download TRACE APK (42.8 MB)": "Download TRACE APK (42.8 MB)",
+            "Download TRACE APK File": "Download TRACE APK File",
+            "Scan with Android Camera": "Scan with Android Camera",
+            "Installation Instructions": "Installation Instructions",
+            "Quick 3-Step Setup Instructions": "Quick 3-Step Setup Instructions",
+            "Core Application Modules": "Core Application Modules",
+            "Offline Sync Ready": "Offline Sync Ready",
+            "Offline First Sync": "Offline First Sync",
+            "Direct Installation": "Direct Installation",
+            "Direct Package Installation": "Direct Package Installation",
+            "Copy URL": "Copy URL",
+            "Copy": "Copy",
+            "Copied! ✅": "Copied! ✅",
+
+            // Alert Dashboard & Tactical ICCC
+            "Unauthorized stoppage": "Unauthorized stoppage",
+            "Vehicle Detection": "Vehicle Detection",
+            "Person Detection": "Person Detection",
+            "Intrusion Detection": "Intrusion Detection",
+            "Traffic Congestion": "Traffic Congestion",
+            "Loaded-Unloaded Alerts": "Loaded-Unloaded Alerts",
+            "Off-Route Movement": "Off-Route Movement",
+            "Speed Violation": "Speed Violation",
+            "Boom Barrier Force": "Boom Barrier Force",
+            "Crowd Formation": "Crowd Formation",
+            "Camera Tampering": "Camera Tampering",
+            "Safety Gear Violation": "Safety Gear Violation",
+            "Illumination Alert": "Illumination Alert",
+            "All Types": "All Types",
+            "ALL": "ALL",
+            "Critical": "Critical",
+            "High": "High",
+            "Medium": "Medium",
+            "Low": "Low",
+            "Active": "Active",
+            "Resolved": "Resolved",
+            "Acknowledged": "Acknowledged",
+            "Filter by Type": "Filter by Type",
+            "Filter by Severity": "Filter by Severity",
+            "Filter by Status": "Filter by Status",
+            "Filter by Area": "Filter by Area",
+            "Search alerts by vehicle, location, or anomaly keyword...": "Search alerts by vehicle, location, or anomaly keyword...",
+            "INCIDENT FORENSICS & TELEMETRY": "INCIDENT FORENSICS & TELEMETRY",
+            "Dispatch QRT Unit": "Dispatch QRT Unit",
+            "Lock Boom Barrier": "Lock Boom Barrier",
+            "Acknowledge": "Acknowledge",
+            "Resolve": "Resolve",
+
+            // Summary View Cards & Tables
             "Weighbridge Status": "Weighbridge Status",
             "Checkpost Status": "Checkpost Status",
             "VTS Fleet Summary": "VTS Fleet Summary",
             "Operational Total": "Operational Total",
             "Operational %": "Operational %",
-            "Road Dispatch": "Road Dispatch",
-            "Internal Movement": "Internal Movement",
             "Total Transactions": "Total Transactions",
+            "Gross Weight": "Gross Weight",
+            "Tare Weight": "Tare Weight",
+            "Net Weight": "Net Weight",
+            "Overload Violations": "Overload Violations",
             "Bypassing Detected": "Bypassing Detected",
             "Boom Violations": "Boom Violations",
             "ANPR Accuracy": "ANPR Accuracy",
+            "Active Vehicles": "Active Vehicles",
+            "Idle Vehicles": "Idle Vehicles",
+            "Transit Delayed": "Transit Delayed",
+            "Geofence Compliance": "Geofence Compliance",
             "Search Area or Project...": "Search Area or Project...",
             "All Areas": "All Areas",
-            "Live": "Live",
+            "North Karanpura": "North Karanpura",
+            "Piprawar": "Piprawar",
+            "Rajrappa": "Rajrappa",
+            "BarkaSayana": "BarkaSayana",
+            "Kathara": "Kathara",
+            "B&K": "B&K",
+            "Dhori": "Dhori",
+            "Kuju": "Kuju",
+            "Hazaribagh": "Hazaribagh",
             "Operational": "Operational",
             "Offline": "Offline",
             "Maintenance": "Maintenance",
-            
-            // Common Actions & Notifications
+            "Live": "Live",
+
+            // Workers Attendance
+            "Location Attendance Dashboard": "Location Attendance Dashboard",
+            "Active Member": "Active Member",
+            "Present": "Present",
+            "Absent": "Absent",
+            "Attendance Overview": "Attendance Overview",
+            "Go": "Go",
+
+            // Common Actions & Form Controls
             "Search": "Search",
             "Filter": "Filter",
             "Export": "Export",
@@ -116,25 +192,49 @@
             "Success": "Success",
             "Error": "Error",
             "Warning": "Warning",
-            "Information": "Information"
+            "Information": "Information",
+            "Status": "Status",
+            "Action": "Action",
+            "Actions": "Actions",
+            "Vehicle Number": "Vehicle Number",
+            "Transporter": "Transporter",
+            "Driver Name": "Driver Name",
+            "Location": "Location",
+            "Timestamp": "Timestamp",
+            "Date": "Date",
+            "Time": "Time",
+            "Description": "Description",
+            "Confidence": "Confidence",
+            "Remarks": "Remarks",
+            "Add New Record": "Add New Record",
+            "Save Changes": "Save Changes",
+            "OFFICER CREDENTIALS & ACCESS": "OFFICER CREDENTIALS & ACCESS",
+            "ACTIVE SESSION": "ACTIVE SESSION",
+            "TIER-1 CLEARANCE": "TIER-1 CLEARANCE",
+            "Command Station:": "Command Station:",
+            "Access Role:": "Access Role:",
+            "Encryption & Telemetry:": "Encryption & Telemetry:",
+            "Live Database:": "Live Database:"
         },
         hi: {
-            // Header
+            // Header & Profile
             "TRACE DIGITAL DASHBOARD": "ट्रेस डिजिटल डैशबोर्ड",
-            "Full Screen": "फुल स्क्रीन",
+            "Full Screen": "पूर्ण स्क्रीन",
+            "Exit Fullscreen": "फुल स्क्रीन बंद करें",
             "Exit Full Screen": "फुल स्क्रीन बंद करें",
-            "Time Filter": "समय फ़िल्टर",
-            "Live (Real-time)": "लाइव (वास्तविक समय)",
-            "Past 1 Hour": "पिछला 1 घंटा",
-            "Today (24h)": "आज (24 घंटे)",
-            "Past 7 Days": "पिछले 7 दिन",
+            "Visual Analytics": "दृश्य विश्लेषिकी",
+            "Export PDF": "पीडीएफ निर्यात",
+            "Export Excel": "एक्सेल निर्यात",
             "Dark": "डार्क",
             "Light": "लाइट",
             "Sign Out": "लॉग आउट",
-            "Active Prototype": "सक्रिय प्रोटोटाइप",
-            "Enterprise Node": "एंटरप्राइज नोड",
+            "GENERAL MANAGER (MINING & OPS)": "महाप्रबंधक (खनन एवं संचालन)",
+            "VIGILANCE OFFICER": "सतर्कता अधिकारी",
+            "SURVEILLANCE COMMANDER": "निगरानी कमांडर",
+            "DISPATCH CONTROLLER": "प्रेषण नियंत्रक",
+            "WEIGHBRIDGE OPERATOR": "वेब्रिज ऑपरेटर",
             
-            // Sidebar Main Navigation
+            // Sidebar Navigation
             "HOME": "होम",
             "Summary": "सारांश",
             "Weighbridge summary": "वेब्रिज सारांश",
@@ -144,78 +244,152 @@
             "AI Driven Drone Monitoring": "एआई ड्रोन निगरानी",
             "Camera View": "कैमरा दृश्य",
             "Grid View": "ग्रिड दृश्य",
+            "GIS View": "जीआईएस दृश्य",
             "GIS Map View": "जीआईएस मानचित्र दृश्य",
+            "VTS Dashboard": "वीटीएस डैशबोर्ड",
+            "RFID Dashboard": "आरएफआईडी डैशबोर्ड",
             "RFID Status & Configuration": "आरएफआईडी स्थिति एवं विन्यास",
             "Irregular Weighments": "अनियमित वजन",
             "Irregular Trips": "अनियमित ट्रिप",
-            "Workers Attendance (Mining / Plant)": "श्रमिक उपस्थिति (खनन / संयंत्र)",
             "Workers Attendance": "श्रमिक उपस्थिति",
+            "Workers Attendance (Mining / Plant)": "श्रमिक उपस्थिति (खनन / संयंत्र)",
+            "Digital Audit Trails": "डिजिटल ऑडिट ट्रेल्स",
             "Blacklisted Vehicles": "ब्लैकलिस्टेड वाहन",
             "View": "देखें",
+            "Add": "जोड़ें",
+            "Remove": "हटाएं",
             "Add Blacklisted Vehicle": "ब्लैकलिस्टेड वाहन जोड़ें",
             "Remove / Unblacklist Vehicle": "वाहन हटाएं / अनब्लैकलिस्ट करें",
+            "DO Operations": "डीओ संचालन",
+            "View Internal DO Data": "आंतरिक डीओ डेटा देखें",
+            "Add Internal DO Data": "आंतरिक डीओ डेटा जोड़ें",
+            "Edit DO or Map to WB": "डीओ संपादित करें / वेब्रिज मैप करें",
+            "Reports": "रिपोर्ट्स",
+            "Road Dispatch": "सड़क प्रेषण",
+            "Internal Transport": "आंतरिक परिवहन",
+            "Checkpost Report": "चेकपोस्ट रिपोर्ट",
+            "Active Vehicle": "सक्रिय वाहन",
+            "Reconcile Report": "समाधान रिपोर्ट",
+            "Manual Operations": "मैनुअल संचालन",
+            "Manual Boom Operations": "मैनुअल बूम संचालन",
             "Contract Management": "अनुबंध प्रबंधन",
             "Area Master": "क्षेत्र मास्टर",
             "Plant Master": "संयंत्र मास्टर",
             "WeighBridge Master": "वेब्रिज मास्टर",
-            "Checkpost Master": "चेकपोस्ट मास्टर",
+            "Checkpost Master": "Checkpost Master",
             "Transporter Master": "ट्रांसपोर्टर मास्टर",
             "Maintenance Master": "रखरखाव मास्टर",
-            "Reports & Analytics": "रिपोर्ट्स एवं एनालिटिक्स",
+            "App Installation": "ऐप इंस्टॉलेशन",
+            "DASHBOARD": "डैशबोर्ड",
             "ANALYTICS": "एनालिटिक्स",
-            "DASHBOARDS & OPERATIONS": "डैशबोर्ड एवं संचालन",
-            "SECURITY & SURVEILLANCE": "सुरक्षा एवं निगरानी",
-            "SYSTEM CONFIGURATION": "सिस्टम विन्यास",
-            
-            // Blacklisted Vehicles Module
-            "Blacklisted Vehicles Master Registry": "ब्लैकलिस्टेड वाहन मास्टर रजिस्ट्री",
-            "Total Blacklisted": "कुल ब्लैकलिस्टेड",
-            "Recent Violations": "हालिया उल्लंघन",
-            "Security Escalations": "सुरक्षा अलर्ट",
-            "Compliance Actions": "अनुपालन कार्रवाइयां",
-            "Filter by Vehicle Number": "वाहन संख्या द्वारा फ़िल्टर करें",
-            "Type to filter...": "फ़िल्टर करने के लिए लिखें...",
-            "Export CSV": "सीएसवी निर्यात करें",
-            "Vehicle Number": "वाहन संख्या",
-            "Remarks": "टिप्पणियां",
-            "Blacklisted By": "किसके द्वारा ब्लैकलिस्टेड",
-            "Blacklisted On": "ब्लैकलिस्ट की तिथि",
-            "Action": "कार्रवाई",
-            "Unblacklist": "अनब्लैकलिस्ट करें",
-            "ADD BLACKLISTED VEHICLE": "ब्लैकलिस्टेड वाहन जोड़ें",
-            "REMOVE / UNBLACKLIST VEHICLE": "वाहन हटाएं / अनब्लैकलिस्ट करें",
-            "Approver (OTP)": "स्वीकृतिकर्ता (ओटीपी)",
-            "Select Approver": "स्वीकृतिकर्ता चुनें",
-            "Send OTP": "ओटीपी भेजें",
-            "Enter OTP": "ओटीपी दर्ज करें",
-            "Blacklist Vehicle": "वाहन ब्लैकलिस्ट करें",
-            "Unblacklist Vehicle": "वाहन अनब्लैकलिस्ट करें",
-            "Reason / Violation Details": "कारण / उल्लंघन का विवरण",
-            "Enter reasons for blacklisting (e.g. boom barrier damage, tampering)...": "ब्लैकलिस्ट करने का कारण दर्ज करें (जैसे बूम बैरियर क्षति, जीपीएस छेड़छाड़)...",
-            "Reason / Justification for Removal": "हटाने का कारण / औचित्य",
-            "Enter justification for removing vehicle from blacklist...": "वाहन को ब्लैकलिस्ट से हटाने का औचित्य दर्ज करें...",
-            "Enter vehicle number (e.g. JH02BZ8562)...": "वाहन संख्या दर्ज करें (जैसे JH02BZ8562)...",
-            
-            // Summary Tabs & Dashboard
+            "Reports & Analytics": "रिपोर्ट्स एवं एनालिटिक्स",
+            "Live Dashboard": "लाइव डैशबोर्ड",
+            "MOBILE APP": "मोबाइल ऐप",
+
+            // App Installation Center
+            "TRACE Mobile App Installation Center": "ट्रेस मोबाइल ऐप इंस्टॉलेशन केंद्र",
+            "TRACE Mobile Field Assistant™": "ट्रेस मोबाइल फील्ड सहायक™",
+            "TRACE Mobile Field Assistant": "ट्रेस मोबाइल फील्ड सहायक",
+            "TRACE MOBILE™ APP INSTALLATION": "ट्रेस मोबाइल™ ऐप इंस्टॉलेशन",
+            "Geo-tagged mobile application for field inspections, safety observations, attendance, and incident reporting with offline support.": "फील्ड निरीक्षण, सुरक्षा अवलोकन, उपस्थिति और ऑफलाइन सहायता के साथ घटना रिपोर्टिंग के लिए जियो-टैग्ड मोबाइल एप्लिकेशन।",
+            "Geo-Tagged Field Inspections": "जियो-टैग्ड फील्ड निरीक्षण",
+            "Safety Observations": "सुरक्षा अवलोकन",
+            "Workers Attendance": "श्रमिक उपस्थिति",
+            "Incident Reporting (Offline Support)": "घटना रिपोर्टिंग (ऑफलाइन सहायता)",
+            "Incident Reporting (Offline)": "घटना रिपोर्टिंग (ऑफलाइन)",
+            "Incident Reporting": "घटना रिपोर्टिंग",
+            "Download APK (42.8 MB)": "एपीके डाउनलोड करें (42.8 MB)",
+            "Download TRACE APK (42.8 MB)": "ट्रेस एपीके डाउनलोड करें (42.8 MB)",
+            "Download TRACE APK File": "ट्रेस एपीके फाइल डाउनलोड करें",
+            "Scan with Android Camera": "एंड्रॉयड कैमरे से स्कैन करें",
+            "Installation Instructions": "इंस्टॉलेशन निर्देश",
+            "Quick 3-Step Setup Instructions": "त्वरित 3-चरणीय सेटअप निर्देश",
+            "Core Application Modules": "मुख्य एप्लिकेशन मॉड्यूल",
+            "Offline Sync Ready": "ऑफलाइन सिंक तैयार",
+            "Offline First Sync": "ऑफलाइन फर्स्ट सिंक",
+            "Direct Installation": "प्रत्यक्ष इंस्टॉलेशन",
+            "Direct Package Installation": "प्रत्यक्ष पैकेज इंस्टॉलेशन",
+            "Copy URL": "यूआरएल कॉपी करें",
+            "Copy": "कॉपी करें",
+            "Copied! ✅": "कॉपी हो गया! ✅",
+
+            // Alert Dashboard & Tactical ICCC
+            "Unauthorized stoppage": "अनधिकृत ठहराव",
+            "Vehicle Detection": "वाहन पहचान",
+            "Person Detection": "व्यक्ति पहचान",
+            "Intrusion Detection": "अनधिकृत प्रवेश",
+            "Traffic Congestion": "यातायात जाम",
+            "Loaded-Unloaded Alerts": "लोड-अनलोड अलर्ट",
+            "Off-Route Movement": "मार्ग से विचलन",
+            "Speed Violation": "गति सीमा उल्लंघन",
+            "Boom Barrier Force": "बूम बैरियर क्षति",
+            "Crowd Formation": "भीड़ का जमाव",
+            "Camera Tampering": "कैमरा छेड़छाड़",
+            "Safety Gear Violation": "सुरक्षा उपकरण उल्लंघन",
+            "Illumination Alert": "प्रकाश व्यवस्था अलर्ट",
+            "All Types": "सभी प्रकार",
+            "ALL": "सभी",
+            "Critical": "गंभीर",
+            "High": "उच्च",
+            "Medium": "मध्यम",
+            "Low": "निम्न",
+            "Active": "सक्रिय",
+            "Resolved": "समाधानित",
+            "Acknowledged": "स्वीकृत",
+            "Filter by Type": "प्रकार द्वारा फ़िल्टर",
+            "Filter by Severity": "गंभीरता द्वारा फ़िल्टर",
+            "Filter by Status": "स्थिति द्वारा फ़िल्टर",
+            "Filter by Area": "क्षेत्र द्वारा फ़िल्टर",
+            "Search alerts by vehicle, location, or anomaly keyword...": "वाहन, स्थान या विसंगति द्वारा अलर्ट खोजें...",
+            "INCIDENT FORENSICS & TELEMETRY": "घटना फोरेंसिक एवं टेलीमेट्री",
+            "Dispatch QRT Unit": "क्यूआरटी यूनिट भेजें",
+            "Lock Boom Barrier": "बूम बैरियर लॉक करें",
+            "Acknowledge": "स्वीकार करें",
+            "Resolve": "समाधान करें",
+
+            // Summary View Cards & Tables
             "Weighbridge Status": "वेब्रिज स्थिति",
             "Checkpost Status": "चेकपोस्ट स्थिति",
             "VTS Fleet Summary": "वीटीएस फ्लीट सारांश",
             "Operational Total": "कुल संचालित",
             "Operational %": "संचालन %",
-            "Road Dispatch": "सड़क प्रेषण",
-            "Internal Movement": "आंतरिक आवागमन",
             "Total Transactions": "कुल लेनदेन",
+            "Gross Weight": "सकल वजन (Gross)",
+            "Tare Weight": "खाली वजन (Tare)",
+            "Net Weight": "शुद्ध वजन (Net)",
+            "Overload Violations": "ओवरलोड उल्लंघन",
             "Bypassing Detected": "बायपास का पता चला",
             "Boom Violations": "बूम उल्लंघन",
             "ANPR Accuracy": "एएनपीआर सटीकता",
+            "Active Vehicles": "सक्रिय वाहन",
+            "Idle Vehicles": "निष्क्रिय वाहन",
+            "Transit Delayed": "पारगमन में देरी",
+            "Geofence Compliance": "जियोफेंस अनुपालन",
             "Search Area or Project...": "क्षेत्र या परियोजना खोजें...",
             "All Areas": "सभी क्षेत्र",
-            "Live": "लाइव",
+            "North Karanpura": "उत्तरी कर्णपुरा",
+            "Piprawar": "पिपरावार",
+            "Rajrappa": "रजरप्पा",
+            "BarkaSayana": "बरका सयाना",
+            "Kathara": "कथारा",
+            "B&K": "बी एंड के",
+            "Dhori": "ढोरी",
+            "Kuju": "कुजू",
+            "Hazaribagh": "हजारीबाग",
             "Operational": "सक्रिय",
             "Offline": "ऑफलाइन",
             "Maintenance": "रखरखाव",
-            
-            // Common Actions & Notifications
+            "Live": "लाइव",
+
+            // Workers Attendance
+            "Location Attendance Dashboard": "स्थान उपस्थिति डैशबोर्ड",
+            "Active Member": "सक्रिय सदस्य",
+            "Present": "उपस्थित",
+            "Absent": "अनुपस्थित",
+            "Attendance Overview": "उपस्थिति अवलोकन",
+            "Go": "जाएं",
+
+            // Common Actions & Form Controls
             "Search": "खोजें",
             "Filter": "फ़िल्टर",
             "Export": "निर्यात",
@@ -227,38 +401,55 @@
             "Success": "सफलता",
             "Error": "त्रुटि",
             "Warning": "चेतावनी",
-            "Information": "जानकारी"
+            "Information": "जानकारी",
+            "Status": "स्थिति",
+            "Action": "कार्रवाई",
+            "Actions": "कार्रवाइयां",
+            "Vehicle Number": "वाहन संख्या",
+            "Transporter": "ट्रांसपोर्टर",
+            "Driver Name": "चालक का नाम",
+            "Location": "स्थान",
+            "Timestamp": "समय",
+            "Date": "दिनांक",
+            "Time": "समय",
+            "Description": "विवरण",
+            "Confidence": "सटीकता",
+            "Remarks": "टिप्पणियां",
+            "Add New Record": "नया रिकॉर्ड जोड़ें",
+            "Save Changes": "परिवर्तन सहेजें",
+            "OFFICER CREDENTIALS & ACCESS": "अधिकारी क्रेडेंशियल्स एवं पहुंच",
+            "ACTIVE SESSION": "सक्रिय सत्र",
+            "TIER-1 CLEARANCE": "टियर-1 क्लीयरेंस",
+            "Command Station:": "कमांड स्टेशन:",
+            "Access Role:": "एक्सेस भूमिका:",
+            "Encryption & Telemetry:": "एन्क्रिप्शन एवं टेलीमेट्री:",
+            "Live Database:": "लाइव डेटाबेस:"
         }
     };
 
     let currentLang = 'en';
-
-    // Reverse lookup map for restoring original English text
-    const hiToEnMap = {};
-    for (const [enKey, hiVal] of Object.entries(TRANSLATIONS.hi)) {
-        hiToEnMap[hiVal.trim()] = enKey.trim();
-    }
 
     /**
      * Translates a single text string
      */
     function t(key, lang) {
         lang = lang || currentLang;
-        const cleanKey = (key || '').trim();
+        if (!key) return key;
+        const cleanKey = key.toString().trim();
         if (lang === 'hi') {
             return TRANSLATIONS.hi[cleanKey] || cleanKey;
         } else {
-            return TRANSLATIONS.en[cleanKey] || hiToEnMap[cleanKey] || cleanKey;
+            return TRANSLATIONS.en[cleanKey] || cleanKey;
         }
     }
 
     /**
-     * Translates DOM text nodes throughout the page
+     * Traverses all elements safely and applies translations
      */
     function translateDOM(root, lang) {
         if (!root) root = document.body;
-        
-        // 1. Elements with explicit data-i18n attribute
+
+        // 1. Explicit data-i18n attributes
         const i18nElements = root.querySelectorAll('[data-i18n]');
         i18nElements.forEach(el => {
             const key = el.getAttribute('data-i18n');
@@ -272,47 +463,97 @@
             }
         });
 
-        // 2. Specific selectors across Nav, Headers, Buttons, and Forms
-        const targets = root.querySelectorAll(
-            '.nav-text, .sub-nav-text, .nav-section-title, .header-main-title, ' +
-            '.tab-btn, .form-view-header h2, .bl-form-header h2, .bl-form-label-cell label, ' +
-            '.bl-stat-label, .bl-filter-box label, .bl-btn-submit-action span, .bl-btn-send-otp, ' +
-            '.theme-pill-btn span, #fullscreenBtnText, .btn-logout span, .badge'
-        );
+        // 2. Comprehensive selector targets across all UI modules
+        const selectors = [
+            '.header-main-title',
+            '.nav-text',
+            '.sub-nav-text',
+            '.nav-section-title',
+            '.tab-btn',
+            '.tab-btn span',
+            '.user-name',
+            '.user-role-badge',
+            '.btn-logout span',
+            '#fullscreenBtnText',
+            '.theme-pill-btn span',
+            '.card-title',
+            '.alert-title',
+            '.metric-label',
+            '.metric-card-label',
+            '.stat-title',
+            '.stat-card-title',
+            '.attendance-title',
+            '.overview-section-title',
+            '.att-card-label',
+            '.rfid-page-title',
+            '.trips-main-title',
+            '.table th',
+            '.table-header th',
+            '.threat-badge-pill',
+            '.app-install-header-title',
+            '.app-install-header-subtitle',
+            '.app-install-card-title',
+            '.app-install-card-desc',
+            '.app-feature-title',
+            '.app-feature-text',
+            '.app-side-card-title',
+            '.app-side-card-heading',
+            '.app-side-card-text',
+            '.btn-action span',
+            '.btn-action',
+            '.form-label',
+            '.bl-stat-label',
+            '.bl-form-header h2',
+            '.config-modal-title span',
+            '.drone-tab-btn'
+        ];
 
-        targets.forEach(el => {
-            // Check if element has direct text
-            const directText = Array.from(el.childNodes)
-                .filter(node => node.nodeType === Node.TEXT_NODE)
-                .map(node => node.textContent.trim())
-                .join(' ');
+        const elements = root.querySelectorAll(selectors.join(', '));
+        elements.forEach(el => {
+            // Ignore script or style tags
+            if (el.tagName === 'SCRIPT' || el.tagName === 'STYLE') return;
 
-            const textToLookup = directText || el.textContent.trim();
-            if (textToLookup) {
-                const translation = t(textToLookup, lang);
-                if (translation && translation !== textToLookup) {
-                    // If element has only text child
-                    if (el.childNodes.length === 1 && el.childNodes[0].nodeType === Node.TEXT_NODE) {
-                        el.textContent = translation;
-                    } else {
-                        // Replace only text nodes without destroying child icons/badges
-                        el.childNodes.forEach(child => {
-                            if (child.nodeType === Node.TEXT_NODE && child.textContent.trim()) {
-                                child.textContent = ' ' + t(child.textContent.trim(), lang) + ' ';
-                            }
-                        });
-                    }
+            // Cache original English text on the element
+            if (!el.hasAttribute('data-orig-en')) {
+                const initialText = Array.from(el.childNodes)
+                    .filter(n => n.nodeType === Node.TEXT_NODE)
+                    .map(n => n.textContent.trim())
+                    .filter(Boolean)
+                    .join(' ') || el.textContent.trim();
+                if (initialText) {
+                    el.setAttribute('data-orig-en', initialText);
                 }
+            }
+
+            const sourceText = el.getAttribute('data-orig-en') || el.textContent.trim();
+            if (!sourceText) return;
+
+            const translated = lang === 'hi' ? (TRANSLATIONS.hi[sourceText] || sourceText) : sourceText;
+            
+            // Only update text nodes to preserve icons like <i> or <svg>
+            const textNodes = Array.from(el.childNodes).filter(n => n.nodeType === Node.TEXT_NODE && n.textContent.trim());
+            if (textNodes.length > 0) {
+                textNodes.forEach(node => {
+                    const clean = node.textContent.trim();
+                    const lookup = el.getAttribute('data-orig-en') || clean;
+                    const nodeTrans = lang === 'hi' ? (TRANSLATIONS.hi[lookup] || TRANSLATIONS.hi[clean] || clean) : lookup;
+                    node.textContent = node.textContent.startsWith(' ') ? ' ' + nodeTrans : nodeTrans;
+                    if (node.textContent.endsWith(' ')) node.textContent += ' ';
+                });
+            } else if (el.children.length === 0) {
+                el.textContent = translated;
             }
         });
 
-        // 3. Placeholders for inputs
+        // 3. Placeholders for inputs and textareas
         const inputs = root.querySelectorAll('input[placeholder], textarea[placeholder]');
         inputs.forEach(input => {
-            const ph = input.getAttribute('placeholder');
-            if (ph) {
-                const translatedPh = t(ph, lang);
-                if (translatedPh) input.setAttribute('placeholder', translatedPh);
+            if (!input.hasAttribute('data-orig-ph')) {
+                input.setAttribute('data-orig-ph', input.getAttribute('placeholder'));
+            }
+            const origPh = input.getAttribute('data-orig-ph');
+            if (origPh) {
+                input.setAttribute('placeholder', lang === 'hi' ? (TRANSLATIONS.hi[origPh] || origPh) : origPh);
             }
         });
     }
@@ -389,9 +630,17 @@
                 window.setLanguage('hi');
             });
         }
+        
+        // Re-translate upon tab navigation or dynamic view switching
         window.addEventListener('hashchange', () => {
             if (currentLang === 'hi') {
-                setTimeout(() => translateDOM(document.body, 'hi'), 50);
+                setTimeout(() => translateDOM(document.body, 'hi'), 60);
+            }
+        });
+        
+        document.addEventListener('click', () => {
+            if (currentLang === 'hi') {
+                setTimeout(() => translateDOM(document.body, 'hi'), 80);
             }
         });
     }

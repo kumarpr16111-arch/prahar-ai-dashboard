@@ -514,19 +514,19 @@
                         </div>
                     </div>
 
-                    <div class="user-profile-group" style="display: flex; align-items: center; gap: 12px;">
-                        <div class="user-profile" onclick="openUserProfileModal()" title="View Officer Identity & Command Permissions" style="display: flex; align-items: center; gap: 10px; cursor: pointer; padding: 3px 6px; border-radius: 6px; transition: background 0.15s ease;">
-                            <div class="avatar" style="background: #141b29; color: #38bdf8; width: 34px; height: 34px; border-radius: 6px; border: 1px solid #243042; display: flex; align-items: center; justify-content: center; font-size: 13px;">
+                    <div class="user-profile-group">
+                        <div class="user-profile" onclick="openUserProfileModal()" title="View Officer Identity & Command Permissions">
+                            <div class="avatar">
                                 <i class="fa-solid fa-user-shield"></i>
                             </div>
-                            <div style="display: flex; flex-direction: column; text-align: left; line-height: 1.25;">
-                                <span class="user-name" style="font-weight: 600; font-size: 13px; color: #f1f5f9;">{{ user_name }}</span>
-                                <span class="user-role-badge" style="font-size: 9.5px; font-weight: 600; padding: 2px 6px; border-radius: 3px; display: inline-block; width: fit-content; text-transform: uppercase; letter-spacing: 0.05em; margin-top: 2px; background: #141b29; border: 1px solid #243042; {% if user_role == 'gm' %}color: #38bdf8;{% elif user_role == 'vigilance' %}color: #34d399;{% elif user_role == 'surveillance' %}color: #38bdf8;{% elif user_role == 'dispatch' %}color: #a78bfa;{% else %}color: #f87171;{% endif %}">
+                            <div class="user-profile-info">
+                                <span class="user-name">{{ user_name }}</span>
+                                <span class="user-role-badge user-role-{{ user_role }}">
                                     {{ user_designation }}
                                 </span>
                             </div>
                         </div>
-                        <a href="/logout" class="btn-logout" title="Sign Out of TRACE" style="display: inline-flex; align-items: center; gap: 6px; padding: 6px 10px; background: rgba(255, 255, 255, 0.03); border: 1px solid #243042; border-radius: 4px; color: #94a3b8; font-size: 11.5px; font-weight: 500; text-decoration: none; transition: all 0.15s;">
+                        <a href="/logout" class="btn-logout" title="Sign Out of TRACE">
                             <i class="fa-solid fa-power-off" style="font-size: 11px;"></i>
                             <span>Sign Out</span>
                         </a>
