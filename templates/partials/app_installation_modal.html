@@ -1,22 +1,22 @@
-<!-- TRACE Mobile App Installation Modal Dialog -->
+<!-- TRACE Mobile App Installation Modal Dialog (Theme-Adaptive Light/Dark) -->
 <div class="incident-modal-backdrop" id="appInstallationModal" style="display: none;" onclick="closeAppInstallationModal(event)">
-    <div class="incident-modal-box app-install-dialog" style="max-width: 680px; width: 92%; padding: 0; border-radius: 12px; background: #0b1120; border: 1px solid #253349; box-shadow: 0 25px 60px rgba(0,0,0,0.85); overflow: hidden;" onclick="event.stopPropagation()">
+    <div class="incident-modal-box app-install-dialog" onclick="event.stopPropagation()">
         
         <!-- Modal Header -->
-        <div style="background: linear-gradient(135deg, #111827 0%, #0d1527 100%); border-bottom: 1px solid #1e293b; padding: 18px 24px; display: flex; justify-content: space-between; align-items: center;">
+        <div class="app-modal-header" style="padding: 18px 24px; display: flex; justify-content: space-between; align-items: center;">
             <div style="display: flex; align-items: center; gap: 12px;">
                 <div style="background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%); width: 38px; height: 38px; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: #ffffff; font-size: 18px; box-shadow: 0 4px 12px rgba(2, 132, 199, 0.4);">
                     <i class="fa-solid fa-mobile-screen-button"></i>
                 </div>
                 <div>
                     <div style="display: flex; align-items: center; gap: 8px;">
-                        <h3 style="margin: 0; font-size: 16px; font-weight: 700; color: #f8fafc; letter-spacing: 0.02em;">TRACE MOBILE™ APP INSTALLATION</h3>
-                        <span style="background: rgba(16, 185, 129, 0.15); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.35); padding: 2px 7px; border-radius: 4px; font-size: 10px; font-weight: 700; letter-spacing: 0.05em;">STABLE v2.4.2</span>
+                        <h3 style="margin: 0; font-size: 16px; font-weight: 700; color: var(--text-main); letter-spacing: 0.02em;">TRACE MOBILE™ APP INSTALLATION</h3>
+                        <span style="background: rgba(16, 185, 129, 0.15); color: #059669; border: 1px solid rgba(16, 185, 129, 0.35); padding: 2px 7px; border-radius: 4px; font-size: 10px; font-weight: 700; letter-spacing: 0.05em;">STABLE v2.4.2</span>
                     </div>
-                    <span style="font-size: 11.5px; color: #94a3b8;">Geo-tagged mobile application for field inspections, safety observations, attendance, and incident reporting with offline support.</span>
+                    <span style="font-size: 11.5px; color: var(--text-muted);">Geo-tagged mobile application for field inspections, safety observations, attendance, and incident reporting with offline support.</span>
                 </div>
             </div>
-            <button type="button" class="drone-modal-close-btn" onclick="closeAppInstallationModalDirect()" title="Close Dialog" style="background: rgba(255,255,255,0.05); border: 1px solid #334155; color: #94a3b8; width: 32px; height: 32px; border-radius: 6px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s;">
+            <button type="button" class="drone-modal-close-btn app-modal-close-btn" onclick="closeAppInstallationModalDirect()" title="Close Dialog" style="width: 32px; height: 32px; border-radius: 6px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s;">
                 <i class="fa-solid fa-xmark"></i>
             </button>
         </div>
@@ -25,11 +25,11 @@
         <div style="padding: 24px; max-height: 80vh; overflow-y: auto;">
             
             <!-- Hero App Card -->
-            <div style="background: linear-gradient(180deg, #131b2e 0%, #0f172a 100%); border: 1px solid #24344d; border-radius: 10px; padding: 20px; display: flex; flex-wrap: wrap; gap: 20px; align-items: center; margin-bottom: 22px; box-shadow: 0 8px 24px rgba(0,0,0,0.3);">
+            <div class="app-install-hero-card" style="margin-bottom: 22px;">
                 <!-- App Icon / Artwork -->
                 <div style="position: relative; flex-shrink: 0;">
-                    <div style="width: 88px; height: 88px; border-radius: 18px; background: #090e17; border: 2px solid #38bdf8; display: flex; align-items: center; justify-content: center; overflow: hidden; box-shadow: 0 8px 20px rgba(56, 189, 248, 0.25);">
-                        <img src="/static/media_screenshots/trace_sidebar_emblem.png" alt="TRACE App Logo" style="width: 70px; height: auto; object-fit: contain;">
+                    <div style="width: 80px; height: 80px; border-radius: 16px; background: #070b12; border: 2px solid #38bdf8; display: flex; align-items: center; justify-content: center; overflow: hidden; box-shadow: 0 8px 20px rgba(56, 189, 248, 0.25);">
+                        <img src="/static/media_screenshots/trace_sidebar_emblem.png" alt="TRACE App Logo" style="width: 64px; height: auto; object-fit: contain;">
                     </div>
                     <span style="position: absolute; bottom: -6px; right: -6px; background: #0284c7; color: #fff; font-size: 9px; font-weight: 800; padding: 2px 6px; border-radius: 4px; border: 1px solid #38bdf8;">APK</span>
                 </div>
@@ -37,26 +37,26 @@
                 <!-- App Details & Spec Badges -->
                 <div style="flex: 1; min-width: 240px;">
                     <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
-                        <h4 style="margin: 0; font-size: 18px; font-weight: 700; color: #ffffff;">TRACE Field Operations App</h4>
-                        <i class="fa-solid fa-circle-check" style="color: #38bdf8;" title="Cryptographically Verified Release"></i>
+                        <h4 style="margin: 0; font-size: 17px; font-weight: 700; color: var(--text-main);">TRACE Field Operations App</h4>
+                        <i class="fa-solid fa-circle-check" style="color: #0284c7;" title="Cryptographically Verified Release"></i>
                     </div>
-                    <div style="font-size: 12.5px; color: #cbd5e1; line-height: 1.45; margin-bottom: 12px; font-weight: 500;">
+                    <div style="font-size: 12px; color: var(--text-muted); line-height: 1.45; margin-bottom: 10px; font-weight: 500;">
                         Geo-tagged mobile application for field inspections, safety observations, attendance, and incident reporting with offline support.
                     </div>
 
                     <!-- Tech Spec Chips -->
                     <div style="display: flex; flex-wrap: wrap; gap: 8px;">
-                        <span style="font-size: 11px; color: #cbd5e1; background: rgba(30, 41, 59, 0.8); border: 1px solid #334155; padding: 3px 8px; border-radius: 4px; display: inline-flex; align-items: center; gap: 5px;">
-                            <i class="fa-brands fa-android" style="color: #34d399;"></i> Android 9.0 - 15.0+
+                        <span class="app-spec-chip">
+                            <i class="fa-brands fa-android" style="color: #059669;"></i> Android 9.0 - 15.0+
                         </span>
-                        <span style="font-size: 11px; color: #cbd5e1; background: rgba(30, 41, 59, 0.8); border: 1px solid #334155; padding: 3px 8px; border-radius: 4px; display: inline-flex; align-items: center; gap: 5px;">
-                            <i class="fa-solid fa-hard-drive" style="color: #38bdf8;"></i> Size: 42.8 MB
+                        <span class="app-spec-chip">
+                            <i class="fa-solid fa-hard-drive" style="color: #0284c7;"></i> 42.8 MB Standalone APK
                         </span>
-                        <span style="font-size: 11px; color: #cbd5e1; background: rgba(30, 41, 59, 0.8); border: 1px solid #334155; padding: 3px 8px; border-radius: 4px; display: inline-flex; align-items: center; gap: 5px;">
-                            <i class="fa-solid fa-wifi-slash" style="color: #fbbf24;"></i> Offline First Sync
+                        <span class="app-spec-chip">
+                            <i class="fa-solid fa-wifi-slash" style="color: #d97706;"></i> Offline First Sync
                         </span>
-                        <span style="font-size: 11px; color: #cbd5e1; background: rgba(30, 41, 59, 0.8); border: 1px solid #334155; padding: 3px 8px; border-radius: 4px; display: inline-flex; align-items: center; gap: 5px;">
-                            <i class="fa-solid fa-shield-halved" style="color: #a78bfa;"></i> SHA-256 Verified
+                        <span class="app-spec-chip">
+                            <i class="fa-solid fa-shield-halved" style="color: #7c3aed;"></i> SHA-256 Verified
                         </span>
                     </div>
                 </div>
@@ -66,14 +66,14 @@
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 22px;">
                 
                 <!-- Direct APK Download Card -->
-                <div style="background: rgba(15, 23, 42, 0.7); border: 1px solid #1e293b; border-radius: 10px; padding: 18px; display: flex; flex-direction: column; justify-content: space-between;">
+                <div class="app-side-card" style="display: flex; flex-direction: column; justify-content: space-between; padding: 18px;">
                     <div>
-                        <div style="font-size: 11px; font-weight: 700; color: #38bdf8; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 6px;">
-                            <i class="fa-solid fa-download" style="margin-right: 5px;"></i> Direct Package Installation
+                        <div class="app-side-card-title" style="margin-bottom: 6px;">
+                            <i class="fa-solid fa-download" style="margin-right: 5px;"></i> Direct Installation
                         </div>
-                        <h5 style="margin: 0 0 8px 0; font-size: 14px; font-weight: 600; color: #f8fafc;">Download TRACE APK File</h5>
-                        <p style="font-size: 11.5px; color: #94a3b8; margin: 0 0 16px 0; line-height: 1.45;">
-                            Click below to download the standalone TRACE Android package installer directly to your workstation or mobile device.
+                        <h5 style="margin: 0 0 8px 0; font-size: 14px; font-weight: 600; color: var(--text-main);">Download TRACE APK File</h5>
+                        <p style="font-size: 11.5px; color: var(--text-muted); margin: 0 0 16px 0; line-height: 1.45;">
+                            Click below to download the compiled standalone APK installer directly to your workstation or mobile device.
                         </p>
                     </div>
 
@@ -85,22 +85,22 @@
                         
                         <!-- Simulated Download Progress Bar (Appears on click) -->
                         <div id="apkDownloadProgressBox" style="display: none; margin-top: 10px;">
-                            <div style="display: flex; justify-content: space-between; font-size: 10.5px; color: #38bdf8; margin-bottom: 4px;">
+                            <div style="display: flex; justify-content: space-between; font-size: 10.5px; color: #0284c7; margin-bottom: 4px;">
                                 <span id="apkDownloadStatusText">Downloading package...</span>
                                 <span id="apkDownloadPercentText">100%</span>
                             </div>
-                            <div style="height: 6px; background: #1e293b; border-radius: 3px; overflow: hidden;">
-                                <div id="apkDownloadProgressBar" style="width: 100%; height: 100%; background: linear-gradient(90deg, #38bdf8, #34d399); border-radius: 3px;"></div>
+                            <div style="height: 6px; background: #e2e8f0; border-radius: 3px; overflow: hidden;">
+                                <div id="apkDownloadProgressBar" style="width: 100%; height: 100%; background: linear-gradient(90deg, #38bdf8, #059669); border-radius: 3px;"></div>
                             </div>
                         </div>
                     </div>
                 </div>
 
                 <!-- QR Code Scanner Card -->
-                <div style="background: rgba(15, 23, 42, 0.7); border: 1px solid #1e293b; border-radius: 10px; padding: 18px; display: flex; gap: 14px; align-items: center;">
+                <div class="app-side-card" style="display: flex; gap: 14px; align-items: center; padding: 18px;">
                     <!-- Stylized QR Code Frame -->
-                    <div style="background: #ffffff; padding: 8px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.5); flex-shrink: 0; text-align: center;">
-                        <svg width="90" height="90" viewBox="0 0 100 100" fill="#0b1120" xmlns="http://www.w3.org/2000/svg">
+                    <div style="background: #ffffff; padding: 8px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.12); border: 1px solid #cbd5e1; flex-shrink: 0; text-align: center;">
+                        <svg width="84" height="84" viewBox="0 0 100 100" fill="#0b1120" xmlns="http://www.w3.org/2000/svg">
                             <rect width="100" height="100" fill="white"/>
                             <rect x="5" y="5" width="30" height="30" fill="#0b1120"/>
                             <rect x="9" y="9" width="22" height="22" fill="white"/>
@@ -125,19 +125,19 @@
                             <rect x="68" y="68" width="14" height="6" fill="#0b1120"/>
                             <rect x="76" y="78" width="14" height="12" fill="#0b1120"/>
                         </svg>
-                        <span style="display: block; font-size: 8.5px; font-weight: 700; color: #0f172a; margin-top: 2px;">SCAN TO GET APK</span>
+                        <span style="display: block; font-size: 8px; font-weight: 700; color: #0f172a; margin-top: 2px;">SCAN APK</span>
                     </div>
 
                     <div style="flex: 1;">
-                        <div style="font-size: 11px; font-weight: 700; color: #34d399; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 4px;">
+                        <div style="font-size: 11px; font-weight: 700; color: #059669; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 4px;">
                             <i class="fa-solid fa-qrcode" style="margin-right: 4px;"></i> Scan & Install
                         </div>
-                        <h6 style="margin: 0 0 6px 0; font-size: 13px; font-weight: 600; color: #f1f5f9;">Instant Mobile Deployment</h6>
-                        <p style="font-size: 11px; color: #94a3b8; margin: 0 0 10px 0; line-height: 1.4;">
-                            Scan with your smartphone or field tablet camera to download directly over local Wi-Fi or cellular network.
+                        <h6 style="margin: 0 0 4px 0; font-size: 13px; font-weight: 600; color: var(--text-main);">Mobile Deployment</h6>
+                        <p style="font-size: 11px; color: var(--text-muted); margin: 0 0 10px 0; line-height: 1.4;">
+                            Scan with camera to download over field Wi-Fi or mobile network.
                         </p>
-                        <button type="button" onclick="copyTraceApkLink()" style="background: rgba(56, 189, 248, 0.12); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.3); padding: 5px 10px; border-radius: 4px; font-size: 11px; font-weight: 600; cursor: pointer; display: inline-flex; align-items: center; gap: 5px;">
-                            <i class="fa-regular fa-copy"></i> <span id="copyLinkBtnText">Copy Download URL</span>
+                        <button type="button" onclick="copyTraceApkLink()" style="background: rgba(56, 189, 248, 0.12); color: #0284c7; border: 1px solid rgba(56, 189, 248, 0.3); padding: 5px 10px; border-radius: 4px; font-size: 11px; font-weight: 600; cursor: pointer; display: inline-flex; align-items: center; gap: 5px;">
+                            <i class="fa-regular fa-copy"></i> <span id="copyLinkBtnTextModal">Copy URL</span>
                         </button>
                     </div>
                 </div>
@@ -145,53 +145,53 @@
 
             <!-- Features Highlights Grid Matching Core Requirements -->
             <div style="margin-bottom: 22px;">
-                <div style="font-size: 12px; font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 12px;">
+                <div style="font-size: 12px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 12px;">
                     Core Application Modules
                 </div>
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px;">
-                    <div style="background: rgba(15, 23, 42, 0.8); border: 1px solid #1e293b; border-radius: 8px; padding: 14px; text-align: left;">
-                        <i class="fa-solid fa-map-location-dot" style="color: #38bdf8; font-size: 20px; margin-bottom: 8px; display: block;"></i>
-                        <div style="font-size: 12.5px; font-weight: 700; color: #f1f5f9; margin-bottom: 4px;">Geo-Tagged Inspections</div>
-                        <div style="font-size: 11px; color: #94a3b8; line-height: 1.4;">High-accuracy GPS verification for field checkposts, weighbridges, and transit routes.</div>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 12px;">
+                    <div class="app-feature-card">
+                        <i class="fa-solid fa-map-location-dot" style="color: #0284c7; font-size: 18px; margin-bottom: 8px; display: block;"></i>
+                        <div class="app-feature-title" style="margin-bottom: 4px;">Geo-Tagged Field Inspections</div>
+                        <div class="app-feature-text" style="font-size: 10.5px;">GPS-watermarked audits of mining weighbridges and checkposts.</div>
                     </div>
-                    <div style="background: rgba(15, 23, 42, 0.8); border: 1px solid #1e293b; border-radius: 8px; padding: 14px; text-align: left;">
-                        <i class="fa-solid fa-helmet-safety" style="color: #fbbf24; font-size: 20px; margin-bottom: 8px; display: block;"></i>
-                        <div style="font-size: 12.5px; font-weight: 700; color: #f1f5f9; margin-bottom: 4px;">Safety Observations</div>
-                        <div style="font-size: 11px; color: #94a3b8; line-height: 1.4;">Direct logging of PPE non-compliance, hazardous conditions, and on-site safety audits.</div>
+                    <div class="app-feature-card">
+                        <i class="fa-solid fa-helmet-safety" style="color: #d97706; font-size: 18px; margin-bottom: 8px; display: block;"></i>
+                        <div class="app-feature-title" style="margin-bottom: 4px;">Safety Observations</div>
+                        <div class="app-feature-text" style="font-size: 10.5px;">On-site PPE compliance and hazard condition logging.</div>
                     </div>
-                    <div style="background: rgba(15, 23, 42, 0.8); border: 1px solid #1e293b; border-radius: 8px; padding: 14px; text-align: left;">
-                        <i class="fa-solid fa-users-viewfinder" style="color: #34d399; font-size: 20px; margin-bottom: 8px; display: block;"></i>
-                        <div style="font-size: 12.5px; font-weight: 700; color: #f1f5f9; margin-bottom: 4px;">Workers Attendance</div>
-                        <div style="font-size: 11px; color: #94a3b8; line-height: 1.4;">Facial/QR biometric field muster tracking with automatic shift synchronization.</div>
+                    <div class="app-feature-card">
+                        <i class="fa-solid fa-users-viewfinder" style="color: #059669; font-size: 18px; margin-bottom: 8px; display: block;"></i>
+                        <div class="app-feature-title" style="margin-bottom: 4px;">Workers Attendance</div>
+                        <div class="app-feature-text" style="font-size: 10.5px;">Biometric/QR field shift muster tracking with cloud sync.</div>
                     </div>
-                    <div style="background: rgba(15, 23, 42, 0.8); border: 1px solid #1e293b; border-radius: 8px; padding: 14px; text-align: left;">
-                        <i class="fa-solid fa-triangle-exclamation" style="color: #f87171; font-size: 20px; margin-bottom: 8px; display: block;"></i>
-                        <div style="font-size: 12.5px; font-weight: 700; color: #f1f5f9; margin-bottom: 4px;">Incident Reporting</div>
-                        <div style="font-size: 11px; color: #94a3b8; line-height: 1.4;">Instant geotagged photographic incident escalation with complete offline storage support.</div>
+                    <div class="app-feature-card">
+                        <i class="fa-solid fa-triangle-exclamation" style="color: #dc2626; font-size: 18px; margin-bottom: 8px; display: block;"></i>
+                        <div class="app-feature-title" style="margin-bottom: 4px;">Incident Reporting</div>
+                        <div class="app-feature-text" style="font-size: 10.5px;">Photographic anomaly capture with offline local storage.</div>
                     </div>
                 </div>
             </div>
 
             <!-- 3-Step Installation Guide -->
-            <div style="background: #090e17; border: 1px solid #1e293b; border-radius: 8px; padding: 14px 18px;">
-                <div style="font-size: 11.5px; font-weight: 700; color: #cbd5e1; margin-bottom: 8px; display: flex; align-items: center; gap: 6px;">
-                    <i class="fa-solid fa-circle-info" style="color: #38bdf8;"></i> Quick 3-Step Setup Instructions
+            <div class="app-side-card" style="padding: 14px 18px;">
+                <div style="font-size: 11.5px; font-weight: 700; color: var(--text-main); margin-bottom: 8px; display: flex; align-items: center; gap: 6px;">
+                    <i class="fa-solid fa-circle-info" style="color: #0284c7;"></i> Quick 3-Step Setup Instructions
                 </div>
-                <div style="display: flex; flex-direction: column; gap: 6px; font-size: 11px; color: #94a3b8;">
-                    <div><strong style="color: #f1f5f9;">Step 1:</strong> Download the <code style="color: #38bdf8; background: rgba(56, 189, 248, 0.1); padding: 1px 4px; border-radius: 3px;">trace_mobile_app_v2.4.apk</code> package to your Android device.</div>
-                    <div><strong style="color: #f1f5f9;">Step 2:</strong> In Android Settings, ensure <em>"Install unknown apps"</em> is permitted for your browser/file manager.</div>
-                    <div><strong style="color: #f1f5f9;">Step 3:</strong> Launch <strong>TRACE Mobile</strong>, enter your registered Officer / Field Staff PIN, and start field reporting.</div>
+                <div style="display: flex; flex-direction: column; gap: 6px; font-size: 11px; color: var(--text-muted);">
+                    <div><strong style="color: var(--text-main);">Step 1:</strong> Download the <code class="app-code-tag">trace_mobile_app_v2.4.apk</code> package to your Android device.</div>
+                    <div><strong style="color: var(--text-main);">Step 2:</strong> In Android Settings, ensure <em>"Install unknown apps"</em> is permitted for your browser/file manager.</div>
+                    <div><strong style="color: var(--text-main);">Step 3:</strong> Launch <strong>TRACE Mobile</strong>, enter your registered Officer / Field Staff PIN, and start field reporting.</div>
                 </div>
             </div>
 
         </div>
 
         <!-- Modal Footer -->
-        <div style="background: #0d1527; border-top: 1px solid #1e293b; padding: 14px 24px; display: flex; justify-content: space-between; align-items: center;">
-            <div style="font-size: 11px; color: #64748b;">
+        <div class="app-modal-footer" style="padding: 14px 24px; display: flex; justify-content: space-between; align-items: center;">
+            <div style="font-size: 11px; color: var(--text-muted);">
                 <i class="fa-solid fa-building-shield" style="margin-right: 5px;"></i> Central Coalfields Vigilance Directorate Telemetry Portal
             </div>
-            <button type="button" class="btn-action" onclick="closeAppInstallationModalDirect()" style="padding: 7px 18px; background: #1e293b; color: #cbd5e1; border: 1px solid #334155; border-radius: 6px; font-weight: 600; font-size: 12px; cursor: pointer; transition: background 0.15s;">
+            <button type="button" class="btn-action app-modal-close-btn" onclick="closeAppInstallationModalDirect()" style="padding: 7px 18px; border-radius: 6px; font-weight: 600; font-size: 12px; cursor: pointer; transition: background 0.15s;">
                 Close
             </button>
         </div>

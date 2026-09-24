@@ -11860,4 +11860,292 @@ body[data-theme="light"].alert-mode-active .user-name {
     border-color: rgba(239, 68, 68, 0.35);
     color: #f87171;
 }
+
+/* ==========================================================================
+   App Installation Center & Modal Universal Theme (Dark 🌙 / Light ☀️)
+   ========================================================================== */
+.app-install-container {
+    padding: 24px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.app-install-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 24px;
+    border-bottom: 1px solid var(--sidebar-border);
+    padding-bottom: 18px;
+}
+
+.app-install-header-title {
+    margin: 0;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--text-main);
+    letter-spacing: -0.02em;
+}
+
+.app-install-header-subtitle {
+    margin: 0;
+    font-size: 13.5px;
+    color: var(--text-muted);
+    font-weight: 500;
+}
+
+/* Hero App Card */
+.app-install-hero-card {
+    border-radius: 12px;
+    padding: 22px;
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    transition: all 0.2s ease;
+}
+
+[data-theme="dark"] .app-install-hero-card {
+    background: linear-gradient(135deg, #131b2e 0%, #0b1120 100%);
+    border: 1px solid #24344d;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+}
+
+[data-theme="light"] .app-install-hero-card {
+    background: linear-gradient(135deg, #ffffff 0%, #f0f9ff 100%);
+    border: 1px solid #bfdbfe;
+    box-shadow: 0 4px 20px rgba(2, 132, 199, 0.08);
+}
+
+.app-install-card-title {
+    margin: 0;
+    font-size: 19px;
+    font-weight: 700;
+    color: var(--text-main);
+}
+
+.app-install-card-desc {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin: 0 0 12px 0;
+    line-height: 1.45;
+    font-weight: 500;
+}
+
+/* App Spec Chip */
+.app-spec-chip {
+    font-size: 11px;
+    padding: 4px 9px;
+    border-radius: 5px;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-weight: 500;
+}
+
+[data-theme="dark"] .app-spec-chip {
+    background: rgba(30, 41, 59, 0.8);
+    border: 1px solid #334155;
+    color: #cbd5e1;
+}
+
+[data-theme="light"] .app-spec-chip {
+    background: #f8fafc;
+    border: 1px solid #cbd5e1;
+    color: #334155;
+}
+
+/* Feature Modules 4-Card Grid */
+.app-feature-card {
+    border-radius: 10px;
+    padding: 16px;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+[data-theme="dark"] .app-feature-card {
+    background: rgba(15, 23, 42, 0.8);
+    border: 1px solid #1e293b;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+}
+
+[data-theme="light"] .app-feature-card {
+    background: #ffffff;
+    border: 1px solid #cbd5e1;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
+}
+
+.app-feature-title {
+    font-size: 13.5px;
+    font-weight: 700;
+    color: var(--text-main);
+}
+
+.app-feature-text {
+    font-size: 11.5px;
+    color: var(--text-muted);
+    margin: 0;
+    line-height: 1.45;
+}
+
+/* Side Card (QR Code & Instructions) */
+.app-side-card {
+    border-radius: 12px;
+    padding: 22px;
+    transition: all 0.2s ease;
+}
+
+[data-theme="dark"] .app-side-card {
+    background: #111827;
+    border: 1px solid #1e293b;
+}
+
+[data-theme="light"] .app-side-card {
+    background: #ffffff;
+    border: 1px solid #cbd5e1;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
+}
+
+.app-side-card-title {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--text-link);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 12px;
+}
+
+.app-side-card-heading {
+    margin: 0 0 12px 0;
+    font-size: 13.5px;
+    font-weight: 700;
+    color: var(--text-main);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.app-side-card-text {
+    font-size: 11.5px;
+    color: var(--text-muted);
+    margin: 0 0 14px 0;
+    line-height: 1.4;
+}
+
+.app-copy-input {
+    flex: 1;
+    font-size: 11px;
+    padding: 7px 10px;
+    border-radius: 6px;
+    font-family: monospace;
+}
+
+[data-theme="dark"] .app-copy-input {
+    background: #0b1120;
+    border: 1px solid #1e293b;
+    color: #cbd5e1;
+}
+
+[data-theme="light"] .app-copy-input {
+    background: #f8fafc;
+    border: 1px solid #cbd5e1;
+    color: #0f172a;
+}
+
+.app-step-number {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 11px;
+    flex-shrink: 0;
+}
+
+[data-theme="dark"] .app-step-number {
+    background: #1e293b;
+    color: #38bdf8;
+}
+
+[data-theme="light"] .app-step-number {
+    background: #e0f2fe;
+    color: #0284c7;
+}
+
+.app-code-tag {
+    padding: 1px 4px;
+    border-radius: 3px;
+    font-size: 11px;
+}
+
+[data-theme="dark"] .app-code-tag {
+    color: #38bdf8;
+    background: rgba(56, 189, 248, 0.1);
+    border: 1px solid rgba(56, 189, 248, 0.2);
+}
+
+[data-theme="light"] .app-code-tag {
+    color: #0284c7;
+    background: #e0f2fe;
+    border: 1px solid #bae6fd;
+}
+
+/* Modal Dialog Theming */
+.app-install-dialog {
+    max-width: 680px;
+    width: 92%;
+    padding: 0;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+[data-theme="dark"] .app-install-dialog {
+    background: #0b1120;
+    border: 1px solid #253349;
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.85);
+}
+
+[data-theme="light"] .app-install-dialog {
+    background: #ffffff;
+    border: 1px solid #cbd5e1;
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.2);
+}
+
+[data-theme="dark"] .app-modal-header {
+    background: linear-gradient(135deg, #111827 0%, #0d1527 100%);
+    border-bottom: 1px solid #1e293b;
+}
+
+[data-theme="light"] .app-modal-header {
+    background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+    border-bottom: 1px solid #e2e8f0;
+}
+
+[data-theme="dark"] .app-modal-footer {
+    background: #0d1527;
+    border-top: 1px solid #1e293b;
+}
+
+[data-theme="light"] .app-modal-footer {
+    background: #f8fafc;
+    border-top: 1px solid #e2e8f0;
+}
+
+[data-theme="dark"] .app-modal-close-btn {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid #334155;
+    color: #94a3b8;
+}
+
+[data-theme="light"] .app-modal-close-btn {
+    background: #f1f5f9;
+    border: 1px solid #cbd5e1;
+    color: #475569;
+}
+
+[data-theme="light"] .app-modal-close-btn:hover {
+    background: #e2e8f0;
+    color: #0f172a;
+}
+
 

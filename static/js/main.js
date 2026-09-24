@@ -2227,10 +2227,16 @@ window.copyTraceApkLink = function() {
     if (navigator.clipboard && navigator.clipboard.writeText) {
         navigator.clipboard.writeText(url).then(() => {
             const btnText = document.getElementById('copyLinkBtnText');
+            const btnTextModal = document.getElementById('copyLinkBtnTextModal');
             if (btnText) {
                 const old = btnText.textContent;
                 btnText.textContent = 'Copied! ✅';
                 setTimeout(() => { btnText.textContent = old; }, 2000);
+            }
+            if (btnTextModal) {
+                const oldModal = btnTextModal.textContent;
+                btnTextModal.textContent = 'Copied! ✅';
+                setTimeout(() => { btnTextModal.textContent = oldModal; }, 2000);
             }
             if (typeof showAuditToast === 'function') {
                 showAuditToast('📋 Direct APK Download URL copied to clipboard!');
