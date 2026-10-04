@@ -748,7 +748,36 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
-    setupDropdownToggle('cameraViewNavLink', 'cameraViewSubList', 'cameraViewArrow');
+    // Camera View Dropdown Toggle
+    window.toggleCameraViewDropdown = function(e) {
+        if (e) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
+        const navItem = document.getElementById('cameraViewNavItem');
+        const list = document.getElementById('cameraViewSubList');
+        const arrow = document.getElementById('cameraViewArrow');
+        if (list) {
+            const isHidden = list.style.display === 'none' || getComputedStyle(list).display === 'none';
+            list.style.display = isHidden ? 'block' : 'none';
+            if (navItem) {
+                if (isHidden) navItem.classList.add('expanded');
+                else navItem.classList.remove('expanded');
+            }
+            if (arrow) {
+                arrow.className = isHidden ? 'fa-solid fa-chevron-down arrow-icon' : 'fa-solid fa-chevron-right arrow-icon';
+            }
+            if (isHidden) {
+                const gridPanel = document.getElementById('camera-grid-view');
+                const gisPanel = document.getElementById('camera-gis-view');
+                const isGridActive = gridPanel && (gridPanel.style.display === 'block' || gridPanel.classList.contains('active'));
+                const isGisActive = gisPanel && (gisPanel.style.display === 'block' || gisPanel.classList.contains('active'));
+                if (!isGridActive && !isGisActive) {
+                    showCameraGridView();
+                }
+            }
+        }
+    };
 
     // Camera Grid & GIS elements
     const cameraGridNavItem = document.getElementById('cameraGridNavItem');
@@ -758,11 +787,22 @@ document.addEventListener('DOMContentLoaded', () => {
     window.showCameraGridView = function() {
         document.body.classList.remove('alert-mode-active');
         document.body.classList.remove('gis-mode-active');
+        const sidebar = document.getElementById('sidebar');
+        if (sidebar) sidebar.style.display = '';
         if (mainSidebarMenu) mainSidebarMenu.style.display = 'block';
         if (alertSidebarMenu) alertSidebarMenu.style.display = 'none';
         if (tabsCard) tabsCard.style.display = 'none';
 
         const cameraViewNavItem = document.getElementById('cameraViewNavItem');
+        const cameraViewSubList = document.getElementById('cameraViewSubList');
+        const cameraViewArrow = document.getElementById('cameraViewArrow');
+        if (cameraViewNavItem) {
+            cameraViewNavItem.classList.add('has-sub');
+            cameraViewNavItem.classList.add('expanded');
+        }
+        if (cameraViewSubList) cameraViewSubList.style.display = 'block';
+        if (cameraViewArrow) cameraViewArrow.className = 'fa-solid fa-chevron-down arrow-icon';
+
         setActiveSidebarNav(cameraViewNavItem);
         updateHeaderMainTitle('CAMERA VIEW (GRID)');
 
@@ -770,7 +810,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (cameraGridNavItem) cameraGridNavItem.classList.add('active');
         if (cameraGisNavItem) cameraGisNavItem.classList.remove('active');
 
-        tabPanels.forEach(panel => {
+        document.querySelectorAll('.tab-content-panel').forEach(panel => {
             if (panel.id === 'camera-grid-view') {
                 panel.classList.add('active');
                 panel.style.display = 'block';
@@ -779,17 +819,30 @@ document.addEventListener('DOMContentLoaded', () => {
                 panel.style.display = 'none';
             }
         });
+
+        window.scrollTo({ top: 0, behavior: 'smooth' });
     };
 
     // Show Camera GIS View Mode
     window.showCameraGISView = function() {
         document.body.classList.remove('alert-mode-active');
         document.body.classList.add('gis-mode-active');
+        const sidebar = document.getElementById('sidebar');
+        if (sidebar) sidebar.style.display = '';
         if (mainSidebarMenu) mainSidebarMenu.style.display = 'block';
         if (alertSidebarMenu) alertSidebarMenu.style.display = 'none';
         if (tabsCard) tabsCard.style.display = 'none';
 
         const cameraViewNavItem = document.getElementById('cameraViewNavItem');
+        const cameraViewSubList = document.getElementById('cameraViewSubList');
+        const cameraViewArrow = document.getElementById('cameraViewArrow');
+        if (cameraViewNavItem) {
+            cameraViewNavItem.classList.add('has-sub');
+            cameraViewNavItem.classList.add('expanded');
+        }
+        if (cameraViewSubList) cameraViewSubList.style.display = 'block';
+        if (cameraViewArrow) cameraViewArrow.className = 'fa-solid fa-chevron-down arrow-icon';
+
         setActiveSidebarNav(cameraViewNavItem);
         updateHeaderMainTitle('GIS CAMERA VIEW');
 
@@ -797,7 +850,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (cameraGisNavItem) cameraGisNavItem.classList.add('active');
         if (cameraGridNavItem) cameraGridNavItem.classList.remove('active');
 
-        tabPanels.forEach(panel => {
+        document.querySelectorAll('.tab-content-panel').forEach(panel => {
             if (panel.id === 'camera-gis-view') {
                 panel.classList.add('active');
                 panel.style.display = 'block';
@@ -809,8 +862,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Initialize or invalidate size for Leaflet GIS map
         setTimeout(() => {
-            initGisLeafletMap();
-        }, 100);
+            if (typeof initGisLeafletMap === 'function') initGisLeafletMap();
+            if (gisMapInstance) gisMapInstance.invalidateSize();
+        }, 150);
+
+        window.scrollTo({ top: 0, behavior: 'smooth' });
     };
 
     if (cameraGridNavItem) {

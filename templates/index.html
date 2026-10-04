@@ -22,7 +22,7 @@
     <!-- Internal VTS Live Alerts Dataset -->
     <script src="/static/js/vts_alerts_data.js"></script>
     <!-- Master Stylesheet -->
-    <link rel="stylesheet" href="/static/css/style.css?v=1.2.9">
+    <link rel="stylesheet" href="/static/css/style.css?v=1.3.0">
     <!-- Immediate Theme Initializer to Enforce Light Mode -->
     <script>
         (function() {
@@ -133,7 +133,7 @@
                             <!-- Camera View Dropdown Section (Grid View & GIS View) -->
                             {% if user_role in ['gm', 'vigilance', 'surveillance', 'operator', 'dispatch'] %}
                             <li class="nav-item has-sub" id="cameraViewNavItem">
-                                <a href="#" class="nav-link" id="cameraViewNavLink">
+                                <a href="javascript:void(0)" class="nav-link" id="cameraViewNavLink" onclick="toggleCameraViewDropdown(event);" style="cursor: pointer;">
                                     <i class="fa-solid fa-video nav-icon"></i>
                                     <span class="nav-text">Camera View</span>
                                     <span class="badge badge-live">Live</span>
@@ -141,13 +141,13 @@
                                 </a>
                                 <ul class="sub-nav-list" id="cameraViewSubList" style="display: none;">
                                     <li class="sub-nav-item" data-view="camera-grid-view" id="cameraGridNavItem">
-                                        <a href="#camera-grid" class="sub-nav-link">
+                                        <a href="javascript:void(0)" class="sub-nav-link" onclick="if(window.showCameraGridView){window.showCameraGridView();}">
                                             <i class="fa-solid fa-angle-right nav-icon" style="font-size: 11px; margin-right: 8px;"></i>
                                             <span class="sub-nav-text">Grid View</span>
                                         </a>
                                     </li>
                                     <li class="sub-nav-item" data-view="camera-gis-view" id="cameraGisNavItem">
-                                        <a href="#camera-gis" class="sub-nav-link">
+                                        <a href="javascript:void(0)" class="sub-nav-link" onclick="if(window.showCameraGISView){window.showCameraGISView();}">
                                             <i class="fa-solid fa-angle-right nav-icon" style="font-size: 11px; margin-right: 8px;"></i>
                                             <span class="sub-nav-text">GIS View</span>
                                         </a>
@@ -579,16 +579,16 @@
     <!-- ======================================================== -->
     <!-- APPLICATION JAVASCRIPT MODULES (Modular & Cached)        -->
     <!-- ======================================================== -->
-    <script src="/static/js/modules/i18n.js?v=1.2.9"></script>
-    <script src="/static/js/modules/workers_attendance.js?v=1.2.9"></script>
-    <script src="/static/js/modules/drone_surveillance.js?v=1.2.9"></script>
-    <script src="/static/js/modules/digital_audit.js?v=1.2.9"></script>
-    <script src="/static/js/modules/do_operations.js?v=1.2.9"></script>
-    <script src="/static/js/modules/alert_dashboard.js?v=1.2.9"></script>
-    <script src="/static/js/modules/config_masters.js?v=1.2.9"></script>
-    <script src="/static/js/modules/blacklisted_vehicles.js?v=1.2.9"></script>
-    <script src="/static/js/modules/vts_fleet.js?v=1.2.9"></script>
-    <script src="/static/js/modules/vts_live_map.js?v=1.2.9"></script>
-    <script src="/static/js/main.js?v=1.2.9"></script>
+    <script src="/static/js/modules/i18n.js?v=1.3.0"></script>
+    <script src="/static/js/modules/workers_attendance.js?v=1.3.0"></script>
+    <script src="/static/js/modules/drone_surveillance.js?v=1.3.0"></script>
+    <script src="/static/js/modules/digital_audit.js?v=1.3.0"></script>
+    <script src="/static/js/modules/do_operations.js?v=1.3.0"></script>
+    <script src="/static/js/modules/alert_dashboard.js?v=1.3.0"></script>
+    <script src="/static/js/modules/config_masters.js?v=1.3.0"></script>
+    <script src="/static/js/modules/blacklisted_vehicles.js?v=1.3.0"></script>
+    <script src="/static/js/modules/vts_fleet.js?v=1.3.0"></script>
+    <script src="/static/js/modules/vts_live_map.js?v=1.3.0"></script>
+    <script src="/static/js/main.js?v=1.3.0"></script>
 </body>
 </html>
