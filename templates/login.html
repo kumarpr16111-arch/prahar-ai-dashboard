@@ -294,45 +294,8 @@
         }
 
         /* ==========================================================================
-           Page 1: Subsidiary Selection Directory (Restrained & Structured)
+           Page 1: Subsidiary Selection Directory (Unified & Scannable Table)
            ========================================================================== */
-        .platform-modules-banner {
-            background-color: var(--color-surface-white);
-            border: 1px solid var(--color-border-subtle);
-            border-radius: var(--radius-lg);
-            padding: 14px 18px;
-            margin-bottom: 24px;
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 16px;
-            box-shadow: var(--shadow-sm);
-        }
-
-        .module-item {
-            display: flex;
-            align-items: flex-start;
-            gap: 10px;
-        }
-
-        .module-item i {
-            font-size: 14px;
-            color: var(--color-primary-interactive);
-            margin-top: 3px;
-        }
-
-        .module-text-wrap h3 {
-            font-size: 12px;
-            font-weight: 600;
-            color: var(--color-text-primary);
-            margin-bottom: 2px;
-        }
-
-        .module-text-wrap p {
-            font-size: 11px;
-            color: var(--color-text-muted);
-            line-height: 1.35;
-        }
-
         .subsidiary-directory-card {
             background-color: var(--color-surface-white);
             border: 1px solid var(--color-border-default);
@@ -341,7 +304,7 @@
             overflow: hidden;
         }
 
-        .directory-section-title {
+        .directory-section-bar {
             padding: 12px 20px;
             background-color: var(--color-surface-subtle);
             border-bottom: 1px solid var(--color-border-subtle);
@@ -359,6 +322,7 @@
             width: 100%;
             border-collapse: collapse;
             text-align: left;
+            table-layout: fixed;
         }
 
         .directory-table th {
@@ -396,16 +360,30 @@
             background-color: var(--color-surface-subtle);
         }
 
+        .table-section-row td {
+            padding: 11px 20px;
+            background-color: var(--color-surface-subtle);
+            border-top: 1px solid var(--color-border-subtle);
+            border-bottom: 1px solid var(--color-border-subtle);
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--color-text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
         .col-code {
             font-weight: 700;
             color: var(--color-text-primary);
             font-family: var(--font-family);
-            width: 90px;
         }
 
         .col-name {
             font-weight: 600;
             color: var(--color-text-primary);
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
         }
 
         .col-location {
@@ -832,12 +810,12 @@
         }
 
         /* ==========================================================================
-           Enterprise Footer
+           Enterprise Footer (Clean & Quiet)
            ========================================================================== */
         .enterprise-footer {
             background-color: var(--color-surface-white);
             border-top: 1px solid var(--color-border-subtle);
-            padding: 18px 24px;
+            padding: 16px 24px;
             margin-top: auto;
         }
 
@@ -853,28 +831,10 @@
             gap: 12px;
         }
 
-        .footer-links-group {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-        }
-
-        .footer-link {
-            color: var(--color-text-muted);
-            text-decoration: none;
-        }
-
-        .footer-link:hover {
-            color: var(--color-text-primary);
-            text-decoration: underline;
-        }
-
         /* Placeholder for authorized ministry emblem / attribution */
         .emblem-placeholder-slot {
-            font-size: 11px;
+            font-size: 11.5px;
             color: var(--color-text-muted);
-            border-left: 1px solid var(--color-border-default);
-            padding-left: 12px;
         }
 
         /* ==========================================================================
@@ -959,18 +919,15 @@
             .portal-main-container {
                 padding: 20px 14px;
             }
-            .platform-modules-banner {
-                grid-template-columns: 1fr;
-                gap: 10px;
-            }
             .directory-table, .directory-table tbody, .directory-table tr, .directory-table td, .directory-table th {
                 display: block;
+                width: 100% !important;
             }
-            .directory-table thead {
+            .directory-table thead, .directory-table colgroup {
                 display: none;
             }
             .directory-table td {
-                padding: 10px 16px;
+                padding: 8px 16px;
                 border-bottom: none;
             }
             .directory-table tr {
@@ -986,11 +943,6 @@
             .footer-inner-content {
                 flex-direction: column;
                 align-items: flex-start;
-            }
-            .emblem-placeholder-slot {
-                border-left: none;
-                padding-left: 0;
-                margin-top: 6px;
             }
         }
     </style>
@@ -1054,39 +1006,21 @@
                 </p>
             </div>
 
-            <!-- Factual Summary of Key Modules (No invented metrics) -->
-            <div class="platform-modules-banner">
-                <div class="module-item">
-                    <i class="fa-solid fa-truck-fast" aria-hidden="true"></i>
-                    <div class="module-text-wrap">
-                        <h3 id="modTitle1">Dispatch Monitoring</h3>
-                        <p id="modDesc1">Real-time electronic transit pass verification and vehicle movement tracking.</p>
-                    </div>
-                </div>
-                <div class="module-item">
-                    <i class="fa-solid fa-scale-balanced" aria-hidden="true"></i>
-                    <div class="module-text-wrap">
-                        <h3 id="modTitle2">Weighbridge Telemetry</h3>
-                        <p id="modDesc2">Net weight gross/tare validation and automated bypass anomaly detection.</p>
-                    </div>
-                </div>
-                <div class="module-item">
-                    <i class="fa-solid fa-video" aria-hidden="true"></i>
-                    <div class="module-text-wrap">
-                        <h3 id="modTitle3">Mine Surveillance</h3>
-                        <p id="modDesc3">Integrated checkpost camera feeds and optical perimeter monitoring.</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 7 Coal-Producing Subsidiaries Table Directory -->
+            <!-- Unified 8-Subsidiary Table Directory (100% Column Alignment) -->
             <div class="subsidiary-directory-card">
-                <div class="directory-section-title">
+                <div class="directory-section-bar">
                     <span id="secTitleProducers">Coal-producing subsidiaries (7)</span>
                     <span style="font-size: 11px; font-weight: 500; text-transform: none; color: var(--color-text-muted);" id="secSummaryCount">7 coal-producing subsidiaries and 1 planning institute</span>
                 </div>
 
                 <table class="directory-table" aria-label="Coal India Subsidiaries Directory">
+                    <colgroup>
+                        <col style="width: 80px;">
+                        <col style="width: 32%;">
+                        <col style="width: 25%;">
+                        <col style="width: 210px;">
+                        <col style="width: 140px;">
+                    </colgroup>
                     <thead>
                         <tr>
                             <th scope="col" id="thCode">Code</th>
@@ -1217,17 +1151,15 @@
                                 </button>
                             </td>
                         </tr>
-                    </tbody>
-                </table>
 
-                <!-- Separate Planning and Design Institute Sub-heading -->
-                <div class="directory-section-title" style="border-top: 1px solid var(--color-border-subtle);">
-                    <span id="secTitlePlanning">Planning and design institute (1)</span>
-                </div>
+                        <!-- Separate Planning and Design Institute Row inside the SAME table -->
+                        <tr class="table-section-row">
+                            <td colspan="5">
+                                <span id="secTitlePlanning">Planning and design institute (1)</span>
+                            </td>
+                        </tr>
 
-                <table class="directory-table" aria-label="Planning and Design Institute">
-                    <tbody>
-                        <!-- CMPDIL -->
+                        <!-- CMPDIL (Perfect Column Alignment) -->
                         <tr>
                             <td class="col-code">CMPDIL</td>
                             <td class="col-name">Central Mine Planning &amp; Design Institute Limited</td>
@@ -1445,13 +1377,9 @@
                 <span>Version {{ app_version or '2.0.0' }}</span>
             </div>
 
-            <div class="footer-links-group">
-                <a href="#help" onclick="openHelpModal(); return false;" class="footer-link" id="footerSupport">Support &amp; Contact</a>
-                <a href="#accessibility" onclick="openAccessibilityModal(); return false;" class="footer-link" id="footerAccessibility">Accessibility Statement</a>
-                <!-- Placeholder: Official Government of India / Ministry of Coal emblem authorization slot -->
-                <div class="emblem-placeholder-slot" id="footerEmblemPlaceholder">
-                    <span>CIL Technical Integration Prototype</span>
-                </div>
+            <!-- Placeholder: Official Government of India / Ministry of Coal emblem authorization slot -->
+            <div class="emblem-placeholder-slot" id="footerEmblemPlaceholder">
+                <span>Coal India Limited Enterprise Portal Prototype</span>
             </div>
         </div>
     </footer>
@@ -1530,12 +1458,6 @@
                 'portalEyebrow': 'Subsidiary Directory',
                 'portalMainTitle': 'Select subsidiary',
                 'portalMainSubtitle': 'Choose an operating subsidiary to access unified coal dispatch monitoring, weighbridge telemetry, and mine surveillance.',
-                'modTitle1': 'Dispatch Monitoring',
-                'modDesc1': 'Real-time electronic transit pass verification and vehicle movement tracking.',
-                'modTitle2': 'Weighbridge Telemetry',
-                'modDesc2': 'Net weight gross/tare validation and automated bypass anomaly detection.',
-                'modTitle3': 'Mine Surveillance',
-                'modDesc3': 'Integrated checkpost camera feeds and optical perimeter monitoring.',
                 'secTitleProducers': 'Coal-producing subsidiaries (7)',
                 'secSummaryCount': '7 coal-producing subsidiaries and 1 planning institute',
                 'thCode': 'Code',
@@ -1569,9 +1491,7 @@
                 'btnLaunchLiveCcl': 'Launch Live CCL Portal (Demo)',
                 'btnSelectAnother': 'Select Another Subsidiary',
                 'footerPrototype': 'Prototype built for Smart India Hackathon 2026',
-                'footerSupport': 'Support & Contact',
-                'footerAccessibility': 'Accessibility Statement',
-                'footerEmblemPlaceholder': 'CIL Technical Integration Prototype'
+                'footerEmblemPlaceholder': 'Coal India Limited Enterprise Portal Prototype'
             },
             'hi': {
                 'lblCilTitle': 'कोल इंडिया लिमिटेड',
@@ -1582,12 +1502,6 @@
                 'portalEyebrow': 'सहायक कंपनी निर्देशिका',
                 'portalMainTitle': 'सहायक कंपनी चुनें',
                 'portalMainSubtitle': 'एकीकृत कोयला प्रेषण निगरानी, वे-ब्रिज टेलीमेट्री और खदान निगरानी तक पहुंचने के लिए एक सहायक कंपनी चुनें।',
-                'modTitle1': 'प्रेषण निगरानी',
-                'modDesc1': 'रीयल-टाइम इलेक्ट्रॉनिक ट्रांजिट पास सत्यापन और वाहन आवागमन ट्रैकिंग।',
-                'modTitle2': 'वे-ब्रिज टेलीमेट्री',
-                'modDesc2': 'शुद्ध वजन सत्यापन और स्वचालित बाईपास विसंगति जांच।',
-                'modTitle3': 'खदान निगरानी',
-                'modDesc3': 'एकीकृत चेकपोस्ट कैमरा फीड और ऑप्टिकल सुरक्षा निगरानी।',
                 'secTitleProducers': 'कोयला उत्पादक सहायक कंपनियां (7)',
                 'secSummaryCount': '7 कोयला उत्पादक और 1 योजना संस्थान',
                 'thCode': 'कोड',
@@ -1621,9 +1535,7 @@
                 'btnLaunchLiveCcl': 'लाइव CCL पोर्टल खोलें (डेमो)',
                 'btnSelectAnother': 'अन्य सहायक कंपनी चुनें',
                 'footerPrototype': 'स्मार्ट इंडिया हैकथॉन 2026 के लिए निर्मित प्रोटोटाइप',
-                'footerSupport': 'सहायता एवं संपर्क',
-                'footerAccessibility': 'अभिगम्यता वक्तव्य',
-                'footerEmblemPlaceholder': 'सीआईएल तकनीकी एकीकरण प्रोटोटाइप'
+                'footerEmblemPlaceholder': 'कोल इंडिया लिमिटेड उद्यम पोर्टल प्रोटोटाइप'
             }
         };
 
@@ -1748,10 +1660,6 @@
 
         function closeHelpModal() {
             document.getElementById('helpModal').classList.remove('active');
-        }
-
-        function openAccessibilityModal() {
-            openHelpModal();
         }
 
         // Close modal on Escape key or outside click
