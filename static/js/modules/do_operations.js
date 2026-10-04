@@ -371,7 +371,7 @@ window.renderInternalDoTable = function() {
                 <td class="sno-col">${row.s_no}</td>
                 <td class="dono-cell" onclick="openDoDetailModal('${row.do_no}')" title="Click to view full DO routing details">${row.do_no}</td>
                 <td style="max-width: 240px; overflow: hidden; text-overflow: ellipsis;" title="${row.contractor}">${row.contractor}</td>
-                <td><span style="background: rgba(56, 189, 248, 0.1); color: #38bdf8; padding: 2px 6px; border-radius: 3px; font-weight: 500;">${row.grade || 'NA'}</span></td>
+                <td><span class="do-grade-badge" style="padding: 2px 6px; border-radius: 3px; font-weight: 500;">${row.grade || 'NA'}</span></td>
                 <td class="qty-cell">${formatNum(row.order_qty)}</td>
                 <td class="qty-cell">${formatNum(row.balance_qty)}</td>
                 <td class="date-cell">${row.validity || 'NA'}</td>
