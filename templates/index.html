@@ -27,7 +27,7 @@
     <script>
         (function() {
             try {
-                const savedTheme = localStorage.getItem('trace_theme') || 'dark';
+                const savedTheme = localStorage.getItem('trace_theme') || 'light';
                 document.documentElement.setAttribute('data-theme', savedTheme);
                 document.documentElement.classList.remove('theme-dark', 'theme-light');
                 document.documentElement.classList.add('theme-' + savedTheme);
@@ -35,7 +35,7 @@
         })();
     </script>
 </head>
-<body data-theme="dark">
+<body data-theme="light">
     <div class="app-container">
         <!-- Sidebar Navigation -->
         <aside class="sidebar" id="sidebar">
@@ -501,14 +501,14 @@
                         </div>
                     </div>
 
-                    <!-- Theme Switcher Pill (Dark Mode 🌙 / Light Mode ☀️) -->
-                    <div class="theme-switcher-container">
+                    <!-- Theme Switcher Pill (Hidden from UI; code preserved) -->
+                    <div class="theme-switcher-container" style="display: none;">
                         <div class="theme-switcher-pill" id="themeSwitcherPill" onclick="toggleThemeMode()" title="Switch Theme (Dark 🌙 / Light ☀️)">
                             <span class="theme-slider-thumb"></span>
-                            <button type="button" class="theme-pill-btn active" id="themePillDark" data-theme="dark" title="Dark Mode (Obsidian Slate)">
+                            <button type="button" class="theme-pill-btn" id="themePillDark" data-theme="dark" title="Dark Mode (Obsidian Slate)">
                                 <i class="fa-solid fa-moon"></i> <span>Dark</span>
                             </button>
-                            <button type="button" class="theme-pill-btn" id="themePillLight" data-theme="light" title="Light Mode (Azure White)">
+                            <button type="button" class="theme-pill-btn active" id="themePillLight" data-theme="light" title="Light Mode (Azure White)">
                                 <i class="fa-solid fa-sun"></i> <span>Light</span>
                             </button>
                         </div>

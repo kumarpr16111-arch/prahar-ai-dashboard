@@ -36,9 +36,9 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     function initTheme() {
-        let savedTheme = 'dark';
+        let savedTheme = 'light';
         try {
-            savedTheme = localStorage.getItem('trace_theme') || 'dark';
+            savedTheme = localStorage.getItem('trace_theme') || 'light';
         } catch(e) {}
         window.setTheme(savedTheme);
 
