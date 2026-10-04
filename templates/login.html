@@ -404,12 +404,16 @@
         .status-badge {
             display: inline-flex;
             align-items: center;
+            justify-content: center;
             gap: 6px;
-            padding: 4px 10px;
+            padding: 4px 12px;
             border-radius: var(--radius-sm);
             font-size: 12px;
             font-weight: 600;
             white-space: nowrap;
+            min-width: 175px;
+            text-align: center;
+            box-sizing: border-box;
         }
 
         .status-badge.status-live {
@@ -444,6 +448,9 @@
             text-decoration: none;
             transition: all 0.15s ease;
             white-space: nowrap;
+            min-width: 130px;
+            text-align: center;
+            box-sizing: border-box;
         }
 
         .btn-table-primary {
@@ -1026,18 +1033,18 @@
                 <table class="directory-table" aria-label="Coal India Subsidiaries Directory">
                     <colgroup>
                         <col style="width: 80px;">
-                        <col style="width: 31%;">
+                        <col style="width: 30%;">
                         <col style="width: 24%;">
-                        <col style="width: 200px;">
-                        <col style="width: 165px;">
+                        <col style="width: 220px;">
+                        <col style="width: 175px;">
                     </colgroup>
                     <thead>
                         <tr>
                             <th scope="col" id="thCode">Code</th>
                             <th scope="col" id="thName">Subsidiary Name</th>
                             <th scope="col" id="thHq">Headquarters</th>
-                            <th scope="col" id="thStatus">Status</th>
-                            <th scope="col" style="text-align: right;" id="thAction">Action</th>
+                            <th scope="col" id="thStatus" style="text-align: center;">Status</th>
+                            <th scope="col" id="thAction" style="text-align: center;">Action</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -1046,13 +1053,13 @@
                             <td class="col-code">CCL</td>
                             <td class="col-name">Central Coalfields Limited</td>
                             <td class="col-location">Ranchi, Jharkhand <!-- verify before final submission --></td>
-                            <td>
+                            <td style="text-align: center;">
                                 <span class="status-badge status-live">
                                     <span class="status-indicator-dot" aria-hidden="true"></span>
                                     <span id="badgeLive">Live (demo)</span>
                                 </span>
                             </td>
-                            <td style="text-align: right;">
+                            <td style="text-align: center;">
                                 <button type="button" class="btn-table-action btn-table-primary" onclick="navigateToCCL()" aria-label="Select Central Coalfields Limited (CCL)">
                                     <span class="btn-action-text">Access Portal</span>
                                     <i class="fa-solid fa-arrow-right" aria-hidden="true" style="font-size: 11px;"></i>
@@ -1065,12 +1072,12 @@
                             <td class="col-code">BCCL</td>
                             <td class="col-name">Bharat Coking Coal Limited</td>
                             <td class="col-location">Dhanbad, Jharkhand <!-- verify before final submission --></td>
-                            <td>
+                            <td style="text-align: center;">
                                 <span class="status-badge status-offline">
                                     <span class="badge-not-onboarded">Not onboarded in demo</span>
                                 </span>
                             </td>
-                            <td style="text-align: right;">
+                            <td style="text-align: center;">
                                 <button type="button" class="btn-table-action btn-table-secondary" onclick="showComingSoon('BCCL', 'Bharat Coking Coal Limited', 'Dhanbad, Jharkhand')" aria-label="Details for Bharat Coking Coal Limited">
                                     <span class="btn-details-text">Details</span>
                                 </button>
@@ -1082,12 +1089,12 @@
                             <td class="col-code">ECL</td>
                             <td class="col-name">Eastern Coalfields Limited</td>
                             <td class="col-location">Sanctoria, West Bengal <!-- verify before final submission --></td>
-                            <td>
+                            <td style="text-align: center;">
                                 <span class="status-badge status-offline">
                                     <span class="badge-not-onboarded">Not onboarded in demo</span>
                                 </span>
                             </td>
-                            <td style="text-align: right;">
+                            <td style="text-align: center;">
                                 <button type="button" class="btn-table-action btn-table-secondary" onclick="showComingSoon('ECL', 'Eastern Coalfields Limited', 'Sanctoria, West Bengal')" aria-label="Details for Eastern Coalfields Limited">
                                     <span class="btn-details-text">Details</span>
                                 </button>
@@ -1099,12 +1106,12 @@
                             <td class="col-code">MCL</td>
                             <td class="col-name">Mahanadi Coalfields Limited</td>
                             <td class="col-location">Sambalpur, Odisha <!-- verify before final submission --></td>
-                            <td>
+                            <td style="text-align: center;">
                                 <span class="status-badge status-offline">
                                     <span class="badge-not-onboarded">Not onboarded in demo</span>
                                 </span>
                             </td>
-                            <td style="text-align: right;">
+                            <td style="text-align: center;">
                                 <button type="button" class="btn-table-action btn-table-secondary" onclick="showComingSoon('MCL', 'Mahanadi Coalfields Limited', 'Sambalpur, Odisha')" aria-label="Details for Mahanadi Coalfields Limited">
                                     <span class="btn-details-text">Details</span>
                                 </button>
@@ -1116,12 +1123,12 @@
                             <td class="col-code">NCL</td>
                             <td class="col-name">Northern Coalfields Limited</td>
                             <td class="col-location">Singrauli, Madhya Pradesh <!-- verify before final submission --></td>
-                            <td>
+                            <td style="text-align: center;">
                                 <span class="status-badge status-offline">
                                     <span class="badge-not-onboarded">Not onboarded in demo</span>
                                 </span>
                             </td>
-                            <td style="text-align: right;">
+                            <td style="text-align: center;">
                                 <button type="button" class="btn-table-action btn-table-secondary" onclick="showComingSoon('NCL', 'Northern Coalfields Limited', 'Singrauli, Madhya Pradesh')" aria-label="Details for Northern Coalfields Limited">
                                     <span class="btn-details-text">Details</span>
                                 </button>
@@ -1133,12 +1140,12 @@
                             <td class="col-code">SECL</td>
                             <td class="col-name">South Eastern Coalfields Limited</td>
                             <td class="col-location">Bilaspur, Chhattisgarh <!-- verify before final submission --></td>
-                            <td>
+                            <td style="text-align: center;">
                                 <span class="status-badge status-offline">
                                     <span class="badge-not-onboarded">Not onboarded in demo</span>
                                 </span>
                             </td>
-                            <td style="text-align: right;">
+                            <td style="text-align: center;">
                                 <button type="button" class="btn-table-action btn-table-secondary" onclick="showComingSoon('SECL', 'South Eastern Coalfields Limited', 'Bilaspur, Chhattisgarh')" aria-label="Details for South Eastern Coalfields Limited">
                                     <span class="btn-details-text">Details</span>
                                 </button>
@@ -1150,12 +1157,12 @@
                             <td class="col-code">WCL</td>
                             <td class="col-name">Western Coalfields Limited</td>
                             <td class="col-location">Nagpur, Maharashtra <!-- verify before final submission --></td>
-                            <td>
+                            <td style="text-align: center;">
                                 <span class="status-badge status-offline">
                                     <span class="badge-not-onboarded">Not onboarded in demo</span>
                                 </span>
                             </td>
-                            <td style="text-align: right;">
+                            <td style="text-align: center;">
                                 <button type="button" class="btn-table-action btn-table-secondary" onclick="showComingSoon('WCL', 'Western Coalfields Limited', 'Nagpur, Maharashtra')" aria-label="Details for Western Coalfields Limited">
                                     <span class="btn-details-text">Details</span>
                                 </button>
@@ -1174,12 +1181,12 @@
                             <td class="col-code">CMPDIL</td>
                             <td class="col-name">Central Mine Planning &amp; Design Institute Limited</td>
                             <td class="col-location">Ranchi, Jharkhand <!-- verify before final submission --></td>
-                            <td>
+                            <td style="text-align: center;">
                                 <span class="status-badge status-offline">
                                     <span class="badge-not-onboarded">Not onboarded in demo</span>
                                 </span>
                             </td>
-                            <td style="text-align: right;">
+                            <td style="text-align: center;">
                                 <button type="button" class="btn-table-action btn-table-secondary" onclick="showComingSoon('CMPDIL', 'Central Mine Planning & Design Institute Limited', 'Ranchi, Jharkhand')" aria-label="Details for CMPDIL">
                                     <span class="btn-details-text">Details</span>
                                 </button>
