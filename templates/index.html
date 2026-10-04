@@ -197,7 +197,7 @@
 
                             {% if user_role in ['gm', 'vigilance', 'surveillance', 'dispatch', 'operator'] %}
                             <li class="nav-item" data-view="digital-audit-trails" id="digitalAuditTrailsNavItem">
-                                <a href="#digital-audit-trails" class="nav-link" id="digitalAuditTrailsNavLink">
+                                <a href="javascript:void(0)" class="nav-link" id="digitalAuditTrailsNavLink" onclick="if(window.showDigitalAuditTrails){window.showDigitalAuditTrails();}" style="cursor: pointer;">
                                     <i class="fa-solid fa-clock-rotate-left nav-icon"></i>
                                     <span class="nav-text">Digital Audit Trails</span>
                                 </a>
@@ -237,26 +237,26 @@
 
                             <!-- DO Operations Dropdown (Direct 3 Subheadings) -->
                             <li class="nav-item has-sub" id="doOpsNavItem">
-                                <a href="#" class="nav-link" id="doOpsNavLink" onclick="event.preventDefault(); toggleDoOpsDropdown(event);">
+                                <a href="javascript:void(0)" class="nav-link" id="doOpsNavLink" onclick="toggleDoOpsDropdown(event);" style="cursor: pointer;">
                                     <i class="fa-regular fa-folder-open nav-icon"></i>
                                     <span class="nav-text">DO Operations</span>
                                     <i class="fa-solid fa-chevron-right arrow-icon" id="doOpsArrow"></i>
                                 </a>
                                 <ul class="sub-nav-list" id="doOpsSubList" style="display: none;">
                                     <li class="sub-nav-item" id="subNavItemViewInternalDo">
-                                        <a href="#view-internal-do" class="sub-nav-link" onclick="event.preventDefault(); showViewInternalDO();">
+                                        <a href="javascript:void(0)" class="sub-nav-link" onclick="showViewInternalDO();">
                                             <i class="fa-solid fa-angle-right nav-icon" style="font-size: 11px; margin-right: 8px;"></i>
                                             <span class="sub-nav-text">View Internal DO Data</span>
                                         </a>
                                     </li>
                                     <li class="sub-nav-item" id="subNavItemAddInternalDo">
-                                        <a href="#add-internal-do" class="sub-nav-link" onclick="event.preventDefault(); showAddInternalDO();">
+                                        <a href="javascript:void(0)" class="sub-nav-link" onclick="showAddInternalDO();">
                                             <i class="fa-solid fa-angle-right nav-icon" style="font-size: 11px; margin-right: 8px;"></i>
                                             <span class="sub-nav-text">Add Internal DO Data</span>
                                         </a>
                                     </li>
                                     <li class="sub-nav-item" id="subNavItemEditInternalDo">
-                                        <a href="#edit-internal-do" class="sub-nav-link" onclick="event.preventDefault(); showEditInternalDO();">
+                                        <a href="javascript:void(0)" class="sub-nav-link" onclick="showEditInternalDO();">
                                             <i class="fa-solid fa-angle-right nav-icon" style="font-size: 11px; margin-right: 8px;"></i>
                                             <span class="sub-nav-text">Edit DO or Map to WB</span>
                                         </a>
@@ -266,50 +266,50 @@
 
                             {% if user_role in ['gm', 'vigilance', 'surveillance'] %}
                             <li class="nav-item has-sub" id="reportsNavItem">
-                                <a href="#" class="nav-link" id="reportsNavLink">
+                                <a href="javascript:void(0)" class="nav-link" id="reportsNavLink" onclick="toggleReportsDropdown(event);" style="cursor: pointer;">
                                     <i class="fa-solid fa-file-lines nav-icon"></i>
                                     <span class="nav-text">Reports</span>
                                     <i class="fa-solid fa-chevron-right arrow-icon" id="reportsArrow"></i>
                                 </a>
                                 <ul class="sub-nav-list" id="reportsSubList" style="display: none;">
                                     <li class="sub-nav-item">
-                                        <a href="#" class="sub-nav-link">
+                                        <a href="javascript:void(0)" class="sub-nav-link" onclick="showRoadDispatchView();">
                                             <i class="fa-solid fa-angle-right nav-icon" style="font-size: 11px; margin-right: 8px;"></i>
                                             <span class="sub-nav-text">Road Dispatch</span>
                                         </a>
                                     </li>
                                     <li class="sub-nav-item">
-                                        <a href="#" class="sub-nav-link">
+                                        <a href="javascript:void(0)" class="sub-nav-link" onclick="showViewInternalDO();">
                                             <i class="fa-solid fa-angle-right nav-icon" style="font-size: 11px; margin-right: 8px;"></i>
                                             <span class="sub-nav-text">Internal Transport</span>
                                         </a>
                                     </li>
                                     <li class="sub-nav-item">
-                                        <a href="#" class="sub-nav-link">
+                                        <a href="javascript:void(0)" class="sub-nav-link" onclick="if(window.showRFIDDashboard){window.showRFIDDashboard();}">
                                             <i class="fa-solid fa-angle-right nav-icon" style="font-size: 11px; margin-right: 8px;"></i>
                                             <span class="sub-nav-text">Checkpost Report</span>
                                         </a>
                                     </li>
                                     <li class="sub-nav-item">
-                                        <a href="#" class="sub-nav-link">
+                                        <a href="javascript:void(0)" class="sub-nav-link" onclick="if(window.showVTSDashboard){window.showVTSDashboard();}">
                                             <i class="fa-solid fa-angle-right nav-icon" style="font-size: 11px; margin-right: 8px;"></i>
                                             <span class="sub-nav-text">Active Vehicle</span>
                                         </a>
                                     </li>
                                     <li class="sub-nav-item">
-                                        <a href="#" class="sub-nav-link">
+                                        <a href="javascript:void(0)" class="sub-nav-link" onclick="if(window.showIrregularWeighments){window.showIrregularWeighments();}">
                                             <i class="fa-solid fa-angle-right nav-icon" style="font-size: 11px; margin-right: 8px;"></i>
                                             <span class="sub-nav-text">Reconcile Report</span>
                                         </a>
                                     </li>
                                     <li class="sub-nav-item">
-                                        <a href="#" class="sub-nav-link">
+                                        <a href="javascript:void(0)" class="sub-nav-link" onclick="if(window.showIrregularWeighments){window.showIrregularWeighments();}">
                                             <i class="fa-solid fa-angle-right nav-icon" style="font-size: 11px; margin-right: 8px;"></i>
                                             <span class="sub-nav-text">Manual Operations</span>
                                         </a>
                                     </li>
                                     <li class="sub-nav-item">
-                                        <a href="#" class="sub-nav-link">
+                                        <a href="javascript:void(0)" class="sub-nav-link" onclick="if(window.showIrregularTrips){window.showIrregularTrips();}">
                                             <i class="fa-solid fa-angle-right nav-icon" style="font-size: 11px; margin-right: 8px;"></i>
                                             <span class="sub-nav-text">Manual Boom Operations</span>
                                         </a>
@@ -320,44 +320,44 @@
 
                             <!-- Contract Management Dropdown at Bottom (Area, Plant, Weighbridge, Checkpost, Transporter, Maintenance Masters) -->
                             <li class="nav-item has-sub" id="configNavItem">
-                                <a href="#" class="nav-link" id="configNavLink" onclick="event.preventDefault(); toggleConfigDropdown(event);" style="cursor: pointer;">
+                                <a href="javascript:void(0)" class="nav-link" id="configNavLink" onclick="toggleConfigDropdown(event);" style="cursor: pointer;">
                                     <i class="fa-solid fa-file-contract nav-icon" style="color: #94a3b8;"></i>
                                     <span class="nav-text">Contract Management</span>
                                     <i class="fa-solid fa-chevron-right arrow-icon" id="configArrow"></i>
                                 </a>
                                 <ul class="sub-nav-list" id="configSubList" style="display: none;">
                                     <li class="sub-nav-item" id="configAreaNavItem">
-                                        <a href="#config-area" class="sub-nav-link" onclick="event.preventDefault(); showConfigArea();">
+                                        <a href="javascript:void(0)" class="sub-nav-link" onclick="showConfigArea();">
                                             <i class="fa-solid fa-mountain-city nav-icon" style="font-size: 11px; margin-right: 8px; color: #38bdf8;"></i>
                                             <span class="sub-nav-text">Area Master</span>
                                         </a>
                                     </li>
                                     <li class="sub-nav-item" id="configPlantNavItem">
-                                        <a href="#config-plant" class="sub-nav-link" onclick="event.preventDefault(); showConfigPlant();">
+                                        <a href="javascript:void(0)" class="sub-nav-link" onclick="showConfigPlant();">
                                             <i class="fa-solid fa-industry nav-icon" style="font-size: 11px; margin-right: 8px; color: #34d399;"></i>
                                             <span class="sub-nav-text">Plant Master</span>
                                         </a>
                                     </li>
                                     <li class="sub-nav-item" id="configWeighbridgeNavItem">
-                                        <a href="#config-weighbridge" class="sub-nav-link" onclick="event.preventDefault(); showConfigWeighbridge();">
+                                        <a href="javascript:void(0)" class="sub-nav-link" onclick="showConfigWeighbridge();">
                                             <i class="fa-solid fa-scale-balanced nav-icon" style="font-size: 11px; margin-right: 8px; color: #a855f7;"></i>
                                             <span class="sub-nav-text">WeighBridge Master</span>
                                         </a>
                                     </li>
                                     <li class="sub-nav-item" id="configCheckpostNavItem">
-                                        <a href="#config-checkpost" class="sub-nav-link" onclick="event.preventDefault(); showConfigCheckpost();">
+                                        <a href="javascript:void(0)" class="sub-nav-link" onclick="showConfigCheckpost();">
                                             <i class="fa-solid fa-shield-halved nav-icon" style="font-size: 11px; margin-right: 8px; color: #f87171;"></i>
                                             <span class="sub-nav-text">Checkpost Master</span>
                                         </a>
                                     </li>
                                     <li class="sub-nav-item" id="configTransporterNavItem">
-                                        <a href="#config-transporter" class="sub-nav-link" onclick="event.preventDefault(); showConfigTransporter();">
+                                        <a href="javascript:void(0)" class="sub-nav-link" onclick="showConfigTransporter();">
                                             <i class="fa-solid fa-truck-moving nav-icon" style="font-size: 11px; margin-right: 8px; color: #38bdf8;"></i>
                                             <span class="sub-nav-text">Transporter Master</span>
                                         </a>
                                     </li>
                                     <li class="sub-nav-item" id="configMaintenanceNavItem">
-                                        <a href="#config-maintenance" class="sub-nav-link" onclick="event.preventDefault(); showConfigMaintenance();">
+                                        <a href="javascript:void(0)" class="sub-nav-link" onclick="showConfigMaintenance();">
                                             <i class="fa-solid fa-screwdriver-wrench nav-icon" style="font-size: 11px; margin-right: 8px; color: #fbbf24;"></i>
                                             <span class="sub-nav-text">Maintenance Master</span>
                                         </a>
@@ -367,7 +367,7 @@
 
                             <!-- App Installation Section at Bottom of Sidebar -->
                             <li class="nav-item" id="appInstallationNavItem" data-view="app-installation">
-                                <a href="#app-installation" class="nav-link" id="appInstallationNavLink" onclick="if(window.showAppInstallationTab){window.showAppInstallationTab();}else if(window.openAppInstallationModal){window.openAppInstallationModal();}" style="cursor: pointer;" title="Geo-tagged mobile application for field inspections, safety observations, attendance, and incident reporting with offline support">
+                                <a href="javascript:void(0)" class="nav-link" id="appInstallationNavLink" onclick="if(window.showAppInstallationTab){window.showAppInstallationTab();}else if(window.openAppInstallationModal){window.openAppInstallationModal();}" style="cursor: pointer;" title="Geo-tagged mobile application for field inspections, safety observations, attendance, and incident reporting with offline support">
                                     <i class="fa-solid fa-mobile-screen-button nav-icon" style="color: #38bdf8;"></i>
                                     <span class="nav-text">App Installation</span>
                                     <span class="badge badge-ai" style="font-size: 8.5px; height: 16px; padding: 0 5px; background: rgba(56, 189, 248, 0.15); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.35);">APK</span>
@@ -579,16 +579,16 @@
     <!-- ======================================================== -->
     <!-- APPLICATION JAVASCRIPT MODULES (Modular & Cached)        -->
     <!-- ======================================================== -->
-    <script src="/static/js/modules/i18n.js?v=1.3.0"></script>
-    <script src="/static/js/modules/workers_attendance.js?v=1.3.0"></script>
-    <script src="/static/js/modules/drone_surveillance.js?v=1.3.0"></script>
-    <script src="/static/js/modules/digital_audit.js?v=1.3.0"></script>
-    <script src="/static/js/modules/do_operations.js?v=1.3.0"></script>
-    <script src="/static/js/modules/alert_dashboard.js?v=1.3.0"></script>
-    <script src="/static/js/modules/config_masters.js?v=1.3.0"></script>
-    <script src="/static/js/modules/blacklisted_vehicles.js?v=1.3.0"></script>
-    <script src="/static/js/modules/vts_fleet.js?v=1.3.0"></script>
-    <script src="/static/js/modules/vts_live_map.js?v=1.3.0"></script>
-    <script src="/static/js/main.js?v=1.3.0"></script>
+    <script src="/static/js/modules/i18n.js?v=1.3.1"></script>
+    <script src="/static/js/modules/workers_attendance.js?v=1.3.1"></script>
+    <script src="/static/js/modules/drone_surveillance.js?v=1.3.1"></script>
+    <script src="/static/js/modules/digital_audit.js?v=1.3.1"></script>
+    <script src="/static/js/modules/do_operations.js?v=1.3.1"></script>
+    <script src="/static/js/modules/alert_dashboard.js?v=1.3.1"></script>
+    <script src="/static/js/modules/config_masters.js?v=1.3.1"></script>
+    <script src="/static/js/modules/blacklisted_vehicles.js?v=1.3.1"></script>
+    <script src="/static/js/modules/vts_fleet.js?v=1.3.1"></script>
+    <script src="/static/js/modules/vts_live_map.js?v=1.3.1"></script>
+    <script src="/static/js/main.js?v=1.3.1"></script>
 </body>
 </html>

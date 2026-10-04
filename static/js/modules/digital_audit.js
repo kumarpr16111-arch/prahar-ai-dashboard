@@ -297,5 +297,42 @@ function showAuditToast(msg) {
     }
 }
 
-// ========================================================
-// Delivery Order (DO) Operations & Table Controller
+window.showDigitalAuditTrails = function() {
+    document.body.classList.remove('alert-mode-active');
+    document.body.classList.remove('gis-mode-active');
+    const mainSidebarMenu = document.getElementById('mainSidebarMenu');
+    const alertSidebarMenu = document.getElementById('alertSidebarMenu');
+    const tabsCard = document.querySelector('.tabs-card');
+    if (mainSidebarMenu) mainSidebarMenu.style.display = 'block';
+    if (alertSidebarMenu) alertSidebarMenu.style.display = 'none';
+    if (tabsCard) tabsCard.style.display = 'none';
+    
+    // Clear other active navs and activate Digital Audit item
+    document.querySelectorAll('.nav-item, .sub-nav-item').forEach(el => el.classList.remove('active'));
+    const digitalAuditItem = document.getElementById('digitalAuditTrailsNavItem');
+    if (digitalAuditItem) digitalAuditItem.classList.add('active');
+
+    if (window.updateHeaderMainTitle) {
+        window.updateHeaderMainTitle('DIGITAL AUDIT TRAILS & STATUTORY LEDGERS');
+    }
+
+    document.querySelectorAll('.tab-content-panel').forEach(panel => {
+        if (panel.id === 'digital-audit-trails-view') {
+            panel.classList.add('active');
+            panel.style.display = 'block';
+        } else {
+            panel.classList.remove('active');
+            panel.style.display = 'none';
+        }
+    });
+
+    window.location.hash = '#digital-audit-trails';
+    window.initAuditTrailsData();
+
+    // Scroll to top
+    const mainWrapper = document.querySelector('.main-wrapper');
+    if (mainWrapper) mainWrapper.scrollTop = 0;
+    const contentBody = document.querySelector('.content-body');
+    if (contentBody) contentBody.scrollTop = 0;
+    window.scrollTo(0, 0);
+};

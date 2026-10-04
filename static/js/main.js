@@ -358,13 +358,15 @@ document.addEventListener('DOMContentLoaded', () => {
         if (alertSidebarMenu) alertSidebarMenu.style.display = 'none';
         if (tabsCard) tabsCard.style.display = 'none';
         
+        document.querySelectorAll('.nav-item, .sub-nav-item').forEach(el => el.classList.remove('active'));
         const digitalAuditItem = document.getElementById('digitalAuditTrailsNavItem');
+        if (digitalAuditItem) digitalAuditItem.classList.add('active');
         setActiveSidebarNav(digitalAuditItem);
         updateHeaderMainTitle('DIGITAL AUDIT TRAILS & STATUTORY LEDGERS');
 
         sidebarSummaryItems.forEach(item => item.classList.remove('active'));
 
-        tabPanels.forEach(panel => {
+        document.querySelectorAll('.tab-content-panel').forEach(panel => {
             if (panel.id === 'digital-audit-trails-view') {
                 panel.classList.add('active');
                 panel.style.display = 'block';
@@ -374,7 +376,16 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
 
-        initAuditTrailsData();
+        window.location.hash = '#digital-audit-trails';
+        if (window.initAuditTrailsData) {
+            window.initAuditTrailsData();
+        }
+
+        const mainWrapper = document.querySelector('.main-wrapper');
+        if (mainWrapper) mainWrapper.scrollTop = 0;
+        const contentBody = document.querySelector('.content-body');
+        if (contentBody) contentBody.scrollTop = 0;
+        window.scrollTo(0, 0);
     };
 
     // Function to show TRACE Mobile App Installation Center Mode
@@ -714,17 +725,78 @@ document.addEventListener('DOMContentLoaded', () => {
             if (arrow) {
                 arrow.className = isHidden ? 'fa-solid fa-chevron-down arrow-icon' : 'fa-solid fa-chevron-right arrow-icon';
             }
+            if (isHidden && window.showBlacklistedTab) {
+                window.showBlacklistedTab('view');
+            }
         }
     };
 
     // DO Operations Dropdown Toggle (Collapsed by default)
     window.toggleDoOpsDropdown = function(e) {
-        if (e) e.preventDefault();
+        if (e) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
+        const navItem = document.getElementById('doOpsNavItem');
         const list = document.getElementById('doOpsSubList');
         const arrow = document.getElementById('doOpsArrow');
         if (list) {
             const isHidden = list.style.display === 'none' || getComputedStyle(list).display === 'none';
             list.style.display = isHidden ? 'block' : 'none';
+            if (navItem) {
+                if (isHidden) navItem.classList.add('expanded');
+                else navItem.classList.remove('expanded');
+            }
+            if (arrow) {
+                arrow.className = isHidden ? 'fa-solid fa-chevron-down arrow-icon' : 'fa-solid fa-chevron-right arrow-icon';
+            }
+            if (isHidden && window.showViewInternalDO) {
+                window.showViewInternalDO();
+            }
+        }
+    };
+
+    // Contract Management Dropdown Toggle
+    window.toggleConfigDropdown = function(e) {
+        if (e) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
+        const navItem = document.getElementById('configNavItem');
+        const list = document.getElementById('configSubList');
+        const arrow = document.getElementById('configArrow');
+        if (list) {
+            const isHidden = list.style.display === 'none' || getComputedStyle(list).display === 'none';
+            list.style.display = isHidden ? 'block' : 'none';
+            if (navItem) {
+                if (isHidden) navItem.classList.add('expanded');
+                else navItem.classList.remove('expanded');
+            }
+            if (arrow) {
+                arrow.className = isHidden ? 'fa-solid fa-chevron-down arrow-icon' : 'fa-solid fa-chevron-right arrow-icon';
+            }
+            if (isHidden && window.showConfigArea) {
+                window.showConfigArea();
+            }
+        }
+    };
+
+    // Reports Dropdown Toggle
+    window.toggleReportsDropdown = function(e) {
+        if (e) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
+        const navItem = document.getElementById('reportsNavItem');
+        const list = document.getElementById('reportsSubList');
+        const arrow = document.getElementById('reportsArrow');
+        if (list) {
+            const isHidden = list.style.display === 'none' || getComputedStyle(list).display === 'none';
+            list.style.display = isHidden ? 'block' : 'none';
+            if (navItem) {
+                if (isHidden) navItem.classList.add('expanded');
+                else navItem.classList.remove('expanded');
+            }
             if (arrow) {
                 arrow.className = isHidden ? 'fa-solid fa-chevron-down arrow-icon' : 'fa-solid fa-chevron-right arrow-icon';
             }
