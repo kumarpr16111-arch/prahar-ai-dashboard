@@ -4,11 +4,12 @@
                         <div class="attendance-top-header">
                             <h1 class="attendance-title">Location Attendance Dashboard</h1>
                             <div class="attendance-filter-group">
-                                <div class="date-picker-box">
-                                    <input type="text" class="date-input-field" value="25-08-2026" readonly>
-                                    <i class="fa-regular fa-calendar date-icon"></i>
+                                <div class="date-picker-box" id="attendanceDatePickerBox" title="Click to select date">
+                                    <input type="date" id="attendanceNativeDateInput" class="attendance-native-date-input" value="2026-08-25" onchange="handleAttendanceDateChange(this.value)">
+                                    <input type="text" class="date-input-field" id="attendanceDateDisplayInput" value="25-08-2026" readonly>
+                                    <i class="fa-regular fa-calendar date-icon" id="attendanceCalendarIcon"></i>
                                 </div>
-                                <button class="btn-go-blue">Go</button>
+                                <button type="button" class="btn-go-blue" id="btnAttendanceGo" onclick="triggerAttendanceDateFilter()">Go</button>
                             </div>
                         </div>
 
@@ -20,25 +21,25 @@
                                     <i class="fa-solid fa-users"></i>
                                 </div>
                                 <span class="att-card-label">Active Member</span>
-                                <span class="att-card-number">32489</span>
+                                <span class="att-card-number" id="attActiveCount">32489</span>
                             </div>
 
-                            <!-- Card 2: Present (87%) -->
+                            <!-- Card 2: Present -->
                             <div class="att-card">
                                 <div class="att-icon-box black-icon">
                                     <i class="fa-solid fa-user-check"></i>
                                 </div>
                                 <span class="att-card-label">Present</span>
-                                <span class="att-card-number">28265</span>
+                                <span class="att-card-number" id="attPresentCount">28265</span>
                             </div>
 
-                            <!-- Card 3: Absent (13%) -->
+                            <!-- Card 3: Absent -->
                             <div class="att-card">
                                 <div class="att-icon-box black-icon">
                                     <i class="fa-solid fa-user-xmark"></i>
                                 </div>
                                 <span class="att-card-label">Absent</span>
-                                <span class="att-card-number">4224</span>
+                                <span class="att-card-number" id="attAbsentCount">4224</span>
                             </div>
                         </div>
 
@@ -48,24 +49,168 @@
                             
                             <div class="doughnut-chart-container">
                                 <div class="doughnut-wrapper">
-                                    <svg viewBox="0 0 200 200" class="attendance-svg-doughnut">
-                                        <!-- Background Ring (13% Absent - Dark Arc) -->
+                                    <svg viewBox="0 0 200 200" class="attendance-svg-doughnut" id="attendanceSvgDoughnut">
+                                        <!-- Background Ring (Absent - Dark Arc) -->
                                         <circle cx="100" cy="100" r="70" fill="transparent" stroke="#1e293b" stroke-width="28" />
-                                        <!-- Foreground Ring (87% Present - Vibrant Orange #f59e0b) -->
+                                        <!-- Foreground Ring (Present - Vibrant Orange #f59e0b) -->
                                         <!-- Circumference = 2 * PI * 70 = 439.82. 87% of 439.82 = 382.64 -->
-                                        <circle cx="100" cy="100" r="70" fill="transparent" stroke="#f59e0b" stroke-width="28"
-                                                stroke-dasharray="382.64 439.82" stroke-dashoffset="0" transform="rotate(-90 100 100)" />
+                                        <circle id="attDoughnutPresentCircle" cx="100" cy="100" r="70" fill="transparent" stroke="#f59e0b" stroke-width="28"
+                                                stroke-dasharray="382.64 439.82" stroke-dashoffset="0" transform="rotate(-90 100 100)" style="transition: stroke-dasharray 0.6s ease;" />
                                         
-                                        <!-- Percentage labels inside doughnut matching screenshot structure -->
-                                        <text x="100" y="42" text-anchor="middle" font-size="12" font-weight="800" fill="#ffffff">13%</text>
-                                        <text x="100" y="170" text-anchor="middle" font-size="13" font-weight="800" fill="#0f172a">87%</text>
+                                        <!-- Percentage labels inside doughnut -->
+                                        <text id="attDoughnutAbsentText" x="100" y="42" text-anchor="middle" font-size="12" font-weight="800" fill="#ffffff">13%</text>
+                                        <text id="attDoughnutPresentText" x="100" y="170" text-anchor="middle" font-size="13" font-weight="800" fill="#0f172a">87%</text>
                                     </svg>
                                 </div>
                             </div>
 
                             <!-- Floating More Details Button -->
                             <div class="more-details-footer">
-                                <button class="btn-more-details-pill">More Details</button>
+                                <button type="button" class="btn-more-details-pill" id="btnAttendanceMoreDetails" onclick="openWorkersDetailModal()">More Details</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ======================================================== -->
+                    <!-- WORKERS ATTENDANCE DETAILS MODAL DIALOG                 -->
+                    <!-- ======================================================== -->
+                    <div class="drone-modal-backdrop" id="workersDetailModal" style="display: none;" onclick="if(event.target===this) closeWorkersDetailModal();">
+                        <div class="feature-modal-container worker-modal-container" role="dialog" aria-modal="true">
+                            <!-- Modal Header -->
+                            <div class="feature-modal-header" style="background: #0f172a; border-bottom: 1px solid #1e293b; color: #ffffff;">
+                                <div class="feature-modal-title-wrap">
+                                    <div class="feature-modal-icon-badge" style="background: #0284c7; color: #ffffff;">
+                                        <i class="fa-solid fa-id-card-clip"></i>
+                                    </div>
+                                    <div>
+                                        <h2 class="feature-modal-title" style="color: #f8fafc; font-size: 17px; font-weight: 700;">Workers Attendance & Shift Telemetry Roster</h2>
+                                        <p class="feature-modal-subtitle" id="workerModalSubtitle" style="color: #94a3b8; font-size: 12px;">Biometric & RFID Attendance Tracking • Date: 25-08-2026 (Total Active: 32,489)</p>
+                                    </div>
+                                </div>
+                                <div class="vts-modal-actions">
+                                    <button type="button" class="btn-action-pill btn-export-excel" onclick="exportWorkersAttendanceCSV()" style="background: #16a34a; border-color: #15803d; color: #ffffff;">
+                                        <i class="fa-solid fa-file-csv"></i> Export CSV
+                                    </button>
+                                    <button type="button" class="btn-action-pill btn-export-pdf" onclick="printWorkersAttendance()" style="background: #0284c7; border-color: #0369a1; color: #ffffff;">
+                                        <i class="fa-solid fa-print"></i> Print Roster
+                                    </button>
+                                    <button type="button" class="feature-modal-close" onclick="closeWorkersDetailModal()" title="Close Window">&times;</button>
+                                </div>
+                            </div>
+
+                            <!-- Telemetry Summary Chips Bar -->
+                            <div class="worker-telemetry-summary" id="workerModalTelemetryStrip">
+                                <div class="worker-summary-chip chip-present">
+                                    <span class="chip-dot dot-green"></span>
+                                    <span class="chip-label">Present:</span>
+                                    <span class="chip-val" id="workerModalPresentVal">28,265 (87%)</span>
+                                </div>
+                                <div class="worker-summary-chip chip-absent">
+                                    <span class="chip-dot dot-red"></span>
+                                    <span class="chip-label">Absent:</span>
+                                    <span class="chip-val" id="workerModalAbsentVal">4,224 (13%)</span>
+                                </div>
+                                <div class="worker-summary-chip chip-shift">
+                                    <i class="fa-solid fa-sun" style="color: #f59e0b; font-size: 11px;"></i>
+                                    <span class="chip-label">Shift-I:</span>
+                                    <span class="chip-val" id="workerModalShift1Val">12,410</span>
+                                </div>
+                                <div class="worker-summary-chip chip-shift">
+                                    <i class="fa-solid fa-cloud-sun" style="color: #0284c7; font-size: 11px;"></i>
+                                    <span class="chip-label">Shift-II:</span>
+                                    <span class="chip-val" id="workerModalShift2Val">10,120</span>
+                                </div>
+                                <div class="worker-summary-chip chip-shift">
+                                    <i class="fa-solid fa-moon" style="color: #6366f1; font-size: 11px;"></i>
+                                    <span class="chip-label">Shift-III:</span>
+                                    <span class="chip-val" id="workerModalShift3Val">5,735</span>
+                                </div>
+                                <div class="worker-summary-chip chip-compliance">
+                                    <i class="fa-solid fa-fingerprint" style="color: #10b981; font-size: 11px;"></i>
+                                    <span class="chip-label">Biometric Verification:</span>
+                                    <span class="chip-val" style="color: #10b981; font-weight: 700;">99.4%</span>
+                                </div>
+                            </div>
+
+                            <!-- Filter Toolbar -->
+                            <div class="vts-modal-toolbar worker-filter-toolbar">
+                                <div class="vts-filter-inputs-grid worker-filter-grid">
+                                    <div class="vts-search-input-wrap" style="flex: 2;">
+                                        <i class="fa-solid fa-magnifying-glass search-icn"></i>
+                                        <input type="text" id="workerSearchInput" placeholder="Search worker name, ID, trade, area, gate..." class="vts-modal-search" oninput="handleWorkerSearch(this.value)">
+                                    </div>
+                                    <div class="vts-select-input-wrap" style="flex: 1.2;">
+                                        <i class="fa-solid fa-location-dot select-icn"></i>
+                                        <select id="workerAreaFilter" class="vts-modal-select" onchange="handleWorkerAreaFilter(this.value)">
+                                            <option value="all">All Mining Areas (14 Areas)</option>
+                                            <option value="Amrapali OCP">Amrapali OCP</option>
+                                            <option value="Argada">Argada Area</option>
+                                            <option value="Barka Sayal">Barka Sayal</option>
+                                            <option value="Bokaro and Kargali">Bokaro and Kargali</option>
+                                            <option value="Dhori">Dhori Area</option>
+                                            <option value="Giridih">Giridih Area</option>
+                                            <option value="Hazaribagh">Hazaribagh Area</option>
+                                            <option value="Kathara">Kathara Washery & OCP</option>
+                                            <option value="Kuju">Kuju Area</option>
+                                            <option value="Magadh & Sanghmitra">Magadh & Sanghmitra</option>
+                                            <option value="NK">North Karanpura (NK)</option>
+                                            <option value="Piparwar">Piparwar OCP</option>
+                                            <option value="Rajhara">Rajhara Area</option>
+                                            <option value="Rajrappa">Rajrappa Project</option>
+                                        </select>
+                                    </div>
+                                    <div class="vts-select-input-wrap" style="flex: 1;">
+                                        <i class="fa-solid fa-clock select-icn"></i>
+                                        <select id="workerShiftFilter" class="vts-modal-select" onchange="handleWorkerShiftFilter(this.value)">
+                                            <option value="all">All Shifts</option>
+                                            <option value="Shift-I">Shift-I (06:00 - 14:00)</option>
+                                            <option value="Shift-II">Shift-II (14:00 - 22:00)</option>
+                                            <option value="Shift-III">Shift-III (22:00 - 06:00)</option>
+                                            <option value="General">General (09:00 - 17:00)</option>
+                                        </select>
+                                    </div>
+                                    <div class="vts-select-input-wrap" style="flex: 0.9;">
+                                        <i class="fa-solid fa-filter select-icn"></i>
+                                        <select id="workerStatusFilter" class="vts-modal-select" onchange="handleWorkerStatusFilter(this.value)">
+                                            <option value="all">All Status</option>
+                                            <option value="Present">Present</option>
+                                            <option value="Absent">Absent</option>
+                                            <option value="On Leave">On Leave</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Modal Table Container -->
+                            <div class="vts-modal-table-container">
+                                <table class="master-data-table worker-roster-table" id="workerRosterTable">
+                                    <thead>
+                                        <tr>
+                                            <th style="width: 55px; text-align: center;">S.No</th>
+                                            <th style="width: 130px;">Worker ID</th>
+                                            <th>Worker Name</th>
+                                            <th>Trade / Designation</th>
+                                            <th>Mining Area / Colliery</th>
+                                            <th style="width: 160px;">Shift</th>
+                                            <th style="width: 130px;">Check-In Time</th>
+                                            <th>Terminal / Gate Station</th>
+                                            <th style="width: 110px; text-align: center;">Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="workerRosterTableBody">
+                                        <!-- Dynamically populated rows -->
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <!-- Modal Footer with Pagination -->
+                            <div class="vts-modal-footer">
+                                <div class="vts-pagination-info" id="workerPaginationInfo">
+                                    Showing <span id="workerPageStart">1</span> to <span id="workerPageEnd">15</span> of <span id="workerTotalCount">0</span> workers
+                                </div>
+                                <div class="vts-pagination-controls" id="workerPaginationControls">
+                                    <!-- Dynamic pagination buttons -->
+                                </div>
                             </div>
                         </div>
                     </div>
