@@ -23,14 +23,14 @@
     <script src="/static/js/vts_alerts_data.js"></script>
     <!-- Master Stylesheet -->
     <link rel="stylesheet" href="/static/css/style.css?v=1.2.3">
-    <!-- Immediate Theme Initializer to Prevent Flash of Unstyled Content -->
+    <!-- Immediate Theme Initializer to Enforce Light Mode -->
     <script>
         (function() {
             try {
-                const savedTheme = localStorage.getItem('trace_theme') || 'light';
-                document.documentElement.setAttribute('data-theme', savedTheme);
-                document.documentElement.classList.remove('theme-dark', 'theme-light');
-                document.documentElement.classList.add('theme-' + savedTheme);
+                localStorage.setItem('trace_theme', 'light');
+                document.documentElement.setAttribute('data-theme', 'light');
+                document.documentElement.classList.remove('theme-dark');
+                document.documentElement.classList.add('theme-light');
             } catch(e) {}
         })();
     </script>

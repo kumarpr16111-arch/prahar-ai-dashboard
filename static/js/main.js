@@ -36,11 +36,7 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     function initTheme() {
-        let savedTheme = 'light';
-        try {
-            savedTheme = localStorage.getItem('trace_theme') || 'light';
-        } catch(e) {}
-        window.setTheme(savedTheme);
+        window.setTheme('light');
 
         const btnDark = document.getElementById('themePillDark');
         const btnLight = document.getElementById('themePillLight');
