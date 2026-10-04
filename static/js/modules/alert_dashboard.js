@@ -472,10 +472,10 @@ function renderDetailEventsForCategory(type) {
     if (detailEventsBody) {
         if (matched.length === 0) {
             detailEventsBody.innerHTML = `
-                <div style="background: rgba(15, 23, 42, 0.6); border: 1px dashed #334155; border-radius: 8px; padding: 36px; text-align: center;">
+                <div class="empty-alerts-card" style="border: 1px dashed #cbd5e1; border-radius: 8px; padding: 36px; text-align: center;">
                     <i class="fa-solid fa-shield-check" style="font-size: 32px; color: #10b981; margin-bottom: 10px; display: inline-block;"></i>
-                    <h4 style="font-size: 14px; color: #f8fafc; margin: 0 0 6px 0; font-weight: 700;">No Alerts Match Active Filters</h4>
-                    <p style="font-size: 12px; color: #94a3b8; margin: 0;">All vehicles and corridors in this category are operating within nominal parameters.</p>
+                    <h4 class="empty-alerts-title" style="font-size: 14px; margin: 0 0 6px 0; font-weight: 700;">No Alerts Match Active Filters</h4>
+                    <p class="empty-alerts-desc" style="font-size: 12px; margin: 0;">All vehicles and corridors in this category are operating within nominal parameters.</p>
                 </div>
             `;
         } else {
@@ -484,58 +484,58 @@ function renderDetailEventsForCategory(type) {
                 const isAcked = a.status === 'ACKNOWLEDGED';
                 const isCritical = a.severity === 'CRITICAL';
                 const badgeBg = isCritical ? '#dc2626' : (a.severity === 'HIGH' ? '#d97706' : '#0284c7');
-                const cardBorder = isResolved ? '#1e293b' : (isAcked ? '#0284c7' : (isCritical ? 'rgba(239, 68, 68, 0.6)' : 'rgba(245, 158, 11, 0.5)'));
-                const statusColor = isResolved ? '#10b981' : (isAcked ? '#38bdf8' : '#ef4444');
+                const cardBorder = isResolved ? '#cbd5e1' : (isAcked ? '#0284c7' : (isCritical ? '#ef4444' : '#f59e0b'));
+                const statusColor = isResolved ? '#10b981' : (isAcked ? '#0284c7' : '#dc2626');
 
                 return `
-                    <div class="event-row-card" style="background: #0f172a; border: 1px solid ${cardBorder}; border-radius: 8px; padding: 14px 16px; margin-bottom: 10px; display: flex; flex-direction: column; gap: 10px; box-shadow: 0 4px 16px rgba(0,0,0,0.3); transition: all 0.15s ease;">
-                        <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.06); padding-bottom: 8px;">
+                    <div class="event-row-card" style="border: 1px solid ${cardBorder}; border-radius: 8px; padding: 14px 16px; margin-bottom: 12px; display: flex; flex-direction: column; gap: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); transition: all 0.15s ease;">
+                        <div class="event-card-header" style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(0,0,0,0.08); padding-bottom: 8px;">
                             <div style="display: flex; align-items: center; gap: 8px;">
-                                <span style="font-size: 10px; font-weight: 800; padding: 2px 7px; border-radius: 3px; background: ${badgeBg}; color: #fff; letter-spacing: 0.04em;">${a.severity}</span>
-                                <strong style="font-size: 13.5px; color: #f8fafc; font-weight: 700;">${a.alert_type}</strong>
-                                <span style="font-size: 11px; color: #64748b; font-family: monospace;">#ALT-${a.id}</span>
+                                <span style="font-size: 10px; font-weight: 800; padding: 2px 8px; border-radius: 4px; background: ${badgeBg}; color: #ffffff; letter-spacing: 0.04em;">${a.severity}</span>
+                                <strong class="event-card-title" style="font-size: 14px; font-weight: 700;">${a.alert_type}</strong>
+                                <span class="event-card-id" style="font-size: 11.5px; font-family: monospace; font-weight: 600;">#ALT-${a.id}</span>
                             </div>
                             <div style="display: flex; align-items: center; gap: 12px;">
-                                <span style="font-size: 11px; font-weight: 800; color: ${statusColor}; letter-spacing: 0.03em;">
+                                <span style="font-size: 11.5px; font-weight: 800; color: ${statusColor}; letter-spacing: 0.03em;">
                                     ${isResolved ? '<i class="fa-solid fa-shield-check"></i> RESOLVED' : (isAcked ? '<i class="fa-solid fa-check"></i> ACKNOWLEDGED' : '<span class="live-dot" style="display:inline-block; margin-right:4px;"></span> ACTIVE')}
                                 </span>
-                                <span style="font-size: 11.5px; color: #94a3b8;"><i class="fa-regular fa-clock" style="margin-right: 4px;"></i>${a.created_at ? new Date(a.created_at).toLocaleTimeString() : 'Live Telemetry'}</span>
+                                <span class="event-card-time" style="font-size: 11.5px;"><i class="fa-regular fa-clock" style="margin-right: 4px;"></i>${a.created_at ? new Date(a.created_at).toLocaleTimeString() : 'Live Telemetry'}</span>
                             </div>
                         </div>
                         
-                        <div style="display: flex; justify-content: space-between; align-items: center; font-size: 12px; color: #cbd5e1; background: rgba(0,0,0,0.35); padding: 8px 12px; border-radius: 6px; flex-wrap: wrap; gap: 8px;">
-                            <span><i class="fa-solid fa-truck" style="color: #38bdf8; margin-right: 6px;"></i>Vehicle: <strong style="color: #f8fafc; font-family: monospace;">${a.vehicle_no || 'JH01-AX-9912'}</strong></span>
-                            <span><i class="fa-solid fa-location-dot" style="color: #f59e0b; margin-right: 6px;"></i>${a.location || 'Mining Haul Corridor'}</span>
-                            <span>AI Confidence: <strong style="color: #34d399;">${a.confidence_score || 96.5}%</strong></span>
+                        <div class="event-card-meta" style="display: flex; justify-content: space-between; align-items: center; font-size: 12.5px; padding: 8px 12px; border-radius: 6px; flex-wrap: wrap; gap: 8px;">
+                            <span><i class="fa-solid fa-truck" style="color: #0284c7; margin-right: 6px;"></i>Vehicle: <strong class="event-vehicle-plate" style="font-family: monospace;">${a.vehicle_no || 'JH01-AX-9912'}</strong></span>
+                            <span><i class="fa-solid fa-location-dot" style="color: #d97706; margin-right: 6px;"></i>${a.location || 'Mining Haul Corridor'}</span>
+                            <span>AI Confidence: <strong style="color: #059669; font-weight: 700;">${a.confidence_score || 96.5}%</strong></span>
                         </div>
 
-                        <p style="font-size: 12px; color: #94a3b8; margin: 0; line-height: 1.5;">
+                        <p class="event-card-desc" style="font-size: 12.5px; margin: 0; line-height: 1.5;">
                             ${a.description || 'Surveillance anomaly identified by Edge Vision model. Immediate vigilance inspection recommended.'}
                         </p>
 
                         <div style="display: flex; gap: 8px; justify-content: space-between; align-items: center; margin-top: 4px; flex-wrap: wrap;">
-                            <button type="button" onclick="openIncidentInspectModal(${a.id})" class="btn-action" style="padding: 5px 12px; font-size: 11.5px; background: #1e293b; color: #38bdf8; border: 1px solid #334155; border-radius: 5px; cursor: pointer; display: flex; align-items: center; gap: 5px; font-weight: 600;">
+                            <button type="button" onclick="openIncidentInspectModal(${a.id})" class="btn-action btn-event-inspect" style="padding: 6px 12px; font-size: 12px; border-radius: 5px; cursor: pointer; display: flex; align-items: center; gap: 5px; font-weight: 600;">
                                 <i class="fa-solid fa-crosshairs"></i> Inspect Forensics & Feed
                             </button>
 
-                            <div style="display: flex; gap: 8px;">
-                                <button type="button" onclick="dispatchQrtPatrol(${a.id}, '${a.vehicle_no || 'Vehicle'}', '${a.location || 'Location'}')" class="btn-action" style="padding: 5px 10px; font-size: 11px; background: rgba(220, 38, 38, 0.15); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.35); border-radius: 5px; cursor: pointer; display: flex; align-items: center; gap: 5px; font-weight: 600;">
+                            <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                                <button type="button" onclick="dispatchQrtPatrol(${a.id}, '${a.vehicle_no || 'Vehicle'}', '${a.location || 'Location'}')" class="btn-action btn-event-qrt" style="padding: 5px 10px; font-size: 11.5px; border-radius: 5px; cursor: pointer; display: flex; align-items: center; gap: 5px; font-weight: 600;">
                                     <i class="fa-solid fa-car-on"></i> Dispatch QRT
                                 </button>
-                                <button type="button" onclick="triggerGateHold(${a.id}, '${a.vehicle_no || 'Vehicle'}', '${a.location || 'Location'}')" class="btn-action" style="padding: 5px 10px; font-size: 11px; background: rgba(217, 119, 6, 0.15); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.35); border-radius: 5px; cursor: pointer; display: flex; align-items: center; gap: 5px; font-weight: 600;">
+                                <button type="button" onclick="triggerGateHold(${a.id}, '${a.vehicle_no || 'Vehicle'}', '${a.location || 'Location'}')" class="btn-action btn-event-hold" style="padding: 5px 10px; font-size: 11.5px; border-radius: 5px; cursor: pointer; display: flex; align-items: center; gap: 5px; font-weight: 600;">
                                     <i class="fa-solid fa-hand"></i> Gate Hold
                                 </button>
                                 ${!isResolved && !isAcked ? `
-                                    <button type="button" onclick="acknowledgeLiveAlert(${a.id})" class="btn-action" style="padding: 5px 12px; font-size: 11px; background: #1e293b; color: #38bdf8; border: 1px solid #334155; border-radius: 5px; cursor: pointer; display: flex; align-items: center; gap: 5px; font-weight: 600;">
+                                    <button type="button" onclick="acknowledgeLiveAlert(${a.id})" class="btn-action btn-event-ack" style="padding: 5px 12px; font-size: 11.5px; border-radius: 5px; cursor: pointer; display: flex; align-items: center; gap: 5px; font-weight: 600;">
                                         <i class="fa-solid fa-check"></i> Acknowledge
                                     </button>
                                 ` : ''}
                                 ${!isResolved ? `
-                                    <button type="button" onclick="resolveLiveAlert(${a.id})" class="btn-action" style="padding: 5px 12px; font-size: 11px; background: rgba(16, 185, 129, 0.15); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.35); border-radius: 5px; cursor: pointer; display: flex; align-items: center; gap: 5px; font-weight: 600;">
+                                    <button type="button" onclick="resolveLiveAlert(${a.id})" class="btn-action btn-event-resolve" style="padding: 5px 12px; font-size: 11.5px; border-radius: 5px; cursor: pointer; display: flex; align-items: center; gap: 5px; font-weight: 600;">
                                         <i class="fa-solid fa-shield-check"></i> Resolve Incident
                                     </button>
                                 ` : `
-                                    <span style="font-size: 11px; color: #10b981; font-weight: 700; padding: 4px 8px; background: rgba(16, 185, 129, 0.1); border-radius: 4px;"><i class="fa-solid fa-circle-check"></i> Incident Recorded</span>
+                                    <span style="font-size: 11px; color: #16a34a; font-weight: 700; padding: 4px 8px; background: #dcfce7; border: 1px solid #86efac; border-radius: 4px;"><i class="fa-solid fa-circle-check"></i> Incident Recorded</span>
                                 `}
                             </div>
                         </div>

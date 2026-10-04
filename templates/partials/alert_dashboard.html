@@ -298,22 +298,22 @@
                         
                         <div class="incident-modal-body">
                             <!-- Visual Snapshot & Map Preview -->
-                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px;">
-                                <div style="background: #111827; border: 1px solid #1e293b; border-radius: 8px; overflow: hidden; position: relative;">
+                            <div class="incident-visual-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px;">
+                                <div class="incident-cctv-box" style="border-radius: 8px; overflow: hidden; position: relative;">
                                     <img src="/static/media_screenshots/SS-1.png" id="modalIncidentStillImg" alt="CCTV Incident Evidence" style="width: 100%; height: 180px; object-fit: cover; display: block;">
-                                    <div style="position: absolute; bottom: 8px; left: 8px; background: rgba(0,0,0,0.7); padding: 3px 8px; border-radius: 4px; font-size: 10.5px; color: #38bdf8;">
+                                    <div class="incident-cam-tag" style="position: absolute; bottom: 8px; left: 8px; background: rgba(0,0,0,0.7); padding: 3px 8px; border-radius: 4px; font-size: 10.5px; color: #38bdf8;">
                                         <i class="fa-solid fa-camera"></i> <span id="modalIncidentCamBadge">CAM-WB-02 (4K Capture)</span>
                                     </div>
                                 </div>
-                                <div style="background: #111827; border: 1px solid #1e293b; border-radius: 8px; padding: 12px; display: flex; flex-direction: column; justify-content: space-between;">
+                                <div class="incident-ai-box" style="border-radius: 8px; padding: 14px; display: flex; flex-direction: column; justify-content: space-between;">
                                     <div>
-                                        <div style="font-size: 11px; font-weight: 700; color: #64748b; text-transform: uppercase;">AI Edge Anomaly Detection</div>
-                                        <div style="font-size: 14px; font-weight: 800; color: #f8fafc; margin-top: 4px;" id="modalIncidentSummaryType">Unauthorized Stoppage</div>
-                                        <p style="font-size: 12px; color: #94a3b8; margin: 6px 0 0 0; line-height: 1.45;" id="modalIncidentDescText">Vehicle stationary in unapproved transit sector > 18 mins with coal payload.</p>
+                                        <div class="incident-ai-label" style="font-size: 11px; font-weight: 700; text-transform: uppercase;">AI Edge Anomaly Detection</div>
+                                        <div class="incident-ai-title" style="font-size: 15px; font-weight: 800; margin-top: 4px;" id="modalIncidentSummaryType">Unauthorized Stoppage</div>
+                                        <p class="incident-ai-desc" style="font-size: 12px; margin: 6px 0 0 0; line-height: 1.45;" id="modalIncidentDescText">Vehicle stationary in unapproved transit sector > 18 mins with coal payload.</p>
                                     </div>
-                                    <div style="background: rgba(0,0,0,0.3); padding: 8px; border-radius: 6px; font-size: 11px; display: flex; justify-content: space-between;">
-                                        <span>AI Model: <strong style="color: #38bdf8;">YOLOv11 Mining-Vision</strong></span>
-                                        <span>Confidence: <strong style="color: #34d399;" id="modalIncidentConfText">96.8%</strong></span>
+                                    <div class="incident-model-meta" style="padding: 8px; border-radius: 6px; font-size: 11px; display: flex; justify-content: space-between;">
+                                        <span>AI Model: <strong style="color: #0284c7;">YOLOv11 Mining-Vision</strong></span>
+                                        <span>Confidence: <strong style="color: #059669;" id="modalIncidentConfText">96.8%</strong></span>
                                     </div>
                                 </div>
                             </div>
@@ -321,15 +321,15 @@
                             <!-- Telemetry Grid -->
                             <div class="incident-meta-grid">
                                 <div class="incident-meta-item">
-                                    <span class="label"><i class="fa-solid fa-truck" style="margin-right: 4px; color: #38bdf8;"></i> Vehicle Registration</span>
+                                    <span class="label"><i class="fa-solid fa-truck" style="margin-right: 4px; color: #0284c7;"></i> Vehicle Registration</span>
                                     <span class="val" id="modalIncidentVehicle">JH01-AX-9912</span>
                                 </div>
                                 <div class="incident-meta-item">
-                                    <span class="label"><i class="fa-solid fa-location-dot" style="margin-right: 4px; color: #f59e0b;"></i> Incident Location</span>
+                                    <span class="label"><i class="fa-solid fa-location-dot" style="margin-right: 4px; color: #d97706;"></i> Incident Location</span>
                                     <span class="val" id="modalIncidentLocation">Amrapali Haul Corridor #4</span>
                                 </div>
                                 <div class="incident-meta-item">
-                                    <span class="label"><i class="fa-solid fa-satellite" style="margin-right: 4px; color: #34d399;"></i> GPS Coordinates</span>
+                                    <span class="label"><i class="fa-solid fa-satellite" style="margin-right: 4px; color: #059669;"></i> GPS Coordinates</span>
                                     <span class="val" id="modalIncidentGps">23.8542° N, 85.0512° E</span>
                                 </div>
                                 <div class="incident-meta-item">
