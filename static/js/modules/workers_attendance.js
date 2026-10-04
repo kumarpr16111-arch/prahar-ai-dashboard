@@ -76,7 +76,7 @@
         rosterList: [],
         filteredRoster: [],
         currentPage: 1,
-        pageSize: 15,
+        pageSize: 10,
         searchQuery: "",
         areaFilter: "all",
         shiftFilter: "all",
@@ -348,6 +348,19 @@
      */
     window.handleWorkerStatusFilter = function(status) {
         state.statusFilter = status;
+        state.currentPage = 1;
+        applyRosterFilters();
+    };
+
+    /**
+     * Filter by Rows Per Page handler
+     */
+    window.handleWorkerRowsPerPage = function(rows) {
+        if (rows === 'all') {
+            state.pageSize = 999999;
+        } else {
+            state.pageSize = parseInt(rows, 10) || 10;
+        }
         state.currentPage = 1;
         applyRosterFilters();
     };
