@@ -86,15 +86,16 @@
                                         <h2 class="feature-modal-title" style="color: #f8fafc; font-size: 17px; font-weight: 700;">Workers Attendance & Shift Telemetry Roster</h2>
                                         <p class="feature-modal-subtitle" id="workerModalSubtitle" style="color: #94a3b8; font-size: 12px;">Biometric & RFID Attendance Tracking • Date: 25-08-2026 (Total Active: 32,489)</p>
                                     </div>
-                                </div>
                                 <div class="vts-modal-actions">
-                                    <button type="button" class="btn-action-pill btn-export-excel" onclick="exportWorkersAttendanceCSV()" style="background: #16a34a; border-color: #15803d; color: #ffffff;">
-                                        <i class="fa-solid fa-file-csv"></i> Export CSV
+                                    <button type="button" class="btn-export-csv" onclick="exportWorkersAttendanceCSV()" title="Download Attendance Records CSV">
+                                        <i class="fa-solid fa-file-csv"></i> <span>Export CSV</span>
                                     </button>
-                                    <button type="button" class="btn-action-pill btn-export-pdf" onclick="printWorkersAttendance()" style="background: #0284c7; border-color: #0369a1; color: #ffffff;">
-                                        <i class="fa-solid fa-print"></i> Print Roster
+                                    <button type="button" class="btn-export-pdf" onclick="printWorkersAttendance()" title="Print Shift Roster">
+                                        <i class="fa-solid fa-print"></i> <span>Print Roster</span>
                                     </button>
-                                    <button type="button" class="feature-modal-close" onclick="closeWorkersDetailModal()" title="Close Window">&times;</button>
+                                    <button type="button" class="feature-modal-close-btn" onclick="closeWorkersDetailModal()" title="Close Window">
+                                        <i class="fa-solid fa-xmark"></i>
+                                    </button>
                                 </div>
                             </div>
 

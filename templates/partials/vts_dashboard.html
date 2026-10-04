@@ -245,16 +245,18 @@
                                         </div>
                                     </div>
                                     <div class="vts-modal-actions">
-                                        <button type="button" class="btn-action-pill btn-export-excel" onclick="closeFleetModal(); openVtsRegisterModal();" style="background: #16a34a; border-color: #15803d; color: #ffffff;">
+                                        <button type="button" class="btn-action-register" onclick="closeFleetModal(); openVtsRegisterModal();" title="Register New Vehicle">
                                             <i class="fa-solid fa-plus"></i> Register
                                         </button>
-                                        <button type="button" class="btn-action-pill btn-export-excel" onclick="exportFleetCSV()">
+                                        <button type="button" class="btn-export-csv" onclick="exportFleetCSV()" title="Export Fleet Records CSV">
                                             <i class="fa-solid fa-file-csv"></i> Export CSV
                                         </button>
-                                        <button type="button" class="btn-action-pill btn-export-pdf" onclick="exportFleetPDF()">
+                                        <button type="button" class="btn-export-pdf" onclick="exportFleetPDF()" title="Export Fleet Records PDF">
                                             <i class="fa-solid fa-file-pdf"></i> Export PDF
                                         </button>
-                                        <button type="button" class="feature-modal-close" onclick="closeFleetModal()" title="Close Window">&times;</button>
+                                        <button type="button" class="feature-modal-close-btn" onclick="closeFleetModal()" title="Close Window">
+                                            <i class="fa-solid fa-xmark"></i>
+                                        </button>
                                     </div>
                                 </div>
 
@@ -355,7 +357,7 @@
                                             <p class="feature-modal-subtitle" style="color: #9ca3af; font-size: 12px;">Real-time Geofence Breaches, Corridor Deviations & Hardware Tamper Alarms (97 Active)</p>
                                         </div>
                                     </div>
-                                    <div style="display: flex; align-items: center; gap: 10px;">
+                                    <div class="vts-modal-actions">
                                         <!-- Export Actions -->
                                         <button type="button" class="btn-export-csv" onclick="exportAlertsCSV()" title="Download raw CSV spreadsheet of alerts">
                                             <i class="fa-solid fa-file-csv"></i> Export CSV
@@ -363,7 +365,7 @@
                                         <button type="button" class="btn-export-pdf" onclick="exportAlertsPDF()" title="Print or save as PDF alert report">
                                             <i class="fa-solid fa-file-pdf"></i> Export PDF
                                         </button>
-                                        <button class="feature-modal-close-btn" onclick="closeAlertsModal()" style="color: #9ca3af; background: #1f2937; margin-left: 6px;">
+                                        <button type="button" class="feature-modal-close-btn" onclick="closeAlertsModal()" title="Close Window">
                                             <i class="fa-solid fa-xmark"></i>
                                         </button>
                                     </div>

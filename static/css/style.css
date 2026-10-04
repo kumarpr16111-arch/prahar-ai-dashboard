@@ -3206,25 +3206,7 @@ body.alert-mode-active .user-name {
     gap: 6px;
 }
 
-.btn-export-csv {
-    background: #eff6ff;
-    border: 1px solid #93c5fd;
-    color: #0284c7;
-    padding: 6px 14px;
-    border-radius: 6px;
-    font-size: 12.5px;
-    font-weight: 600;
-    cursor: pointer;
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    transition: all 0.15s ease;
-}
-
-.btn-export-csv:hover {
-    background: #0284c7;
-    color: #ffffff;
-}
+.drone-search-box input {
     font-size: 14px;
     outline: none;
     background: #ffffff;
@@ -8519,36 +8501,6 @@ body.gis-mode-active .content-body {
     font-weight: 700;
 }
 
-.btn-export-csv, .btn-export-pdf {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    padding: 6px 14px;
-    border-radius: 6px;
-    font-size: 12px;
-    font-weight: 700;
-    cursor: pointer;
-    transition: all 0.15s ease;
-    border: none;
-}
-
-.btn-export-csv {
-    background: #059669;
-    color: #ffffff;
-}
-
-.btn-export-csv:hover {
-    background: #047857;
-}
-
-.btn-export-pdf {
-    background: #dc2626;
-    color: #ffffff;
-}
-
-.btn-export-pdf:hover {
-    background: #b91c1c;
-}
 
 /* ======================================================== */
 /* VTS LIVE ALERTS MODAL BADGES & TAB STYLES                */
@@ -12622,6 +12574,258 @@ body[data-theme="light"].alert-mode-active .user-name {
     font-size: 12.5px !important;
 }
 
+/* ==========================================================================
+   Back to Overview Button (Alert Dashboard & Global)
+   ========================================================================== */
+.btn-back-overview {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 8px !important;
+    padding: 7px 16px !important;
+    background: #f0f7ff !important;
+    border: 1px solid #bfdbfe !important;
+    border-radius: 6px !important;
+    color: #0284c7 !important;
+    font-size: 12.5px !important;
+    font-weight: 600 !important;
+    cursor: pointer !important;
+    white-space: nowrap !important;
+    width: auto !important;
+    height: 34px !important;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    text-decoration: none !important;
+    line-height: 1 !important;
+    box-shadow: 0 1px 3px rgba(2, 132, 199, 0.08) !important;
+}
 
+.btn-back-overview:hover {
+    background: #0284c7 !important;
+    border-color: #0284c7 !important;
+    color: #ffffff !important;
+    box-shadow: 0 4px 12px rgba(2, 132, 199, 0.25) !important;
+    transform: translateY(-1px);
+}
 
+.btn-back-overview i {
+    font-size: 13px !important;
+    transition: transform 0.2s ease !important;
+}
+
+.btn-back-overview:hover i {
+    transform: translateX(-2px) !important;
+}
+
+[data-theme="dark"] .btn-back-overview {
+    background: #1e293b !important;
+    border: 1px solid #334155 !important;
+    color: #38bdf8 !important;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3) !important;
+}
+
+[data-theme="dark"] .btn-back-overview:hover {
+    background: #0284c7 !important;
+    border-color: #0284c7 !important;
+    color: #ffffff !important;
+    box-shadow: 0 4px 12px rgba(2, 132, 199, 0.35) !important;
+}
+
+/* ==========================================================================
+   Global Export CSV, Export PDF & Modal Header Action Buttons
+   ========================================================================== */
+.btn-export-csv, 
+.btn-export-excel {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 7px !important;
+    padding: 6px 14px !important;
+    height: 32px !important;
+    border-radius: 6px !important;
+    font-size: 12px !important;
+    font-weight: 600 !important;
+    cursor: pointer !important;
+    white-space: nowrap !important;
+    width: auto !important;
+    background: #ecfdf5 !important;
+    border: 1px solid #a7f3d0 !important;
+    color: #059669 !important;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    line-height: 1 !important;
+    text-decoration: none !important;
+    box-shadow: 0 1px 2px rgba(16, 185, 129, 0.08) !important;
+}
+
+.btn-export-csv:hover, 
+.btn-export-excel:hover {
+    background: #059669 !important;
+    border-color: #059669 !important;
+    color: #ffffff !important;
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.25) !important;
+    transform: translateY(-1px) !important;
+}
+
+.btn-export-csv i,
+.btn-export-excel i {
+    font-size: 13px !important;
+}
+
+.btn-export-pdf {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 7px !important;
+    padding: 6px 14px !important;
+    height: 32px !important;
+    border-radius: 6px !important;
+    font-size: 12px !important;
+    font-weight: 600 !important;
+    cursor: pointer !important;
+    white-space: nowrap !important;
+    width: auto !important;
+    background: #f0f7ff !important;
+    border: 1px solid #bfdbfe !important;
+    color: #0284c7 !important;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    line-height: 1 !important;
+    text-decoration: none !important;
+    box-shadow: 0 1px 2px rgba(2, 132, 199, 0.08) !important;
+}
+
+.btn-export-pdf:hover {
+    background: #0284c7 !important;
+    border-color: #0284c7 !important;
+    color: #ffffff !important;
+    box-shadow: 0 4px 12px rgba(2, 132, 199, 0.25) !important;
+    transform: translateY(-1px) !important;
+}
+
+.btn-export-pdf i {
+    font-size: 13px !important;
+}
+
+.btn-action-register {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 6px !important;
+    padding: 6px 14px !important;
+    height: 32px !important;
+    border-radius: 6px !important;
+    font-size: 12px !important;
+    font-weight: 600 !important;
+    cursor: pointer !important;
+    white-space: nowrap !important;
+    background: #10b981 !important;
+    border: 1px solid #059669 !important;
+    color: #ffffff !important;
+    transition: all 0.2s ease !important;
+    line-height: 1 !important;
+    box-shadow: 0 1px 2px rgba(16, 185, 129, 0.12) !important;
+}
+
+.btn-action-register:hover {
+    background: #059669 !important;
+    transform: translateY(-1px) !important;
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3) !important;
+}
+
+/* Modal Actions Wrapper */
+.vts-modal-actions {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    flex-wrap: nowrap !important;
+}
+
+/* Modal Header Close Buttons */
+.feature-modal-close,
+.feature-modal-close-btn {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 32px !important;
+    height: 32px !important;
+    border-radius: 6px !important;
+    background: rgba(255, 255, 255, 0.1) !important;
+    border: 1px solid rgba(255, 255, 255, 0.18) !important;
+    color: #94a3b8 !important;
+    font-size: 15px !important;
+    cursor: pointer !important;
+    transition: all 0.2s ease !important;
+    padding: 0 !important;
+    line-height: 1 !important;
+    margin: 0 !important;
+}
+
+.feature-modal-close:hover,
+.feature-modal-close-btn:hover {
+    background: rgba(239, 68, 68, 0.25) !important;
+    border-color: rgba(239, 68, 68, 0.5) !important;
+    color: #f87171 !important;
+}
+
+/* Context: Buttons inside dark feature modal headers */
+.feature-modal-header .btn-export-csv,
+.feature-modal-header .btn-export-excel,
+.vts-modal-actions .btn-export-csv,
+.vts-modal-actions .btn-export-excel {
+    background: rgba(16, 185, 129, 0.15) !important;
+    border: 1px solid rgba(52, 211, 153, 0.4) !important;
+    color: #34d399 !important;
+    box-shadow: none !important;
+}
+
+.feature-modal-header .btn-export-csv:hover,
+.feature-modal-header .btn-export-excel:hover,
+.vts-modal-actions .btn-export-csv:hover,
+.vts-modal-actions .btn-export-excel:hover {
+    background: #10b981 !important;
+    border-color: #10b981 !important;
+    color: #ffffff !important;
+    box-shadow: 0 4px 14px rgba(16, 185, 129, 0.4) !important;
+}
+
+.feature-modal-header .btn-export-pdf,
+.vts-modal-actions .btn-export-pdf {
+    background: rgba(2, 132, 199, 0.15) !important;
+    border: 1px solid rgba(56, 189, 248, 0.4) !important;
+    color: #38bdf8 !important;
+    box-shadow: none !important;
+}
+
+.feature-modal-header .btn-export-pdf:hover,
+.vts-modal-actions .btn-export-pdf:hover {
+    background: #0284c7 !important;
+    border-color: #0284c7 !important;
+    color: #ffffff !important;
+    box-shadow: 0 4px 14px rgba(2, 132, 199, 0.4) !important;
+}
+
+/* Dark Theme Overrides for Export Buttons */
+[data-theme="dark"] .btn-export-csv,
+[data-theme="dark"] .btn-export-excel {
+    background: rgba(16, 185, 129, 0.15) !important;
+    border: 1px solid rgba(52, 211, 153, 0.3) !important;
+    color: #34d399 !important;
+}
+
+[data-theme="dark"] .btn-export-csv:hover,
+[data-theme="dark"] .btn-export-excel:hover {
+    background: #10b981 !important;
+    border-color: #10b981 !important;
+    color: #ffffff !important;
+}
+
+[data-theme="dark"] .btn-export-pdf {
+    background: rgba(2, 132, 199, 0.15) !important;
+    border: 1px solid rgba(56, 189, 248, 0.3) !important;
+    color: #38bdf8 !important;
+}
+
+[data-theme="dark"] .btn-export-pdf:hover {
+    background: #0284c7 !important;
+    border-color: #0284c7 !important;
+    color: #ffffff !important;
+}
 
