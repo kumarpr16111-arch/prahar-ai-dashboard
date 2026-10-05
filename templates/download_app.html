@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Download TRACE Mobile App v1.0.0.0 - Central Coalfields Limited</title>
+    <link rel="icon" type="image/png" href="/static/media_screenshots/trace_sidebar_emblem.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+        body {
+            background: linear-gradient(180deg, #070e1b 0%, #0b1528 100%);
+            color: #f8fafc;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px 16px;
+        }
+        .download-card {
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(56, 189, 248, 0.35);
+            border-radius: 24px;
+            padding: 28px 22px;
+            width: 100%;
+            max-width: 440px;
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.7), 0 0 30px rgba(2, 132, 199, 0.25);
+            animation: fadeIn 0.35s ease-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .app-icon-wrap {
+            width: 92px;
+            height: 92px;
+            margin: 0 auto 16px;
+            border-radius: 22px;
+            background: #0284c7;
+            border: 2.5px solid #38bdf8;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 10px 25px rgba(2, 132, 199, 0.45);
+            position: relative;
+        }
+        .app-icon-wrap img {
+            width: 74px;
+            height: auto;
+            object-fit: contain;
+        }
+        .app-title {
+            font-size: 21px;
+            font-weight: 800;
+            color: #ffffff;
+            letter-spacing: 0.02em;
+            margin-bottom: 4px;
+        }
+        .app-version-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(16, 185, 129, 0.15);
+            color: #34d399;
+            border: 1px solid rgba(16, 185, 129, 0.4);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+            margin-bottom: 14px;
+        }
+        .app-desc {
+            font-size: 13px;
+            color: #94a3b8;
+            line-height: 1.5;
+            margin-bottom: 18px;
+        }
+        .prompt-question-box {
+            background: linear-gradient(135deg, rgba(2, 132, 199, 0.15) 0%, rgba(14, 165, 233, 0.1) 100%);
+            border: 1.5px solid rgba(56, 189, 248, 0.45);
+            border-radius: 14px;
+            padding: 14px 16px;
+            margin-bottom: 18px;
+            text-align: left;
+        }
+        .prompt-question-title {
+            font-size: 13.5px;
+            font-weight: 700;
+            color: #38bdf8;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 4px;
+        }
+        .prompt-question-sub {
+            font-size: 12px;
+            color: #cbd5e1;
+            line-height: 1.4;
+        }
+        .specs-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 20px;
+            text-align: left;
+        }
+        .spec-item {
+            background: rgba(30, 41, 59, 0.7);
+            border: 1px solid rgba(51, 65, 85, 0.8);
+            border-radius: 10px;
+            padding: 10px 12px;
+        }
+        .spec-label {
+            font-size: 10.5px;
+            color: #64748b;
+            text-transform: uppercase;
+            font-weight: 600;
+            display: block;
+            margin-bottom: 2px;
+        }
+        .spec-val {
+            font-size: 12.5px;
+            color: #f1f5f9;
+            font-weight: 700;
+        }
+        .btn-download-primary {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            width: 100%;
+            background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+            color: #ffffff;
+            text-decoration: none;
+            padding: 15px 20px;
+            border-radius: 14px;
+            font-size: 16px;
+            font-weight: 800;
+            border: 1px solid #38bdf8;
+            box-shadow: 0 8px 25px rgba(2, 132, 199, 0.45);
+            cursor: pointer;
+            transition: transform 0.15s ease, box-shadow 0.15s ease;
+            margin-bottom: 14px;
+        }
+        .btn-download-primary:active {
+            transform: scale(0.98);
+        }
+        .instructions-box {
+            background: rgba(30, 41, 59, 0.5);
+            border-radius: 12px;
+            padding: 14px 16px;
+            text-align: left;
+            margin-top: 16px;
+            border: 1px solid rgba(51, 65, 85, 0.6);
+        }
+        .instructions-title {
+            font-size: 12px;
+            font-weight: 700;
+            color: #38bdf8;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .instructions-list {
+            list-style: none;
+            font-size: 11.5px;
+            color: #cbd5e1;
+            line-height: 1.6;
+        }
+        .instructions-list li {
+            position: relative;
+            padding-left: 18px;
+            margin-bottom: 4px;
+        }
+        .instructions-list li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #10b981;
+            font-weight: 800;
+        }
+        .footer-note {
+            margin-top: 18px;
+            font-size: 11px;
+            color: #64748b;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="download-card">
+        <div class="app-icon-wrap">
+            <img src="/static/media_screenshots/trace_sidebar_emblem.png" alt="TRACE App Emblem">
+        </div>
+
+        <h1 class="app-title">TRACE Mobile Field Assistant™</h1>
+        <div class="app-version-pill">
+            <i class="fa-solid fa-circle-check"></i> v1.0.0.0 Production Release
+        </div>
+
+        <p class="app-desc">
+            Geo-tagged mining inspection, worker attendance, and real-time security reporting suite for Central Coalfields Limited.
+        </p>
+
+        <!-- Prompt asking user if they want to download the app -->
+        <div class="prompt-question-box" id="downloadPromptBox">
+            <div class="prompt-question-title">
+                <i class="fa-solid fa-mobile-screen"></i>
+                <span>Download TRACE Mobile App?</span>
+            </div>
+            <p class="prompt-question-sub">
+                Do you want to download <strong style="color: #ffffff;">TRACE_Mobile-V1.0.0.0.apk</strong> to your mobile device?
+            </p>
+        </div>
+
+        <div class="specs-grid">
+            <div class="spec-item">
+                <span class="spec-label">Package</span>
+                <span class="spec-val">TRACE_Mobile-V1.0.0.0.apk</span>
+            </div>
+            <div class="spec-item">
+                <span class="spec-label">File Size</span>
+                <span class="spec-val">36.9 MB (APK)</span>
+            </div>
+            <div class="spec-item">
+                <span class="spec-label">Platform</span>
+                <span class="spec-val"><i class="fa-brands fa-android" style="color: #10b981;"></i> Android 9.0+</span>
+            </div>
+            <div class="spec-item">
+                <span class="spec-label">Architecture</span>
+                <span class="spec-val">ARM64 & Universal</span>
+            </div>
+        </div>
+
+        <a href="/download/apk" class="btn-download-primary" id="btnManualDownload" download="TRACE_Mobile-V1.0.0.0.apk">
+            <i class="fa-solid fa-cloud-arrow-down" style="font-size: 18px;"></i>
+            <span>Download APK (36.9 MB)</span>
+        </a>
+
+        <div class="instructions-box">
+            <div class="instructions-title">
+                <i class="fa-solid fa-shield-halved"></i> Installation Steps on Android:
+            </div>
+            <ul class="instructions-list">
+                <li>Tap <strong>Download APK</strong> and confirm saving the file.</li>
+                <li>When prompted, tap <em>"Allow installation from this source"</em> in Settings.</li>
+                <li>Tap <strong>Install</strong> and launch <strong>TRACE Mobile</strong>.</li>
+            </ul>
+        </div>
+
+        <div class="footer-note">
+            Central Coalfields Limited • Digicoal Surveillance Division
+        </div>
+    </div>
+
+    <script>
+        // Initiate download after gentle prompt delay
+        setTimeout(() => {
+            const promptBox = document.getElementById('downloadPromptBox');
+            if (promptBox) {
+                promptBox.innerHTML = `
+                    <div class="prompt-question-title" style="color: #34d399;">
+                        <i class="fa-solid fa-circle-check"></i>
+                        <span>Download Starting...</span>
+                    </div>
+                    <p class="prompt-question-sub">
+                        If your download did not start automatically, please tap the Download APK button below.
+                    </p>
+                `;
+            }
+            window.location.href = '/download/apk';
+        }, 1200);
+    </script>
+</body>
+</html>

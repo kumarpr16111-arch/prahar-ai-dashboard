@@ -1,15 +1,15 @@
-<div id="sihDemoConsole" style="position: fixed; bottom: 18px; right: 18px; z-index: 9999; background: #0f172a; border: 1px solid #334155; border-radius: 6px; box-shadow: 0 10px 30px rgba(0,0,0,0.7); font-family: system-ui, sans-serif; overflow: hidden; width: 270px; transition: all 0.3s ease;">
-    <div style="background: #1e293b; padding: 7px 11px; display: flex; justify-content: space-between; align-items: center; cursor: pointer;" onclick="toggleDemoConsole()">
+<div id="sihDemoConsole" style="position: fixed; bottom: 14px; left: 16px; z-index: 9999; background: #0f172a; border: 1px solid #334155; border-radius: 8px; box-shadow: 0 10px 30px rgba(0,0,0,0.7); font-family: system-ui, sans-serif; overflow: hidden; width: 218px; transition: all 0.3s ease;">
+    <div style="background: #1e293b; padding: 7px 11px; display: flex; justify-content: space-between; align-items: center; cursor: pointer;" onclick="toggleDemoConsole()" title="Toggle SIH Live Demo Simulation Controls">
         <div style="display: flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 700; color: #38bdf8;">
             <i class="fa-solid fa-bolt"></i>
             <span>SIH Live Demo Console</span>
         </div>
         <div style="display: flex; align-items: center; gap: 6px;">
             <span style="width: 7px; height: 7px; border-radius: 50%; background: #10b981; display: inline-block;"></span>
-            <i class="fa-solid fa-chevron-up" id="demoConsoleChevron" style="font-size: 9px; color: #94a3b8;"></i>
+            <i class="fa-solid fa-chevron-down" id="demoConsoleChevron" style="font-size: 9px; color: #94a3b8;"></i>
         </div>
     </div>
-    <div id="demoConsoleBody" style="padding: 10px; display: flex; flex-direction: column; gap: 6px; background: #0b0f19;">
+    <div id="demoConsoleBody" style="display: none; padding: 10px; flex-direction: column; gap: 6px; background: #0b0f19;">
         <div style="font-size: 10px; color: #94a3b8; display: flex; justify-content: space-between;">
             <span>Live DB:</span>
             <strong style="color: #34d399;">Supabase (PostgreSQL)</strong>

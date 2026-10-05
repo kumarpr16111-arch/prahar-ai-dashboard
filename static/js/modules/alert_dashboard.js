@@ -200,9 +200,83 @@ async function fetchLiveAlerts() {
     }
 }
 
-function getFilteredAlertsList() {
+// Comprehensive category mapping helper for all 15 operational alert categories
+function getAlertCategoryKey(alert) {
+    if (!alert) return 'stoppage';
+    const type = (alert.alert_type || '').toLowerCase();
+    const desc = (alert.description || '').toLowerCase();
+
+    // 1. Primary classification by alert_type
+    if (type.includes('speed') || type.includes('velocity')) return 'over_speed';
+    if (type.includes('stoppage') || type.includes('halt')) return 'stoppage';
+    if (type.includes('off route') || type.includes('route') || type.includes('geofence')) return 'off_route';
+    if (type.includes('off area') || type.includes('off-area') || type.includes('blasting')) return 'off_area';
+    if (type.includes('camera')) return 'camera_tamper';
+    if (type.includes('tamper') || type.includes('seal') || type.includes('device tamper')) return 'tamper';
+    if (type.includes('barrier') || type.includes('boom') || type.includes('gate')) return 'boom_barrier';
+    if (type.includes('crowd')) return 'crowd';
+    if (type.includes('person')) return 'person';
+    if (type.includes('intrusion') || type.includes('tripwire')) return 'intrusion';
+    if (type.includes('traffic') || type.includes('congestion')) return 'traffic';
+    if (type.includes('load') || type.includes('unload') || type.includes('variance') || type.includes('tare')) return 'load_unload';
+    if (type.includes('hazard') || type.includes('safety')) return 'safety_hazard';
+    if (type.includes('illumination') || type.includes('light')) return 'illumination';
+    if (type.includes('vehicle')) return 'vehicle';
+
+    // 2. Secondary fallback by description semantics
+    if (desc.includes('km/h')) return 'over_speed';
+    if (desc.includes('stationary')) return 'stoppage';
+    if (desc.includes('deviated')) return 'off_route';
+    if (desc.includes('restricted') || desc.includes('blasting')) return 'off_area';
+    if (desc.includes('occlusion') || desc.includes('camera lens')) return 'camera_tamper';
+    if (desc.includes('rfid tag mismatch') || desc.includes('tamper')) return 'tamper';
+    if (desc.includes('boom') || desc.includes('barrier')) return 'boom_barrier';
+    if (desc.includes('congregation') || desc.includes('cluster of')) return 'crowd';
+    if (desc.includes('pedestrian')) return 'person';
+    if (desc.includes('perimeter fence') || desc.includes('tripwire')) return 'intrusion';
+    if (desc.includes('queue backlog') || desc.includes('congestion')) return 'traffic';
+    if (desc.includes('spillage') || desc.includes('helmet') || desc.includes('vest')) return 'safety_hazard';
+    if (desc.includes('lux') || desc.includes('illumination')) return 'illumination';
+    if (desc.includes('dump truck') || desc.includes('light motor vehicle') || desc.includes('unregistered')) return 'vehicle';
+
+    return 'stoppage';
+}
+window.getAlertCategoryKey = getAlertCategoryKey;
+
+function matchCategory(typeStr, alert) {
+    const norm = (typeStr || '').toLowerCase().trim();
+    if (norm === 'all types' || norm === 'all categories (overview)' || norm === 'all' || norm === '' || norm === 'overview') return true;
+    const cat = getAlertCategoryKey(alert);
+    if (norm.includes('stoppage') || norm.includes('halt')) return cat === 'stoppage';
+    if (norm.includes('off route') || norm.includes('off-route') || norm.includes('geofence')) return cat === 'off_route';
+    if (norm.includes('off area') || norm.includes('off-area')) return cat === 'off_area';
+    if (norm.includes('camera')) return cat === 'camera_tamper';
+    if (norm.includes('tamper')) return cat === 'tamper' || cat === 'camera_tamper';
+    if (norm.includes('speed')) return cat === 'over_speed';
+    if (norm.includes('boom') || norm.includes('barrier')) return cat === 'boom_barrier';
+    if (norm.includes('crowd')) return cat === 'crowd';
+    if (norm.includes('person')) return cat === 'person';
+    if (norm.includes('intrusion')) return cat === 'intrusion';
+    if (norm.includes('traffic') || norm.includes('congestion')) return cat === 'traffic';
+    if (norm.includes('load') || norm.includes('unload') || norm.includes('variance') || norm.includes('tare')) return cat === 'load_unload';
+    if (norm.includes('hazard') || norm.includes('safety')) return cat === 'safety_hazard';
+    if (norm.includes('illumination') || norm.includes('lux') || norm.includes('light')) return cat === 'illumination';
+    if (norm.includes('vehicle')) return cat === 'vehicle';
+    return cat === norm;
+}
+window.matchCategory = matchCategory;
+
+// Get alerts filtered by current Category, Area, and Search query (the active base context pool)
+function getBaseAlerts() {
     const rawAlerts = window.ALL_LIVE_ALERTS || [];
     return rawAlerts.filter(a => {
+        // Category Filter
+        if (window.CURRENT_ALERT_CATEGORY && window.CURRENT_ALERT_CATEGORY !== 'All Types' && window.CURRENT_ALERT_CATEGORY !== 'All Categories (Overview)') {
+            if (!matchCategory(window.CURRENT_ALERT_CATEGORY, a)) {
+                return false;
+            }
+        }
+
         // Area Filter
         if (window.CURRENT_ALERT_AREA_FILTER && window.CURRENT_ALERT_AREA_FILTER !== 'all') {
             const areaKey = window.CURRENT_ALERT_AREA_FILTER.toLowerCase();
@@ -211,22 +285,6 @@ function getFilteredAlertsList() {
             if (!loc.includes(areaKey) && !desc.includes(areaKey)) {
                 return false;
             }
-        }
-
-        // Severity Filter
-        if (window.CURRENT_ALERT_SEVERITY_FILTER && window.CURRENT_ALERT_SEVERITY_FILTER !== 'ALL') {
-            const sev = (a.severity || '').toUpperCase().trim();
-            if (window.CURRENT_ALERT_SEVERITY_FILTER === 'CRITICAL' && !sev.includes('CRIT')) return false;
-            if (window.CURRENT_ALERT_SEVERITY_FILTER === 'HIGH' && (!sev.includes('HIGH') || sev.includes('CRIT'))) return false;
-            if (window.CURRENT_ALERT_SEVERITY_FILTER === 'WARNING' && !sev.includes('WARN')) return false;
-        }
-
-        // Status Filter
-        if (window.CURRENT_ALERT_STATUS_FILTER && window.CURRENT_ALERT_STATUS_FILTER !== 'ALL') {
-            const stat = (a.status || '').toUpperCase().trim();
-            if (window.CURRENT_ALERT_STATUS_FILTER === 'ACTIVE' && !stat.includes('ACT')) return false;
-            if (window.CURRENT_ALERT_STATUS_FILTER === 'ACKNOWLEDGED' && !stat.includes('ACK')) return false;
-            if (window.CURRENT_ALERT_STATUS_FILTER === 'RESOLVED' && !stat.includes('RESOLV')) return false;
         }
 
         // Search Query Filter
@@ -245,26 +303,62 @@ function getFilteredAlertsList() {
         return true;
     });
 }
+window.getBaseAlerts = getBaseAlerts;
+
+// Get alerts filtered by Category, Area, Search, Severity, and Status
+function getFilteredAlertsList() {
+    const baseAlerts = getBaseAlerts();
+    return baseAlerts.filter(a => {
+        // Severity Filter
+        if (window.CURRENT_ALERT_SEVERITY_FILTER && window.CURRENT_ALERT_SEVERITY_FILTER !== 'ALL') {
+            const sev = (a.severity || '').toUpperCase().trim();
+            if (window.CURRENT_ALERT_SEVERITY_FILTER === 'CRITICAL' && !sev.includes('CRIT')) return false;
+            if (window.CURRENT_ALERT_SEVERITY_FILTER === 'HIGH' && (!sev.includes('HIGH') || sev.includes('CRIT'))) return false;
+            if (window.CURRENT_ALERT_SEVERITY_FILTER === 'WARNING' && !sev.includes('WARN')) return false;
+        }
+
+        // Status Filter
+        if (window.CURRENT_ALERT_STATUS_FILTER && window.CURRENT_ALERT_STATUS_FILTER !== 'ALL') {
+            const stat = (a.status || '').toUpperCase().trim();
+            if (window.CURRENT_ALERT_STATUS_FILTER === 'ACTIVE' && !stat.includes('ACT') && !stat.includes('OPEN')) return false;
+            if (window.CURRENT_ALERT_STATUS_FILTER === 'ACKNOWLEDGED' && !stat.includes('ACK')) return false;
+            if (window.CURRENT_ALERT_STATUS_FILTER === 'RESOLVED' && !stat.includes('RESOLV')) return false;
+        }
+
+        return true;
+    });
+}
+window.getFilteredAlertsList = getFilteredAlertsList;
 
 function updateAlertsDashboardUI() {
     const allAlerts = window.ALL_LIVE_ALERTS || [];
+    const baseAlerts = getBaseAlerts();
     const filteredAlerts = getFilteredAlertsList();
-    const activeAlerts = allAlerts.filter(a => a.status === 'ACTIVE');
-    const totalActive = activeAlerts.length;
-    const criticalActive = activeAlerts.filter(a => a.severity === 'CRITICAL').length;
-    const highActive = activeAlerts.filter(a => a.severity === 'HIGH').length;
-    const warningActive = activeAlerts.filter(a => a.severity === 'WARNING').length;
+
+    // Active metrics scoped to current base filters (Category, Area, Search)
+    const activeBase = baseAlerts.filter(a => (a.status || 'ACTIVE').toUpperCase().includes('ACT') || (a.status || '').toUpperCase().includes('OPEN'));
+    const totalBase = baseAlerts.length;
+    const criticalActive = activeBase.filter(a => (a.severity || '').toUpperCase().includes('CRIT')).length;
+    const highActive = activeBase.filter(a => {
+        const s = (a.severity || '').toUpperCase();
+        return s.includes('HIGH') && !s.includes('CRIT');
+    }).length;
+    const warningActive = activeBase.filter(a => (a.severity || '').toUpperCase().includes('WARN')).length;
+
+    // Overall system active count for top global badges
+    const globalActive = allAlerts.filter(a => (a.status || 'ACTIVE').toUpperCase().includes('ACT') || (a.status || '').toUpperCase().includes('OPEN')).length;
+    const globalCritical = allAlerts.filter(a => ((a.status || 'ACTIVE').toUpperCase().includes('ACT') || (a.status || '').toUpperCase().includes('OPEN')) && (a.severity || '').toUpperCase().includes('CRIT')).length;
 
     // Update global header badge
     const badgeEl = document.getElementById('headerBadgeCount');
-    if (badgeEl) badgeEl.innerText = totalActive;
+    if (badgeEl) badgeEl.innerText = globalActive;
 
     // Update Threat Level Banner
     const threatBadge = document.getElementById('threatLevelBadge');
     const threatText = document.getElementById('threatLevelText');
     const pulseDot = threatBadge ? threatBadge.querySelector('.threat-pulse-dot') : null;
     if (threatBadge && threatText) {
-        if (criticalActive > 0) {
+        if (globalCritical > 0) {
             threatBadge.style.background = 'rgba(239, 68, 68, 0.2)';
             threatBadge.style.borderColor = 'rgba(239, 68, 68, 0.6)';
             threatBadge.style.color = '#f87171';
@@ -273,8 +367,8 @@ function updateAlertsDashboardUI() {
                 pulseDot.style.backgroundColor = '#ef4444';
                 pulseDot.style.boxShadow = '0 0 10px #ef4444';
             }
-            threatText.innerHTML = `CRITICAL • ${criticalActive} ANOMALIES ACTIVE`;
-        } else if (totalActive > 0) {
+            threatText.innerHTML = `CRITICAL • ${globalCritical} ANOMALIES ACTIVE`;
+        } else if (globalActive > 0) {
             threatBadge.style.background = 'rgba(245, 158, 11, 0.2)';
             threatBadge.style.borderColor = 'rgba(245, 158, 11, 0.6)';
             threatBadge.style.color = '#fbbf24';
@@ -283,7 +377,7 @@ function updateAlertsDashboardUI() {
                 pulseDot.style.backgroundColor = '#f59e0b';
                 pulseDot.style.boxShadow = '0 0 10px #f59e0b';
             }
-            threatText.innerHTML = `SURVEILLANCE • ${totalActive} ANOMALIES ACTIVE`;
+            threatText.innerHTML = `SURVEILLANCE • ${globalActive} ANOMALIES ACTIVE`;
         } else {
             threatBadge.style.background = 'rgba(16, 185, 129, 0.2)';
             threatBadge.style.borderColor = 'rgba(16, 185, 129, 0.6)';
@@ -304,12 +398,12 @@ function updateAlertsDashboardUI() {
         tickerEl.innerHTML = `<strong>#ALT-${latest.id} [${latest.severity}]</strong>: ${latest.alert_type} (${latest.vehicle_no || 'Unassigned'}) @ ${latest.location} — ${latest.description}`;
     }
 
-    // Update Filter Chip Counts
+    // Update Filter Chip Counts - dynamically reflects the active applied Category, Area, and Search filters
     const bAll = document.getElementById('chipBadgeAll');
     const bCrit = document.getElementById('chipBadgeCritical');
     const bHigh = document.getElementById('chipBadgeHigh');
     const bWarn = document.getElementById('chipBadgeWarning');
-    if (bAll) bAll.innerText = allAlerts.length;
+    if (bAll) bAll.innerText = totalBase;
     if (bCrit) bCrit.innerText = criticalActive;
     if (bHigh) bHigh.innerText = highActive;
     if (bWarn) bWarn.innerText = warningActive;
@@ -347,7 +441,7 @@ function updateAlertsDashboardUI() {
         }).length;
 
         // Ensure non-zero baseline count when in standard view
-        if (matchedActive === 0 && window.CURRENT_ALERT_STATUS_FILTER === 'ALL' && window.CURRENT_ALERT_SEVERITY_FILTER === 'ALL') {
+        if (matchedActive === 0 && window.CURRENT_ALERT_STATUS_FILTER === 'ALL' && window.CURRENT_ALERT_SEVERITY_FILTER === 'ALL' && (!window.CURRENT_ALERT_AREA_FILTER || window.CURRENT_ALERT_AREA_FILTER === 'all') && !window.CURRENT_ALERT_SEARCH_QUERY) {
             matchedActive = BASELINE_CARD_COUNTS[catKey] || 2;
         }
 
@@ -389,15 +483,15 @@ function updateAlertsDashboardUI() {
 
     const vaStatusEl = document.getElementById('vaSectionStatusText') || document.getElementById('vaSidebarStatusText');
     if (vaStatusEl) {
-        const vaActiveCount = activeAlerts.filter(a => !['stoppage', 'off_route', 'off_area', 'tamper', 'over_speed', 'boom_barrier'].includes(getAlertCategoryKey(a))).length;
+        const vaActiveCount = activeBase.filter(a => !['stoppage', 'off_route', 'off_area', 'tamper', 'over_speed', 'boom_barrier'].includes(getAlertCategoryKey(a))).length;
         vaStatusEl.textContent = vaActiveCount > 0 ? `• ${vaActiveCount} EVENTS` : '• NO EVENTS';
     }
 
     // Update sidebar badges
     const sideCardCount = document.getElementById('sidebarLiveCardCount');
     const sideThreatText = document.getElementById('sidebarLiveThreatText');
-    if (sideCardCount) sideCardCount.innerText = `${totalActive} Anomalies Active`;
-    if (sideThreatText) sideThreatText.innerText = criticalActive > 0 ? `• ${criticalActive} Critical Active` : `• ${totalActive} Active`;
+    if (sideCardCount) sideCardCount.innerText = `${globalActive} Anomalies Active`;
+    if (sideThreatText) sideThreatText.innerText = globalCritical > 0 ? `• ${globalCritical} Critical Active` : `• ${globalActive} Active`;
 
     // Re-render detail view if open
     const detailContainer = document.getElementById('alertDetailContainer');
@@ -405,12 +499,13 @@ function updateAlertsDashboardUI() {
         renderDetailEventsForCategory(window.CURRENT_ALERT_CATEGORY || 'All Types');
     }
 }
+window.updateAlertsDashboardUI = updateAlertsDashboardUI;
 
 function renderDetailEventsForCategory(type) {
-    const isAll = (type === 'All Types' || !type);
-    const pool = getFilteredAlertsList();
-    const matched = isAll ? pool : pool.filter(a => matchCategory(type, a));
-    const activeCount = matched.filter(a => a.status === 'ACTIVE').length;
+    const categoryName = type || window.CURRENT_ALERT_CATEGORY || 'All Types';
+    const isAllCat = (categoryName === 'All Types' || categoryName === 'All Categories (Overview)');
+    const matched = getFilteredAlertsList();
+    const activeCount = matched.filter(a => (a.status || 'ACTIVE').toUpperCase().includes('ACT') || (a.status || '').toUpperCase().includes('OPEN')).length;
 
     // Set Icon & Header Title
     const detailIcon = document.getElementById('detailIcon');
@@ -420,34 +515,35 @@ function renderDetailEventsForCategory(type) {
 
     let iconClass = 'fa-solid fa-triangle-exclamation detail-icon-orange';
     let subTag = '(Vehicle & Corridor Alerts)';
-    let titleText = type || 'All Types';
+    let titleText = isAllCat ? 'All Categories' : categoryName;
 
+    // Compose title with category + severity/status filter
     if (window.CURRENT_ALERT_SEVERITY_FILTER === 'CRITICAL') {
         iconClass = 'fa-solid fa-circle-radiation detail-icon-orange';
-        titleText = (type && type !== 'All Types') ? `${type} (Critical)` : 'Critical Incidents';
+        titleText = isAllCat ? 'Critical Incidents' : `${categoryName} • Critical`;
         subTag = '(Priority Intervention Required)';
     } else if (window.CURRENT_ALERT_SEVERITY_FILTER === 'HIGH') {
         iconClass = 'fa-solid fa-triangle-exclamation detail-icon-orange';
-        titleText = (type && type !== 'All Types') ? `${type} (High Priority)` : 'High Priority Alerts';
+        titleText = isAllCat ? 'High Priority Alerts' : `${categoryName} • High Priority`;
         subTag = '(Vigilance Inspection)';
     } else if (window.CURRENT_ALERT_SEVERITY_FILTER === 'WARNING') {
         iconClass = 'fa-solid fa-circle-exclamation detail-icon-teal';
-        titleText = (type && type !== 'All Types') ? `${type} (Warnings)` : 'Warnings & Sensory Variances';
+        titleText = isAllCat ? 'Warnings & Sensory Variances' : `${categoryName} • Warnings`;
         subTag = '(Edge AI Anomaly Filter)';
     } else if (window.CURRENT_ALERT_STATUS_FILTER === 'ACTIVE') {
         iconClass = 'fa-solid fa-bolt detail-icon-teal';
-        titleText = (type && type !== 'All Types') ? `${type} (Active)` : 'Active Unresolved Incidents';
+        titleText = isAllCat ? 'Active Unresolved Incidents' : `${categoryName} • Active Only`;
         subTag = '(Real-time Live Stream)';
     } else if (window.CURRENT_ALERT_STATUS_FILTER === 'ACKNOWLEDGED') {
         iconClass = 'fa-solid fa-check-double detail-icon-teal';
-        titleText = (type && type !== 'All Types') ? `${type} (Acknowledged)` : 'Acknowledged Incidents';
+        titleText = isAllCat ? 'Acknowledged Incidents' : `${categoryName} • Acknowledged`;
         subTag = '(Under Investigation)';
     } else if (window.CURRENT_ALERT_STATUS_FILTER === 'RESOLVED') {
         iconClass = 'fa-solid fa-shield-check detail-icon-teal';
-        titleText = (type && type !== 'All Types') ? `${type} (Resolved)` : 'Resolved Incidents';
+        titleText = isAllCat ? 'Resolved Incidents' : `${categoryName} • Resolved`;
         subTag = '(Historical Archive)';
     } else {
-        const lower = (type || '').toLowerCase();
+        const lower = categoryName.toLowerCase();
         if (lower.includes('vehicle')) { iconClass = 'fa-solid fa-car detail-icon-teal'; subTag = '(Camera Feeds)'; }
         else if (lower.includes('route')) { iconClass = 'fa-solid fa-route detail-icon-orange'; subTag = '(GPS Corridor)'; }
         else if (lower.includes('speed')) { iconClass = 'fa-solid fa-gauge-high detail-icon-orange'; subTag = '(Speed Radar)'; }
@@ -475,15 +571,16 @@ function renderDetailEventsForCategory(type) {
                 <div class="empty-alerts-card" style="border: 1px dashed #cbd5e1; border-radius: 8px; padding: 36px; text-align: center;">
                     <i class="fa-solid fa-shield-check" style="font-size: 32px; color: #10b981; margin-bottom: 10px; display: inline-block;"></i>
                     <h4 class="empty-alerts-title" style="font-size: 14px; margin: 0 0 6px 0; font-weight: 700;">No Alerts Match Active Filters</h4>
-                    <p class="empty-alerts-desc" style="font-size: 12px; margin: 0;">All vehicles and corridors in this category are operating within nominal parameters.</p>
+                    <p class="empty-alerts-desc" style="font-size: 12px; margin: 0;">All vehicles and corridors in this filter selection are operating within nominal parameters.</p>
                 </div>
             `;
         } else {
             detailEventsBody.innerHTML = matched.map(a => {
                 const isResolved = a.status === 'RESOLVED';
                 const isAcked = a.status === 'ACKNOWLEDGED';
-                const isCritical = a.severity === 'CRITICAL';
-                const badgeBg = isCritical ? '#dc2626' : (a.severity === 'HIGH' ? '#d97706' : '#0284c7');
+                const isCritical = (a.severity || '').toUpperCase().includes('CRIT');
+                const isHigh = (a.severity || '').toUpperCase().includes('HIGH');
+                const badgeBg = isCritical ? '#dc2626' : (isHigh ? '#d97706' : '#0284c7');
                 const cardBorder = isResolved ? '#cbd5e1' : (isAcked ? '#0284c7' : (isCritical ? '#ef4444' : '#f59e0b'));
                 const statusColor = isResolved ? '#10b981' : (isAcked ? '#0284c7' : '#dc2626');
 
@@ -545,21 +642,34 @@ function renderDetailEventsForCategory(type) {
         }
     }
 }
+window.renderDetailEventsForCategory = renderDetailEventsForCategory;
 
 // Interactive Category, Triage & Filter Handlers
 window.setAlertDetectionType = function(type) {
-    window.CURRENT_ALERT_CATEGORY = type;
+    window.CURRENT_ALERT_CATEGORY = type || 'All Types';
     const overviewCon = document.getElementById('alertOverviewContainer');
     const detailCon = document.getElementById('alertDetailContainer');
     const detectionSelect = document.getElementById('detectionTypeSelect');
     if (detectionSelect && type) detectionSelect.value = type;
 
-    if (type === 'All Types' || !type) {
+    // Reset severity and status triage filter when selecting a new category
+    window.CURRENT_ALERT_SEVERITY_FILTER = 'ALL';
+    window.CURRENT_ALERT_STATUS_FILTER = 'ALL';
+    document.querySelectorAll('.alert-triage-bar .chip-btn').forEach(btn => btn.classList.remove('active'));
+    document.getElementById('chipFilterAll')?.classList.add('active');
+
+    // Sync sub-nav items in sidebar if present
+    document.querySelectorAll('.sub-nav-item[data-detection]').forEach(item => {
+        const itemType = item.getAttribute('data-detection');
+        if (itemType === window.CURRENT_ALERT_CATEGORY) {
+            item.classList.add('active');
+        } else {
+            item.classList.remove('active');
+        }
+    });
+
+    if (window.CURRENT_ALERT_CATEGORY === 'All Types' || window.CURRENT_ALERT_CATEGORY === 'All Categories (Overview)' || !window.CURRENT_ALERT_CATEGORY) {
         window.CURRENT_ALERT_CATEGORY = 'All Types';
-        window.CURRENT_ALERT_SEVERITY_FILTER = 'ALL';
-        window.CURRENT_ALERT_STATUS_FILTER = 'ALL';
-        document.querySelectorAll('.alert-triage-bar .chip-btn').forEach(btn => btn.classList.remove('active'));
-        document.getElementById('chipFilterAll')?.classList.add('active');
         if (overviewCon) overviewCon.style.display = 'block';
         if (detailCon) detailCon.style.display = 'none';
         updateAlertsDashboardUI();
@@ -568,7 +678,10 @@ window.setAlertDetectionType = function(type) {
 
     if (overviewCon) overviewCon.style.display = 'none';
     if (detailCon) detailCon.style.display = 'block';
-    renderDetailEventsForCategory(type);
+    const mainContent = document.querySelector('.main-content') || window;
+    if (mainContent.scrollTo) mainContent.scrollTo({ top: 0, behavior: 'smooth' });
+
+    renderDetailEventsForCategory(window.CURRENT_ALERT_CATEGORY);
     updateAlertsDashboardUI();
 };
 
@@ -582,9 +695,13 @@ window.setSeverityFilter = function(sev) {
 
     if (sev === 'ALL') {
         document.getElementById('chipFilterAll')?.classList.add('active');
-        window.CURRENT_ALERT_CATEGORY = 'All Types';
-        if (overviewCon) overviewCon.style.display = 'block';
-        if (detailCon) detailCon.style.display = 'none';
+        if (window.CURRENT_ALERT_CATEGORY === 'All Types' && !window.CURRENT_ALERT_SEARCH_QUERY) {
+            if (overviewCon) overviewCon.style.display = 'block';
+            if (detailCon) detailCon.style.display = 'none';
+        } else {
+            if (overviewCon) overviewCon.style.display = 'none';
+            if (detailCon) detailCon.style.display = 'block';
+        }
     } else {
         if (sev === 'CRITICAL') document.getElementById('chipFilterCritical')?.classList.add('active');
         else if (sev === 'HIGH') document.getElementById('chipFilterHigh')?.classList.add('active');
@@ -623,6 +740,9 @@ window.handleAlertSearch = function(query) {
     if (window.CURRENT_ALERT_SEARCH_QUERY) {
         if (overviewCon) overviewCon.style.display = 'none';
         if (detailCon) detailCon.style.display = 'block';
+    } else if (window.CURRENT_ALERT_CATEGORY === 'All Types' && window.CURRENT_ALERT_SEVERITY_FILTER === 'ALL' && window.CURRENT_ALERT_STATUS_FILTER === 'ALL') {
+        if (overviewCon) overviewCon.style.display = 'block';
+        if (detailCon) detailCon.style.display = 'none';
     }
     renderDetailEventsForCategory(window.CURRENT_ALERT_CATEGORY || 'All Types');
     updateAlertsDashboardUI();

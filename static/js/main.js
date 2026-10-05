@@ -413,6 +413,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 panel.style.display = 'none';
             }
         });
+
+        if (typeof initAppInstallationQRCodes === 'function') {
+            initAppInstallationQRCodes();
+        }
     };
 
     // Drone Sub-Tabs Switcher (Dashboard, Features, Sites, Inferred Reports)
@@ -449,88 +453,67 @@ document.addEventListener('DOMContentLoaded', () => {
     window.CURRENT_ALERT_SEARCH_QUERY = '';
 
     // Comprehensive category mapping helper for all 15 operational alert categories
-    function getAlertCategoryKey(alert) {
+    const getAlertCategoryKey = window.getAlertCategoryKey || function(alert) {
+        if (!alert) return 'stoppage';
         const type = (alert.alert_type || '').toLowerCase();
         const desc = (alert.description || '').toLowerCase();
-        if (type.includes('stoppage') || type.includes('halt') || desc.includes('stationary')) return 'stoppage';
-        if (type.includes('off route') || type.includes('route') || type.includes('geofence') || desc.includes('deviated')) return 'off_route';
-        if (type.includes('off area') || type.includes('area') || type.includes('blasting') || desc.includes('restricted')) return 'off_area';
-        if (type.includes('tamper alerts') || type.includes('device tamper') || type.includes('seal') || type.includes('tamper')) return 'tamper';
-        if (type.includes('speed') || type.includes('velocity') || desc.includes('km/h')) return 'over_speed';
-        if (type.includes('barrier') || type.includes('boom') || type.includes('gate')) return 'boom_barrier';
-        if (type.includes('crowd') || desc.includes('congregation')) return 'crowd';
-        if (type.includes('person') || desc.includes('pedestrian')) return 'person';
-        if (type.includes('intrusion') || type.includes('tripwire') || desc.includes('perimeter')) return 'intrusion';
-        if (type.includes('traffic') || type.includes('congestion') || desc.includes('queue')) return 'traffic';
-        if (type.includes('load') || type.includes('unload') || type.includes('weight') || type.includes('variance') || type.includes('tare')) return 'load_unload';
-        if (type.includes('camera') || desc.includes('occlusion')) return 'camera_tamper';
-        if (type.includes('hazard') || type.includes('safety') || desc.includes('helmet') || desc.includes('vest')) return 'safety_hazard';
-        if (type.includes('illumination') || type.includes('light') || desc.includes('lux')) return 'illumination';
-        if (type.includes('vehicle') || desc.includes('light motor vehicle') || desc.includes('unregistered')) return 'vehicle';
-        return 'stoppage';
-    }
 
-    function matchCategory(typeStr, alert) {
-        const cat = getAlertCategoryKey(alert);
+        // 1. Primary classification by alert_type
+        if (type.includes('speed') || type.includes('velocity')) return 'over_speed';
+        if (type.includes('stoppage') || type.includes('halt')) return 'stoppage';
+        if (type.includes('off route') || type.includes('route') || type.includes('geofence')) return 'off_route';
+        if (type.includes('off area') || type.includes('off-area') || type.includes('blasting')) return 'off_area';
+        if (type.includes('camera')) return 'camera_tamper';
+        if (type.includes('tamper') || type.includes('seal') || type.includes('device tamper')) return 'tamper';
+        if (type.includes('barrier') || type.includes('boom') || type.includes('gate')) return 'boom_barrier';
+        if (type.includes('crowd')) return 'crowd';
+        if (type.includes('person')) return 'person';
+        if (type.includes('intrusion') || type.includes('tripwire')) return 'intrusion';
+        if (type.includes('traffic') || type.includes('congestion')) return 'traffic';
+        if (type.includes('load') || type.includes('unload') || type.includes('variance') || type.includes('tare')) return 'load_unload';
+        if (type.includes('hazard') || type.includes('safety')) return 'safety_hazard';
+        if (type.includes('illumination') || type.includes('light')) return 'illumination';
+        if (type.includes('vehicle')) return 'vehicle';
+
+        // 2. Secondary fallback by description semantics
+        if (desc.includes('km/h')) return 'over_speed';
+        if (desc.includes('stationary')) return 'stoppage';
+        if (desc.includes('deviated')) return 'off_route';
+        if (desc.includes('restricted') || desc.includes('blasting')) return 'off_area';
+        if (desc.includes('occlusion') || desc.includes('camera lens')) return 'camera_tamper';
+        if (desc.includes('rfid tag mismatch') || desc.includes('tamper')) return 'tamper';
+        if (desc.includes('boom') || desc.includes('barrier')) return 'boom_barrier';
+        if (desc.includes('congregation') || desc.includes('cluster of')) return 'crowd';
+        if (desc.includes('pedestrian')) return 'person';
+        if (desc.includes('perimeter fence') || desc.includes('tripwire')) return 'intrusion';
+        if (desc.includes('queue backlog') || desc.includes('congestion')) return 'traffic';
+        if (desc.includes('spillage') || desc.includes('helmet') || desc.includes('vest')) return 'safety_hazard';
+        if (desc.includes('lux') || desc.includes('illumination')) return 'illumination';
+        if (desc.includes('dump truck') || desc.includes('light motor vehicle') || desc.includes('unregistered')) return 'vehicle';
+
+        return 'stoppage';
+    };
+
+    const matchCategory = window.matchCategory || function(typeStr, alert) {
         const norm = (typeStr || '').toLowerCase().trim();
-        if (norm === 'all types' || !norm) return true;
-        if (norm.includes('unauthorized stoppage') || norm.includes('stoppage')) return cat === 'stoppage';
+        if (norm === 'all types' || norm === 'all categories (overview)' || norm === 'all' || norm === '' || norm === 'overview') return true;
+        const cat = getAlertCategoryKey(alert);
+        if (norm.includes('stoppage') || norm.includes('halt')) return cat === 'stoppage';
         if (norm.includes('off route') || norm.includes('off-route') || norm.includes('geofence')) return cat === 'off_route';
         if (norm.includes('off area') || norm.includes('off-area')) return cat === 'off_area';
-        if (norm.includes('tamper alerts') || norm.includes('tamper')) return cat === 'tamper' || cat === 'camera_tamper';
-        if (norm.includes('over speed') || norm.includes('over-speed')) return cat === 'over_speed';
+        if (norm.includes('camera')) return cat === 'camera_tamper';
+        if (norm.includes('tamper')) return cat === 'tamper' || cat === 'camera_tamper';
+        if (norm.includes('speed')) return cat === 'over_speed';
         if (norm.includes('boom') || norm.includes('barrier')) return cat === 'boom_barrier';
-        if (norm.includes('vehicle')) return cat === 'vehicle';
         if (norm.includes('crowd')) return cat === 'crowd';
         if (norm.includes('person')) return cat === 'person';
         if (norm.includes('intrusion')) return cat === 'intrusion';
-        if (norm.includes('traffic')) return cat === 'traffic';
-        if (norm.includes('loaded') || norm.includes('weight')) return cat === 'load_unload';
-        if (norm.includes('camera')) return cat === 'camera_tamper';
-        if (norm.includes('safety') || norm.includes('hazard')) return cat === 'safety_hazard';
-        if (norm.includes('illumination')) return cat === 'illumination';
+        if (norm.includes('traffic') || norm.includes('congestion')) return cat === 'traffic';
+        if (norm.includes('load') || norm.includes('unload') || norm.includes('variance') || norm.includes('tare')) return cat === 'load_unload';
+        if (norm.includes('hazard') || norm.includes('safety')) return cat === 'safety_hazard';
+        if (norm.includes('illumination') || norm.includes('lux') || norm.includes('light')) return cat === 'illumination';
+        if (norm.includes('vehicle')) return cat === 'vehicle';
         return cat === norm;
-    }
-
-    // Function to set detection view (All Types Overview vs Specific Detail view)
-    window.setAlertDetectionType = function(type) {
-        window.CURRENT_ALERT_CATEGORY = type || 'All Types';
-        const detSelect = document.getElementById('detectionTypeSelect');
-        if (detSelect) detSelect.value = window.CURRENT_ALERT_CATEGORY;
-
-        // Reset triage chips to All when explicitly selecting a category from sidebar or card
-        window.CURRENT_ALERT_SEVERITY_FILTER = 'ALL';
-        window.CURRENT_ALERT_STATUS_FILTER = 'ALL';
-        document.querySelectorAll('.alert-triage-bar .chip-btn').forEach(btn => btn.classList.remove('active'));
-        document.getElementById('chipFilterAll')?.classList.add('active');
-
-        const alertSubItems = document.querySelectorAll('.sub-nav-item[data-detection]');
-        alertSubItems.forEach(item => {
-            const itemType = item.getAttribute('data-detection');
-            if (itemType === window.CURRENT_ALERT_CATEGORY) {
-                item.classList.add('active');
-            } else {
-                item.classList.remove('active');
-            }
-        });
-
-        const overviewCon = document.getElementById('alertOverviewContainer');
-        const detailCon = document.getElementById('alertDetailContainer');
-
-        if (window.CURRENT_ALERT_CATEGORY === 'All Types' || !window.CURRENT_ALERT_CATEGORY) {
-            if (overviewCon) overviewCon.style.display = 'block';
-            if (detailCon) detailCon.style.display = 'none';
-        } else {
-            if (overviewCon) overviewCon.style.display = 'none';
-            if (detailCon) detailCon.style.display = 'grid';
-            const mainContent = document.querySelector('.main-content') || window;
-            if (mainContent.scrollTo) mainContent.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-
-        renderDetailEventsForCategory(window.CURRENT_ALERT_CATEGORY);
-        if (typeof updateAlertsDashboardUI === 'function') {
-            updateAlertsDashboardUI();
-        }
     };
 
     // Sub-nav detection items click listeners
@@ -570,6 +553,7 @@ document.addEventListener('DOMContentLoaded', () => {
     bindViewClick(droneDashboardItem, showDroneDashboard);
     bindViewClick(workersAttendanceItem, showWorkersAttendance);
     bindViewClick(digitalAuditTrailsItem, showDigitalAuditTrails);
+    bindViewClick(appInstallationItem, showAppInstallationTab);
 
     // Home navigation link
     const homeNavLink = document.querySelector('.nav-item-home a');
@@ -2289,6 +2273,7 @@ window.openAppInstallationModal = function() {
     const modal = document.getElementById('appInstallationModal');
     if (modal) {
         modal.style.display = 'flex';
+        if (typeof initAppInstallationQRCodes === 'function') initAppInstallationQRCodes();
         if (typeof playAlertChime === 'function') playAlertChime('test');
     }
 };
@@ -2304,6 +2289,63 @@ window.closeAppInstallationModal = function(e) {
     }
 };
 
+window.initAppInstallationQRCodes = async function() {
+    try {
+        let downloadUrl = window.location.origin + '/download/app';
+        
+        // If testing locally (localhost/127.0.0.1), resolve host machine's Wi-Fi/LAN IP so phones can connect
+        const isLocalhost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+        if (isLocalhost) {
+            try {
+                const res = await fetch('/api/server-info');
+                if (res.ok) {
+                    const data = await res.json();
+                    if (data.download_app_url) {
+                        downloadUrl = data.download_app_url;
+                    }
+                }
+            } catch (e) {
+                console.warn('Could not fetch server LAN info, using origin:', e);
+            }
+        }
+
+        window._activeApkDownloadUrl = downloadUrl;
+
+        // Render QR Code with high resolution
+        const qrApiUrl = 'https://api.qrserver.com/v1/create-qr-code/?size=300x300&margin=6&data=' + encodeURIComponent(downloadUrl);
+
+        document.querySelectorAll('.trace-apk-qr-img').forEach(img => {
+            img.src = qrApiUrl;
+        });
+
+        document.querySelectorAll('.app-copy-input').forEach(input => {
+            input.value = downloadUrl;
+        });
+
+        document.querySelectorAll('.app-qr-open-link').forEach(a => {
+            a.href = downloadUrl;
+        });
+    } catch (err) {
+        console.warn('initAppInstallationQRCodes error:', err);
+    }
+};
+
+window.updateQRCodeFromInput = function(inputElem) {
+    if (!inputElem || !inputElem.value) return;
+    const newUrl = inputElem.value.trim();
+    window._activeApkDownloadUrl = newUrl;
+    const qrApiUrl = 'https://api.qrserver.com/v1/create-qr-code/?size=300x300&margin=6&data=' + encodeURIComponent(newUrl);
+    document.querySelectorAll('.trace-apk-qr-img').forEach(img => {
+        img.src = qrApiUrl;
+    });
+    document.querySelectorAll('.app-copy-input').forEach(input => {
+        if (input !== inputElem) input.value = newUrl;
+    });
+    document.querySelectorAll('.app-qr-open-link').forEach(a => {
+        a.href = newUrl;
+    });
+};
+
 window.triggerTraceApkDownload = function() {
     const progressBox = document.getElementById('apkDownloadProgressBox');
     const statusText = document.getElementById('apkDownloadStatusText');
@@ -2315,61 +2357,80 @@ window.triggerTraceApkDownload = function() {
     if (btn) btn.disabled = true;
 
     if (typeof showAuditToast === 'function') {
-        showAuditToast('📥 Initiating verified package download: TRACE_Mobile_v2.4.2.apk (42.8 MB)...');
+        showAuditToast('📥 Downloading TRACE_Mobile-V1.0.0.0.apk (36.9 MB)...');
     }
     if (typeof playAlertChime === 'function') playAlertChime('high');
+
+    // Trigger direct browser download of the APK file via server endpoint
+    const link = document.createElement('a');
+    link.href = '/download/apk';
+    link.download = 'TRACE_Mobile-V1.0.0.0.apk';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
 
     let current = 0;
     const interval = setInterval(() => {
         current += 20;
         if (progressBar) progressBar.style.width = current + '%';
         if (percentText) percentText.textContent = current + '%';
-        if (statusText) statusText.textContent = `Downloading TRACE package... ${Math.round(current * 0.428)} MB / 42.8 MB`;
+        if (statusText) statusText.textContent = `Downloading TRACE package... ${Math.round(current * 0.369)} MB / 36.9 MB`;
 
         if (current >= 100) {
             clearInterval(interval);
-            if (statusText) statusText.textContent = '✅ Download complete! Package ready for installation.';
-            
-            // Trigger actual browser download
-            const link = document.createElement('a');
-            link.href = '/static/downloads/trace_mobile_app_v2.4.apk';
-            link.download = 'TRACE_Mobile_v2.4.2_Production.apk';
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-
+            if (statusText) statusText.textContent = '✅ Download complete! TRACE_Mobile-V1.0.0.0.apk ready for installation.';
             if (typeof showAuditToast === 'function') {
-                showAuditToast('✅ TRACE_Mobile_v2.4.2_Production.apk downloaded successfully!');
+                showAuditToast('✅ TRACE_Mobile-V1.0.0.0.apk downloaded successfully!');
             }
             if (btn) btn.disabled = false;
         }
-    }, 100);
+    }, 80);
 };
 
-window.copyTraceApkLink = function() {
-    const url = 'https://trace.ccl.gov.in/downloads/mobile/trace-field-v2.4.apk';
+window.copyTraceApkLink = function(targetInputId) {
+    const input = targetInputId ? document.getElementById(targetInputId) : document.querySelector('.app-copy-input');
+    const url = (input && input.value) ? input.value.trim() : (window._activeApkDownloadUrl || window.location.origin + '/download/app');
+
+    function handleCopySuccess() {
+        const btnTexts = document.querySelectorAll('#copyLinkBtnText, #copyLinkBtnTextModal');
+        btnTexts.forEach(btn => {
+            const old = btn.textContent;
+            btn.textContent = 'Copied! ✅';
+            setTimeout(() => { btn.textContent = old; }, 2000);
+        });
+        if (typeof showAuditToast === 'function') {
+            showAuditToast('📋 APK download URL copied to clipboard: ' + url);
+        }
+    }
+
     if (navigator.clipboard && navigator.clipboard.writeText) {
-        navigator.clipboard.writeText(url).then(() => {
-            const btnText = document.getElementById('copyLinkBtnText');
-            const btnTextModal = document.getElementById('copyLinkBtnTextModal');
-            if (btnText) {
-                const old = btnText.textContent;
-                btnText.textContent = 'Copied! ✅';
-                setTimeout(() => { btnText.textContent = old; }, 2000);
-            }
-            if (btnTextModal) {
-                const oldModal = btnTextModal.textContent;
-                btnTextModal.textContent = 'Copied! ✅';
-                setTimeout(() => { btnTextModal.textContent = oldModal; }, 2000);
-            }
-            if (typeof showAuditToast === 'function') {
-                showAuditToast('📋 Direct APK Download URL copied to clipboard!');
-            }
+        navigator.clipboard.writeText(url).then(handleCopySuccess).catch(() => {
+            fallbackCopy();
         });
     } else {
+        fallbackCopy();
+    }
+
+    function fallbackCopy() {
+        if (input) {
+            input.focus();
+            input.select();
+            try {
+                document.execCommand('copy');
+                handleCopySuccess();
+                return;
+            } catch (err) {}
+        }
         if (typeof showAuditToast === 'function') {
-            showAuditToast('📋 URL: ' + url);
+            showAuditToast('📋 Link: ' + url);
         }
     }
 };
+
+// Auto-initialize QR codes on script load
+setTimeout(() => {
+    if (typeof window.initAppInstallationQRCodes === 'function') {
+        window.initAppInstallationQRCodes();
+    }
+}, 200);
 

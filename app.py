@@ -1,7 +1,5 @@
-"""
-Prahar AI - Unified Intelligent Mining Command Center
-Main ASGI Application Entry Point & Module Orchestrator.
-"""
+# Prahar AI - Unified Intelligent Mining Command Center
+# Main ASGI Application Entry Point & Module Orchestrator.
 
 import os
 from pathlib import Path

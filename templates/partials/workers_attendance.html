@@ -78,26 +78,27 @@
                         <div class="feature-modal-container worker-modal-container" role="dialog" aria-modal="true">
                             <!-- Modal Header -->
                             <div class="feature-modal-header" style="background: #0f172a; border-bottom: 1px solid #1e293b; color: #ffffff;">
-                                <div class="feature-modal-title-wrap">
-                                    <div class="feature-modal-icon-badge" style="background: #0284c7; color: #ffffff;">
-                                        <i class="fa-solid fa-id-card-clip"></i>
+                                    <div class="feature-modal-title-wrap">
+                                        <div class="feature-modal-icon-badge" style="background: #0284c7; color: #ffffff;">
+                                            <i class="fa-solid fa-id-card-clip"></i>
+                                        </div>
+                                        <div>
+                                            <h2 class="feature-modal-title" style="color: #f8fafc; font-size: 17px; font-weight: 700;">Workers Attendance & Shift Telemetry Roster</h2>
+                                            <p class="feature-modal-subtitle" id="workerModalSubtitle" style="color: #94a3b8; font-size: 12px;">Biometric & RFID Attendance Tracking • Date: 25-08-2026 (Total Active: 32,489)</p>
+                                        </div>
                                     </div>
-                                    <div>
-                                        <h2 class="feature-modal-title" style="color: #f8fafc; font-size: 17px; font-weight: 700;">Workers Attendance & Shift Telemetry Roster</h2>
-                                        <p class="feature-modal-subtitle" id="workerModalSubtitle" style="color: #94a3b8; font-size: 12px;">Biometric & RFID Attendance Tracking • Date: 25-08-2026 (Total Active: 32,489)</p>
+                                    <div class="vts-modal-actions">
+                                        <button type="button" class="btn-export-csv" onclick="exportWorkersAttendanceCSV()" title="Download Attendance Records CSV">
+                                            <i class="fa-solid fa-file-csv"></i> <span>Export CSV</span>
+                                        </button>
+                                        <button type="button" class="btn-export-pdf" onclick="printWorkersAttendance()" title="Print Shift Roster">
+                                            <i class="fa-solid fa-print"></i> <span>Print Roster</span>
+                                        </button>
+                                        <button type="button" class="feature-modal-close-btn" onclick="closeWorkersDetailModal()" title="Close Window">
+                                            <i class="fa-solid fa-xmark"></i>
+                                        </button>
                                     </div>
-                                <div class="vts-modal-actions">
-                                    <button type="button" class="btn-export-csv" onclick="exportWorkersAttendanceCSV()" title="Download Attendance Records CSV">
-                                        <i class="fa-solid fa-file-csv"></i> <span>Export CSV</span>
-                                    </button>
-                                    <button type="button" class="btn-export-pdf" onclick="printWorkersAttendance()" title="Print Shift Roster">
-                                        <i class="fa-solid fa-print"></i> <span>Print Roster</span>
-                                    </button>
-                                    <button type="button" class="feature-modal-close-btn" onclick="closeWorkersDetailModal()" title="Close Window">
-                                        <i class="fa-solid fa-xmark"></i>
-                                    </button>
                                 </div>
-                            </div>
 
                             <!-- Telemetry Summary Chips Bar -->
                             <div class="worker-telemetry-summary" id="workerModalTelemetryStrip">

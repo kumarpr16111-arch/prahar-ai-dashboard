@@ -1,6 +1,7 @@
 import asyncio
-from fastapi import APIRouter, Request
-from fastapi.responses import RedirectResponse
+from pathlib import Path
+from fastapi import APIRouter, Request, HTTPException
+from fastapi.responses import RedirectResponse, FileResponse
 from fastapi.templating import Jinja2Templates
 
 from backend.core.config import config
@@ -147,3 +148,92 @@ async def get_login(request: Request):
         name="login.html",
         context={"error": None, "app_version": config.APP_VERSION}
     )
+
+
+@router.api_route("/download/apk", methods=["GET", "HEAD"])
+@router.api_route("/api/download/apk", methods=["GET", "HEAD"])
+async def download_apk():
+    """Serves the TRACE Mobile V1.0.0.0 APK file directly for download."""
+    candidates = [
+        config.BASE_DIR / "static" / "downloads" / "TRACE_Mobile-V1.0.0.0.apk",
+        config.BASE_DIR / "TRACE_Mobile-V1.0.0.0.apk",
+        config.BASE_DIR / "static" / "downloads" / "Trace- mobile-v1.0.0.0.apk",
+        config.BASE_DIR / "Trace- mobile-v1.0.0.0.apk",
+        config.BASE_DIR / "static" / "downloads" / "Trace-mobile-v1.0.0.0.apk",
+        config.BASE_DIR / "Trace-mobile-v1.0.0.0.apk",
+    ]
+    
+    apk_path = None
+    for p in candidates:
+        if p.exists() and p.is_file() and p.stat().st_size > 1000:
+            apk_path = p
+            break
+
+    if not apk_path:
+        # Search all .apk files in static/downloads and root base directory
+        all_apks = list((config.BASE_DIR / "static" / "downloads").glob("*.apk")) + list(config.BASE_DIR.glob("*.apk"))
+        for apk in all_apks:
+            if apk.is_file() and apk.stat().st_size > 1000:
+                apk_path = apk
+                break
+
+    if not apk_path or not apk_path.exists():
+        raise HTTPException(status_code=404, detail="TRACE Mobile APK file not found on server")
+
+    return FileResponse(
+        path=str(apk_path),
+        filename="TRACE_Mobile-V1.0.0.0.apk",
+        media_type="application/vnd.android.package-archive",
+        headers={"Content-Disposition": 'attachment; filename="TRACE_Mobile-V1.0.0.0.apk"'}
+    )
+
+
+import socket
+
+def get_local_lan_ip() -> str:
+    """Returns the reachable LAN IP of the host machine for local phone QR scanning."""
+    try:
+        s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        s.settimeout(0.5)
+        s.connect(('8.8.8.8', 80))
+        ip = s.getsockname()[0]
+        s.close()
+        return ip
+    except Exception:
+        try:
+            return socket.gethostbyname(socket.gethostname())
+        except Exception:
+            return "127.0.0.1"
+
+
+@router.get("/api/server-info")
+async def get_server_info(request: Request):
+    """Returns local LAN IP, active port, and mobile-friendly download endpoints."""
+    lan_ip = get_local_lan_ip()
+    host_header = request.headers.get("host", "")
+    port = "8000"
+    if ":" in host_header:
+        port = host_header.split(":")[-1]
+    
+    scheme = request.url.scheme or "http"
+    base_url = f"{scheme}://{lan_ip}:{port}" if port not in ("80", "443") else f"{scheme}://{lan_ip}"
+    
+    return {
+        "lan_ip": lan_ip,
+        "port": port,
+        "base_url": base_url,
+        "download_app_url": f"{base_url}/download/app",
+        "download_apk_url": f"{base_url}/download/apk"
+    }
+
+
+@router.api_route("/download/app", methods=["GET", "HEAD"])
+async def download_app_landing(request: Request):
+    """Mobile-friendly landing page when scanning QR code on phone."""
+    return templates.TemplateResponse(
+        request=request,
+        name="download_app.html",
+        context={"app_version": "v1.0.0.0", "apk_filename": "TRACE_Mobile-V1.0.0.0.apk", "file_size": "36.9 MB"}
+    )
+
+
